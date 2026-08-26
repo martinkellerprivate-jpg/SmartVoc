@@ -1,6 +1,6 @@
-# Smart Vocables — iOS-App
+# Smart Vocables — App und Web
 
-Einstieg für die Session, die diese App baut.
+Einstieg für die Session, die an diesem Produkt arbeitet.
 
 ---
 
@@ -10,17 +10,32 @@ Es gibt einen **Web-Piloten** („Lilly-Anne's Vokabeltrainer"), von dem dieses
 Projekt als Kopie gestartet ist. Damit endet die Beziehung.
 
 - **Eigenes Repository.** Keine gemeinsame Git-Historie mit dem Piloten, kein
-  Remote, kein Merge-Pfad. `git merge main` gibt es hier nicht.
+  Merge-Pfad. `git merge main` gibt es hier nicht.
 - **Eigenes Supabase-Projekt.** Eigene Nutzertabelle, eigene Zugangsdaten. Die
-  Konten der Web-App gelten hier **nicht** und umgekehrt.
+  Konten des Piloten gelten hier **nicht** und umgekehrt.
 - **Der Pilot wird nicht angefasst.** Er liegt in einem anderen Ordner, hat sein
   eigenes Repository und läuft unverändert weiter. Kein Grund, ihn zu öffnen,
   zu lesen oder zu verändern.
-- Der GitHub-Pages-Workflow des Piloten wurde entfernt — dies ist eine App,
-  keine Website.
 
 Wenn etwas in dieser Datei nach „geteilt mit dem Piloten" klingt, ist es ein
 Überbleibsel und gehört korrigiert.
+
+---
+
+## Das Produkt: zwei Zugänge, eine Datenbasis
+
+Das hier ist **keine reine App**. Es sind zwei gleichwertige Wege auf dieselben
+Daten:
+
+- **iOS-App** für den App Store, gebaut über Capacitor
+- **Web-Version mit Login**, ausgeliefert über GitHub Pages
+
+Beide sprechen **dasselbe Supabase-Projekt** an. Ein Konto, dieselben Wörter und
+Lernstände auf dem Handy wie im Browser. Keiner der beiden Wege ist zweitrangig
+— eine Änderung, die einen davon bricht, ist nicht fertig.
+
+Technisch fällt das in `vite.config.ts` auseinander: `CAP_PLATFORM=ios` schaltet
+zwischen den Zielen um. Details unter „Bauen und starten".
 
 ---
 
@@ -28,42 +43,50 @@ Wenn etwas in dieser Datei nach „geteilt mit dem Piloten" klingt, ist es ein
 
 | | |
 |---|---|
-| Repository | lokal, 1 Commit, Branch `main`, **noch kein Remote** |
+| Repository | `martinkellerprivate-jpg/SmartVoc`, öffentlich, `main` gepusht |
+| Web-Version | https://martinkellerprivate-jpg.github.io/SmartVoc/ |
+| Supabase | Projekt `wpwrqjyljgrmhamupspz`, `schema.sql` eingespielt, `.env.local` gesetzt |
 | Xcode | 26.6, iOS 26.5 SDK + Simulatoren |
 | Capacitor | 8.5, native Abhängigkeiten über SwiftPM (kein CocoaPods) |
 | Bundle-ID | `ch.drkeller.smartvocables` — nach dem ersten Store-Eintrag fix |
 | Simulator | verifiziert auf iPhone 17 Pro, iOS 26.5 |
 | Bundle-Grösse | 860 kB JS (gzip 276 kB) |
 | Apple-Account | kostenlos; 99 $/Jahr noch nicht gekauft |
-| Supabase | **noch keines** — `.env.local` fehlt, Anmeldung/Sync daher ungetestet |
+
+**Warum das Repository öffentlich ist.** Pages aus einem privaten Repository
+setzt einen bezahlten GitHub-Plan voraus, und ohne Pages gibt es keine
+Web-Version. Zu verbergen ist ohnehin nichts: der Anon-Key steckt im
+ausgelieferten JS und ist für jeden Web-Besucher lesbar, gleich ob das
+Repository privat wäre. Geschützt wird über Row-Level-Security in Supabase —
+siehe `schema.sql`, dort ist sie scharf gestellt (eigene Zeilen pro Nutzer,
+`shared_lists` ohne SELECT-Policy, Lesen nur über die token-gebundene Funktion).
+Das ist die Stelle, die zählt, und die bei jeder Schema-Änderung wieder zu
+prüfen ist.
 
 ---
 
-## Noch offen — muss der Nutzer tun
+## Noch zu bestätigen
 
-Beides geht nicht von der Kommandozeile aus (`gh` ist nicht installiert,
-Supabase-Projekte entstehen nur im Dashboard):
+Zwei Einstellungen wurden angeleitet, aber nicht nachgeprüft:
 
-1. **GitHub-Repository anlegen** (z. B. `smart-vocables`, privat), dann:
-   ```
-   git remote add origin git@github.com:<user>/smart-vocables.git
-   git push -u origin main
-   ```
-2. **Supabase-Projekt anlegen**, `schema.sql` aus diesem Ordner im SQL-Editor
-   ausführen, und `.env.local` anlegen:
-   ```
-   VITE_SUPABASE_URL=…
-   VITE_SUPABASE_ANON_KEY=…
-   ```
-   Erst danach lassen sich Registrierung, Anmeldung und Sync testen.
-   `.env.local` gehört **nicht** ins Repository.
+1. **GitHub-Secrets** (*Settings → Secrets and variables → Actions*):
+   `VITE_SUPABASE_URL` und `VITE_SUPABASE_ANON_KEY`. Fehlen sie, baut die Action
+   durch, aber die Web-Version kommt ohne Anmeldung hoch.
+2. **Supabase → Authentication → URL Configuration**: Site URL und Redirect URL
+   auf `https://martinkellerprivate-jpg.github.io/SmartVoc/`. Fehlt das, laufen
+   Bestätigungs- und Reset-Mails ins Leere.
+
+Danach steht der erste Gate-Test noch aus: registrieren, anmelden, ein Wort
+anlegen, in der App wiederfinden — echter Beleg dafür, dass ein Konto beide
+Wege trägt.
 
 ---
 
 ## Was die App ist
 
-React 18 + Vite + TypeScript in einer Capacitor-Hülle. Die Lernlogik liegt in
-reinem, framework-freiem TypeScript und ist mit Node-Tests abgesichert:
+React 18 + Vite + TypeScript, im Browser direkt und auf iOS in einer
+Capacitor-Hülle. Die Lernlogik liegt in reinem, framework-freiem TypeScript und
+ist mit Node-Tests abgesichert:
 
 - `src/lib/fsrs.ts` — Gedächtnismodell (ts-fsrs), 5 Stufen, CFG-Parameter
 - `src/lib/runqueue.ts` — eine Queue für alle Einstiege (gewichtete Töpfe,
@@ -73,7 +96,8 @@ reinem, framework-freiem TypeScript und ist mit Node-Tests abgesichert:
 - `src/lib/engine.ts` — Scope-Auflösung, Prognosen
 
 Diese Logik bleibt TypeScript. Sie nativ nachzubauen hiesse, dieselben Regeln
-in zwei Sprachen dauerhaft synchron zu halten.
+in zwei Sprachen dauerhaft synchron zu halten — und würde ausserdem die
+Web-Version abhängen.
 
 ---
 
@@ -94,30 +118,54 @@ in zwei Sprachen dauerhaft synchron zu halten.
 - Teilen über das System-Share-Sheet
 - Später: Texterkennung über Apple Vision als Tesseract-Ersatz
 
+Diese Zusätze müssen **zusätzlich** sein, nicht ersetzend: die Web-Version darf
+dabei nicht verlieren, was sie heute kann. Der übliche Weg ist eine dünne
+Fallunterscheidung an der einen Stelle, die die Fähigkeit kapselt — so wie
+`src/ui/speak.ts` es für die Sprachausgabe schon vorzeichnet.
+
 ---
 
 ## Nächste Schritte
 
-1. **Sichtbare native Mängel** (beim ersten Start aufgefallen):
+1. **Gate-Test** der beiden Zugänge, sobald die zwei Punkte oben bestätigt sind
+2. **Sichtbare native Mängel** (beim ersten Simulator-Start aufgefallen):
    - Statusleiste liegt über der Kopfzeile — `index.html` fehlt
      `viewport-fit=cover`, und nichts polstert um `env(safe-area-inset-top)`.
      Unten wird bereits gepolstert (`src/index.css`), oben fehlt das Gegenstück.
+     Auf dem Web unschädlich, also gefahrlos für beide Ziele zu beheben.
    - Tastatur springt beim Start hoch, quer über den Willkommen-Dialog —
      `Practice.tsx` fokussiert das Antwortfeld selbst. Auf dem Web harmlos,
-     auf dem Handy nicht.
-2. Abspecken: Tesseract- und xlsx-Pfade entfernen, Grösse vorher/nachher messen
-3. Native Schicht: TTS, Haptik, Share
-4. Supabase anbinden (siehe oben) und Anmeldung/Sync auf dem Gerät testen
-5. Store-Material, bezahlte Mitgliedschaft, TestFlight
+     auf dem Handy nicht: der Selbstfokus gehört an die Plattform gebunden.
+3. Abspecken: Tesseract- und xlsx-Pfade entfernen, Grösse vorher/nachher messen
+4. Native Schicht: TTS, Haptik, Share
+5. Passwort-Reset in der App (siehe „Bekannte Punkte")
+6. Store-Material, bezahlte Mitgliedschaft, TestFlight
 
 ---
 
 ## Bauen und starten
 
+Ein Quellbaum, zwei Ziele. `CAP_PLATFORM=ios` schaltet in `vite.config.ts` um:
+
+| Befehl | Ziel | base | Service Worker |
+|---|---|---|---|
+| `npm run build` | `dist/` | `/SmartVoc/` | ja |
+| `npm run build:ios` | `dist-ios/` | `/` | nein |
+
+Getrennte Ordner, damit ein Web-Deploy nie ein iOS-Bündel mitnimmt. `base` muss
+**exakt** dem Repo-Namen entsprechen, Grossschreibung eingeschlossen —
+Pages-Pfade unterscheiden Gross- und Kleinschreibung, sonst kommt eine leere
+Seite. Auf iOS entfällt der Service Worker bewusst: dort *ist* das Bündel die
+App, eine zweite Offline-Schicht würde nach einem Update nur veraltete Dateien
+ausliefern.
+
 ```
-npm run ios          # Web-Build nach dist-ios/ + npx cap sync ios
+npm run ios          # build:ios + npx cap sync ios
 npm run ios:open     # Projekt in Xcode öffnen
 ```
+
+Der Web-Deploy läuft über `.github/workflows/deploy.yml` bei jedem Push auf
+`main`. Pages-Quelle steht auf **GitHub Actions** (nicht „Deploy from a branch").
 
 Ohne Xcode-Oberfläche:
 
@@ -137,8 +185,9 @@ xcrun simctl launch  <UDID> ch.drkeller.smartvocables
 
 Capacitor holt `Capacitor.xcframework` als Binär-Artefakt von GitHub und fragt
 davor den **Schlüsselbund** — das löst einen Systemdialog aus. Läuft `xcodebuild`
-im Hintergrund, sieht den niemand: der Build steht dann ohne Ausgabe still.
-Einmal vorher ohne Schlüsselbund auflösen:
+im Hintergrund, sieht den niemand: der Build steht dann ohne Ausgabe still, in
+`waitForRemoteSourcePackagesToFinishLoading`. Einmal vorher ohne Schlüsselbund
+auflösen:
 
 ```
 cd ios/App/CapApp-SPM && swift package resolve --disable-keychain --disable-netrc
@@ -149,46 +198,46 @@ läuft `SecurityAgent`, steht ein Dialog.
 
 ---
 
-## Aufräumen, das noch offen ist
-
-Reste aus der Kopie, die noch auf den Piloten zeigen:
-
-- `vite.config.ts` kennt zwei Build-Ziele; das Web-Ziel setzt `base` noch auf
-  den Pfad des Piloten. Für dieses Projekt wird nur `build:ios` gebraucht — das
-  Web-Ziel kann weg oder auf `base: "/"` vereinfacht werden.
-- `README`/Kommentare erwähnen teils noch den alten Namen.
-
----
-
 ## Bekannte Punkte
 
 **Passwort-Reset.** `src/sync/auth.tsx`, `resetPassword()` baut den Rücksprung
-aus `window.location.origin` — in einer Capacitor-App ist das
-`capacitor://localhost`, der Mail-Link führt also ins Leere. Da dieses Projekt
-keine eigene Website hat, braucht es dafür **Universal Links**, und die setzen
-Associated Domains und damit die **bezahlte Mitgliedschaft** voraus. Bis dahin
-ist Passwort-Zurücksetzen nicht nutzbar.
+aus `window.location.origin + import.meta.env.BASE_URL`. Im Browser ergibt das
+`https://martinkellerprivate-jpg.github.io/SmartVoc/` und funktioniert. In der
+App ergibt es `capacitor://localhost/`, und der Mail-Link führt ins Leere.
+
+Da es jetzt eine eigene Web-Version auf **demselben** Supabase-Projekt gibt, ist
+das billig zu lösen: in der App die Rücksprung-Adresse fest auf die Web-URL
+zeigen lassen, statt sie aus `origin` abzuleiten. Kein Universal Link, keine
+Associated Domains, keine bezahlte Mitgliedschaft nötig. Der Nutzer setzt das
+Passwort im Browser zurück und meldet sich in der App neu an.
+
+**Konto löschen.** `delete_account()` in `schema.sql` löscht auch aus
+`auth.users`. Ob der Funktions-Eigentümer dort Rechte hat, ist ungetestet —
+`schema.sql` beschreibt am Ende den Ausweichweg über eine Edge Function. Vor dem
+Store-Eintrag prüfen; Apple verlangt eine funktionierende Konto-Löschung.
 
 **Lokaler Speicher.** Heute `localStorage` über `src/lib/storage.ts`
 (`LS`, `load`, `save`). iOS darf WKWebView-Speicher bei Knappheit löschen — für
-die native Version auf nativen Speicher umstellen. Alles läuft durch diese eine
-Datei, das Innenleben lässt sich austauschen.
+die App auf nativen Speicher umstellen. Alles läuft durch diese eine Datei, das
+Innenleben lässt sich austauschen, ohne die Web-Version anzufassen.
 
 **Kostenloser Apple-Account kann nicht:** TestFlight, Associated Domains, Push.
 Installationen laufen nach 7 Tagen ab. Für Simulator und eigenes Gerät reicht er.
 
-**Ordner liegt in OneDrive.** Während der Einrichtung ist der Ordner einmal
-mitten in der Arbeit verschwunden, weil OneDrive neu gestartet hat. Xcode-
-Projekte und `node_modules` vertragen sich schlecht mit Cloud-Sync. Ein Umzug
-nach z. B. `~/Developer/smart-vocables` wäre empfehlenswert; die Sicherung
-übernimmt dann GitHub.
+**Ordner liegt in OneDrive.** Der Ordner ist während der Einrichtung zweimal
+mitten in der Arbeit verschwunden, weil OneDrive neu gestartet hat — beim
+zweiten Mal war er erst nach einem Neustart der Claude-Code-Sitzung wieder
+lesbar. Xcode-Projekte und `node_modules` vertragen sich schlecht mit
+Cloud-Sync. Ein Umzug nach z. B. `~/Developer/SmartVoc` wäre empfehlenswert; die
+Sicherung übernimmt jetzt GitHub.
 
 ---
 
 ## Arbeitsweise
 
-- Nach jeder Änderung `npm run build:ios` — muss grün sein
-- Verhalten tatsächlich prüfen (Simulator-Screenshot), nicht nur Code lesen
+- Nach jeder Änderung **beide** Builds — `npm run build` und `npm run build:ios`
+- Verhalten tatsächlich prüfen: Simulator-Screenshot für die App, Browser für
+  das Web. Nicht nur den Code lesen.
 - Reine Logik mit kleinen Node-Tests absichern (esbuild + Assertions)
 - Deutsche UI-Texte: **keine geraden Anführungszeichen in JSX-Attributen** —
   `"` beendet den String. `„…"` verwenden.

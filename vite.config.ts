@@ -2,9 +2,12 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
-// Two targets out of one source tree:
+// Two ways into the same product, out of one source tree:
 //   web → GitHub Pages project page, served under /<repo>/, installable as a PWA
 //   iOS → Capacitor, served from capacitor://localhost/ inside a WKWebView
+// Both talk to the same Supabase project, so one account carries the same data
+// on the phone and in the browser. Neither target is secondary.
+//
 // The iOS build sets CAP_PLATFORM=ios (see the build:ios script). It needs a
 // root base — there is no repo path in front of it — and no service worker:
 // there the bundle *is* the app, so a second offline layer would only keep
@@ -13,8 +16,10 @@ import { VitePWA } from "vite-plugin-pwa";
 const forIOS = process.env.CAP_PLATFORM === "ios";
 
 // GitHub Pages project page → served under /<repo>/. base must match the repo
-// name; the PWA manifest start_url/scope/id and the SW scope all derive from it.
-const base = forIOS ? "/" : "/Vokablen-Trainer/";
+// name exactly, capitals included — Pages paths are case-sensitive, and a
+// mismatch serves a blank page. The PWA manifest start_url/scope/id and the SW
+// scope all derive from it.
+const base = forIOS ? "/" : "/SmartVoc/";
 
 export default defineConfig({
   base,

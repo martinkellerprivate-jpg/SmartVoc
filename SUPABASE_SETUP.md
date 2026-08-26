@@ -29,8 +29,15 @@ Zwei Wege — einer reicht:
 - **Oder direkt in der App:** nach Schritt 5 oben rechts **„Anmelden" → „Registrieren"**.
 
 ## 5. Schlüssel in die App eintragen
-1. Linke Leiste → **Project Settings** → **API**.
-2. Kopiere **Project URL** und **anon public** Key.
+Das Dashboard hat die beiden Werte inzwischen auf **zwei** Seiten verteilt:
+
+1. **Project URL:** Settings → *Integrations* → **Data API**. Dort steht sie oben.
+   Ohne den angehängten `/rest/v1/` übernehmen — den Pfad hängt die Bibliothek
+   selbst an.
+2. **Key:** Settings → *Configuration* → **API Keys** → **Publishable key**
+   (`sb_publishable_…`). **Nicht** den Secret key. Der ältere `anon`-JWT unter
+   *Legacy anon, service_role API keys* funktioniert ebenfalls, wird aber
+   ausgemustert.
 3. Im Projekt-Root die Datei `.env.example` nach **`.env.local`** kopieren und ausfüllen:
    ```
    VITE_SUPABASE_URL=https://DEINPROJEKT.supabase.co

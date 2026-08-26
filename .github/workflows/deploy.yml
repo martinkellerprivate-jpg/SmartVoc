@@ -1,0 +1,64 @@
+name: Deploy web app to GitHub Pages
+
+# This repo has two build targets. The iOS bundle is built locally with Xcode
+# and shipped by Apple; only the web one is deployed here. Both read the same
+# Supabase project, so an account carries the same data either way.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# The Pages deploy needs these. The repo-wide default can stay read-only —
+# a workflow may ask for more than the default, it just cannot exceed what
+# the repository allows.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. A running deploy is allowed to finish rather than being
+# cancelled halfway, which would leave the live site in a half-written state.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Vite bakes these into the bundle at build time — they end up readable in
+      # the shipped JS no matter what, and that is by design: the anon key is
+      # public, the data is guarded by row-level security in Supabase. They live
+      # in secrets so they stay out of the git history and can be rotated in one
+      # place. Without them the site builds fine but comes up with no login.
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
