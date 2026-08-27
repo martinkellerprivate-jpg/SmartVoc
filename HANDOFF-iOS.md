@@ -44,7 +44,7 @@ zwischen den Zielen um. Details unter „Bauen und starten".
 | | |
 |---|---|
 | Repository | `martinkellerprivate-jpg/SmartVoc`, öffentlich, `main` gepusht |
-| Web-Version | https://martinkellerprivate-jpg.github.io/SmartVoc/ |
+| Web-Version | https://martinkellerprivate-jpg.github.io/SmartVoc/ — live, mit Anmeldung |
 | Supabase | Projekt `wpwrqjyljgrmhamupspz`, `schema.sql` eingespielt, `.env.local` gesetzt |
 | Xcode | 26.6, iOS 26.5 SDK + Simulatoren |
 | Capacitor | 8.5, native Abhängigkeiten über SwiftPM (kein CocoaPods) |
@@ -65,20 +65,45 @@ prüfen ist.
 
 ---
 
+## Erledigt und nachgeprüft
+
+Die Web-Version ist live und trägt die Anmeldung: das ausgelieferte Bündel
+enthält die Supabase-Werte, und der Hash stimmt mit dem lokalen Build überein.
+Die GitHub-Secrets sind gesetzt.
+
+**Merke für später:** Secrets werden nur **beim Bauen** gelesen. Sie nachträglich
+zu setzen ändert nichts an einem bereits gebauten Artefakt — es braucht einen
+neuen Lauf (*Actions → Deploy web app to GitHub Pages → Run workflow*). Woran man
+es erkennt: der Dateiname des Bündels in `index.html` ändert sich nicht.
+
+Prüfbefehl:
+
+```
+JS=$(curl -sS https://martinkellerprivate-jpg.github.io/SmartVoc/ \
+  | grep -oE '/SmartVoc/assets/index-[A-Za-z0-9_-]*\.js' | head -1)
+curl -sS "https://martinkellerprivate-jpg.github.io$JS" | grep -c '<projekt-ref>'
+```
+
 ## Noch zu bestätigen
 
-Zwei Einstellungen wurden angeleitet, aber nicht nachgeprüft:
+- **Supabase → Authentication → URL Configuration**: Site URL und Redirect URL
+  auf `https://martinkellerprivate-jpg.github.io/SmartVoc/`. Fehlt das, laufen
+  Bestätigungs- und Reset-Mails ins Leere.
+- **Confirm email** ist in einem frischen Projekt an. Für die Testphase unter
+  *Authentication → Sign In / Providers → Email* abschalten — **vor dem Launch
+  wieder ein**.
 
-1. **GitHub-Secrets** (*Settings → Secrets and variables → Actions*):
-   `VITE_SUPABASE_URL` und `VITE_SUPABASE_ANON_KEY`. Fehlen sie, baut die Action
-   durch, aber die Web-Version kommt ohne Anmeldung hoch.
-2. **Supabase → Authentication → URL Configuration**: Site URL und Redirect URL
-   auf `https://martinkellerprivate-jpg.github.io/SmartVoc/`. Fehlt das, laufen
-   Bestätigungs- und Reset-Mails ins Leere.
+Dann der Gate-Test: im Web registrieren, ein Wort anlegen, dasselbe Konto in der
+App anmelden, das Wort dort wiederfinden. Das ist der Beleg, dass ein Konto
+beide Wege trägt.
 
-Danach steht der erste Gate-Test noch aus: registrieren, anmelden, ein Wort
-anlegen, in der App wiederfinden — echter Beleg dafür, dass ein Konto beide
-Wege trägt.
+**Beim ersten Login wandern die lokalen Daten des Browsers hoch.** In welchem
+Browser man sich registriert, entscheidet also, was im Konto landet. Für einen
+leeren Start ein privates Fenster nehmen.
+
+**Die Web-Version ist eine PWA.** Nach einem Deploy liefert der Service Worker
+womöglich noch das alte Bündel aus — hart neu laden (⇧⌘R) oder privates Fenster,
+sonst sieht man trotz grünem Deploy die alte Fassung.
 
 ---
 
@@ -140,6 +165,8 @@ Fallunterscheidung an der einen Stelle, die die Fähigkeit kapselt — so wie
 4. Native Schicht: TTS, Haptik, Share
 5. Passwort-Reset in der App (siehe „Bekannte Punkte")
 6. Store-Material, bezahlte Mitgliedschaft, TestFlight
+7. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
+   Wegen (siehe „Bekannte Punkte" — Apple setzt die Mitgliedschaft voraus)
 
 ---
 
@@ -199,6 +226,27 @@ läuft `SecurityAgent`, steht ein Dialog.
 ---
 
 ## Bekannte Punkte
+
+**Anmeldung über Google und Apple — gewollt, aber erst nach der Mitgliedschaft.**
+Heute kennt der Code nur E-Mail/Passwort (`signInWithPassword`, `signUp` in
+`src/sync/auth.tsx`); OAuth kommt darin gar nicht vor. Beides nachzurüsten hängt
+an vier Dingen:
+
+- **Apple** setzt die bezahlte Mitgliedschaft voraus (App ID, Services ID,
+  Schlüssel). Solange die 99 $/Jahr nicht gekauft sind, geht es nicht.
+- **Google** braucht einen OAuth-Client in der Google Cloud Console und die
+  Redirect-URI `https://<projekt>.supabase.co/auth/v1/callback`.
+- **In der App ist es die eigentliche Arbeit.** Google verbietet OAuth in
+  eingebetteten Webviews, der Standardfluss von Supabase greift dort also nicht.
+  Nötig ist ein nativer Weg über `ASWebAuthenticationSession` und ein eigenes
+  URL-Schema, das zurück in die App führt. Im Web sind beide dagegen billig.
+- **Richtlinie 4.8** verlangt: wer einen Fremd-Login wie Google anbietet, muss
+  auch „Sign in with Apple" anbieten. Google allein fällt durch.
+
+**Nicht halb machen.** Ein Anbieter nur im Web freigeschaltet erzeugt Konten,
+die sich in der App nicht anmelden können. Beide Wege müssen dieselben Anbieter
+kennen — also Apple und Google zusammen, Web und App im selben Zug, sobald die
+Mitgliedschaft da ist. Bis dahin trägt E-Mail/Passwort beide Wege.
 
 **Passwort-Reset.** `src/sync/auth.tsx`, `resetPassword()` baut den Rücksprung
 aus `window.location.origin + import.meta.env.BASE_URL`. Im Browser ergibt das
