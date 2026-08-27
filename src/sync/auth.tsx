@@ -2,7 +2,7 @@
  * tiny hook. When Supabase isn't configured it degrades to a disabled
  * stub so the rest of the app never has to special-case it. */
 import React, { useState, useEffect, useCallback } from "react";
-import { supabase, isConfigured } from "../lib/supabase";
+import { supabase, isConfigured, cameFromRecoveryLink } from "../lib/supabase";
 
 type AuthResult = { error?: string };
 
@@ -32,7 +32,10 @@ export const useAuth = () => React.useContext(AuthCtx);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any | null>(null);
   const [ready, setReady] = useState(!isConfigured);
-  const [recovering, setRecovering] = useState(false);
+  // Seeded from the URL, not from the event: PASSWORD_RECOVERY fires while the
+  // client initialises, before this component exists, and is never replayed.
+  // See cameFromRecoveryLink in lib/supabase.ts.
+  const [recovering, setRecovering] = useState(cameFromRecoveryLink);
 
   useEffect(() => {
     if (!supabase) return;
