@@ -163,9 +163,8 @@ Fallunterscheidung an der einen Stelle, die die Fähigkeit kapselt — so wie
      auf dem Handy nicht: der Selbstfokus gehört an die Plattform gebunden.
 3. Abspecken: Tesseract- und xlsx-Pfade entfernen, Grösse vorher/nachher messen
 4. Native Schicht: TTS, Haptik, Share
-5. Passwort-Reset in der App (siehe „Bekannte Punkte")
-6. Store-Material, bezahlte Mitgliedschaft, TestFlight
-7. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
+5. Store-Material, bezahlte Mitgliedschaft, TestFlight
+6. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
    Wegen (siehe „Bekannte Punkte" — Apple setzt die Mitgliedschaft voraus)
 
 ---
@@ -248,16 +247,33 @@ die sich in der App nicht anmelden können. Beide Wege müssen dieselben Anbiete
 kennen — also Apple und Google zusammen, Web und App im selben Zug, sobald die
 Mitgliedschaft da ist. Bis dahin trägt E-Mail/Passwort beide Wege.
 
-**Passwort-Reset.** `src/sync/auth.tsx`, `resetPassword()` baut den Rücksprung
-aus `window.location.origin + import.meta.env.BASE_URL`. Im Browser ergibt das
-`https://martinkellerprivate-jpg.github.io/SmartVoc/` und funktioniert. In der
-App ergibt es `capacitor://localhost/`, und der Mail-Link führt ins Leere.
+**Passwort-Reset — erledigt, mit zwei Fallstricken, die man kennen sollte.**
 
-Da es jetzt eine eigene Web-Version auf **demselben** Supabase-Projekt gibt, ist
-das billig zu lösen: in der App die Rücksprung-Adresse fest auf die Web-URL
-zeigen lassen, statt sie aus `origin` abzuleiten. Kein Universal Link, keine
-Associated Domains, keine bezahlte Mitgliedschaft nötig. Der Nutzer setzt das
-Passwort im Browser zurück und meldet sich in der App neu an.
+*Im Browser* zeigte die App das Formular für das neue Passwort nicht an, obwohl
+sie richtig verdrahtet war. Ursache war ein Wettlauf beim Start: `createClient()`
+läuft beim Import des Moduls, liest den Token aus dem Adress-Fragment, **löscht
+das Fragment** und meldet `PASSWORD_RECOVERY` an die dann vorhandenen Zuhörer.
+React hängt sich erst beim Mounten ein, und späteren Zuhörern wird nur
+`INITIAL_SESSION` nachgereicht — das Ereignis wird nie wiederholt. Gelöst über
+`cameFromRecoveryLink` in `src/lib/supabase.ts`: der Marker wird gelesen, **bevor**
+der Client entsteht. Wer je etwas an dieser Datei umsortiert, muss die Reihenfolge
+erhalten.
+
+Abgedeckt ist nur der implizite Fluss (der Standard der Bibliothek). Ein PKCE-
+oder `token_hash`-Link bräuchte `verifyOtp()`; ihn bloss zu erkennen würde das
+Formular ohne brauchbare Sitzung zeigen.
+
+*In der App* baute `resetPassword()` den Rücksprung aus `window.location.origin`
+— dort `capacitor://localhost/`, ein Schema, das kein Mailprogramm öffnen kann.
+Die App schickt jetzt auf die Web-Version, konfiguriert über **`VITE_WEB_URL`**
+(siehe `.env.example`). Beide Wege teilen dasselbe Supabase-Projekt, also gibt
+der Reset im Browser das Konto auch für die App frei. Kein Universal Link, keine
+Associated Domains, keine bezahlte Mitgliedschaft.
+
+Ohne `VITE_WEB_URL` verschickt die App **keinen** Link, sondern sagt es —
+ein stiller Rückfall auf `origin` hätte eine tote Mail erzeugt, die aussieht,
+als hätte es geklappt. Die Adresse muss ausserdem in Supabase unter
+*Authentication → URL Configuration* eingetragen sein.
 
 **Konto löschen.** `delete_account()` in `schema.sql` löscht auch aus
 `auth.users`. Ob der Funktions-Eigentümer dort Rechte hat, ist ungetestet —

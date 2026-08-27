@@ -2,6 +2,7 @@
  * tiny hook. When Supabase isn't configured it degrades to a disabled
  * stub so the rest of the app never has to special-case it. */
 import React, { useState, useEffect, useCallback } from "react";
+import { Capacitor } from "@capacitor/core";
 import { supabase, isConfigured, cameFromRecoveryLink } from "../lib/supabase";
 
 type AuthResult = { error?: string };
@@ -72,9 +73,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   // Sends the user a "reset your password" email with a link back to this app.
+  //
+  // In the browser, origin + BASE_URL is exactly the right return address. In
+  // the iOS app it would be capacitor://localhost/ — a scheme no email client
+  // can open, so the link would lead nowhere. Both share one Supabase project,
+  // so the app sends the user to the web version instead: they set the new
+  // password there and sign in again in the app. That avoids Universal Links,
+  // which would need Associated Domains and the paid Apple membership.
+  //
+  // No silent fallback: without VITE_WEB_URL the app would mail out a dead
+  // link and look like it worked. Say so instead.
   const resetPassword = useCallback(async (email: string): Promise<AuthResult> => {
     if (!supabase) return { error: "not-configured" };
-    const redirectTo = window.location.origin + import.meta.env.BASE_URL;
+    let redirectTo = window.location.origin + import.meta.env.BASE_URL;
+    if (Capacitor.isNativePlatform()) {
+      const web = (import.meta.env.VITE_WEB_URL as string | undefined)?.trim();
+      if (!web) return { error: "Passwort-Zurücksetzen ist in dieser App-Fassung nicht eingerichtet. Bitte im Browser zurücksetzen." };
+      redirectTo = web.replace(/\/*$/, "/");
+    }
     const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
     return error ? { error: error.message } : {};
   }, []);
