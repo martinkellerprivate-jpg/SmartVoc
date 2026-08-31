@@ -67,7 +67,7 @@ den neuen, kürzeren Namen entworfen werden.
 
 ## Was gebraucht wird
 
-Sechs Lieferungen. Ich beziehe mich später auf die Kürzel D1–D6.
+Sieben Lieferungen. Ich beziehe mich später auf die Kürzel D1–D7.
 
 ### D1 — App-Zeichen (Icon)
 
@@ -149,6 +149,33 @@ Randbedingungen, die feststehen:
 - Der Hinweis-Knopf wird zur **Glühbirne unten rechts in der Karte**, ohne Wort.
 - „Überspringen / Weiss ich nicht" entfällt.
 - Vier Antwort-Arten bleiben: tippen, auswählen, selbst prüfen, nur ansehen.
+
+### D7 — Navigation: wohin mit alldem?
+
+Das ist ein echter Entwurfsauftrag, keine Umsetzung einer fertigen Idee.
+
+Heute liegt unten eine feste Leiste mit fünf Einträgen: Üben, Lektionen,
+Wörter, Statistik, Mehr. Oben in der Kopfzeile stehen zusätzlich Übungsplan,
+Lerntipps, Anleitung und ein Tagesziel-Ring.
+
+Beschlossen ist:
+- **Lektionen und Wörter werden zu einem einzigen Bereich „Wortlisten".**
+  Jede Liste kann ein optionales **Zieldatum** tragen (Prüfung oder
+  selbstgesetztes Ziel).
+- **Das Tagesziel verschwindet** aus der Kopfzeile.
+- **Anleitung und Lerntipps** sollen aus der Kopfzeile weg.
+
+Damit blieben vier Bereiche plus zwei Hilfe-Einträge. Sechs Einträge in einer
+Leiste sind auf einem Telefon zu viel — deshalb die eigentliche Frage an dich:
+
+**Wie ordnet man das? Muss überhaupt alles in die Fusszeile?** Vielleicht
+gehören Anleitung und Lerntipps gar nicht auf dieselbe Ebene wie die
+Hauptbereiche. Vielleicht braucht es kein „Mehr". Vielleicht ist eine feste
+Fusszeile nicht die richtige Antwort. Schlag vor, was trägt — begründet, gern
+mit zwei Varianten zum Vergleichen.
+
+Randbedingung: die Web-Version hat am Rechner viel mehr Platz. Es soll
+dieselbe Oberfläche bleiben, kein zweiter Entwurf — aber sie darf sich weiten.
 
 ### D6 — Startbildschirm der App
 
