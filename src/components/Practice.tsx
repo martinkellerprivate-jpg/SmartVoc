@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { Capacitor } from "@capacitor/core";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
@@ -246,7 +247,11 @@ export function Practice() {
         distractors.push(o);
     }
     setChoices([w, ...distractors].sort(() => Math.random() - 0.5));
-    setTimeout(() => inputRef.current && inputRef.current.focus(), 60);
+    // Only on the web. There a focused field costs nothing; on a phone it
+    // throws the keyboard over half the screen the moment a card appears —
+    // at launch that lands on top of the welcome dialog. Focus after a
+    // deliberate tap (see useHint) stays, since there the user asked for it.
+    if (!Capacitor.isNativePlatform()) setTimeout(() => inputRef.current && inputRef.current.focus(), 60);
     if (settings.autoAudio && hasTTS(srcKey)) setTimeout(() => speak(sideText(w, srcKey), srcKey), 130);
   }, [poolById, distractorPool, tgtKey, srcKey, settings.choicesCount, settings.autoAudio]);
 

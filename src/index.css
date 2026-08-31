@@ -48,10 +48,17 @@ button { font-family: inherit; cursor: pointer; }
 input, button, textarea, select { font-family: inherit; }
 
 /* ---------- layout ---------- */
-.app { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
+/* Side insets matter in landscape on a notched device; on desktop every
+   env() here is 0, so the layout is unchanged. */
+.app {
+  max-width: 1080px; margin: 0 auto;
+  padding: 0 calc(20px + env(safe-area-inset-right)) 80px calc(20px + env(safe-area-inset-left));
+}
 .topbar {
   display: flex; align-items: center; gap: 18px;
-  padding: 22px 4px 18px;
+  /* Top inset: the page now runs under the status bar (viewport-fit=cover),
+     and the brand line is the first thing that would end up beneath it. */
+  padding: calc(22px + env(safe-area-inset-top)) 4px 18px;
   flex-wrap: wrap;
 }
 .brand { display: flex; align-items: center; gap: 12px; }
@@ -696,8 +703,8 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    V1 — iPhone reflow + fixed bottom navigation (desktop unchanged)
    ==================================================================== */
 @media (max-width: 640px) {
-  .app { padding: 0 12px calc(78px + env(safe-area-inset-bottom)); }
-  .topbar { gap: 10px; padding: 14px 2px 8px; }
+  .app { padding: 0 calc(12px + env(safe-area-inset-right)) calc(78px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left)); }
+  .topbar { gap: 10px; padding: calc(14px + env(safe-area-inset-top)) 2px 8px; }
   .brand-name { font-size: 18px; white-space: normal; }
 
   /* fixed bottom navigation */
