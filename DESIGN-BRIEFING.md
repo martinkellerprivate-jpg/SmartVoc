@@ -25,6 +25,26 @@ handgemacht wirken, aber nicht verspielt.
 
 ---
 
+## Schau sie dir zuerst an
+
+**https://martinkellerprivate-jpg.github.io/SmartVoc/**
+
+Das ist der laufende Stand, dieselbe Oberfläche wie in der App. **Keine
+Anmeldung nötig** — die App startet mit einem Grundwortschatz und ist sofort
+benutzbar; alles bleibt lokal im Browser.
+
+Worauf zu schauen lohnt:
+
+- **Üben** — die Karte, um die es in D4 und D5 geht. Ein Wort eintippen, prüfen,
+  weiter. Auch den Knopf „Karte vergrössern" oben rechts an der Karte ausprobieren.
+- Das Fenster **schmal ziehen** (unter 640 px) — dann erscheint die Telefon-Ansicht
+  mit der festen Fusszeile, um die es in D7 geht.
+- **Einstellungen** — die lange Seite, die ausgedünnt gehört.
+- Die **Kopfzeile** mit Marke, Übungsplan, Lerntipps, Anleitung und Tagesziel.
+
+Was du dort siehst, ist der Ausgangszustand, nicht das Ziel: gewachsen,
+funktionierend, überladen.
+
 ## Was heute existiert
 
 Die Oberfläche ist gewachsen und funktioniert, wirkt aber überladen und
