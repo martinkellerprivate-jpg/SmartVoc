@@ -119,9 +119,12 @@ heute gar nicht; auf einem Telefon abends ist das ein echter Mangel.
 Das wichtigste Einzelstück. Hier verbringt der Nutzer die ganze Zeit.
 
 Auf der Karte stehen heute: das abgefragte Wort, ein Eingabefeld, ein
-Prüfen-Knopf, ein Hinweis-Knopf, die Auflösung nach dem Prüfen, optional ein
-Beispielsatz und eine Lautschrift, ein Lautsprecher-Symbol, dazu Kartenzähler
-und Fortschritt.
+Prüfen-Knopf, ein Hinweis-Knopf, die Auflösung nach dem Prüfen, optional bis zu
+zwei Beispielsätze und eine Lautschrift, dazu Kartenzähler und Fortschritt.
+
+Das Lautsprecher-Symbol und die Sprachausgabe **entfallen** — nicht mit
+entwerfen. Die **Lautschrift bleibt**, als optionales Feld in beiden
+Sprachrichtungen.
 
 **Zu liefern:** die Karte in ihren vier Zuständen — Frage, Antwort getippt,
 richtig, falsch. Für Telefon und Rechner. Mit Angabe, was gross und was klein
@@ -148,7 +151,10 @@ Ebene? Wo darf Farbe etwas sagen, statt nur zu schmücken?
 Randbedingungen, die feststehen:
 - Der Hinweis-Knopf wird zur **Glühbirne unten rechts in der Karte**, ohne Wort.
 - „Überspringen / Weiss ich nicht" entfällt.
+- Sprachausgabe und Lautsprecher-Symbol entfallen.
+- **Themen entfallen** — Wörter tragen keine Kategorie mehr.
 - Vier Antwort-Arten bleiben: tippen, auswählen, selbst prüfen, nur ansehen.
+  Sie sollen **auf eine Zeile** passen.
 
 ### D7 — Navigation: wohin mit alldem?
 

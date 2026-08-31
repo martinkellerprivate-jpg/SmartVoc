@@ -141,10 +141,15 @@ Web-Version abhängen.
 - Alle drei Sprachen, pro Konto abwählbar (`activePairs`)
 
 **Nativ dazu** — nötig gegen App-Store-Richtlinie 4.2 („keine reine Website-Hülle")
-- Sprachausgabe über iOS statt Web-Speech (`src/ui/speak.ts`)
 - Haptisches Feedback
 - Teilen über das System-Share-Sheet
 - Später: Texterkennung über Apple Vision als Tesseract-Ersatz
+
+**Die Sprachausgabe ist gestrichen** (Entscheid: Lautsprecher und Vorlesen raus,
+die Lautschrift als Feld bleibt). Sie war bisher das erste 4.2-Argument; damit
+ruht die Begründung auf Haptik, System-Teilen und später Apple Vision. Wird das
+zu dünn, ist Apple Vision der stärkste Nachzügler — es ist echte Gerätefunktion,
+nicht nur eine Hülle um Web-Technik.
 
 Diese Zusätze müssen **zusätzlich** sein, nicht ersetzend: die Web-Version darf
 dabei nicht verlieren, was sie heute kann. Der übliche Weg ist eine dünne
