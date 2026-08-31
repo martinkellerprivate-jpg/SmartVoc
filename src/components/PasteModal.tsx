@@ -8,13 +8,41 @@ import { PAIRS, isLatinPair } from "../lib/pairs";
 
 /* EN/FR line splitter: columns Fremd | Deutsch | Topic. Same delimiters as the
  * scan heuristic (tab / : | – — - / 2+ spaces), but topic-aware (3rd column). */
+/* Split one pasted line into columns.
+ *
+ * Two bugs used to live here, and both fired exactly on the rows the AI prompt
+ * asks for:
+ *
+ * 1. Every separator was accepted at once — tab, "|", colon, hyphen, en dash.
+ *    Those last three also occur INSIDE the content: "e-mail", "Nun denn: los!",
+ *    and most example sentences carry one. A single dash in a sentence tore the
+ *    row into extra columns and everything after it landed in the wrong field.
+ *    So: use the strongest separator the line actually contains, and only fall
+ *    back to the loose set when there is no "|", no tab and no column gap.
+ *
+ * 2. Empty columns were dropped. The prompt tells the AI to leave the second
+ *    example empty and still write the "|", so "dog|der Hund|Satz||Tiere" is
+ *    normal — and dropping the empty shifted "Tiere" into the example slot.
+ *    Inner empties are kept now; only trailing ones go, since they carry
+ *    nothing. */
+function columns(s: string): string[] {
+  let p: string[];
+  if (s.includes("|")) p = s.split("|");
+  else if (s.includes("\t")) p = s.split("\t");
+  else if (/\s{2,}/.test(s)) p = s.split(/\s{2,}/);
+  else p = s.split(/\s*[–—:-]\s*/);
+  p = p.map((x) => x.trim());
+  while (p.length && p[p.length - 1] === "") p.pop();
+  return p;
+}
+
 function splitForeign(text: string) {
   const out: any[] = [];
   (text || "").split(/\r?\n/).forEach((line) => {
     const s = line.trim();
     if (!s || s.length < 2) return;
     if (/^(unit|lesson|lektion|page|seite|vokabel|words?|english|fran|deutsch|german)\b/i.test(s) && !/[-–—:|\t]/.test(s)) return;
-    const p = s.split(/\s*[\t:|–—-]\s*|\s{2,}/).map((x) => x.trim()).filter(Boolean);
+    const p = columns(s);
     // Fremd | Deutsch | Beispiel 1 | Beispiel 2 | Topic — extra columns are optional,
     // so shorter rows keep their old meaning (…| Topic as the third column).
     if (p.length >= 6) out.push({ fgn: p[0], de: p[1], examples: [p[2], p[3]].filter(Boolean), topic: p[4], phonetic: p[5] });
@@ -35,7 +63,7 @@ function splitLatin(text: string) {
     const s = line.trim();
     if (!s || s.length < 2) return;
     if (/^(unit|lektion|lesson|seite|page|wort|latein|deutsch|grundform)\b/i.test(s) && !/[\t|]/.test(s)) return;
-    const p = s.split(/\s*[\t|]\s*|\s{2,}/).map((x) => x.trim()).filter(Boolean);
+    const p = columns(s);
     // …| Deutsch | Beispiel 1 | Beispiel 2 | Topic (example columns optional)
     if (p.length >= 8) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean), topic: p[6], phonetic: p[7] });
     else if (p.length === 7) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean), topic: p[6] });
