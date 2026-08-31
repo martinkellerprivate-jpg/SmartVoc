@@ -93,9 +93,11 @@ curl -sS "https://martinkellerprivate-jpg.github.io$JS" | grep -c '<projekt-ref>
   *Authentication → Sign In / Providers → Email* abschalten — **vor dem Launch
   wieder ein**.
 
-Dann der Gate-Test: im Web registrieren, ein Wort anlegen, dasselbe Konto in der
-App anmelden, das Wort dort wiederfinden. Das ist der Beleg, dass ein Konto
-beide Wege trägt.
+**Gate-Test bestanden.** Im Web angelegtes Wort erscheint nach der Anmeldung in
+der App im Simulator. Ein Konto trägt beide Wege — das Fundament ist belegt.
+
+Ungetestet bleibt der Passwort-Reset: beide Korrekturen sind ausgeliefert, aber
+weder im Browser noch aus der App heraus einmal durchgespielt.
 
 **Beim ersten Login wandern die lokalen Daten des Browsers hoch.** In welchem
 Browser man sich registriert, entscheidet also, was im Konto landet. Für einen
@@ -152,19 +154,10 @@ Fallunterscheidung an der einen Stelle, die die Fähigkeit kapselt — so wie
 
 ## Nächste Schritte
 
-1. **Gate-Test** der beiden Zugänge, sobald die zwei Punkte oben bestätigt sind
-2. **Sichtbare native Mängel** (beim ersten Simulator-Start aufgefallen):
-   - Statusleiste liegt über der Kopfzeile — `index.html` fehlt
-     `viewport-fit=cover`, und nichts polstert um `env(safe-area-inset-top)`.
-     Unten wird bereits gepolstert (`src/index.css`), oben fehlt das Gegenstück.
-     Auf dem Web unschädlich, also gefahrlos für beide Ziele zu beheben.
-   - Tastatur springt beim Start hoch, quer über den Willkommen-Dialog —
-     `Practice.tsx` fokussiert das Antwortfeld selbst. Auf dem Web harmlos,
-     auf dem Handy nicht: der Selbstfokus gehört an die Plattform gebunden.
-3. Abspecken: Tesseract- und xlsx-Pfade entfernen, Grösse vorher/nachher messen
-4. Native Schicht: TTS, Haptik, Share
-5. Store-Material, bezahlte Mitgliedschaft, TestFlight
-6. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
+1. Abspecken: Tesseract- und xlsx-Pfade entfernen, Grösse vorher/nachher messen
+2. Native Schicht: TTS, Haptik, Share
+3. Store-Material, bezahlte Mitgliedschaft, TestFlight
+4. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
    Wegen (siehe „Bekannte Punkte" — Apple setzt die Mitgliedschaft voraus)
 
 ---
