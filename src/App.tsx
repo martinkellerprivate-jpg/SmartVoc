@@ -40,7 +40,7 @@ function Header() {
       <div className="brand">
         <div className="brand-mark">S</div>
         <div>
-          <div className="brand-name">Smart Vocables</div>
+          <div className="brand-name">SmartVoc</div>
           <div className="brand-sub">{p.foreignLabel} ⇄ {p.nativeLabel} · {nWords} words</div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-# Smart Vocables — App und Web
+# SmartVoc — App und Web
 
 Einstieg für die Session, die an diesem Produkt arbeitet.
 
@@ -48,7 +48,8 @@ zwischen den Zielen um. Details unter „Bauen und starten".
 | Supabase | Projekt `wpwrqjyljgrmhamupspz`, `schema.sql` eingespielt, `.env.local` gesetzt |
 | Xcode | 26.6, iOS 26.5 SDK + Simulatoren |
 | Capacitor | 8.5, native Abhängigkeiten über SwiftPM (kein CocoaPods) |
-| Bundle-ID | `ch.drkeller.smartvocables` — nach dem ersten Store-Eintrag fix |
+| Bundle-ID | `ch.drkeller.smartvoc` — nach dem ersten Store-Eintrag fix |
+| Produktname | **SmartVoc** (vorher „Smart Vocables") |
 | Simulator | verifiziert auf iPhone 17 Pro, iOS 26.5 |
 | Bundle-Grösse | 860 kB JS (gzip 276 kB) |
 | Apple-Account | kostenlos; 99 $/Jahr noch nicht gekauft |
@@ -195,7 +196,7 @@ xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
   CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
 
 xcrun simctl install <UDID> <DerivedData>/Build/Products/Debug-iphonesimulator/App.app
-xcrun simctl launch  <UDID> ch.drkeller.smartvocables
+xcrun simctl launch  <UDID> ch.drkeller.smartvoc
 ```
 
 `CODE_SIGNING_ALLOWED=NO`: für den Simulator braucht es keine Mitgliedschaft.

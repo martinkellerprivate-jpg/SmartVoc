@@ -3,8 +3,8 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
   // Reverse DNS of a domain Martin owns. Fixed for the lifetime of the App
   // Store listing — changing it later means a new app, so change it now if at all.
-  appId: "ch.drkeller.smartvocables",
-  appName: "Smart Vocables",
+  appId: "ch.drkeller.smartvoc",
+  appName: "SmartVoc",
   // Written by `npm run build:ios`; kept apart from dist/ so a web deploy can
   // never pick up the iOS bundle.
   webDir: "dist-ios",

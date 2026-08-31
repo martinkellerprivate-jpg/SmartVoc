@@ -4,7 +4,7 @@ import { LS, load } from "./storage";
 /* Full account export: the five vt_v1_* documents as a JSON download. */
 export function exportAllData(stamp: string) {
   const data = {
-    app: "Smart Vocables",
+    app: "SmartVoc",
     schema: "vt_v1",
     exportedAt: stamp,
     vocab: load(LS.vocab, []),
