@@ -45,7 +45,24 @@ export function effectiveRetentionFor(word: any, settings: any, lessons?: any[],
   for (const l of lessons) {
     if (!l.dueDate || !(l.members || []).includes(word.id)) continue;
     const daysLeft = (l.dueDate - now) / 86400000;
-    if (daysLeft >= 0 && daysLeft <= CFG.examWindowDays) target = Math.max(target, CFG.examRetention);
+    if (daysLeft < 0) continue;                                  // vorbei → kein Einfluss
+    if (daysLeft <= CFG.examWindowDays) { target = Math.max(target, CFG.examRetention); continue; }
+    // V18: ausserhalb des Endspurt-Fensters eine RAMPE statt nichts.
+    //
+    // Warum überhaupt: werden mehrere Listen zusammen geübt, sollen Wörter aus
+    // der Liste mit dem näheren Termin häufiger drankommen. Genau das tut ein
+    // höheres Behaltensziel schon — interval = 9·S·(1/Ziel − 1) wird kürzer,
+    // das Wort ist früher fällig. Bisher schaltete das erst drei Tage vorher
+    // ein; davor waren ein Termin in 11 und einer in 18 Tagen ununterscheidbar.
+    //
+    // Es ist bewusst KEINE neue Formel in der Queue (siehe runqueue.ts: „no
+    // invented scoring formula"), sondern derselbe FSRS-Hebel, nur stetig
+    // statt als Stufe. Unverändert bleiben beide Ränder: innerhalb des
+    // Fensters volles examRetention, jenseits des Horizonts das Grundziel.
+    if (daysLeft <= CFG.examRampDays) {
+      const k = (CFG.examRampDays - daysLeft) / (CFG.examRampDays - CFG.examWindowDays);
+      target = Math.max(target, base + (CFG.examRetention - base) * k);
+    }
   }
   return target;
 }
@@ -69,7 +86,7 @@ export const STUFE_ORDER = ["sitzt", "sitzt_fast", "sitzt_schlecht", "neu", "noc
  * RetentionFor / the grade path read CFG → effective value, instantly. ---- */
 export const DEFAULTS = {
   S1: 3, S2: 14, MIN_REPS: 2, PUFFER: 2, D_LEECH: 7, LAPSE_LEECH: 3,
-  examRetention: 0.95, examWindowDays: 3, learningSpeed: 1.0,
+  examRetention: 0.95, examWindowDays: 3, examRampDays: 21, learningSpeed: 1.0,
   // PLANUNGS-RUNDE 2 — V-ENGINE: pot weights, round goals, session limits.
   W_ROT: 5, W_FAELLIG: 5, W_GRAU: 3, W_BLAU: 3, W_ORANGE: 2,
   ZIEL_WACKELT: 3, ZIEL_NEU: 2, ZIEL_NEU_NIE: 2, ZIEL_FAST: 1, ZIEL_FAELLIG: 1,
