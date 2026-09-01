@@ -6,7 +6,7 @@ import { LS, load, save } from "../lib/storage";
 import { newId } from "../lib/ids";
 import { RECOMMENDED } from "../lib/defaults";
 import { DEFAULT_VOCAB } from "../data/seed";
-import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic } from "../lib/migrate";
+import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings } from "../lib/migrate";
 import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER } from "../lib/fsrs";
 import type { SessionOutcome, SerializedCard } from "../lib/fsrs";
 import { appendReviews, type ReviewEntry } from "../lib/reviewlog";
@@ -46,7 +46,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   if (!initRef.current) initRef.current = initData();
   const [vocab, setVocabState] = React.useState(initRef.current.vocab);
   const [lists, setListsState] = React.useState(initRef.current.lists);
-  const [lessons, setLessonsState] = React.useState(() => load(LS.lessons, []));
   const [stats, setStats] = React.useState(() => load(LS.stats, {}));
   const [reviews, setReviews] = React.useState(() => load(LS.reviews, {})); // F-SETTINGS-ADVANCED: review log
   const [meta, setMeta] = React.useState(() => load(LS.meta, {
@@ -72,7 +71,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const remoteKeys = React.useRef<Set<string>>(new Set());
   const onLocalChange = React.useRef<((key: string) => void) | null>(null);
   const setterFor: Record<string, (v: any) => void> = {
-    vocab: setVocabState, lists: setListsState, lessons: setLessonsState, stats: setStats, meta: setMeta, settings: setSettings, reviews: setReviews,
+    vocab: setVocabState, lists: setListsState, stats: setStats, meta: setMeta, settings: setSettings, reviews: setReviews,
   };
   const applyRemote = React.useCallback((key: string, data: any) => {
     remoteKeys.current.add(key);
@@ -87,7 +86,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => persist("vocab", LS.vocab, vocab), [vocab]);
   React.useEffect(() => persist("lists", LS.lists, lists), [lists]);
-  React.useEffect(() => persist("lessons", LS.lessons, lessons), [lessons]);
   React.useEffect(() => persist("stats", LS.stats, stats), [stats]);
   React.useEffect(() => persist("reviews", LS.reviews, reviews), [reviews]);
   React.useEffect(() => persist("meta", LS.meta, meta), [meta]);
@@ -103,14 +101,26 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const applied: Record<string, boolean> = {};
     if (!done.topicsDe) { setVocabState((v: any) => migrateTopics(v)); applied.topicsDe = true; } // V4
     if (!done.swissV3) { setVocabState((v: any) => swissifyVocab(v)); applied.swissV3 = true; } // V3 — ß → ss
-    if (!done.lessonsV6) { // V6 — one list-lesson per existing list
-      const add = lessonsForLists(initRef.current.lists, load(LS.lessons, []), newId);
-      if (add.length) setLessonsState((les: any) => [...les, ...add]);
-      applied.lessonsV6 = true;
-    }
-    if (!done.lessonsStaticV9) { // V9 — convert all lessons to static snapshots (once)
-      setLessonsState((les: any) => migrateLessonsStatic(les, initRef.current.lists, initRef.current.vocab || [], newId));
-      applied.lessonsStaticV9 = true;
+    /* V16 — Lektionen werden Wortlisten. Der Plan wird aus den geladenen Daten
+     * gerechnet und dann funktional eingespielt, damit er die Migrationen
+     * darueber (die ebenfalls am Vokabular arbeiten) nicht ueberschreibt. */
+    if (!done.wortlistenV16) {
+      /* Die Vorstufen V6 und V9 laufen hier als reine Funktionen mit, statt
+       * eigenen Zustand zu schreiben: erst fehlende Listen-Lektionen ergaenzen,
+       * dann alle auf feste Mitglieder bringen -- und was dabei herauskommt,
+       * wird in Wortlisten aufgeloest. */
+      const stored = load(LS.lessons, []);
+      const withLists = [...stored, ...lessonsForLists(initRef.current.lists, stored, newId)];
+      const les = migrateLessonsStatic(withLists, initRef.current.lists, initRef.current.vocab || [], newId);
+      const plan = planWortlisten(les, initRef.current.lists, initRef.current.vocab || []);
+      setListsState(plan.lists);
+      setVocabState((v: any) => v.map((w: any) => {
+        const add = plan.memberships[w.id];
+        if (!add) return w;
+        return { ...w, lists: Array.from(new Set([...(w.lists || []), ...add])) };
+      }));
+      setSettings((prev: any) => ({ ...prev, ...retokenSettings(prev, plan.tokenMap) }));
+      applied.wortlistenV16 = true;
     }
     if (Object.keys(applied).length) {
       setMeta((prev: any) => ({ ...prev, migrations: { ...(prev.migrations || {}), ...applied } }));
@@ -225,7 +235,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   }, [settings.targetRetention, settings.lernIntensity, flushReviews]);
 
   const api = {
-    vocab, stats, meta, settings, lists, lessons, reviews,
+    vocab, stats, meta, settings, lists, reviews,
     flushReviews,
     setVocab: setVocabState,
     setSettings: (patch: any) => setSettings((p: any) => ({ ...p, ...patch })),
@@ -240,10 +250,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     resetStats: () => { setStats({}); setReviews({}); reviewBuf.current = []; setMeta({ lastDate: null, streak: 0, todayCount: 0, newToday: 0, totalReviews: 0 }); },
     resetStatsForWords: (ids: string[]) => { setStats((prev: any) => { const next = { ...prev }; ids.forEach((id) => { delete next[id]; }); return next; }); setReviews((prev: any) => { const next = { ...prev }; ids.forEach((id) => { delete next[id]; }); return next; }); },
     resetSettings: () => setSettings((p: any) => ({ ...p, ...RECOMMENDED })),
-    // ---- lists (each new list gets a paired dynamic "whole list" lesson) ----
-    // V9: lists and lessons are decoupled — adding a list no longer creates a lesson.
+    // ---- Wortlisten (V16: der einzige Behaelter fuer Woerter) ----
     addList: (name: string, pair: string) => {
-      const l = { id: newId(), name: name || "New list", pair: pair || "en-de", createdAt: Date.now() };
+      const l = { id: newId(), name: name || "Neue Wortliste", pair: pair || "en-de", createdAt: Date.now() };
       setListsState((ls: any) => [...ls, l]);
       return l.id;
     },
@@ -260,24 +269,28 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     renameList: (id: string, name: string) => {
       setListsState((ls: any) => ls.map((l: any) => (l.id === id ? { ...l, name } : l)));
     },
+    /* Zieldatum an jeder Wortliste (V16). undefined entfernt es wieder --
+     * ein natives Datumsfeld laesst sich auf iOS nicht zuverlaessig leeren. */
+    updateList: (id: string, patch: any) =>
+      setListsState((ls: any) => ls.map((l: any) => (l.id === id ? { ...l, ...patch, updatedAt: Date.now() } : l))),
     deleteList: (id: string) => {
       if (lists.find((l: any) => l.id === id)?.system === "nolist") return;   // PFLICHT 2: nolist not deletable
       setListsState((ls: any) => ls.filter((l: any) => l.id !== id));
       setVocabState((v: any) => v.map((w: any) => ({ ...w, lists: (w.lists || []).filter((x: string) => x !== id) })));
-      // lessons are snapshots → unaffected by list deletion
     },
     toggleWordList: (wordId: string, listId: string) => setVocabState((v: any) => v.map((w: any) => w.id === wordId
       ? { ...w, lists: (w.lists || []).includes(listId) ? w.lists.filter((x: string) => x !== listId) : [...(w.lists || []), listId] }
       : w)),
-    // ---- lessons (V9: always static snapshots) ----
-    addLesson: (lesson: any) => { const id = newId(); const now = Date.now(); setLessonsState((les: any) => [...les, { id, members: [], createdAt: now, updatedAt: now, ...lesson }]); return id; },
-    updateLesson: (id: string, patch: any) => setLessonsState((les: any) => les.map((l: any) => (l.id === id ? { ...l, ...patch, updatedAt: Date.now() } : l))),
-    deleteLesson: (id: string) => setLessonsState((les: any) => les.filter((l: any) => l.id !== id)),
-    setLessons: (next: any[]) => setLessonsState(next),
-    addWordsToLesson: (id: string, wordIds: string[]) => setLessonsState((les: any) => les.map((l: any) =>
-      l.id === id ? { ...l, members: Array.from(new Set([...(l.members || []), ...wordIds])), updatedAt: Date.now() } : l)),
-    removeWordFromLesson: (id: string, wordId: string) => setLessonsState((les: any) => les.map((l: any) =>
-      l.id === id ? { ...l, members: (l.members || []).filter((x: string) => x !== wordId), updatedAt: Date.now() } : l)),
+    /* Mitgliedschaft steht am Wort. Ein Wort darf in mehreren Listen liegen --
+     * "Lektion 4" und "Unregelmaessige Verben" sind beide wahr. */
+    addWordsToList: (listId: string, wordIds: string[]) => {
+      const set = new Set(wordIds);
+      setVocabState((v: any) => v.map((w: any) => (set.has(w.id) && !(w.lists || []).includes(listId)
+        ? { ...w, lists: [...(w.lists || []), listId] } : w)));
+    },
+    removeWordFromList: (listId: string, wordId: string) =>
+      setVocabState((v: any) => v.map((w: any) => (w.id === wordId
+        ? { ...w, lists: (w.lists || []).filter((x: string) => x !== listId) } : w))),
     newId,
     // sync glue
     applyRemote,

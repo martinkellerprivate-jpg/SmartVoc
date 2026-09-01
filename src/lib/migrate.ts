@@ -81,3 +81,67 @@ export function migrateLessonsStatic(lessons: any[], lists: ListT[], vocab: Word
   }
   return [...out, ...added];
 }
+
+/* V16 — EIN Begriff: Wortlisten.
+ *
+ * Bisher gab es zwei Dinge, die dasselbe taten: "Listen" (Mitgliedschaft ueber
+ * w.lists, Ziel des Imports) und "Lektionen" (feste Mitgliederliste, dazu
+ * Pruefungstermin und Prognose). Fuer den Benutzer war das ein Unterschied ohne
+ * Bedeutung — und die Frage "wo lege ich meine Woerter hin?" hatte zwei
+ * richtige Antworten.
+ *
+ * Ab jetzt zaehlt nur die Liste. Jede Lektion wird zu einer Liste, ihre
+ * Mitglieder bekommen die Listen-Id in w.lists, der Pruefungstermin wandert
+ * mit. Doppel werden ueber Sprachpaar + Name erkannt: V6 hatte zu jeder Liste
+ * eine gleichnamige Lektion angelegt, die hier wieder mit ihr verschmilzt —
+ * sonst stuende nach der Migration alles zweimal da.
+ *
+ * Gibt einen Plan zurueck statt fertiger Daten, damit der Aufruf ihn mit
+ * funktionalen Updates einspielen kann und nicht mit den Migrationen davor
+ * kollidiert. */
+const norm = (s: string) => (s || "").trim().toLowerCase();
+
+export function planWortlisten(lessons: any[], lists: ListT[], vocab: Word[]) {
+  const now = Date.now();
+  const out: any[] = lists.map((l) => ({ ...l }));
+  const byName = new Map<string, any>();
+  for (const l of out) byName.set(l.pair + " " + norm(l.name), l);
+
+  const memberships: Record<string, string[]> = {};   // wordId -> hinzuzufuegende Listen-Ids
+  const tokenMap: Record<string, string> = {};        // alte lesson:<id> -> neue Listen-Id
+  const known = new Set(vocab.map((w) => w.id));
+
+  for (const les of lessons || []) {
+    const key = les.pair + " " + norm(les.name);
+    let target = byName.get(key);
+    if (!target) {
+      /* Die Id der Lektion wird zur Id der Liste. Das haelt gespeicherte
+       * Auswahlen und geteilte Verweise gueltig, wo es nur um die Id geht. */
+      target = { id: les.id, name: les.name, pair: les.pair, createdAt: les.createdAt || now };
+      out.push(target);
+      byName.set(key, target);
+    }
+    if (les.dueDate && !target.dueDate) target.dueDate = les.dueDate;
+    tokenMap[les.id] = target.id;
+    for (const wid of les.members || []) {
+      if (!known.has(wid)) continue;                  // tote Verweise still uebergehen
+      (memberships[wid] ||= []).push(target.id);
+    }
+  }
+  return { lists: out, memberships, tokenMap };
+}
+
+/* Gespeicherte Auswahlen zeigen als "lesson:<id>" auf die alte Welt. */
+export function retokenSettings(settings: any, tokenMap: Record<string, string>) {
+  /* Zwei Schreibweisen, weil sie zwei Dinge bedeuten: practiceSel traegt genau
+   * eine Wahl und praefixt sie ("list:" / "smart:"), selectedLists und statLists
+   * tragen mehrere und fuehren Listen als blosse Id. */
+  const mapped = (id: string) => tokenMap[id] || id;
+  const sel = (t: string) => (typeof t === "string" && t.startsWith("lesson:")) ? "list:" + mapped(t.slice(7)) : t;
+  const many = (t: string) => (typeof t === "string" && t.startsWith("lesson:")) ? mapped(t.slice(7)) : t;
+  return {
+    practiceSel: sel(settings.practiceSel || ""),
+    selectedLists: (settings.selectedLists || []).map(many),
+    statLists: (settings.statLists || []).map(many),
+  };
+}

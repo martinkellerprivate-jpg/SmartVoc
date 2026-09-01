@@ -38,7 +38,7 @@ function haeltCircle(p: any) {
 export function Stats() {
   const store = useStore();
   const toast = useToast();
-  const { vocab, stats, meta, settings, lessons } = store;
+  const { vocab, stats, meta, settings, lists } = store;
   const pair = settings.pair;
   const goPractice = (sel: string) => { store.setSettings({ practiceSel: sel }); window.dispatchEvent(new CustomEvent("vt-tab", { detail: "practice" })); };
   const P = PAIRS[pair] || PAIRS["en-de"];
@@ -53,7 +53,7 @@ export function Stats() {
   const [resetOpen, setResetOpen] = useState(false);
 
   const ret = retentionFor(settings);
-  const rows = useMemo(() => wordsForSelection(vocab.filter((w) => w.pair === pair), stats, settings.statLists, settings.masteryCorrect, lessons).map((w) => {
+  const rows = useMemo(() => wordsForSelection(vocab.filter((w) => w.pair === pair), stats, settings.statLists, settings.masteryCorrect).map((w) => {
     const s = stats[w.id];
     const seen = s ? s.seen : 0;
     const acc = s && seen ? s.scoreSum / seen : 0;
@@ -62,7 +62,7 @@ export function Stats() {
     const history = s ? s.history : [];
     const priority = stufe === "sitzt_schlecht" ? 0 : stufe === "noch_nicht_geuebt" ? 1 : stufe === "sitzt_fast" ? 2 : 3;
     return { w, seen, acc, stufe, prof, history, priority };
-  }), [vocab, stats, settings.statLists, ret, pair, lessons]);
+  }), [vocab, stats, settings.statLists, ret, pair]);
 
   const counts = useMemo(() => {
     const c: any = { sitzt: 0, sitzt_fast: 0, sitzt_schlecht: 0, neu: 0, noch_nicht_geuebt: 0 };
@@ -118,15 +118,16 @@ export function Stats() {
     const c = retentionFor(settings);
     const kvs = rows.filter((r) => { const s = stats[r.w.id]?.fsrs?.stability || 0; return s >= 14 * 0.7 && s < 14; });
     if (kvs.length) steps.push({ tone: "green", text: `${kvs.length} kurz vor „sitzt" — ein Durchgang reicht.`, action: { label: "Üben", sel: "smart:kurzvorsitzt" } });
-    for (const l of (lessons || [])) {
+    for (const l of (lists || [])) {
       if (l.pair !== pair || !l.dueDate) continue;
       const days = Math.ceil((l.dueDate - Date.now()) / 86400000);
       if (days < 0 || days > 14) continue;
-      const risk = (l.members || []).filter((id: string) => { const st = deriveProfile(stats[id]?.fsrs, c).stufe; return st === "sitzt_schlecht" || st === "neu" || st === "noch_nicht_geuebt"; }).length;
-      if (risk > 0) { steps.push({ tone: "red", text: `Prüfung „${l.name}" in ${days} T — ${risk} noch wackelig.`, action: { label: "Gefährdete üben", sel: "lesson:" + l.id } }); break; }
+      const risk = rows.filter((r) => (r.w.lists || []).includes(l.id)
+        && ["sitzt_schlecht", "neu", "noch_nicht_geuebt"].includes(deriveProfile(stats[r.w.id]?.fsrs, c).stufe)).length;
+      if (risk > 0) { steps.push({ tone: "red", text: `„${l.name}" ist in ${days} ${days === 1 ? "Tag" : "Tagen"} dran — ${risk} ${risk === 1 ? "Wort wackelt" : "Wörter wackeln"} noch.`, action: { label: "Gefährdete üben", sel: "list:" + l.id } }); break; }
     }
     return { strength, steps, enough: !!strength || steps.length > 0 };
-  }, [rows, stats, lessons, pair, settings, vocab]);
+  }, [rows, stats, lists, pair, settings, vocab]);
 
   // F-STATS-STRUKTUR: percentages that sum to exactly 100 (largest remainder).
   const pctMap: Record<string, number> = useMemo(() => {

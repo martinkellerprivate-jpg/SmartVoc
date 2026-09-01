@@ -14,9 +14,8 @@ import { ImportContext } from "./components/importContext";
 import { OnboardingModal } from "./components/OnboardingModal";
 import { LearnTips } from "./components/LearnTips";
 import { HelpGuide } from "./components/HelpGuide";
-import { PlanModal } from "./components/PlanModal";
 import { Practice } from "./components/Practice";
-import { LessonsTab } from "./components/LessonsTab";
+import { PlanTab } from "./components/PlanTab";
 import { WordList } from "./components/WordList";
 import { Stats } from "./components/Stats";
 import { SettingsTab } from "./components/SettingsTab";
@@ -25,12 +24,11 @@ const SYNC_DOT: Record<string, string> = {
   local: "var(--ink-faint)", syncing: "var(--amber)", synced: "var(--green)", offline: "var(--ink-faint)", error: "var(--red)",
 };
 
-function Header() {
+function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
   const { meta, vocab, settings } = useStore();
   const auth = useAuth();
   const { status } = useSync();
   const [accountOpen, setAccountOpen] = useState(false);
-  const [planOpen, setPlanOpen] = useState(false);
   const pair = settings.pair;
   const p = PAIRS[pair] || PAIRS["en-de"];
   const nWords = vocab.filter((w: any) => w.pair === pair).length;
@@ -41,7 +39,7 @@ function Header() {
         <div className="brand-mark">S</div>
         <div>
           <div className="brand-name">SmartVoc</div>
-          <div className="brand-sub">{p.foreignLabel} ⇄ {p.nativeLabel} · {nWords} words</div>
+          <div className="brand-sub">{p.foreignLabel} ⇄ {p.nativeLabel} · {nWords} Wörter</div>
         </div>
       </div>
       <div className="topbar-spacer" />
@@ -54,16 +52,18 @@ function Header() {
           <AccountModal open={accountOpen} onClose={() => setAccountOpen(false)} />
         </>
       )}
-      <button className="tipbtn" title="Übungsplan" onClick={() => setPlanOpen(true)} style={{ gap: 7 }}>
-        <Icon name="calendar" size={16} /> Übungsplan
-      </button>
-      <PlanModal open={planOpen} onClose={() => setPlanOpen(false)} />
       <LearnTips />
       <HelpGuide />
+      {/* Einstellungen verlassen die Leiste: sie sind kein Bereich, in dem man
+          arbeitet, sondern etwas, das man einmal einstellt. */}
+      <button className={"icon-btn" + (tab === "settings" ? " active" : "")} title="Einstellungen"
+        aria-pressed={tab === "settings"} onClick={() => setTab(tab === "settings" ? "practice" : "settings")}>
+        <Icon name="gear" size={17} />
+      </button>
       {/* F-7TAGE/STREAK: Tage-in-Folge wandert in die Statistik; Kopf zeigt nur das Tagesziel. */}
-      <div className="metric" title="Cards practised today">
+      <div className="metric" title="Heute geübte Karten">
         <span className="ic"><Ring value={goalP} size={26} stroke={4} /></span>
-        <div><b>{meta.todayCount || 0}/{settings.dailyGoal || 20}</b><small>today's goal</small></div>
+        <div><b>{meta.todayCount || 0}/{settings.dailyGoal || 20}</b><small>Tagesziel</small></div>
       </div>
     </div>
   );
@@ -88,18 +88,25 @@ function PairSwitcher() {
   );
 }
 
+/* Vier Bereiche in der Reihenfolge des Tuns: üben, planen, verwalten,
+ * nachschauen. Die Einstellungen sind kein Bereich mehr — sie sitzen als
+ * Zahnrad in der Kopfzeile, wo man sie einmal aufsucht. */
 const TABS = [
-  { id: "practice", label: "Practise", short: "Üben", icon: "cards" },
-  { id: "lessons", label: "Lessons", short: "Lektionen", icon: "book" },
-  { id: "words", label: "Word List", short: "Wörter", icon: "list" },
-  { id: "stats", label: "Statistics", short: "Statistik", icon: "chart" },
-  { id: "settings", label: "Settings", short: "Mehr", icon: "gear" },
+  { id: "practice", label: "Üben", icon: "cards" },
+  { id: "plan", label: "Übungsplan", icon: "calendar" },
+  { id: "lists", label: "Wortlisten", icon: "list" },
+  { id: "stats", label: "Statistik", icon: "chart" },
 ];
 
 export function App() {
   const { vocab, settings, setSettings } = useStore();
   const nWords = vocab.filter((w: any) => w.pair === settings.pair).length;
-  const [tab, setTab] = useState(() => localStorage.getItem("vt_v1_tab") || "practice");
+  /* Alte gespeicherte Bereiche auf die neuen abbilden — sonst startet die App
+   * nach dem Umbau auf einem Bereich, den es nicht mehr gibt. */
+  const [tab, setTab] = useState(() => {
+    const saved = localStorage.getItem("vt_v1_tab") || "practice";
+    return ({ lessons: "lists", words: "lists" } as Record<string, string>)[saved] || saved;
+  });
   useEffect(() => { localStorage.setItem("vt_v1_tab", tab); }, [tab]);
   // V14: let other tabs (Stats insight lists) jump to a tab programmatically.
   useEffect(() => {
@@ -155,21 +162,22 @@ export function App() {
   return (
     <ImportContext.Provider value={{ openImport }}>
     <div className="app">
-      <Header />
+      <Header tab={tab} setTab={setTab} />
       <div className="tabs" role="tablist">
         {TABS.map((t) => (
-          <button key={t.id} className="tab" role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)}>
+          <button key={t.id} className="tab" role="tab" aria-selected={tab === t.id && tab !== "settings"} onClick={() => setTab(t.id)}>
             <Icon name={t.icon} size={17} />
             <span className="tab-full">{t.label}</span>
-            <span className="tab-short">{t.short}</span>
-            {t.id === "words" && <span className="badge-count">{nWords}</span>}
+            {t.id === "lists" && <span className="badge-count">{nWords}</span>}
           </button>
         ))}
       </div>
-      {tab !== "settings" && <PairSwitcher />}
+      {/* Der Übungsplan gilt sprachübergreifend — dort wäre ein Sprachschalter
+          eine Einschränkung, die es gar nicht gibt. */}
+      {tab !== "settings" && tab !== "plan" && <PairSwitcher />}
       {tab === "practice" && <Practice />}
-      {tab === "lessons" && <LessonsTab />}
-      {tab === "words" && <WordList />}
+      {tab === "plan" && <PlanTab />}
+      {tab === "lists" && <WordList />}
       {tab === "stats" && <Stats />}
       {tab === "settings" && <SettingsTab />}
       <ImportShareModal open={importOpen} initialToken={importToken} onClose={() => setImportOpen(false)} />

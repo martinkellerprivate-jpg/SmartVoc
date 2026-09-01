@@ -32,18 +32,18 @@ export function retentionFor(s?: any): number {
   return RETENTION[(s as Intensity)] ?? RETENTION.normal;
 }
 /* V13/FIX 4: THE single effective-retention source. V13 baseline = the global
- * target; V15 raises it per active lesson deadline (highest wins). Every derivation
+ * target; V15 raises it per active Zieldatum einer Wortliste (highest wins). Every derivation
  * (card, stats, popup, today, due-list) must call this — never settings.targetRetention
  * directly — so the same word shows identical due everywhere. */
-export function effectiveRetentionFor(word: any, settings: any, lessons?: any[], now: number = Date.now()): number {
+export function effectiveRetentionFor(word: any, settings: any, lists?: any[], now: number = Date.now()): number {
   const base = retentionFor(settings);
-  if (!word || !lessons || !lessons.length) return base;
-  // V15 auto-densification: a word in a lesson whose deadline is within the window
+  if (!word || !lists || !lists.length) return base;
+  // V15 auto-densification: a word in a list whose target date is within the window
   // gets a higher target → shorter intervals / earlier due. Highest wins; after the
   // deadline the override is gone (snap-back). Window/target read from CFG (settings).
   let target = base;
-  for (const l of lessons) {
-    if (!l.dueDate || !(l.members || []).includes(word.id)) continue;
+  for (const l of lists) {
+    if (!l.dueDate || !(word.lists || []).includes(l.id)) continue;
     const daysLeft = (l.dueDate - now) / 86400000;
     if (daysLeft < 0) continue;                                  // vorbei → kein Einfluss
     if (daysLeft <= CFG.examWindowDays) { target = Math.max(target, CFG.examRetention); continue; }

@@ -5,6 +5,9 @@ import { Icon } from "../ui/Icon";
 import { speak } from "../ui/speak";
 import { translateWord } from "../lib/translate";
 import { deriveProfile, retentionFor } from "../lib/fsrs";
+import { listProfile, examPrognosis } from "../lib/engine";
+import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
+import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { isConfigured } from "../lib/supabase";
@@ -21,8 +24,13 @@ import { useImport } from "./importContext";
 const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Zahlwort", "Adverb"];
 
 /* ===================================================================
- * wordlist.jsx — manage vocabulary & lists (lessons), scoped to the
- * active language pair (English⇄German or Français⇄German).
+ * Bereich "Wortlisten" (V16) — der eine Ort fuer Woerter und Listen.
+ *
+ * Frueher zwei Bereiche: "Lektionen" (Zieldatum, Beherrschungsstand,
+ * Prognose) und "Woerter" (anlegen, suchen, bearbeiten). Beide meinten
+ * dieselbe Sache, nur mit verschiedenen Mitteln. Jetzt traegt die Liste
+ * beides: oben die Liste als Einheit mit Stand und Termin, darunter ihre
+ * Woerter.
  * =================================================================== */
 const findKey = (obj, re) => Object.keys(obj).find((k) => re.test(k));
 
@@ -57,25 +65,40 @@ export function WordList() {
   const [detailWord, setDetailWord] = useState(null);   // V16: word-detail popup
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState([]);
-  const [lessonName, setLessonName] = useState("");
-  const [addLessonId, setAddLessonId] = useState("");
+  const [newListName, setNewListName] = useState("");
+  const [addToListId, setAddToListId] = useState("");
   const toggleSel = (id) => setSelectedIds((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]);
-  const staticLessons = (store.lessons || []).filter((l) => l.pair === pair);   // V9: all lessons are static
-  const createLessonFromSel = () => {
+  const createListFromSel = () => {
     if (!selectedIds.length) return;
-    const id = store.addLesson({ name: lessonName.trim() || "Auswahl", pair, kind: "static", members: [...selectedIds] });
-    toast(`Lektion „${lessonName.trim() || "Auswahl"}" · ${selectedIds.length} Wörter`, "check");
-    setSelectedIds([]); setLessonName(""); setSelectMode(false); return id;
+    const name = newListName.trim() || "Auswahl";
+    const id = store.addList(name, pair);
+    store.addWordsToList(id, [...selectedIds]);
+    toast(`Wortliste „${name}“ · ${selectedIds.length} Wörter`, "check");
+    setSelectedIds([]); setNewListName(""); setSelectMode(false); return id;
   };
-  const addSelToLesson = () => {
-    if (!selectedIds.length || !addLessonId) return;
-    store.addWordsToLesson(addLessonId, selectedIds);
-    toast(`${selectedIds.length} Wörter zur Lektion hinzugefügt`, "check");
-    setSelectedIds([]); setAddLessonId(""); setSelectMode(false);
+  const addSelToList = () => {
+    if (!selectedIds.length || !addToListId) return;
+    store.addWordsToList(addToListId, selectedIds);
+    toast(`${selectedIds.length} Wörter hinzugefügt`, "check");
+    setSelectedIds([]); setAddToListId(""); setSelectMode(false);
   };
   const canShare = isConfigured && !!auth.user;
 
   const pairLists = useMemo(() => lists.filter((l) => l.pair === pair), [lists, pair]);
+  const activeListObj = lists.find((l: any) => l.id === activeList);
+  /* Stand der offenen Liste. Nur rechnen, wenn eine offen ist -- ueber alle
+   * Woerter zu mitteln waere eine andere Aussage als "diese Liste sitzt". */
+  const activeListStand = useMemo(() => {
+    if (activeList === "__all" || !activeListObj) return null;
+    const prof = listProfile(activeListObj, vocab, stats, retentionFor(settings));
+    return { prof, pct: readyPercent(prof.dist), pg: examPrognosis(activeListObj, vocab, stats) };
+  }, [activeList, activeListObj, vocab, stats, settings]);
+  const setListDue = (id: string, val: string) =>
+    store.updateList(id, { dueDate: val ? new Date(val + "T08:00:00").getTime() : undefined });
+  const practiseList = (id: string) => {
+    store.setSettings({ practiceSel: "list:" + id });
+    window.dispatchEvent(new CustomEvent("vt-tab", { detail: "practice" }));
+  };
   const activeIsNoList = lists.find((l) => l.id === activeList)?.system === "nolist";
   const pairVocab = useMemo(() => vocab.filter((w) => w.pair === pair), [vocab, pair]);
 
@@ -144,11 +167,11 @@ export function WordList() {
   const toggleDraftList = (lid) => setDraft((d) => ({ ...d, lists: d.lists.includes(lid) ? d.lists.filter((x) => x !== lid) : [...d.lists, lid] }));
 
   /* ---- list management ---- */
-  const newList = () => { const id = store.addList("Lesson " + (pairLists.length + 1), pair); setActiveList(id); setEditingListId(id); setListName("Lesson " + (pairLists.length + 1)); };
+  const newList = () => { const name = "Wortliste " + (pairLists.length + 1); const id = store.addList(name, pair); setActiveList(id); setEditingListId(id); setListName(name); };
   const commitRename = () => { if (editingListId) store.renameList(editingListId, listName.trim() || "Untitled"); setEditingListId(null); };
   const deleteActiveList = () => {
     const l = lists.find((x) => x.id === activeList); if (!l) return;
-    if (confirm(`Delete the list “${l.name}”? The words stay in your collection but leave this list.`)) { store.deleteList(activeList); setActiveList("__all"); toast("List deleted", "trash"); }
+    if (confirm(`Die Wortliste „${l.name}“ löschen? Die Wörter bleiben erhalten und verlassen nur diese Liste.`)) { store.deleteList(activeList); setActiveList("__all"); toast("Wortliste gelöscht", "trash"); }
   };
 
   /* ---- share the active list (copy-on-import snapshot) ---- */
@@ -230,14 +253,14 @@ export function WordList() {
       {/* list bar */}
       <div className="listbar">
         <button className={"ltab" + (activeList === "__all" ? " on" : "")} onClick={() => setActiveList("__all")}>
-          All words <span className="ltab-n">{pairVocab.length}</span>
+          Alle Wörter <span className="ltab-n">{pairVocab.length}</span>
         </button>
         {pairLists.map((l) => (
           <button key={l.id} className={"ltab" + (activeList === l.id ? " on" : "")} onClick={() => setActiveList(l.id)}>
             {l.name} <span className="ltab-n">{pairVocab.filter((w) => (w.lists || []).includes(l.id)).length}</span>
           </button>
         ))}
-        <button className="ltab ltab-new" onClick={newList}><Icon name="plus" size={14} /> New list</button>
+        <button className="ltab ltab-new" onClick={newList}><Icon name="plus" size={14} /> Neue Liste</button>
       </div>
 
       {/* active list header */}
@@ -251,13 +274,57 @@ export function WordList() {
             <div className="section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {listNameOf(activeList)}
               {/* PFLICHT 2: "Wörter ohne Liste" is device-local — not renamable/shareable/deletable as a list */}
-              {!activeIsNoList && <button className="icon-btn" style={{ width: 30, height: 30 }} title="Rename"
+              {!activeIsNoList && <button className="icon-btn" style={{ width: 30, height: 30 }} title="Umbenennen"
                 onClick={() => { setEditingListId(activeList); setListName(listNameOf(activeList)); }}><Icon name="edit" size={14} /></button>}
             </div>
           )}
           <div className="grow" />
+          <button className="btn btn-sm btn-primary" onClick={() => practiseList(activeList)}><Icon name="cards" size={14} /> Üben</button>
           {canShare && !activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={shareActiveList}><Icon name="upload" size={14} /> Teilen</button>}
-          {!activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={deleteActiveList}><Icon name="trash" size={14} /> Delete list</button>}
+          {!activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={deleteActiveList}><Icon name="trash" size={14} /> Liste löschen</button>}
+        </div>
+      )}
+
+      {/* Die Liste als Einheit: wie weit sie ist und wann sie dran ist.
+          Dieselbe Kennzahl wie im Uebungsplan -- readyPercent, eine Quelle. */}
+      {activeList !== "__all" && activeListStand && (
+        <div className="listmeta">
+          <div className="listmeta-stand">
+            <span className="listmeta-dot" style={{ background: TONE_VAR[readyTone(activeListStand.pct, settings)] }} />
+            <b>{activeListStand.pct} %</b> bereit
+            <span className="faint"> · {activeListStand.prof.total} {activeListStand.prof.total === 1 ? "Wort" : "Wörter"}</span>
+          </div>
+          <MasteryBar dist={activeListStand.prof.dist} total={activeListStand.prof.total} showLegend={false} />
+          <label className="listmeta-due">
+            <Icon name="target" size={13} /> Zieldatum
+            <input type="date" className="field" style={{ width: "auto" }}
+              value={activeListObj?.dueDate ? new Date(activeListObj.dueDate).toISOString().slice(0, 10) : ""}
+              onChange={(e) => setListDue(activeList, e.target.value)} />
+            {/* Ein natives Datumsfeld laesst sich auf iOS nicht zuverlaessig leeren. */}
+            {activeListObj?.dueDate && (
+              <button className="icon-btn" style={{ width: 26, height: 26 }} title="Zieldatum entfernen"
+                onClick={() => setListDue(activeList, "")}><Icon name="x" size={12} /></button>
+            )}
+          </label>
+          {activeListStand.pg && (
+            <div className="exam-box">
+              <div className="exam-head">
+                <Icon name="target" size={13} /> {activeListStand.pg.daysLeft < 0 ? "Termin vorbei"
+                  : activeListStand.pg.daysLeft === 0 ? "heute dran"
+                  : `noch ${activeListStand.pg.daysLeft} ${activeListStand.pg.daysLeft === 1 ? "Tag" : "Tage"}`} · <b>{activeListStand.pg.buckets.sicher.length} von {activeListStand.pg.total} sitzen sicher</b> <span className="faint">· Schätzung</span>
+              </div>
+              {activeListStand.pg.need > 0 && activeListStand.pg.daysLeft >= 0 && (
+                <div className="row" style={{ justifyContent: "space-between", marginTop: 7, gap: 8, flexWrap: "wrap" }}>
+                  <span className="faint" style={{ fontSize: 12 }}>
+                    {activeListStand.pg.need} {activeListStand.pg.need === 1 ? "Wort" : "Wörter"} brauchen noch Übung · etwa {activeListStand.pg.perDay} pro Tag
+                  </span>
+                  <button className="btn btn-sm btn-amber" onClick={() => practiseList(activeList)}>
+                    <Icon name="flame" size={13} /> Jetzt üben
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -265,7 +332,7 @@ export function WordList() {
       <div className="bar">
         <div className="search">
           <Icon name="search" size={17} />
-          <input className="field" placeholder="Search words…" value={query} onChange={(e) => setQuery(e.target.value)} />
+          <input className="field" placeholder="Wörter suchen …" value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
         <button className="btn btn-sm btn-amber" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> Einfügen</button>
         {isConfigured && <button className="btn btn-sm" onClick={() => openImport()} title="Eine Liste, die dir jemand geteilt hat, übernehmen"><Icon name="download" size={15} /> Geteilte Liste importieren</button>}
@@ -299,7 +366,7 @@ export function WordList() {
           <input className="field" style={{ width: 110 }} placeholder="Topic" value={adding.topic}
             onChange={(e) => setAdding({ ...adding, topic: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
           <select className="field" style={{ width: "auto", minWidth: 120 }} value={adding.listId} onChange={(e) => setAdding({ ...adding, listId: e.target.value })}>
-            {pairLists.length === 0 && <option value="">— new list on add —</option>}
+            {pairLists.length === 0 && <option value="">— beim Hinzufügen neue Liste —</option>}
             {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
           </select>
           <button className="btn btn-primary" onClick={addWord} disabled={busy || (!adding.fgn.trim() && !adding.de.trim() && !adding.lernform.trim())}>
@@ -321,24 +388,24 @@ export function WordList() {
       </div>
 
       <div className="row" style={{ justifyContent: "space-between", marginBottom: 10 }}>
-        <span className="muted" style={{ fontSize: 13.5 }}><b style={{ color: "var(--ink)" }}>{filtered.length}</b> word{filtered.length === 1 ? "" : "s"}{activeList !== "__all" ? ` in “${listNameOf(activeList)}”` : ""}</span>
+        <span className="muted" style={{ fontSize: 13.5 }}><b style={{ color: "var(--ink)" }}>{filtered.length}</b> {filtered.length === 1 ? "Wort" : "Wörter"}{activeList !== "__all" ? ` in „${listNameOf(activeList)}“` : ""}</span>
       </div>
 
-      {/* multi-select → static lesson (V6) */}
+      {/* Mehrfachauswahl -> in eine Wortliste */}
       {selectMode && (
         <div className="panel" style={{ padding: 12, marginBottom: 12 }}>
           <div className="row wrap" style={{ gap: 10, alignItems: "center" }}>
             <span style={{ fontWeight: 600 }}>{selectedIds.length} ausgewählt</span>
             <span className="grow" />
-            <input className="field" style={{ width: 160 }} placeholder="Neue Lektion …" value={lessonName} onChange={(e) => setLessonName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && createLessonFromSel()} />
-            <button className="btn btn-sm btn-primary" disabled={!selectedIds.length} onClick={createLessonFromSel}><Icon name="plus" size={14} /> Neue Lektion</button>
-            {staticLessons.length > 0 && (
+            <input className="field" style={{ width: 160 }} placeholder="Neue Wortliste …" value={newListName} onChange={(e) => setNewListName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && createListFromSel()} />
+            <button className="btn btn-sm btn-primary" disabled={!selectedIds.length} onClick={createListFromSel}><Icon name="plus" size={14} /> Neue Wortliste</button>
+            {pairLists.length > 0 && (
               <>
-                <select className="field" style={{ width: "auto", minWidth: 130 }} value={addLessonId} onChange={(e) => setAddLessonId(e.target.value)}>
-                  <option value="">Zu Lektion …</option>
-                  {staticLessons.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
+                <select className="field" style={{ width: "auto", minWidth: 130 }} value={addToListId} onChange={(e) => setAddToListId(e.target.value)}>
+                  <option value="">Zu Wortliste …</option>
+                  {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
                 </select>
-                <button className="btn btn-sm" disabled={!selectedIds.length || !addLessonId} onClick={addSelToLesson}>Hinzufügen</button>
+                <button className="btn btn-sm" disabled={!selectedIds.length || !addToListId} onClick={addSelToList}>Hinzufügen</button>
               </>
             )}
           </div>

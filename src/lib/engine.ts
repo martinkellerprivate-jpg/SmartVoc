@@ -74,19 +74,17 @@ export function smartCount(vocab: Word[], stats: Record<string, Stat>, key: stri
 }
 
 /* Resolve a selection (array of list ids; [] = everything) into words. */
-export function wordsForSelection(vocab: Word[], stats: Record<string, Stat>, selected: string[], mc?: number, lessons?: any[]) {
+export function wordsForSelection(vocab: Word[], stats: Record<string, Stat>, selected: string[], mc?: number) {
   if (!selected || !selected.length) return vocab;
-  const set = new Set(selected);
+  // "list:<id>" und blosse Id meinen dasselbe -- beide Schreibweisen kommen aus
+  // gespeicherten Auswahlen, also hier einmal auf die blosse Id bringen.
+  const set = new Set(selected.map((t) => (typeof t === "string" && t.startsWith("list:")) ? t.slice(5) : t));
   const smartActive = SMART_KEYS.filter((k) => set.has(SMART[k].id));
-  // F-NAV: lesson membership for any "lesson:<id>" selections
-  const lessonMembers = new Set<string>();
-  for (const l of (lessons || [])) { if (set.has("lesson:" + l.id)) for (const id of (l.members || [])) lessonMembers.add(id); }
   const now = Date.now();
   const out: Word[] = [];
   for (const w of vocab) {
     let inc = (w.lists || []).some((l) => set.has(l));
     if (!inc && w.topic && set.has("t:" + w.topic)) inc = true;
-    if (!inc && lessonMembers.has(w.id)) inc = true;
     if (!inc) { for (const k of smartActive) { if (SMART[k].test(w, stats[w.id], mc, now)) { inc = true; break; } } }
     if (inc) out.push(w);
   }
@@ -102,20 +100,20 @@ export function trickyCount(vocab: Word[], stats: Record<string, Stat>, mc?: num
  * a small new-word quota. Ordered by retrievability (most fragile first),
  * capped to the daily goal. */
 const DAY_MS = 86400000;
-export function resolveToday(pairVocab: Word[], stats: Record<string, any>, lessons: any[], retention: number, dailyGoal: number, newPerDay: number, now: number = Date.now()): Word[] {
+export function resolveToday(pairVocab: Word[], stats: Record<string, any>, lists: any[], retention: number, dailyGoal: number, newPerDay: number, now: number = Date.now()): Word[] {
   const seen = new Set<string>();
   const out: Word[] = [];
   const add = (w: Word) => { if (!seen.has(w.id) && practiceable(w)) { seen.add(w.id); out.push(w); } };
   // V15: per-word effective retention (deadline densification raises it near a due date)
-  const effFor = (w: Word) => effectiveRetentionFor(w, { targetRetention: retention }, lessons, now);
+  const effFor = (w: Word) => effectiveRetentionFor(w, { targetRetention: retention }, lists, now);
   pairVocab.filter((w) => isDue(stats[w.id], now, effFor(w))).forEach(add);   // 1) due (override-aware)
   const pair = pairVocab[0]?.pair;
-  for (const l of (lessons || [])) {                                          // 2) deadline-at-risk
+  for (const l of (lists || [])) {                                            // 2) deadline-at-risk
     if (l.pair !== pair || !l.dueDate) continue;
     const daysLeft = (l.dueDate - now) / DAY_MS;
     if (daysLeft < 0 || daysLeft > 7) continue;
-    const set = new Set(l.members || []);
-    pairVocab.filter((w) => set.has(w.id) && deriveProfile(stats[w.id]?.fsrs, effFor(w), now).stufe !== "sitzt").forEach(add);
+    pairVocab.filter((w) => (w.lists || []).includes(l.id)
+      && deriveProfile(stats[w.id]?.fsrs, effFor(w), now).stufe !== "sitzt").forEach(add);
   }
   out.sort((a, b) => retrievabilityOf(stats[a.id], effFor(a), now) - retrievabilityOf(stats[b.id], effFor(b), now));
   const news = pairVocab.filter((w) => practiceable(w) && !(stats[w.id]?.fsrs)).slice(0, Math.max(0, newPerDay || 0));
@@ -123,8 +121,8 @@ export function resolveToday(pairVocab: Word[], stats: Record<string, any>, less
   return dailyGoal ? out.slice(0, Math.max(dailyGoal, 1)) : out;
 }
 
-/* V17 — 7-day outlook: words coming due per day (from deriveProfile.due) + lesson deadlines. */
-export function sevenDayOutlook(pairVocab: Word[], stats: Record<string, any>, lessons: any[], retention: number, now: number = Date.now()) {
+/* V17 — 7-day outlook: words coming due per day (from deriveProfile.due) + Zieldaten der Listen. */
+export function sevenDayOutlook(pairVocab: Word[], stats: Record<string, any>, lists: any[], retention: number, now: number = Date.now()) {
   const startOfDay = (t: number) => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
   const today0 = startOfDay(now);
   const days = Array.from({ length: 7 }, (_, i) => ({ day: today0 + i * DAY_MS, count: 0, deadlines: [] as string[] }));
@@ -135,7 +133,7 @@ export function sevenDayOutlook(pairVocab: Word[], stats: Record<string, any>, l
     if (idx >= 0 && idx < 7) days[idx].count++;
   }
   const pair = pairVocab[0]?.pair;
-  for (const l of (lessons || [])) {
+  for (const l of (lists || [])) {
     if (l.pair !== pair || !l.dueDate) continue;
     const idx = Math.round((startOfDay(l.dueDate) - today0) / DAY_MS);
     if (idx >= 0 && idx < 7) days[idx].deadlines.push(l.name);
@@ -145,36 +143,34 @@ export function sevenDayOutlook(pairVocab: Word[], stats: Record<string, any>, l
 
 /* V15 — exam prognosis: for a lesson with a deadline, estimate each word's
  * retrievability AT the exam day and bucket it. Honest "Schätzung". */
-export function examPrognosis(lesson: any, vocab: Word[], stats: Record<string, any>, now: number = Date.now()) {
-  if (!lesson?.dueDate) return null;
-  const words = resolveLesson(lesson, vocab);
+export function examPrognosis(list: any, vocab: Word[], stats: Record<string, any>, now: number = Date.now()) {
+  if (!list?.dueDate) return null;
+  const words = resolveList(list, vocab);
   const buckets: Record<string, Word[]> = { sicher: [], wackelig: [], vergessen: [] };
   for (const w of words) {
-    const r = retrievabilityAt(stats[w.id]?.fsrs, lesson.dueDate);   // null = never practised
+    const r = retrievabilityAt(stats[w.id]?.fsrs, list.dueDate);   // null = never practised
     const b = r == null ? "vergessen" : r >= 0.9 ? "sicher" : r >= 0.7 ? "wackelig" : "vergessen";
     buckets[b].push(w);
   }
-  const daysLeft = Math.ceil((lesson.dueDate - now) / DAY_MS);
+  const daysLeft = Math.ceil((list.dueDate - now) / DAY_MS);
   const need = buckets.wackelig.length + buckets.vergessen.length;
   const perDay = daysLeft > 0 ? Math.ceil(need / daysLeft) : need;
   // unreachable if even at a heavy pace some words can't be pulled to "sicher"
   const unreachable = daysLeft <= 0 ? buckets.vergessen.length : Math.max(0, need - daysLeft * Math.max(perDay, 8));
-  return { due: lesson.dueDate, daysLeft, total: words.length, buckets, need, perDay, unreachable };
+  return { due: list.dueDate, daysLeft, total: words.length, buckets, need, perDay, unreachable };
 }
 
-/* V9: resolve a (static) lesson to its words. Dead member ids skipped silently.
- * Legacy dynamic lessons (pre-migration) still resolve via their source. */
-export function resolveLesson(lesson: any, vocab: Word[]): Word[] {
-  if (!lesson) return [];
-  const pairVocab = vocab.filter((w) => w.pair === lesson.pair);
-  if (lesson.members) {
-    const set = new Set(lesson.members);
-    return pairVocab.filter((w) => set.has(w.id));
-  }
-  const src = lesson.source || {};   // legacy fallback until lessonsStaticV9 migrates it
-  if (src.type === "list") return pairVocab.filter((w) => (w.lists || []).includes(src.ref));
-  if (src.type === "topic") return pairVocab.filter((w) => w.topic === src.ref);
-  return [];
+/* V16: eine Wortliste zu ihren Woertern aufloesen. Mitgliedschaft steht am
+ * Wort (w.lists) -- ein Mechanismus fuer Import, Handeingabe und Uebernahme.
+ * members[] wird nur noch gelesen, falls die Synchronisierung Daten von einem
+ * Geraet bringt, das die Migration noch nicht gesehen hat. */
+export function resolveList(list: any, vocab: Word[]): Word[] {
+  if (!list) return [];
+  const pairVocab = vocab.filter((w) => w.pair === list.pair);
+  const byMembership = pairVocab.filter((w) => (w.lists || []).includes(list.id));
+  if (byMembership.length || !list.members) return byMembership;
+  const set = new Set(list.members);
+  return pairVocab.filter((w) => set.has(w.id));
 }
 
 /* V9: snapshot the current words of a list or topic into a member-id array. */
@@ -184,10 +180,10 @@ export function snapshotMembers(vocab: Word[], pair: string, src: { type: "list"
   return Array.from(new Set(ws.map((w) => w.id)));
 }
 
-/* V9/V14: lesson mastery aggregate from deriveProfile (the ONE source). Returns
+/* V9/V14: list mastery aggregate from deriveProfile (the ONE source). Returns
  * the count per Stufe, % "sitzt", the dominant colour, and last_review. */
-export function lessonProfile(lesson: any, vocab: Word[], stats: Record<string, any>, effRetention: number, now: number = Date.now()) {
-  const words = resolveLesson(lesson, vocab);
+export function listProfile(list: any, vocab: Word[], stats: Record<string, any>, effRetention: number, now: number = Date.now()) {
+  const words = resolveList(list, vocab);
   const dist: Record<string, number> = { noch_nicht_geuebt: 0, sitzt_schlecht: 0, sitzt_fast: 0, sitzt: 0 };
   let lastReview = 0;
   for (const w of words) {

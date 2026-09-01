@@ -31,10 +31,9 @@ const SWITCH_NOTICE_KEY = "vt_v1_switch_notice";
  * not "own content" and must not trigger the adoption question. */
 export function hasOwnContent(docs: Record<string, any>): boolean {
   const lists = docs.lists || [];
-  const lessons = docs.lessons || [];
   const stats = docs.stats || {};
   const vocab = docs.vocab || [];
-  return lists.length > 1 || lessons.length > 0
+  return lists.length > 1
     || Object.keys(stats).length > 0
     || vocab.length > DEFAULT_VOCAB.length;
 }
@@ -48,7 +47,7 @@ export function SyncBridge({ children }: { children: React.ReactNode }) {
   // latest docs, readable from timers/event handlers
   const docsRef = useRef<Record<string, any>>({});
   docsRef.current = {
-    vocab: store.vocab, lists: store.lists, lessons: store.lessons, stats: store.stats, meta: store.meta, settings: store.settings,
+    vocab: store.vocab, lists: store.lists, stats: store.stats, meta: store.meta, settings: store.settings,
     reviews: store.reviews,   // F-SETTINGS-ADVANCED: 7th synced doc
   };
   const userIdRef = useRef<string | null>(null);
