@@ -947,3 +947,10 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .scope-line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 2px 0 10px; }
 .scope-line-label { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
 .scope-line-name { font-weight: 600; }
+
+/* Passung geht vor Format. Bleibt der Inhalt selbst auf der kleinsten Stufe
+   zu gross, waechst die Karte in die Hoehe statt einen Balken zu bekommen.
+   Das Seitenverhaeltnis 8:5 ist damit ein Mindestmass, keine Fessel. */
+.flashcard.grow { aspect-ratio: auto; }
+.flashcard.grow .card-face { position: static; inset: auto; min-height: 220px; }
+.flashcard.grow .card-center { overflow: visible; }

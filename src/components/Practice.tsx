@@ -514,6 +514,8 @@ export function Practice() {
   useLayoutEffect(() => {
     const el = centerRef.current;
     if (!el) return;
+    const card = el.closest(".flashcard") as HTMLElement | null;
+    card?.classList.remove("grow");
     let f = 1;
     el.style.setProperty("--fit", "1");
     for (let i = 0; i < 12 && el.scrollHeight > el.clientHeight + 1; i++) {
@@ -521,7 +523,11 @@ export function Practice() {
       el.style.setProperty("--fit", String(f));
       if (f <= 0.5) break;
     }
-    el.classList.toggle("overflows", el.scrollHeight > el.clientHeight + 1);
+    /* Reicht auch die kleinste Stufe nicht, gibt das Format nach, nicht der
+     * Inhalt: die Karte wird hoeher als 8:5. Ein Balken auf der Karte waere
+     * schlimmer als eine Karte, die nicht ganz wie eine Karteikarte aussieht. */
+    if (el.scrollHeight > el.clientHeight + 1) card?.classList.add("grow");
+    el.classList.toggle("overflows", !card && el.scrollHeight > el.clientHeight + 1);
   }, [current?.id, face, result, focus, settings.cardFont, settings.showExamples]);
 
   // V2: leave focus mode on Escape (iOS can't force rotation — we only react).
@@ -745,13 +751,13 @@ export function Practice() {
           )}
 
           {back > 0 && (
-            <div className="round-tally">{back} {back === 1 ? "Wort kommt" : "Wörter kommen"} später zur Wiederholung zurück — das ist so gedacht.</div>
+            <div className="round-tally">{back} {back === 1 ? "Wort kommt" : "Wörter kommen"} später zur Wiederholung zurück — das ist so gedacht</div>
           )}
 
           {grown.length > 0 && (
             <div className="round-grow">
               {topGrow.map((g: any, i: number) => { const y = Math.round(g.after), z = Math.round(g.before); return (
-                <div key={i} className="faint" style={{ fontSize: 12.5 }}>{wlbl(g.id)} hält jetzt etwa {y} {y === 1 ? "Tag" : "Tage"}{z >= 1 ? ` statt ${z}` : ""}.</div>
+                <div key={i} className="faint" style={{ fontSize: 12.5 }}>{wlbl(g.id)} hält jetzt etwa {y} {y === 1 ? "Tag" : "Tage"}{z >= 1 ? ` statt ${z}` : ""}</div>
               ); })}
             </div>
           )}
@@ -767,7 +773,7 @@ export function Practice() {
           <button className="btn btn-ghost btn-sm" onClick={() => beginRun(runWordsRef.current, true)}>
             <Icon name="refresh" size={14} /> Ganze Übung nochmal
           </button>
-          <div className="faint" style={{ fontSize: 12.5, marginTop: 10 }}>Am besten morgen wieder — dann sitzt es dauerhaft.</div>
+          <div className="faint" style={{ fontSize: 12.5, marginTop: 10 }}>Am besten morgen wieder — dann sitzt es dauerhaft</div>
         </div>
       </div>
     );
@@ -1001,7 +1007,7 @@ export function Practice() {
               </div>
               <div className="toolbelt">
                 <span className="faint">
-                  {mode === "recall" ? "Erst selber überlegen, dann aufdecken." : "Nur anschauen — das zählt nicht."}
+                  {mode === "recall" ? "Erst selber überlegen, dann aufdecken" : "Nur anschauen — das zählt nicht"}
                 </span>
               </div>
             </>
@@ -1013,7 +1019,7 @@ export function Practice() {
                 Nächste Karte <Icon name="arrowRight" size={16} />
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">Mit <b>Enter</b> geht es weiter.</span></div>
+            <div className="toolbelt"><span className="faint">Mit <b>Enter</b> geht es weiter</span></div>
           </>
         ) : mode === "recall" ? (
           <>
@@ -1027,7 +1033,7 @@ export function Practice() {
                 <Icon name="flame" size={17} /> Das sitzt noch nicht so gut
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">Sei ehrlich — davon hängt ab, wann das Wort wiederkommt.</span></div>
+            <div className="toolbelt"><span className="faint">Sei ehrlich — davon hängt ab, wann das Wort wiederkommt</span></div>
           </>
         ) : (
           <>
@@ -1036,7 +1042,7 @@ export function Practice() {
                 Nächste Karte <Icon name="arrowRight" size={16} />
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">Durchblättern ändert deinen Lernstand nicht.</span></div>
+            <div className="toolbelt"><span className="faint">Durchblättern ändert deinen Lernstand nicht</span></div>
           </>
         )}
       </div>
