@@ -13,6 +13,7 @@ import { LatinKeys } from "../ui/LatinKeys";
 import { retrievabilityOf, isDueCard, retentionFor, initialCard, deriveProfile, STUFE, STUFE_ORDER, deriveRating, gradeFromCard, getCfg } from "../lib/fsrs";
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
+import { tapRichtig, tapFalsch } from "../lib/native";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
 import { TipPopup } from "./TipPopup";
 import { lernTipps } from "./Help";
@@ -382,6 +383,7 @@ export function Practice() {
     const st = stats[current.id];
     const isNew = !st || !st.seen;
     setResult(res);
+    if (res.verdict === "correct") tapRichtig(); else tapFalsch();
     recordAttempt(current.id, res.score, res.verdict, isNew, res.errorType ?? null);  // legacy stats
     resolveWord(rawCorrect, hintUsed);   // V8: runqueue + single FSRS grade at graduation
     setSession((s) => [...s, res.verdict].slice(-12));
@@ -438,6 +440,7 @@ export function Practice() {
     if (!current || anim) return;
     const st = stats[current.id];
     const isNew = !st || !st.seen;
+    if (correct) tapRichtig(); else tapFalsch();
     recordAttempt(current.id, correct ? 1 : 0, correct ? "correct" : "wrong", isNew);  // legacy
     resolveWord(correct, false);   // V8: runqueue + grade at graduation
     setSession((s) => [...s, correct ? "correct" : "wrong"].slice(-12));

@@ -1035,3 +1035,9 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .help-theory ul { margin: 0 0 12px; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
 .help-lead { font-family: var(--serif); font-size: 16.5px; font-style: italic; color: var(--ink); border-left: 2px solid var(--amber); padding-left: 14px; }
 .help-links a { color: var(--amber-deep); }
+
+/* Rechtstexte: Fliesstext, keine Datenbankausgabe. */
+.legal-body { font-size: 13.5px; line-height: 1.55; max-height: 60vh; overflow-y: auto; }
+.legal-body p { margin: 0 0 10px; }
+.legal-body h4 { font-family: var(--serif); font-size: 15px; color: var(--ink); margin: 16px 0 5px; }
+.legal-body h4:first-of-type { margin-top: 12px; }

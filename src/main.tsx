@@ -17,18 +17,21 @@ import { StoreProvider } from "./store/StoreProvider";
 import { AuthProvider } from "./sync/auth";
 import { SyncBridge } from "./sync/SyncBridge";
 import { App } from "./App";
+import { hydrateFromNative } from "./lib/storage";
 
-// warm up speech voices (some browsers load them lazily)
-if (window.speechSynthesis) { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = () => {}; }
-
-createRoot(document.getElementById("root")!).render(
-  <ToastHost>
-    <AuthProvider>
-      <StoreProvider>
-        <SyncBridge>
-          <App />
-        </SyncBridge>
-      </StoreProvider>
-    </AuthProvider>
-  </ToastHost>
-);
+/* Auf iOS zuerst die native Sicherung in den Arbeitsspeicher zurueckholen --
+ * vor dem ersten Rendern, weil der Laden seine Anfangswerte synchron aus
+ * localStorage liest. Im Browser kehrt das sofort zurueck. */
+hydrateFromNative().finally(() => {
+  createRoot(document.getElementById("root")!).render(
+    <ToastHost>
+      <AuthProvider>
+        <StoreProvider>
+          <SyncBridge>
+            <App />
+          </SyncBridge>
+        </StoreProvider>
+      </AuthProvider>
+    </ToastHost>
+  );
+});

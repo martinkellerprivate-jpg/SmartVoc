@@ -365,4 +365,48 @@ export const EN: Record<string, string> = {
   "Es genügt eine Sprache — die andere wird übersetzt und zum Nachschauen vorgemerkt.":
     "One language is enough — the other is translated and flagged for you to check.",
   "Auswahl beenden": "Stop selecting",
+
+  // ---- Rechtstexte ----
+  "Impressum": "Legal notice",
+  "Impressum ansehen": "View the legal notice",
+  "Wer diese App herausgibt.": "Who publishes this app.",
+  "Was gespeichert wird, wo es liegt und was nicht passiert.": "What is stored, where it lives, and what does not happen.",
+  "Kurz: Diese App sammelt nichts über dich. Sie speichert nur, was du selbst einträgst, und braucht dafür nicht mehr als eine E-Mail-Adresse — und die nur, wenn du dich anmeldest.":
+    "In short: this app collects nothing about you. It stores only what you enter yourself, and needs no more than an email address for that — and only if you sign in.",
+  "Was gespeichert wird": "What is stored",
+  "Deine Wörter, Wortlisten, Lernstände und Einstellungen. Meldest du dich an, zusätzlich deine E-Mail-Adresse und ein selbst gewählter Anzeigename.":
+    "Your words, word lists, progress and settings. If you sign in, also your email address and a display name you choose yourself.",
+  "Wo es liegt": "Where it lives",
+  "Ohne Anmeldung bleibt alles ausschliesslich auf diesem Gerät. Mit Anmeldung wird es zusätzlich bei Supabase gespeichert, damit du auf mehreren Geräten denselben Stand hast. Die Übertragung ist verschlüsselt, und die Regeln der Datenbank lassen nur dich an deine eigenen Daten.":
+    "Without signing in, everything stays on this device only. With an account it is also stored at Supabase so that your devices share the same state. The transfer is encrypted, and the database rules let only you reach your own data.",
+  "Was NICHT passiert": "What does NOT happen",
+  "Keine Werbung, keine Zählpixel, keine Weitergabe an Dritte, kein Verkauf. Die App verfolgt dein Verhalten nicht und legt kein Profil über dich an. Was sie über deinen Lernstand weiss, dient nur dazu, dir die richtigen Wörter zur richtigen Zeit zu zeigen.":
+    "No advertising, no tracking pixels, no sharing with third parties, no selling. The app does not follow what you do and builds no profile of you. What it knows about your progress serves only to show you the right words at the right time.",
+  "Geteilte Wortlisten": "Shared word lists",
+  "Teilst du eine Wortliste, wird ihr Inhalt unter einem zufälligen Code abgelegt. Wer den Code hat, kann eine Kopie übernehmen — dein Name steht nicht dabei, und dein Lernstand wird nicht mitgeteilt.":
+    "If you share a word list, its contents are stored under a random code. Anyone with the code can take a copy — your name is not attached, and your progress is not shared.",
+  "Deine Rechte": "Your rights",
+  "Du kannst deine Daten jederzeit als Datei exportieren und dein Konto vollständig löschen — beides oben unter „Konto & Daten“. Beim Löschen verschwinden auch die Daten in der Cloud; das lässt sich nicht rückgängig machen.":
+    "You can export your data as a file at any time and delete your account completely — both above under “Account and data”. Deleting also removes the data in the cloud; this cannot be undone.",
+  "Kinder": "Children",
+  "Die App ist für Schülerinnen und Schüler gemacht. Sie erhebt keine Daten über das hinaus, was zum Lernen nötig ist, und sie enthält keine Werbung und keine Käufe.":
+    "The app is made for schoolchildren. It collects no data beyond what learning requires, and it contains no advertising and no purchases.",
+  "Verantwortlich": "Responsible",
+  "Martin Keller, Schweiz. Fragen zum Datenschutz gehen an die im Impressum genannte Adresse.":
+    "Martin Keller, Switzerland. Questions about privacy go to the address given in the legal notice.",
+  "Herausgeber": "Publisher",
+  "Kontakt": "Contact",
+  "Fragen, Fehler und Rückmeldungen gehen an die im App Store hinterlegte Adresse.":
+    "Questions, bugs and feedback go to the address listed in the App Store.",
+  "Inhalte": "Content",
+  "Der mitgelieferte Grundwortschatz und alle Texte dieser App stammen vom Herausgeber. Die Wörter, die du selbst einträgst, gehören dir.":
+    "The bundled core vocabulary and all texts in this app come from the publisher. The words you enter yourself belong to you.",
+  "Verwendete Arbeit anderer": "Work by others",
+  "Die Wiederholungsabstände berechnet FSRS, ein frei verfügbares Gedächtnismodell. Die Schriften sind Source Serif 4, Hanken Grotesk und Patrick Hand, alle unter der SIL Open Font License.":
+    "The repetition intervals are calculated by FSRS, a freely available memory model. The typefaces are Source Serif 4, Hanken Grotesk and Patrick Hand, all under the SIL Open Font License.",
+  "Teilen …": "Share …",
+  "„{liste}“ teilen": "Share “{liste}”",
+  "Übernimm meine Wortliste „{liste}“ in SmartVoc:": "Take my word list “{liste}” into SmartVoc:",
+  "Kopiert": "Copied",
+  "Kopieren": "Copy",
 };

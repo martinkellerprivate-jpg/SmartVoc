@@ -1,5 +1,5 @@
 /* Account data portability + erasure (Phase 7, GDPR / store requirement). */
-import { LS, load } from "./storage";
+import { LS, load, clearAll } from "./storage";
 
 /* Full account export: the five vt_v1_* documents as a JSON download. */
 export function exportAllData(stamp: string) {
@@ -24,10 +24,13 @@ export function exportAllData(stamp: string) {
 
 /* Remove all local data (vt_v1_* + backups + sync bookkeeping). The app
  * re-seeds on the next load. Does NOT touch the Supabase auth session. */
-export function deleteLocalData() {
+export async function deleteLocalData() {
   Object.keys(localStorage)
     // "vtbackup_" holds pre-merge snapshots kept outside the vt_v1_ namespace —
     // "delete everything" has to take those too.
     .filter((k) => k.startsWith("vt_v1_") || k.startsWith("vtbackup_"))
     .forEach((k) => localStorage.removeItem(k));
+  /* Auf iOS liegt neben localStorage eine native Sicherung. Wer loescht,
+   * meint beides -- sonst waere alles beim naechsten Start wieder da. */
+  await clearAll();
 }
