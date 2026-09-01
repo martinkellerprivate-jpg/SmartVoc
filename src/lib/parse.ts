@@ -1,5 +1,5 @@
 /* Heuristic parsing of raw text into {fgn, de} pairs — shared by the photo
- * scan (Tesseract fallback) and, in Phase 5, the paste/clipboard flow. */
+ * den Einfüge-Weg (Text aus der Zwischenablage). */
 export function extractJson(text: string): any[] | null {
   if (!text) return null;
   let t = text.replace(/```json/gi, "").replace(/```/g, "").trim();

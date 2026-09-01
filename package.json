@@ -21,9 +21,7 @@
     "@supabase/supabase-js": "^2.108.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tesseract.js": "^5.1.1",
-    "ts-fsrs": "^5.4.1",
-    "xlsx": "^0.18.5"
+    "ts-fsrs": "^5.4.1"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.0",

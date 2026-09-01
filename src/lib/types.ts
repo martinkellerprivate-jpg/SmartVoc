@@ -17,7 +17,6 @@ export interface Pair {
   foreignLabel: string;
   nativeLabel: string;
   short: string;
-  ocr: string;            // Tesseract language pack
   tts?: boolean;          // capability flag (Phase 1/2 seam — unused in P0)
 }
 
@@ -144,7 +143,7 @@ export interface Settings {
   // F-SETTINGS-ADVANCED: per-user CFG overrides (read by fsrs.configure). All optional;
   // undefined falls back to the named DEFAULTS in fsrs.ts.
   S1?: number; S2?: number; MIN_REPS?: number; D_LEECH?: number; LAPSE_LEECH?: number; PUFFER?: number;
-  examRetention?: number; examWindowDays?: number; learningSpeed?: number;
+  examRetention?: number; examWindowDays?: number; examRampDays?: number; learningSpeed?: number;
   autoFit?: boolean;       // Auto-Anpassung (Default false; WASM-Fit deferred)
   [key: string]: any;
 }

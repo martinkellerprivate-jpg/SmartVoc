@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import * as XLSX from "xlsx";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
@@ -11,7 +10,6 @@ import { latinHeadword } from "../lib/latin";
 import { isConfigured } from "../lib/supabase";
 import { useAuth } from "../sync/auth";
 import { publishList } from "../sync/share";
-import { ScanModal } from "./ScanModal";
 import { ListPicker } from "./ListSelector";
 import { ShareModal } from "./ShareModal";
 import { ReviewModal } from "./ReviewModal";
@@ -47,7 +45,6 @@ export function WordList() {
   const [draft, setDraft] = useState({ fgn: "", de: "", topic: "", lists: [] as any[], lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
   const [adding, setAdding] = useState({ fgn: "", de: "", topic: "", listId: "", lernform: "", wortart: "Nomen", ex1: "", ex1de: "", phon: "" });
   const [busy, setBusy] = useState(false);
-  const [scanOpen, setScanOpen] = useState(false);
   const [pendingImport, setPendingImport] = useState(null);
   const [editingListId, setEditingListId] = useState(null);
   const [listName, setListName] = useState("");
@@ -76,7 +73,6 @@ export function WordList() {
     toast(`${selectedIds.length} Wörter zur Lektion hinzugefügt`, "check");
     setSelectedIds([]); setAddLessonId(""); setSelectMode(false);
   };
-  const fileRef = useRef(null);
   const canShare = isConfigured && !!auth.user;
 
   const pairLists = useMemo(() => lists.filter((l) => l.pair === pair), [lists, pair]);
@@ -213,53 +209,6 @@ export function WordList() {
   }, [pairVocab, store, toast, foreign, pair, isLat]);
 
   /* ---- excel ---- */
-  const onImportFile = useCallback(async (file) => {
-    if (!file) return;
-    setBusy(true);
-    try {
-      const buf = await file.arrayBuffer();
-      const wb = XLSX.read(buf, { type: "array" });
-      const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
-      const parsed = [];
-      for (const row of rows) {
-        const deK = findKey(row, /germ|deut|^de$/i);
-        const tpK = findKey(row, /top|thema|categ|subject|sujet/i);
-        // "Beispielsatz 1/2"; a single "Beispielsätze" cell may hold both on separate lines
-        const ex1K = findKey(row, /beispiel.*1|example.*1|satz.*1/i);
-        const ex2K = findKey(row, /beispiel.*2|example.*2|satz.*2/i);
-        const phK = findKey(row, /ausspr|phonet|lautschr|pronunc|ipa/i);
-        const phonetic = (phK ? String(row[phK]) : "").trim();
-        const exK = ex1K ? null : findKey(row, /beispiel|example|satz|phrase/i);
-        const examples = [
-          ...(ex1K ? [String(row[ex1K])] : []),
-          ...(ex2K ? [String(row[ex2K])] : []),
-          ...(exK ? String(row[exK]).split(/\r?\n/) : []),
-        ].map((s) => s.trim()).filter(Boolean);
-        if (isLat) {
-          // Latin schema: Grundform | Lernform | Wortart | Deutsch | Topic
-          const gfK = findKey(row, /grundform|grund|^la$|latein|lat/i);
-          const lfK = findKey(row, /lernform|stammform|formen/i);
-          const waK = findKey(row, /wortart|wort.?art|^art$|pos/i);
-          const grundform = (gfK ? String(row[gfK]) : "").trim();
-          const lernform = (lfK ? String(row[lfK]) : "").trim();
-          const wortart = (waK ? String(row[waK]) : "").trim();
-          const de = (deK ? String(row[deK]) : "").trim();
-          const topic = (tpK ? String(row[tpK]) : "").trim();
-          if (grundform || lernform || de) parsed.push({ grundform, lernform, wortart, de, topic, examples, phonetic });
-          continue;
-        }
-        const skip = new Set([deK, tpK, ex1K, ex2K, exK, phK].filter(Boolean) as string[]);
-        const fgnK = findKey(row, /eng|fran|fren|^fr$|^en$/i) || Object.keys(row).find((k) => !skip.has(k));
-        const fgn = (fgnK ? String(row[fgnK]) : "").trim();
-        const de = (deK ? String(row[deK]) : "").trim();
-        const topic = (tpK ? String(row[tpK]) : "").trim();
-        if (fgn || de) parsed.push({ fgn, de, topic, examples });
-      }
-      setBusy(false);
-      if (!parsed.length) { toast("No words found in that file", "x"); return; }
-      setReviewRows(parsed);          // P5: review before import
-    } catch (e) { setBusy(false); toast("Couldn't read that file", "x"); }
-  }, [toast, isLat]);
 
   // Two explicit example columns instead of one delimited cell: a sentence may
   // contain any punctuation, and "|" / ";" are already column separators here.
@@ -268,32 +217,6 @@ export function WordList() {
     : pair === "fr-de"
     ? [["le chien", "der Hund", "ʃjɛ̃", "Le chien court dans le jardin.", "", "Animaux"], ["rouge", "", "ʁuʒ", "La rose est rouge.", "", "Couleurs"], ["", "das Buch", "", "", "", "École"]]
     : [["dog", "der Hund", "dɒɡ", "The dog runs in the garden.", "My dog is very old.", "Animals"], ["red", "", "rɛd", "The rose is red.", "", "Colours"], ["", "das Buch", "", "", "", "School"]];
-  const downloadTemplate = () => {
-    const head = isLat
-      ? ["Grundform", "Lernform", "Wortart", "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2", "Topic"]
-      : [P.foreignLabel, "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2", "Topic"];
-    const ws = XLSX.utils.aoa_to_sheet([head, ...exampleRows]);
-    ws["!cols"] = isLat
-      ? [{ wch: 16 }, { wch: 28 }, { wch: 12 }, { wch: 18 }, { wch: 14 }, { wch: 30 }, { wch: 30 }, { wch: 14 }]
-      : [{ wch: 18 }, { wch: 20 }, { wch: 14 }, { wch: 30 }, { wch: 30 }, { wch: 14 }];
-    const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Vocabulary"); XLSX.writeFile(wb, "vocabulary-template.xlsx");
-    toast("Template downloaded — fill it and import", "download");
-  };
-  const exportList = () => {
-    const src = activeList === "__all" ? pairVocab : filtered;
-    const ex = (w, i) => (w.examples || [])[i] || "";
-    if (isLat) {
-      const ws = XLSX.utils.aoa_to_sheet([["Grundform", "Lernform", "Wortart", "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2", "Topic"], ...src.map((w) => [w.grundform || "", w.lernform || "", w.wortart || "", w.de, w.phonetic || "", ex(w, 0), ex(w, 1), w.topic || ""])]);
-      ws["!cols"] = [{ wch: 16 }, { wch: 28 }, { wch: 12 }, { wch: 18 }, { wch: 14 }, { wch: 30 }, { wch: 30 }, { wch: 14 }];
-      const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Vocabulary"); XLSX.writeFile(wb, "my-vocabulary.xlsx");
-      toast("Exported your word list", "download");
-      return;
-    }
-    const ws = XLSX.utils.aoa_to_sheet([[P.foreignLabel, "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2", "Topic"], ...src.map((w) => [w[foreign] || "", w.de, w.phonetic || "", ex(w, 0), ex(w, 1), w.topic || ""])]);
-    ws["!cols"] = [{ wch: 18 }, { wch: 20 }, { wch: 14 }, { wch: 30 }, { wch: 30 }, { wch: 14 }];
-    const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Vocabulary"); XLSX.writeFile(wb, "my-vocabulary.xlsx");
-    toast("Exported your word list", "download");
-  };
 
   const WL_STUFE: any = { sitzt: ["green", "Sitzt"], sitzt_fast: ["amber", "Sitzt fast"], sitzt_schlecht: ["red", "Wackelt noch"], neu: ["blue", "Neu"], noch_nicht_geuebt: ["slate", "Noch nicht geübt"] };
   const catBadge = (w) => {
@@ -344,15 +267,9 @@ export function WordList() {
           <Icon name="search" size={17} />
           <input className="field" placeholder="Search words…" value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
-        <button className="btn btn-sm btn-amber" onClick={() => setScanOpen(true)}><Icon name="camera" size={15} /> Scan photo</button>
-        <button className="btn btn-sm" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> Einfügen</button>
-        <button className="btn btn-sm" onClick={() => fileRef.current.click()} disabled={busy} title="Wörter aus einer CSV-/Textdatei laden"><Icon name="upload" size={15} /> Datei-Import</button>
-        <button className="btn btn-sm" onClick={downloadTemplate}><Icon name="download" size={15} /> Template</button>
-        <button className="btn btn-sm" onClick={exportList}><Icon name="download" size={15} /> Export</button>
+        <button className="btn btn-sm btn-amber" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> Einfügen</button>
         {isConfigured && <button className="btn btn-sm" onClick={() => openImport()} title="Eine Liste, die dir jemand geteilt hat, übernehmen"><Icon name="download" size={15} /> Geteilte Liste importieren</button>}
         <button className={"btn btn-sm" + (selectMode ? " btn-primary" : "")} onClick={() => { setSelectMode((m) => !m); setSelectedIds([]); }}><Icon name="check" size={15} /> {selectMode ? "Auswahl beenden" : "Auswählen"}</button>
-        <input ref={fileRef} type="file" accept=".xlsx,.xls,.csv" style={{ display: "none" }}
-          onChange={(e) => { onImportFile(e.target.files[0]); e.target.value = ""; }} />
       </div>
 
       {/* add row */}
@@ -505,12 +422,9 @@ export function WordList() {
             ))}
           </tbody>
         </table>
-        {!filtered.length && <div className="empty"><div className="big">No words here yet</div><div>Add one above, scan a photo, or import a file.</div></div>}
+        {!filtered.length && <div className="empty"><div className="big">No words here yet</div><div>Füge eines oben hinzu oder nutze „Einfügen“.</div></div>}
       </div>
 
-      <ScanModal open={scanOpen} pair={pair} onClose={() => setScanOpen(false)}
-        onScanned={(raw) => { setScanOpen(false); setPasteSeed(raw); setPasteDraft(true); setPasteOpen(true); }}
-        onImport={(pairs) => { setScanOpen(false); setReviewRows(pairs); }} />
       <PasteModal open={pasteOpen} pair={pair} initialText={pasteSeed} draftHint={pasteDraft}
         onClose={() => setPasteOpen(false)}
         onParsed={(rows) => { setPasteOpen(false); setReviewRows(rows); }} />

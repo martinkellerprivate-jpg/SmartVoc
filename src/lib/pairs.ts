@@ -1,7 +1,7 @@
 /* Language pairs. Native side is always German; the foreign side is
  * stored on the word under its own key (en / fr).
  *
- * `tts`/`ocr` are capability flags so Phase 1/2 (e.g. Latin: no TTS) can
+ * `tts` is a capability flag so Phase 1/2 (e.g. Latin: no TTS) can
  * dock without a refactor. In Phase 0 they cause NO visible change — only
  * the existing EN-DE / FR-DE pairs ship, both fully capable. */
 import type { Pair, PairId, Word } from "./types";
@@ -10,9 +10,9 @@ export const SMART_TRICKY = "__tricky";
 export const NATIVE = "de";
 
 export const PAIRS: Record<string, Pair> = {
-  "en-de": { id: "en-de", foreign: "en", foreignLabel: "English",  nativeLabel: "Deutsch", short: "EN", ocr: "eng+deu", tts: true },
-  "fr-de": { id: "fr-de", foreign: "fr", foreignLabel: "Français", nativeLabel: "Deutsch", short: "FR", ocr: "fra+deu", tts: true },
-  "la-de": { id: "la-de", foreign: "la", foreignLabel: "Latein",   nativeLabel: "Deutsch", short: "LA", ocr: "lat",     tts: false },
+  "en-de": { id: "en-de", foreign: "en", foreignLabel: "English",  nativeLabel: "Deutsch", short: "EN", tts: true },
+  "fr-de": { id: "fr-de", foreign: "fr", foreignLabel: "Français", nativeLabel: "Deutsch", short: "FR", tts: true },
+  "la-de": { id: "la-de", foreign: "la", foreignLabel: "Latein",   nativeLabel: "Deutsch", short: "LA",     tts: false },
 };
 
 /* Which pairs the user wants to see. Purely a display filter: words of a

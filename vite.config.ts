@@ -56,20 +56,9 @@ export default defineConfig({
               globPatterns: ["**/*.{js,css,html,woff2,woff,png,svg,ico}"],
               maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
               navigateFallback: base + "index.html",
-              runtimeCaching: [
-                // Tesseract worker/core from CDN → cache-first so scan works offline after first use.
-                {
-                  urlPattern: ({ url }) => /(^|\.)(jsdelivr\.net|unpkg\.com)$/.test(url.hostname) && /tesseract/.test(url.href),
-                  handler: "CacheFirst",
-                  options: { cacheName: "tesseract-lib", expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 90 }, cacheableResponse: { statuses: [0, 200] } },
-                },
-                // Tesseract language traineddata.
-                {
-                  urlPattern: ({ url }) => url.hostname === "tessdata.projectnaptha.com",
-                  handler: "CacheFirst",
-                  options: { cacheName: "tesseract-lang", expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 90 }, cacheableResponse: { statuses: [0, 200] } },
-                },
-              ],
+              // Fremdinhalte gibt es keine mehr: mit dem Foto-Scan sind auch die
+              // Zwischenspeicher-Regeln für Tesseract entfallen. Alles, was die App
+              // braucht, liegt im Bündel.
             },
           }),
         ]),

@@ -51,7 +51,7 @@ zwischen den Zielen um. Details unter „Bauen und starten".
 | Bundle-ID | `ch.drkeller.smartvoc` — nach dem ersten Store-Eintrag fix |
 | Produktname | **SmartVoc** (vorher „Smart Vocables") |
 | Simulator | verifiziert auf iPhone 17 Pro, iOS 26.5 |
-| Bundle-Grösse | 860 kB JS (gzip 276 kB) |
+| Bundle-Grösse | **622 kB** JS — war 1063 kB vor dem Abspecken |
 | Apple-Account | kostenlos; 99 $/Jahr noch nicht gekauft |
 
 **Warum das Repository öffentlich ist.** Pages aus einem privaten Repository
@@ -160,10 +160,25 @@ Fallunterscheidung an der einen Stelle, die die Fähigkeit kapselt — so wie
 
 ## Nächste Schritte
 
-1. Abspecken: Tesseract- und xlsx-Pfade entfernen, Grösse vorher/nachher messen
-2. Native Schicht: TTS, Haptik, Share
-3. Store-Material, bezahlte Mitgliedschaft, TestFlight
-4. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
+Der Umbau aus der Entwurfsrunde ist gross. Reihenfolge, damit jede Stufe die
+nächste leichter macht:
+
+1. ~~Abspecken: Tesseract- und xlsx-Pfade entfernen~~ — **erledigt**, 1063 → 622 kB
+2. **Farbwerte und dunkle Darstellung.** `farben.css` aus dem Entwurf einsetzen,
+   drei Schemata mal hell/dunkel. Fundament — alles Weitere erbt davon.
+3. **Navigation.** Vier Bereiche (Üben · Übungsplan · Wortlisten · Statistik),
+   Lektionen und Wörter zusammenlegen, Hilfe und Einstellungen in die Kopfzeile.
+4. **Die Karte.** Zwei Seiten, Querformat, feste Höhe, Sprachkennzeichnung,
+   Handlungszone am Kartenzustand statt am Modus.
+5. **Übungsplan** als neuer Bereich: Kalender mit Ampel, Listenansicht,
+   Mehrfachauswahl, zwei Verben je Zeile.
+6. **Rundenabschluss**, Statistik-Umbau, Einstellungen (Aussehen, Schwellen,
+   Lerntipp-Häufigkeit), Hilfe in drei Teilen samt Lerntheorie-Text.
+7. **Oberflächensprache** (CR23) — alle Texte in eine Übersetzungsschicht. Gross,
+   und Voraussetzung für die einheitliche Benennung.
+8. Native Schicht: Haptik, Share
+9. Store-Material, bezahlte Mitgliedschaft, TestFlight
+10. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
    Wegen (siehe „Bekannte Punkte" — Apple setzt die Mitgliedschaft voraus)
 
 ---
