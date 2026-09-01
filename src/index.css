@@ -954,3 +954,35 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .flashcard.grow { aspect-ratio: auto; }
 .flashcard.grow .card-face { position: static; inset: auto; min-height: 220px; }
 .flashcard.grow .card-center { overflow: visible; }
+
+/* ====================================================================
+   STATISTIK (Stufe 5) — Kopf ist die Leiste, Gliederung in drei Teile.
+   ==================================================================== */
+.stats-head { padding: 14px 16px; margin-bottom: 22px; }
+.stats-section { margin-bottom: 26px; }
+.stats-sub { font-size: 12.5px; margin: 3px 0 10px; }
+.stats-step { display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 1.45;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 13px; }
+.stats-step-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+/* Eine Wortzeile statt sechs Spalten: eine Tabelle mit sechs Spalten ist auf
+   einem Handy keine Tabelle mehr, sondern ein Rätsel. */
+.wordrows { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+.wordrow {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  width: 100%; text-align: left; cursor: pointer;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px;
+  font: inherit; color: var(--ink);
+}
+.wordrow:hover { border-color: var(--amber); }
+.wordrow-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.wordrow-word { font-weight: 600; }
+.wordrow-de { font-size: 13px; color: var(--ink-soft); }
+.wordrow-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-align: right; flex: none; }
+.wordrow-state { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+.wordrow-dot { width: 8px; height: 8px; border-radius: 50%; }
+.wordrow-detail { font-size: 12px; color: var(--ink-faint); }
+@media (max-width: 520px) {
+  .wordrow { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .wordrow-right { align-items: flex-start; text-align: left; }
+}

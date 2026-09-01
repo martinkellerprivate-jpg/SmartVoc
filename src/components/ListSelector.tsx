@@ -72,7 +72,7 @@ export function ListSelector({ selected, onChange, smart = ["tricky"], pair, mc 
       )}
       {pairLists.length > 0 && (
         <div className="lchips lchips-topics">
-          {head(listsOpen, setListsOpen, "list", "Listen", pairLists.length, listToks)}
+          {head(listsOpen, setListsOpen, "list", "Wortlisten", pairLists.length, listToks)}
           {listsOpen && pairLists.map((l) => (
             <button key={l.id} className={"lchip" + (sel.includes(l.id) ? " on" : "")} onClick={() => toggle(l.id)}>
               {l.name} <span className="lchip-n">{countFor(l.id)}</span>

@@ -10,16 +10,24 @@ import { latinHeadword } from "../lib/latin";
 import { buildInsights } from "../lib/insights";
 import { MasteryBar, MasteryTrend } from "../ui/MasteryBar";
 import { ListSelector } from "./ListSelector";
+import { WordDetailModal } from "./WordDetailModal";
 
 // V14: the four FSRS levels (one source). Tone/labels match V13 STUFE.
 const STUFE_META: Record<string, any> = {
-  sitzt:             { label: "Sitzt",           tone: "green", blurb: "Sitzt sicher — hält lange." },
-  sitzt_fast:        { label: "Sitzt fast",      tone: "amber", blurb: "Fast da — noch ein paar Wiederholungen." },
-  sitzt_schlecht:    { label: "Wackelt noch",    tone: "red",   blurb: "Wackelt noch — kommt öfter zurück." },
-  neu:               { label: "Neu / frisch",   tone: "blue",  blurb: "Frisch gelernt — noch jung." },
-  noch_nicht_geuebt: { label: "Noch nicht geübt", tone: "slate", blurb: "Noch nicht geübt." },
+  sitzt:             { label: "sitzt",           tone: "green", blurb: "Sitzt sicher — hält lange." },
+  sitzt_fast:        { label: "sitzt fast",      tone: "amber", blurb: "Fast da — noch ein paar Wiederholungen." },
+  sitzt_schlecht:    { label: "wackelt noch",    tone: "red",   blurb: "Wackelt noch — kommt öfter zurück." },
+  neu:               { label: "neu",             tone: "blue",  blurb: "Frisch gelernt — noch jung." },
+  noch_nicht_geuebt: { label: "ungeübt",         tone: "slate", blurb: "Noch nicht geübt." },
 };
 const STUFE_KEYS = STUFE_ORDER;
+/* Die Farben der fuenf Stufen kommen aus derselben Quelle wie die Leiste und
+ * die Karte -- eine eigene Tabelle hier waere die naechste Stelle, an der die
+ * Farben auseinanderlaufen. */
+const STUFE_TONE: Record<string, string> = {
+  sitzt: "var(--ok)", sitzt_fast: "var(--warn)", sitzt_schlecht: "var(--bad)",
+  neu: "var(--blue)", noch_nicht_geuebt: "var(--ink-faint)",
+};
 // F-WORTLISTE: "Hält" as a circle — full ring = one month (~30 days).
 function haeltCircle(p: any) {
   if (p.haeltTage == null || p.haeltTage <= 0) return <span className="faint">—</span>;
@@ -51,6 +59,7 @@ export function Stats() {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState({ key: "priority", dir: 1 });
   const [resetOpen, setResetOpen] = useState(false);
+  const [detail, setDetail] = useState<any>(null);   // Wortdetail
 
   const ret = retentionFor(settings);
   const rows = useMemo(() => wordsForSelection(vocab.filter((w) => w.pair === pair), stats, settings.statLists, settings.masteryCorrect).map((w) => {
@@ -112,19 +121,19 @@ export function Stats() {
     for (const [t, v] of Object.entries(byTopic)) { if (v.n >= 2 && (!strength || v.s / v.n > strength.avg)) strength = { topic: t, n: v.n, avg: v.s / v.n }; }
     // next steps (each only if it applies)
     const bald = rows.filter((r) => r.prof.baldFaellig);
-    if (bald.length) steps.push({ tone: "amber", text: `${bald.length} ${bald.length === 1 ? "Wort wird" : "Wörter werden"} bald fällig — heute auffrischen.`, action: { label: "Üben", sel: "smart:baldfaellig" } });
+    if (bald.length) steps.push({ tone: "amber", text: `${bald.length} ${bald.length === 1 ? "Wort wird" : "Wörter werden"} bald fällig — heute auffrischen`, action: { label: "Üben", sel: "smart:baldfaellig" } });
     const leech = rows.filter((r) => r.prof.istLeech);
-    if (leech.length) steps.push({ tone: "red", text: `${leech.length} hartnäckig (z. B. ${fgnOfId(leech[0].w.id)}) — eine Eselsbrücke hilft.`, action: { label: "Üben", sel: "smart:leech" } });
+    if (leech.length) steps.push({ tone: "red", text: `${leech.length} hartnäckig (z. B. ${fgnOfId(leech[0].w.id)}) — eine Eselsbrücke hilft`, action: { label: "Üben", sel: "smart:leech" } });
     const c = retentionFor(settings);
     const kvs = rows.filter((r) => { const s = stats[r.w.id]?.fsrs?.stability || 0; return s >= 14 * 0.7 && s < 14; });
-    if (kvs.length) steps.push({ tone: "green", text: `${kvs.length} kurz vor „sitzt" — ein Durchgang reicht.`, action: { label: "Üben", sel: "smart:kurzvorsitzt" } });
+    if (kvs.length) steps.push({ tone: "green", text: `${kvs.length} kurz vor „sitzt“ — ein Durchgang reicht`, action: { label: "Üben", sel: "smart:kurzvorsitzt" } });
     for (const l of (lists || [])) {
       if (l.pair !== pair || !l.dueDate) continue;
       const days = Math.ceil((l.dueDate - Date.now()) / 86400000);
       if (days < 0 || days > 14) continue;
       const risk = rows.filter((r) => (r.w.lists || []).includes(l.id)
         && ["sitzt_schlecht", "neu", "noch_nicht_geuebt"].includes(deriveProfile(stats[r.w.id]?.fsrs, c).stufe)).length;
-      if (risk > 0) { steps.push({ tone: "red", text: `„${l.name}" ist in ${days} ${days === 1 ? "Tag" : "Tagen"} dran — ${risk} ${risk === 1 ? "Wort wackelt" : "Wörter wackeln"} noch.`, action: { label: "Gefährdete üben", sel: "list:" + l.id } }); break; }
+      if (risk > 0) { steps.push({ tone: "red", text: `„${l.name}" ist in ${days} ${days === 1 ? "Tag" : "Tagen"} dran — ${risk} ${risk === 1 ? "Wort wackelt" : "Wörter wackeln"} noch`, action: { label: "Gefährdete üben", sel: "list:" + l.id } }); break; }
     }
     return { strength, steps, enough: !!strength || steps.length > 0 };
   }, [rows, stats, lists, pair, settings, vocab]);
@@ -141,10 +150,10 @@ export function Stats() {
   // FR3-2: daily distribution snapshots for this pair → trend
   const trendDays = useMemo(() => { const t = (meta.trends && meta.trends[pair]) || {}; return Object.keys(t).sort().map((d) => ({ d, c: t[d].c || [] })); }, [meta.trends, pair]);
 
-  const resetAll = () => { store.resetStats(); setResetOpen(false); toast("All progress reset", "refresh"); };
-  const resetSelected = () => { const ids = rows.map((r) => r.w.id); store.resetStatsForWords(ids); setResetOpen(false); toast(`Progress reset for ${ids.length} word${ids.length === 1 ? "" : "s"}`, "refresh"); };
+  const resetAll = () => { store.resetStats(); setResetOpen(false); toast("Lernstand zurückgesetzt", "refresh"); };
+  const resetSelected = () => { const ids = rows.map((r) => r.w.id); store.resetStatsForWords(ids); setResetOpen(false); toast(`Lernstand für ${ids.length} ${ids.length === 1 ? "Wort" : "Wörter"} zurückgesetzt`, "refresh"); };
 
-  const StatCard = ({ icon, k, v, sub, color }) => (
+  const StatCard = ({ icon, k, v, sub, color }: any) => (
     <div className="stat-card">
       <div className="k"><Icon name={icon} size={15} style={{ color: color || "var(--ink-soft)" }} /> {k}</div>
       <div className="v" style={{ color }}>{v}</div>
@@ -152,155 +161,172 @@ export function Stats() {
     </div>
   );
 
+  /* Eine Wortzeile, überall gleich gebaut: links das Wortpaar, rechts der
+   * Zustand aus der etablierten Skala, darunter in ganzen Worten, was war
+   * und was kommt. Keine Sternchen (das wäre eine vierte Skala neben den
+   * fünf Stufen) und keine Abkürzungen wie „4 T." -- wer die App nicht
+   * gebaut hat, liest das nicht. */
+  const wannWieder = (p: any) => {
+    if (p.due == null) return null;
+    const tage = Math.round((p.due - Date.now()) / 86400000);
+    if (tage < 0) return "jetzt wieder dran";
+    if (tage === 0) return "heute wieder dran";
+    if (tage === 1) return "morgen wieder dran";
+    return `in ${tage} Tagen wieder dran`;
+  };
+  const wortZeile = (r: any) => {
+    const s = stats[r.w.id];
+    const richtig = s ? (s.correctCount || 0) : 0;
+    const fast = s ? (s.almostCount || 0) : 0;
+    const falsch = s ? (s.wrongCount || 0) : 0;
+    const teile: string[] = [];
+    if (r.seen) {
+      teile.push(`${richtig} × richtig`);
+      if (fast) teile.push(`${fast} × fast`);
+      if (falsch) teile.push(`${falsch} × falsch`);
+    } else {
+      teile.push("noch nie geübt");
+    }
+    const wann = wannWieder(r.prof);
+    if (wann) teile.push(wann);
+    return teile.join(" · ");
+  };
+
   return (
     <div>
       <ListSelector selected={settings.statLists} onChange={(s) => store.setSettings({ statLists: s })} pair={pair} mc={settings.masteryCorrect} smart={[]} />
 
-      {/* F-STATS-INSIGHTS: Stärken & nächste Schritte (versteckt wenn nichts Substanzielles) */}
-      {insights.enough && (
-        <div className="panel" style={{ padding: "16px 18px", marginBottom: 22 }}>
-          <div className="section-title" style={{ marginBottom: 12 }}>Deine Stärken & nächste Schritte</div>
-          <div className="col" style={{ gap: 10 }}>
-            {insights.strength && (
-              <div className="row" style={{ gap: 10, alignItems: "flex-start" }}>
-                <span className="badge green" style={{ flex: "0 0 auto", marginTop: 1 }}><span className="dot" />Stärke</span>
-                <span style={{ fontSize: 14, lineHeight: 1.45 }}>Stark in <b>{insights.strength.topic}</b> — {insights.strength.n} {insights.strength.n === 1 ? "Wort sitzt" : "Wörter sitzen"}, halten ~{Math.round(insights.strength.avg)} Tage.</span>
-              </div>
-            )}
+      {/* Der Kopf IST die Verteilungsleiste. Ihre Legende ist zugleich die
+          Kennzahlenreihe und der Filter für die Liste darunter: eine Zahl,
+          eine Farbe, ein Ort. Nicht gewählte Stufen werden abgedunkelt,
+          nicht entfernt -- sonst verschwindet die Übersicht in dem Moment,
+          in dem man hineinschaut. */}
+      {rows.length ? (
+        <div className="panel stats-head">
+          <MasteryBar dist={counts} total={rows.length}
+            onSegment={(k) => setFilter(filter === k ? "all" : k)}
+            activeFilter={filter !== "all" ? filter : undefined} />
+        </div>
+      ) : (
+        <div className="empty"><div className="big">Noch keine Wörter</div><div>In dieser Auswahl ist noch nichts</div></div>
+      )}
+
+      {/* ---------------- Jetzt üben ---------------- */}
+      <div className="stats-section">
+        <div className="section-title">Jetzt üben</div>
+        <div className="muted stats-sub">Drei Wege quer zu den Stufen. Tippen startet die Übung</div>
+        <div className="lchips" style={{ justifyContent: "flex-start" }}>
+          {[{ k: "leech", label: "Hartnäckig", tone: "red", help: "Oft vergessen trotz Übung — hier hilft eine Eselsbrücke" },
+            { k: "frischfragil", label: "Frisch und wackelig", tone: "amber", help: "Gerade gelernt, sitzt noch nicht" },
+            { k: "kurzvorsitzt", label: "Kurz vor „sitzt“", tone: "green", help: "Fast dauerhaft — ein Schubs reicht" }].map((c) => {
+            const n = resolveSmart(c.k, vocab.filter((w) => w.pair === pair), stats, settings.masteryCorrect, { retention: ret }).filter(practiceable).length;
+            return (
+              <button key={c.k} className={"lchip lchip-smart tone-" + c.tone} title={c.help} disabled={!n}
+                onClick={() => goPractice("smart:" + c.k)}>
+                <Icon name="target" size={13} /> {c.label} <span className="lchip-n">{n}</span>
+              </button>
+            );
+          })}
+        </div>
+        {insights.steps.length > 0 && (
+          <div className="col" style={{ gap: 8, marginTop: 12 }}>
             {insights.steps.map((it: any, i: number) => (
-              <div key={i} className="row" style={{ gap: 10, alignItems: "center" }}>
-                <span className="badge" style={{ flex: "0 0 auto", background: `var(--${it.tone}-bg)`, color: toneColor(it.tone) }}><span className="dot" style={{ background: toneColor(it.tone) }} />Schritt</span>
-                <span className="grow" style={{ fontSize: 14, lineHeight: 1.45 }}>{it.text}</span>
+              <div key={i} className="stats-step">
+                <span className="stats-step-dot" style={{ background: toneColor(it.tone) }} />
+                <span className="grow">{it.text}</span>
                 {it.action && <button className="btn btn-sm" onClick={() => goPractice(it.action.sel)}>{it.action.label}</button>}
               </div>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* overall */}
-      <div className="stat-grid">
-        <StatCard icon="sparkle" k="Mastered" v={`${totals.mastered}/${totals.total}`}
-          sub={`${pct(totals.total ? totals.mastered / totals.total : 0)}% of your words`} color="var(--green)" />
-        <StatCard icon="target" k="Overall accuracy" v={`${pct(totals.overallAcc)}%`}
-          sub={`across ${totals.reviews} answers`} color="var(--amber-deep)" />
-        <StatCard icon="flame" k="Tage in Folge" v={meta.streak || 0}
-          sub={meta.streak ? "dranbleiben!" : "heute üben startet die Serie"} color="var(--red)" />
-        <div className="stat-card">
-          <div className="k"><Icon name="target" size={15} /> Today's goal</div>
-          <div className="row" style={{ gap: 12, marginTop: 8, alignItems: "center" }}>
-            <Ring value={goalP} size={48} stroke={6} />
-            <div>
-              <div className="v" style={{ fontSize: 26, margin: 0 }}>{meta.todayCount || 0}<span className="faint" style={{ fontSize: 16 }}>/{settings.dailyGoal || 20}</span></div>
-              <div className="sub">cards today</div>
+      {/* ---------------- Nachschauen ---------------- */}
+      <div className="stats-section">
+        <div className="bar">
+          <div className="section-title grow">Nachschauen</div>
+          {filter !== "all" && (
+            <button className="btn btn-ghost btn-sm" onClick={() => setFilter("all")}>
+              <Icon name="x" size={14} /> {STUFE_META[filter].label}: Filter aufheben
+            </button>
+          )}
+          <div className="search" style={{ flex: "0 0 220px" }}>
+            <Icon name="search" size={17} />
+            <input className="field" placeholder="Wort suchen …" value={query} onChange={(e) => setQuery(e.target.value)} />
+          </div>
+        </div>
+
+        <div className="stat-grid">
+          <StatCard icon="sparkle" k="Sitzt dauerhaft" v={`${totals.mastered} von ${totals.total}`}
+            sub={`${pct(totals.total ? totals.mastered / totals.total : 0)} % deiner Wörter`} color="var(--ok)" />
+          <StatCard icon="target" k="Trefferquote" v={`${pct(totals.overallAcc)} %`}
+            sub={`aus ${totals.reviews} Antworten`} color="var(--amber-deep)" />
+          <StatCard icon="flame" k="Tage in Folge" v={meta.streak || 0}
+            sub={meta.streak ? "dranbleiben" : "heute üben startet die Serie"} color="var(--bad)" />
+          <div className="stat-card">
+            <div className="k"><Icon name="target" size={15} /> Tagesziel</div>
+            <div className="row" style={{ gap: 12, marginTop: 8, alignItems: "center" }}>
+              <Ring value={goalP} size={48} stroke={6} />
+              <div>
+                <div className="v" style={{ fontSize: 26, margin: 0 }}>{meta.todayCount || 0}<span className="faint" style={{ fontSize: 16 }}>/{settings.dailyGoal || 20}</span></div>
+                <div className="sub">Karten heute</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* FR3-2: Stufen-Verteilung = geteilte MasteryBar-Komponente (identisch zur Karte) + Trend */}
-      <div className="section-title" style={{ marginBottom: 10 }}>Wie deine Wörter sitzen</div>
-      <div className="panel" style={{ padding: "14px 16px", marginBottom: 22 }}>
-        {rows.length ? (
-          <>
-            <MasteryBar dist={counts} total={rows.length} onSegment={(k) => setFilter(filter === k ? "all" : k)} activeFilter={filter !== "all" ? filter : undefined} />
-            <MasteryTrend days={trendDays} />
-          </>
-        ) : <div className="muted" style={{ fontSize: 13.5 }}>Noch keine Wörter in dieser Auswahl.</div>}
-      </div>
-
-      {/* F-STATS-STRUKTUR: smarte Listen = optionale Fokus-Filter, quer zu den Stufen */}
-      <div className="section-title" style={{ marginBottom: 4 }}>Worauf du dich konzentrieren kannst</div>
-      <div className="muted" style={{ fontSize: 12.5, marginBottom: 10 }}>Optionale Fokus-Listen — quer zu den Stufen. Tippen startet sofort das Üben.</div>
-      <div className="lchips" style={{ justifyContent: "flex-start", marginBottom: 18 }}>
-        {[{ k: "leech", label: "Hartnäckig", tone: "red", help: "Oft vergessen trotz Übung — brauchen eine Eselsbrücke" },
-          { k: "frischfragil", label: "Frisch & fragil", tone: "amber", help: "Gerade gelernt, noch wackelig" },
-          { k: "kurzvorsitzt", label: "Kurz vor „sitzt\"", tone: "green", help: "Fast dauerhaft — ein Schubs reicht" }].map((c) => {
-          const n = resolveSmart(c.k, vocab.filter((w) => w.pair === pair), stats, settings.masteryCorrect, { retention: ret }).filter(practiceable).length;
-          return (
-            <button key={c.k} className={"lchip lchip-smart tone-" + c.tone} title={c.help} disabled={!n}
-              onClick={() => goPractice("smart:" + c.k)}>
-              <Icon name="target" size={13} /> {c.label} <span className="lchip-n">{n}</span>
+        <div className="wordrows">
+          {view.map((r) => (
+            <button key={r.w.id} className="wordrow" onClick={() => setDetail(r.w)}>
+              <span className="wordrow-main">
+                <span className="wordrow-word">{fgnOf(r.w)}</span>
+                <span className="wordrow-de">{r.w[NATIVE]}</span>
+              </span>
+              <span className="wordrow-right">
+                <span className="wordrow-state" style={{ color: STUFE_TONE[r.stufe] }}>
+                  <span className="wordrow-dot" style={{ background: STUFE_TONE[r.stufe] }} />
+                  {STUFE_META[r.stufe].label}
+                </span>
+                <span className="wordrow-detail">{wortZeile(r)}</span>
+              </span>
             </button>
-          );
-        })}
-      </div>
-
-      {/* word-by-word */}
-      <div className="bar" style={{ marginTop: 22 }}>
-        <div className="section-title grow">Word by word</div>
-        {filter !== "all" && (
-          <button className="btn btn-ghost btn-sm" onClick={() => setFilter("all")}>
-            <Icon name="x" size={14} /> Filter aufheben: {STUFE_META[filter].label}
-          </button>
-        )}
-        <div className="search" style={{ flex: "0 0 220px" }}>
-          <Icon name="search" size={17} />
-          <input className="field" placeholder="Find a word…" value={query} onChange={(e) => setQuery(e.target.value)} />
+          ))}
         </div>
+        {!view.length && rows.length > 0 && (
+          <div className="empty"><div className="big">Nichts gefunden</div><div>Andere Stufe wählen oder die Suche leeren</div></div>
+        )}
+
+        <MasteryTrend days={trendDays} />
       </div>
 
-      <div className="table-wrap">
-        <table className="vt">
-          <thead>
-            <tr>
-              <th className="sortable" onClick={() => setSortKey("word")}>Word</th>
-              <th>Translation</th>
-              <th>Status</th>
-              <th style={{ width: 90 }}>Hält</th>
-              <th className="sortable" onClick={() => setSortKey("acc")} style={{ width: 140 }}>Treffer</th>
-              <th className="sortable" onClick={() => setSortKey("seen")} style={{ width: 70 }}>Geübt</th>
-            </tr>
-          </thead>
-          <tbody>
-            {view.map((r) => (
-              <tr key={r.w.id}>
-                <td className="cell-en">{fgnOf(r.w)}<div className="faint" style={{ fontSize: 11.5 }}>{r.w.topic}</div></td>
-                <td className="cell-de">{r.w[NATIVE]}</td>
-                <td>
-                  <span className={"badge " + STUFE_META[r.stufe].tone}><span className="dot" />{STUFE_META[r.stufe].label}</span>
-                  {r.prof.istLeech && <span className="badge red" style={{ marginLeft: 5 }}><Icon name="flame" size={11} /> Hartnäckig</span>}
-                </td>
-                <td>{haeltCircle(r.prof)}</td>
-                <td>
-                  {r.seen ? (
-                    <div className="acc">
-                      <div className="acc-track"><i style={{ width: pct(r.acc) + "%", background: r.acc >= .8 ? "var(--green)" : r.acc >= .5 ? "var(--amber)" : "var(--red)" }} /></div>
-                      <span style={{ fontSize: 13, fontWeight: 600 }}>{pct(r.acc)}%</span>
-                    </div>
-                  ) : <span className="faint">—</span>}
-                </td>
-                <td><span style={{ fontWeight: 600 }}>{r.seen || <span className="faint">0</span>}</span></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {!view.length && <div className="empty"><div className="big">Nothing here yet</div><div>Practise some cards to see them appear.</div></div>}
-      </div>
-
-      <div className="row" style={{ justifyContent: "flex-end", marginTop: 16 }}>
+      {/* ---------------- Einstellen ---------------- */}
+      <div className="stats-section">
+        <div className="section-title">Einstellen</div>
+        <div className="muted stats-sub">Der Lernstand lässt sich zurücksetzen. Deine Wörter und Wortlisten bleiben dabei erhalten</div>
         <button className="btn btn-ghost btn-sm" onClick={() => setResetOpen(true)}>
-          <Icon name="refresh" size={14} /> Reset progress
+          <Icon name="refresh" size={14} /> Lernstand zurücksetzen
         </button>
       </div>
+
+      <WordDetailModal open={!!detail} word={detail} onClose={() => setDetail(null)} />
 
       {resetOpen && (
         <div className="modal-backdrop" onClick={() => setResetOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
             <div className="modal-head">
-              <div className="modal-title">Reset progress</div>
+              <div className="modal-title">Lernstand zurücksetzen</div>
               <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setResetOpen(false)}><Icon name="x" size={16} /></button>
             </div>
-            <div className="muted" style={{ fontSize: 13.5, marginBottom: 14 }}>This clears scores and history. Your words and lists are kept.</div>
+            <div className="muted" style={{ fontSize: 13.5, marginBottom: 14 }}>Das löscht Punkte und Verlauf. Deine Wörter und Wortlisten bleiben.</div>
             <div className="picker-list">
               <button className="picker-row" style={{ textAlign: "left", opacity: settings.statLists.length ? 1 : .5, cursor: settings.statLists.length ? "pointer" : "not-allowed" }}
                 disabled={!settings.statLists.length} onClick={resetSelected}>
                 <Icon name="filter" size={16} />
-                <span className="grow"><b>Selected lists only</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>{settings.statLists.length ? `${rows.length} word${rows.length === 1 ? "" : "s"} in your current selection` : "Pick one or more lists above first"}</div></span>
+                <span className="grow"><b>Nur die gewählten Wortlisten</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>{settings.statLists.length ? `${rows.length} ${rows.length === 1 ? "Wort" : "Wörter"} in deiner aktuellen Auswahl` : "Wähle oben zuerst eine Wortliste"}</div></span>
               </button>
               <button className="picker-row" style={{ textAlign: "left" }} onClick={resetAll}>
                 <Icon name="refresh" size={16} />
-                <span className="grow"><b>Everything</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>All lists, both languages, and the day streak</div></span>
+                <span className="grow"><b>Alles</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>Alle Wortlisten, alle Sprachen und die Tagesserie</div></span>
               </button>
             </div>
           </div>
