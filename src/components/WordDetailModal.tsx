@@ -86,11 +86,22 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
         )}
 
         {/* example sentences (always shown here — this is the detail view) */}
-        {(word.examples || []).filter(Boolean).length > 0 && (
+        {[...(word.examples || []), ...(word.examplesDe || [])].filter(Boolean).length > 0 && (
           <div className="panel" style={{ padding: "12px 14px", marginBottom: 12 }}>
             <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>Beispielsätze</div>
             <div className="card-examples" style={{ marginTop: 0, maxWidth: "none" }}>
-              {(word.examples || []).filter(Boolean).map((s: string, i: number) => <p key={i}>{s}</p>)}
+              {(word.examples || []).map((s: string, i: number) => {
+                const de = ((word.examplesDe || [])[i] || "").trim();
+                if (!String(s || "").trim() && !de) return null;
+                /* Satz und Übersetzung gehören zusammen — deshalb untereinander
+                 * im selben Block, die Übersetzung zurückgenommen. */
+                return (
+                  <p key={i}>
+                    {s}
+                    {de && <><br /><span className="faint">{de}</span></>}
+                  </p>
+                );
+              })}
             </div>
           </div>
         )}

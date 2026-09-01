@@ -33,6 +33,12 @@ export interface Word {
   lernform?: string;      // full stammformen, e.g. "video, videre, vidi, visum"
   wortart?: Wortart;
   examples?: string[];    // 1–2 example sentences IN THE FOREIGN LANGUAGE (school books print these)
+  /* Their German translations, index-aligned with `examples`. A parallel array
+   * rather than a restructure to {fgn, de} pairs: `examples` is read in a dozen
+   * places, and every word that already exists carries the old shape. Both are
+   * optional and each entry may be empty — a sentence without a translation
+   * simply shows nothing on the German side. */
+  examplesDe?: string[];
   phonetic?: string;      // optional pronunciation of the foreign word, e.g. "dɒɡ" or "dohg"
   topic?: string;
   lists?: string[];

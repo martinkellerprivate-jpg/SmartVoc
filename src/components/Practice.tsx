@@ -642,9 +642,18 @@ export function Practice() {
     );
   }
 
-  // Example sentences are in the FOREIGN language, so they can give the answer
-  // away — only ever shown on the solution side of the card, never on the prompt.
-  const cardExamples = (current?.examples || []).filter(Boolean);
+  /* Beispielsätze gibt es jetzt paarweise: `examples` in der Fremdsprache,
+   * `examplesDe` mit den Übersetzungen, gleicher Index. Gezeigt wird immer die
+   * Sprache des Worts, das gerade gross auf der Karte steht — sonst stünde eine
+   * Übersetzung neben einem Wort, das man erst noch übersetzen soll.
+   *
+   * Unverändert bleibt: nur auf der LÖSUNGSSEITE. Ein Beispielsatz enthält das
+   * Wort und verrät damit die Antwort; das galt für die fremdsprachigen und
+   * gilt für die deutschen genauso. */
+  const exFgn = (current?.examples || []).map((s: any) => String(s || "").trim());
+  const exDe = (current?.examplesDe || []).map((s: any) => String(s || "").trim());
+  const examplesIn = (lang: string) => (lang === NATIVE ? exDe : exFgn).filter(Boolean);
+  const cardExamples = examplesIn(tgtKey);
   // Pronunciation belongs to the FOREIGN word, so it may only appear where that
   // word itself is shown — otherwise it would hint at the answer.
   const phon = (settings.showPhonetic !== false && current?.phonetic) ? String(current.phonetic).trim() : "";
