@@ -795,3 +795,155 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   .planrow-acts .btn { flex: 1; justify-content: center; }
   .cal-day { height: 40px; font-size: 12.5px; }
 }
+
+/* ====================================================================
+   DIE KARTE (Stufe 4) — Querformat, zwei Seiten, nichts drauf, was nicht
+   auf eine Karteikarte gehört.
+   ==================================================================== */
+
+/* ---- Passung statt Scrollbalken ----
+   --fit wird vom Bauteil in Stufen gesenkt, bis der Inhalt passt. Alles,
+   was wachsen kann, hängt an dieser einen Zahl. */
+.card-center { --fit: 1; overflow: hidden; gap: calc(12px * var(--fit)); padding: 0 calc(22px * var(--fit)); }
+/* Auch die Polsterung der Karte gibt nach: auf einer kleinen Karte sind
+   26 Pixel Rand ringsum mehr als der Text selbst. */
+.card-face { padding: clamp(14px, 4.6%, 26px); }
+.card-center.overflows { overflow-y: auto; }   /* der Ausnahmefall */
+.prompt-word { font-size: calc(clamp(26px, 5vw, 46px) * var(--fit)); line-height: 1.08; }
+.card-sub { font-size: calc(14px * var(--fit)); color: var(--ink-soft); text-align: center; }
+.card-phonetic { font-size: calc(13px * var(--fit)); }
+.card-yours { font-size: calc(13px * var(--fit)); color: var(--ink-soft); text-align: center; }
+
+/* ---- Beispielsätze: fein, kursiv, mittig, keine Pfeile, kein Rahmen ---- */
+.card-examples {
+  border-left: none; padding-left: 0; margin-top: calc(4px * var(--fit));
+  max-width: 40ch; text-align: center; display: flex; flex-direction: column; gap: calc(3px * var(--fit));
+}
+.card-examples p {
+  font-family: var(--card-font); font-style: italic; text-align: center;
+  font-size: calc(14px * var(--fit)); line-height: 1.45; color: var(--ink-faint); margin: 0;
+}
+
+/* ---- Sprachkennzeichnung: die volle Seite ist die, auf der man steht ---- */
+.card-dir { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; }
+.card-dir-from { background: var(--ink); color: var(--card); border-radius: 5px; padding: 2px 7px; }
+.card-dir-arrow { color: var(--ink-faint); font-weight: 400; }
+.card-dir-to { color: var(--ink-soft); border: 1px solid var(--line); border-radius: 5px; padding: 2px 7px; }
+.card-top { justify-content: center; }
+
+/* ---- Das Urteil steht in Worten über dem Wort, das Wort trägt die Farbe.
+       Kein Haken, kein Kreuz, kein Kasten um die Lösung. ---- */
+.verdict { font-size: calc(13px * var(--fit)); font-weight: 800; letter-spacing: .14em; }
+.prompt-word .ch.wrong, .prompt-word .ch.missing, .prompt-word .ch.extra, .prompt-word .ch.ok {
+  background: none; color: inherit; text-decoration: none; padding: 0;
+}
+
+/* ---- Eine Höhe für alle Aufklapper, eine für alle Handlungsknöpfe.
+       Die Breite darf mitwachsen, die Höhe nie. ---- */
+.practice-controls { justify-content: flex-start; gap: 10px; }
+.ctl { display: inline-flex; flex-direction: column; gap: 3px; }
+.ctl-label { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); padding-left: 2px; }
+.ctl-select {
+  height: 40px; padding: 0 32px 0 12px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font: inherit; font-size: 14px; cursor: pointer;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%), linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 17px, calc(100% - 12px) 17px;
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+}
+.ctl-select:hover { border-color: var(--amber); }
+.btn-h { height: 44px; padding: 0 18px; }
+.field-h { height: 44px; padding: 0 16px; font-size: 17px; }
+.grow-btn { flex: 1; justify-content: center; }
+.answer-row .field { font-size: 17px; padding: 0 16px; }
+.toolbelt .faint { font-size: 12.5px; align-self: center; text-align: center; }
+
+.grade-got { border-color: var(--ok); color: var(--ok); }
+.grade-miss { border-color: var(--warn); color: var(--warn); }
+
+.round-progress-off {
+  text-align: center; font-size: 12px; font-weight: 600; letter-spacing: .03em;
+  color: var(--ink-faint); background: var(--bg-2); border-radius: 999px; padding: 6px 14px;
+  margin-bottom: 10px;
+}
+
+/* ---- Vollbild: die Karte schwebt in Schwarz. Ausgang und Fortschritt
+       stehen DANEBEN, nie darauf. Gilt hoch wie quer. ---- */
+.practice-wrap.focus-on {
+  background: oklch(0.16 0.008 70 / 0.94);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  gap: 14px; padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  justify-content: center;
+}
+.practice-wrap.focus-on .card-scene,
+.practice-wrap.focus-on .answer-zone { width: min(94vw, 150vh); max-width: 1200px; }
+/* Auf Schwarz muss die Beschriftung hell sein -- sonst steht dunkler Text
+   auf dunklem Grund, und der Fortschritt ist unlesbar. */
+.practice-wrap.focus-on .round-progress-head,
+.practice-wrap.focus-on .toolbelt .faint,
+.practice-wrap.focus-on .mbar-legend,
+.practice-wrap.focus-on .mbar-total { color: oklch(0.86 0.01 80); }
+.practice-wrap.focus-on .round-progress-track { background: oklch(1 0 0 / .16); }
+.practice-wrap.focus-on .round-progress-off { background: oklch(1 0 0 / .1); color: oklch(0.86 0.01 80); }
+.practice-wrap.focus-on .card-expand { background: oklch(1 0 0 / .12); border-color: oklch(1 0 0 / .2); color: #fff; }
+
+/* Im Hochformat bleibt die Karte quer -- sie ist eine Karteikarte, keine
+   Seite. Der Platz darüber und darunter gehört Fortschritt und Handlung. */
+@media (orientation: portrait) {
+  .practice-wrap.focus-on .card-scene,
+  .practice-wrap.focus-on .answer-zone { width: 94vw; }
+}
+@media (orientation: landscape) and (max-height: 560px) {
+  /* Quer auf dem Handy ist die Höhe knapp, also muss SIE die Karte bemessen.
+     Nach Breite gerechnet wäre die Karte 277 Pixel hoch, und Fortschritt,
+     Beherrschung und Handlungszone fielen unten aus dem Bild.
+     Rechnung: rund 155 Pixel gehen an alles ausser der Karte, der Rest mal
+     1.6 ist ihre Breite (Seitenverhältnis 8:5). */
+  .practice-wrap.focus-on { gap: 8px; padding: 8px 12px; }
+  .practice-wrap.focus-on .card-scene,
+  .practice-wrap.focus-on .answer-zone { width: min(94vw, calc((100vh - 155px) * 1.6)); }
+  .practice-wrap.focus-on .toolbelt { display: none; }
+  /* Der Balken bleibt, die Legende geht -- in der Miniansicht ist das erlaubt,
+     und der Platz fehlt sonst der Karte. */
+  .practice-wrap.focus-on .mbar-legend,
+  .practice-wrap.focus-on .mbar-total { display: none; }
+  .practice-wrap.focus-on .mastery-strip { margin-top: 0; }
+}
+
+/* ---- Rundenabschluss: die Wörter selbst, nicht nur ihre Anzahl ---- */
+.round-group { width: 100%; max-width: 520px; margin: 0 auto; }
+.round-group-head { display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+.round-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.round-chip { border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; font-size: 13px; background: var(--card); }
+.round-chip-more { color: var(--ink-faint); border-style: dashed; }
+.round-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+/* Im Vollbild verlaesst der Ausgang die Karte: er sitzt in der Ecke des
+   Bildschirms, nicht auf dem Papier. */
+.focus-exit {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  width: 42px; height: 42px; border-radius: 12px;
+  border: 1px solid oklch(1 0 0 / .22); background: oklch(1 0 0 / .12); color: #fff;
+  display: grid; place-items: center; cursor: pointer; z-index: 10;
+}
+.focus-exit:hover { background: oklch(1 0 0 / .2); }
+
+/* ---- Bühne: Karte und Handlungszone ----
+   Auf dem Handy untereinander. Auf dem Schirm nebeneinander -- dort ist die
+   Breite da und die Höhe knapp, und die Antwortzeile darf nie unter der Falz
+   liegen. Dieselbe Logik, nur der vorhandene Platz ist ein anderer. */
+.practice-stage { display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
+@media (min-width: 940px) {
+  .practice-stage { flex-direction: row; align-items: center; justify-content: center; gap: 28px; }
+  .practice-stage .answer-zone { width: min(380px, 38%); }
+}
+/* Im Vollbild bleibt es untereinander: dort gehört die Breite der Karte. */
+.practice-wrap.focus-on .practice-stage { flex-direction: column; gap: 14px; }
+
+/* ---- Die eine Zeile, die sagt, was gerade geübt wird ---- */
+.scope-line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 2px 0 10px; }
+.scope-line-label { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+.scope-line-name { font-weight: 600; }
