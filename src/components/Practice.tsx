@@ -14,7 +14,7 @@ import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
 import { TipPopup } from "./TipPopup";
-import { LERN_TIPPS } from "./LearnTips";
+import { LERN_TIPPS } from "./Help";
 
 /* ===================================================================
  * practice.jsx — the flashcard trainer.

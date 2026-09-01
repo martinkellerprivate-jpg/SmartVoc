@@ -8,12 +8,11 @@ import { useSync } from "./sync/SyncBridge";
 import { Icon } from "./ui/Icon";
 import { Ring } from "./ui/Ring";
 import { PAIRS, activePairs } from "./lib/pairs";
+import { STARTERS, activateStarter, isStarterActivated } from "./data/starter";
 import { AccountModal } from "./components/AccountModal";
 import { ImportShareModal } from "./components/ImportShareModal";
 import { ImportContext } from "./components/importContext";
-import { OnboardingModal } from "./components/OnboardingModal";
-import { LearnTips } from "./components/LearnTips";
-import { HelpGuide } from "./components/HelpGuide";
+import { Help } from "./components/Help";
 import { Practice } from "./components/Practice";
 import { PlanTab } from "./components/PlanTab";
 import { WordList } from "./components/WordList";
@@ -52,8 +51,7 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
           <AccountModal open={accountOpen} onClose={() => setAccountOpen(false)} />
         </>
       )}
-      <LearnTips />
-      <HelpGuide />
+      <Help />
       {/* Einstellungen verlassen die Leiste: sie sind kein Bereich, in dem man
           arbeitet, sondern etwas, das man einmal einstellt. */}
       <button className={"icon-btn" + (tab === "settings" ? " active" : "")} title="Einstellungen"
@@ -99,7 +97,8 @@ const TABS = [
 ];
 
 export function App() {
-  const { vocab, settings, setSettings } = useStore();
+  const store = useStore();
+  const { vocab, settings, setSettings } = store;
   const nWords = vocab.filter((w: any) => w.pair === settings.pair).length;
   /* Alte gespeicherte Bereiche auf die neuen abbilden — sonst startet die App
    * nach dem Umbau auf einem Bereich, den es nicht mehr gibt. */
@@ -114,6 +113,20 @@ export function App() {
     window.addEventListener("vt-tab", go);
     return () => window.removeEventListener("vt-tab", go);
   }, []);
+
+  /* Der Grundwortschatz erscheint von selbst, sobald eine Sprache
+   * eingeschaltet ist -- statt hinter einem Willkommen-Dialog, den man
+   * wegklickt, bevor man ihn gelesen hat. Die Aktivierung ist wiederhol-
+   * sicher (activatedStarters) und legt eine ganz normale Wortliste an,
+   * die sich loeschen laesst wie jede andere. Damit bleibt sie fuer eine
+   * spaetere Bezahlfassung technisch abtrennbar. */
+  useEffect(() => {
+    for (const p of activePairs(settings)) {
+      for (const s of STARTERS.filter((x) => x.pair === p.id)) {
+        if (!isStarterActivated(settings, s.pair, s.stufe)) { activateStarter(store, s.pair, s.stufe); return; }
+      }
+    }
+  }, [settings.activatedStarters, settings.activePairs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // If the active pair was switched off in settings, move to the first one
   // that is still visible — otherwise the app would show a hidden language.
@@ -181,7 +194,6 @@ export function App() {
       {tab === "stats" && <Stats />}
       {tab === "settings" && <SettingsTab />}
       <ImportShareModal open={importOpen} initialToken={importToken} onClose={() => setImportOpen(false)} />
-      <OnboardingModal />
     </div>
     </ImportContext.Provider>
   );
