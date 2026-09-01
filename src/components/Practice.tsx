@@ -133,7 +133,8 @@ export function Practice() {
   const [session, setSession] = useState([]); // recent verdicts
   const [tip, setTip] = useState(null);        // current study-tip popup (Phase 6)
   const [focus, setFocus] = useState(false);   // V2: zoom / focus card mode
-  const [listsOpen, setListsOpen] = useState(false);
+  // Die Wortlisten sind die eigentliche Wahl -- sie stehen offen da.
+  const [listsOpen, setListsOpen] = useState(true);
   const [topicsOpen, setTopicsOpen] = useState(false); // F-NAV: collapsible topics
   const [enoughAck, setEnoughAck] = useState(false);   // F-CARD-UI: "genug für heute" dismissed
   const [chipsHelp, setChipsHelp] = useState(false);   // FR3-5: smart-chip explainer popup

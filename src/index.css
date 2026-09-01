@@ -728,7 +728,10 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .cal-wd { text-align: center; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-faint); padding: 2px 0; }
 
 .cal-day {
-  position: relative; aspect-ratio: 1; min-height: 38px;
+  /* Feste Hoehe statt aspect-ratio: bei sieben Spalten auf einem breiten
+     Fenster wuerde ein quadratischer Tag ueber hundert Pixel hoch -- der
+     Monat passte dann nicht mehr auf den Schirm. */
+  position: relative; height: clamp(42px, 6vw, 64px);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
   border: 1px solid transparent; border-radius: 10px; background: none;
   color: var(--ink); font-size: 13.5px; font-variant-numeric: tabular-nums;
@@ -790,5 +793,5 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   .planrow { flex-wrap: wrap; }
   .planrow-acts { flex-direction: row; width: 100%; }
   .planrow-acts .btn { flex: 1; justify-content: center; }
-  .cal-day { min-height: 34px; font-size: 12.5px; }
+  .cal-day { height: 40px; font-size: 12.5px; }
 }

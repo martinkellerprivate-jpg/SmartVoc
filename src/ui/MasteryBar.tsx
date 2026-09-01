@@ -25,7 +25,9 @@ export function MasteryBar({ dist, total, onSegment, activeFilter, showLegend = 
 
   return (
     <div className="mbar">
-      <div className="mbar-total">{total} {total === 1 ? "Wort" : "Wörter"} insgesamt</div>
+      {/* In Miniansichten steht die Gesamtzahl schon in der Zeile darueber --
+          zweimal dieselbe Zahl liest sich wie zwei verschiedene. */}
+      {showLegend && <div className="mbar-total">{total} {total === 1 ? "Wort" : "Wörter"} insgesamt</div>}
       <div className="mbar-band">
         {present.map((k) => (
           <i key={k} className={onSegment ? "clickable" : ""} onClick={onSegment ? () => onSegment(k) : undefined}

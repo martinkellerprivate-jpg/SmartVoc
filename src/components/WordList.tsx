@@ -356,21 +356,21 @@ export function WordList() {
             </>
           ) : (
             <>
-              <input className="field grow" style={{ minWidth: 140 }} placeholder={`${P.foreignLabel} word`} value={adding.fgn}
+              <input className="field grow" style={{ minWidth: 140 }} placeholder={P.foreignLabel} value={adding.fgn}
                 onChange={(e) => setAdding({ ...adding, fgn: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
               <Icon name="arrowRight" size={18} style={{ color: "var(--ink-faint)" }} />
               <input className="field grow" style={{ minWidth: 140 }} placeholder="Deutsch (der/die/das)" value={adding.de}
                 onChange={(e) => setAdding({ ...adding, de: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
             </>
           )}
-          <input className="field" style={{ width: 110 }} placeholder="Topic" value={adding.topic}
+          <input className="field" style={{ width: 110 }} placeholder="Thema" value={adding.topic}
             onChange={(e) => setAdding({ ...adding, topic: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
           <select className="field" style={{ width: "auto", minWidth: 120 }} value={adding.listId} onChange={(e) => setAdding({ ...adding, listId: e.target.value })}>
             {pairLists.length === 0 && <option value="">— beim Hinzufügen neue Liste —</option>}
             {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
           </select>
           <button className="btn btn-primary" onClick={addWord} disabled={busy || (!adding.fgn.trim() && !adding.de.trim() && !adding.lernform.trim())}>
-            {busy ? <Icon name="refresh" size={15} /> : <Icon name="plus" size={15} />} Add
+            {busy ? <Icon name="refresh" size={15} /> : <Icon name="plus" size={15} />} Hinzufügen
           </button>
         </div>
         {isLat && <LatinKeys hint="Feld antippen, dann Zeichen wählen" />}
@@ -383,7 +383,7 @@ export function WordList() {
             onChange={(e) => setAdding({ ...adding, ex1: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
         </div>
         <div className="faint" style={{ fontSize: 12, marginTop: 9, display: "flex", alignItems: "center", gap: 6 }}>
-          <Icon name="sparkle" size={13} /> {isLat ? "Latein: Grundform + volle Lernform (Stammformen) + Wortart eingeben." : "Fill in just one language — the app translates the other and flags it for your review."}
+          <Icon name="sparkle" size={13} /> {isLat ? "Latein: Grundform + volle Lernform (Stammformen) + Wortart eingeben." : "Es genügt eine Sprache — die andere wird übersetzt und zum Nachschauen vorgemerkt."}
         </div>
       </div>
 
@@ -419,7 +419,7 @@ export function WordList() {
             <tr>
               <th style={{ width: "28%" }}>{P.foreignLabel}</th>
               <th style={{ width: "28%" }}>Deutsch</th>
-              <th style={{ width: "30%" }}>Lists</th>
+              <th style={{ width: "30%" }}>Listen</th>
               <th style={{ width: "14%" }}></th>
             </tr>
           </thead>
@@ -446,7 +446,7 @@ export function WordList() {
                       </label>
                     ))}
                   </div>
-                  <input className="mini-input" style={{ marginTop: 8, maxWidth: 160 }} placeholder="Topic" value={draft.topic} onChange={(e) => setDraft({ ...draft, topic: e.target.value })} />
+                  <input className="mini-input" style={{ marginTop: 8, maxWidth: 160 }} placeholder="Thema" value={draft.topic} onChange={(e) => setDraft({ ...draft, topic: e.target.value })} />
                   {isLat && <LatinKeys />}
                   <input className="mini-input" style={{ marginTop: 6, maxWidth: 160 }} placeholder="Aussprache" value={draft.phon} onChange={(e) => setDraft({ ...draft, phon: e.target.value })} />
                   <input className="mini-input" style={{ marginTop: 6 }} placeholder={`Beispielsatz (${P.foreignLabel})`} value={draft.ex1} onChange={(e) => setDraft({ ...draft, ex1: e.target.value })} />
