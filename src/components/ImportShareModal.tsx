@@ -1,5 +1,6 @@
 /* Import a shared list by code or link → own copy (copy-on-import). */
 import { useState, useEffect } from "react";
+import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
@@ -57,13 +58,13 @@ export function ImportShareModal({ open, initialToken, onClose }: { open: boolea
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
         <div className="modal-head">
-          <div className="modal-title">Liste importieren</div>
+          <div className="modal-title">{txt("Liste importieren")}</div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
 
         <div className="col" style={{ gap: 10 }}>
           <div className="row" style={{ gap: 8 }}>
-            <input className="field" placeholder="Code (VT-…) oder Link einfügen" value={code}
+            <input className="field" placeholder={txt("Code (VT-…) oder Link einfügen")} value={code}
               onChange={(e) => setCode(e.target.value)} onKeyDown={(e) => e.key === "Enter" && load(code)} />
             <button className="btn" onClick={() => load(code)} disabled={busy || !code.trim()}>
               {busy ? <Icon name="refresh" size={15} /> : <Icon name="search" size={15} />}
@@ -83,7 +84,7 @@ export function ImportShareModal({ open, initialToken, onClose }: { open: boolea
         </div>
 
         <div className="modal-foot">
-          <button className="btn btn-ghost" onClick={onClose}>Abbrechen</button>
+          <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
           <button className="btn btn-primary" onClick={doImport} disabled={!payload}>
             <Icon name="download" size={15} /> {payload ? `${payload.words.length} Wörter importieren` : "Importieren"}
           </button>

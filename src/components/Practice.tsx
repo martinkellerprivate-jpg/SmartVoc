@@ -1,4 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo } from "react";
+import { txt } from "../lib/i18n";
 import { Capacitor } from "@capacitor/core";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
@@ -14,7 +15,7 @@ import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
 import { TipPopup } from "./TipPopup";
-import { LERN_TIPPS } from "./Help";
+import { lernTipps } from "./Help";
 
 /* ===================================================================
  * practice.jsx — the flashcard trainer.
@@ -78,7 +79,8 @@ export function Practice() {
   // 'sitzt_schlecht' (S), replaces the old classifyWord-„Schwierige". Leeches (D)
   // live only in Stats, not here.
   const SMART_ACCESS = [
-    { ref: "heute", label: "Heute dran", icon: "calendar", tone: "green" },   // V17 default learning path
+    // Beschriftung laeuft beim Rendern durch txt().
+    { ref: "heute", label: "Heute dran", icon: "calendar", tone: "green" },
     { ref: "due", label: "Fällige Wörter", icon: "target", tone: "amber" },
     { ref: "wackeln", label: "Wackeln noch", icon: "flame", tone: "red" },
     { ref: "baldfaellig", label: "Bald fällig", icon: "clock", tone: "amber" },
@@ -249,9 +251,9 @@ export function Practice() {
     answeredRef.current += 1;
     if (!every || answeredRef.current % every !== 0) { setTip(null); return; } // clear any lingering tip
     let idx = 0;
-    try { idx = (parseInt(localStorage.getItem("vt_v1_tipidx") || "-1", 10) + 1) % LERN_TIPPS.length; } catch (e) {}
+    try { idx = (parseInt(localStorage.getItem("vt_v1_tipidx") || "-1", 10) + 1) % lernTipps().length; } catch (e) {}
     try { localStorage.setItem("vt_v1_tipidx", String(idx)); } catch (e) {}
-    setTip(LERN_TIPPS[idx]);
+    setTip(lernTipps()[idx]);
   }, [settings.tipsFrequency]);
 
   // Bulletproof flip: render a single face, animate edge-on, swap, animate back.
@@ -533,13 +535,13 @@ export function Practice() {
   const smartChipsEl = (
     <div className="lchips smart-chips p-smart">
       {SMART_ACCESS.map((s) => (
-        <button key={s.ref} title="Schnellzugriff"
+        <button key={s.ref} title={txt("Schnellzugriff")}
           className={"lchip lchip-smart tone-" + s.tone + (validMulti.length === 0 && effective.kind === "smart" && effective.ref === s.ref ? " on" : "")}
           onClick={() => pickScope("smart", s.ref)}>
           <Icon name={s.icon} size={14} /> {s.label} <span className="lchip-n">{smartCountOf(s.ref)}</span>
         </button>
       ))}
-      <button className="chips-help" title="Was bedeuten diese?" aria-label="Erklärung" onClick={() => setChipsHelp(true)}>?</button>
+      <button className="chips-help" title={txt("Was bedeuten diese?")} aria-label={txt("Erklärung")} onClick={() => setChipsHelp(true)}>?</button>
     </div>
   );
   // FR3-5: kindgerechte Erklärung der vier Schnellzugriffe (als Möglichkeit formuliert).
@@ -553,7 +555,7 @@ export function Practice() {
     <div className="modal-backdrop" onClick={() => setChipsHelp(false)}>
       <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
         <div className="modal-head">
-          <div className="modal-title">Die vier Schnellzugriffe</div>
+          <div className="modal-title">{txt("Die vier Schnellzugriffe")}</div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setChipsHelp(false)}><Icon name="x" size={16} /></button>
         </div>
         <div className="col" style={{ gap: 12 }}>
@@ -564,7 +566,7 @@ export function Practice() {
             </div>
           ))}
         </div>
-        <div className="modal-foot" style={{ marginTop: 14 }}><button className="btn btn-primary" onClick={() => setChipsHelp(false)}>Verstanden</button></div>
+        <div className="modal-foot" style={{ marginTop: 14 }}><button className="btn btn-primary" onClick={() => setChipsHelp(false)}>{txt("Verstanden")}</button></div>
       </div>
     </div>
   ) : null;
@@ -583,9 +585,9 @@ export function Practice() {
   const groupHead = (open: boolean, set: any, icon: string, label: string, n: number, toks: string[]) => (
     <div className="scope-group-head">
       <button className="lchips-label lchips-toggle" onClick={() => set((o: boolean) => !o)}>
-        <span style={{ fontSize: 10 }}>{open ? "▾" : "▸"}</span> <Icon name={icon as any} size={13} /> {label} ({n})
+        <span style={{ fontSize: 10 }}>{open ? "▾" : "▸"}</span> <Icon name={icon as any} size={13} /> {txt(label)} ({n})
       </button>
-      {open && n > 0 && <button className="scope-all" onClick={() => toggleAll(toks)}>{toks.every((t) => validMulti.includes(t)) && toks.length ? "keine" : "alle"}</button>}
+      {open && n > 0 && <button className="scope-all" onClick={() => toggleAll(toks)}>{txt(toks.every((t) => validMulti.includes(t)) && toks.length ? "keine" : "alle")}</button>}
     </div>
   );
   const listToks = listsSorted.map((l: any) => "list:" + l.id);
@@ -601,7 +603,7 @@ export function Practice() {
               <button key={l.id} className={"lchip" + (isActiveTok("list:" + l.id) ? " on" : "")} onClick={() => toggleScope("list:" + l.id)}>
                 <span className="dot" style={{ width: 9, height: 9, borderRadius: "50%", background: TONE_VAR[readyTone(pct, settings)] }} />
                 {l.name} <span className="lchip-n">{listCountOf(l.id)}</span>
-                {days != null && <span className="lchip-due" style={{ color: days <= 3 ? "var(--bad)" : "var(--ink-faint)" }}>{days < 0 ? "überfällig" : days === 0 ? "heute" : `${days} T`}</span>}
+                {days != null && <span className="lchip-due" style={{ color: days <= 3 ? "var(--bad)" : "var(--ink-faint)" }}>{days < 0 ? txt("überfällig") : days === 0 ? txt("heute") : txt("{n} T", { n: days })}</span>}
               </button>
             );
           })}
@@ -613,19 +615,19 @@ export function Practice() {
   /* Was gerade geübt wird, in einer Zeile. Mehrere Wortlisten werden gezählt,
    * nicht aufgezählt -- eine Zeile, die umbricht, ist keine Zeile mehr. */
   const scopeSummary = (() => {
-    if (scopeTokens.length > 1) return `${scopeTokens.length} Wortlisten`;
+    if (scopeTokens.length > 1) return txt("{n} Wortlisten", { n: scopeTokens.length });
     const tok = scopeTokens[0] || "";
     const i = tok.indexOf(":"); const kind = tok.slice(0, i), ref = tok.slice(i + 1);
-    if (kind === "smart") return (SMART_ACCESS.find((a) => a.ref === ref) || {}).label || "Schnellzugriff";
+    if (kind === "smart") return txt((SMART_ACCESS.find((a) => a.ref === ref) || {}).label || "Schnellzugriff");
     return (pairLists.find((l: any) => l.id === ref) || {}).name || "Übung";
   })();
   const scopeBar = (
     <div className="lchips-wrap scope-bar">
       <div className="scope-line">
-        <span className="scope-line-label">Übung</span>
+        <span className="scope-line-label">{txt("Übung")}</span>
         <span className="scope-line-name">{scopeSummary}</span>
         <button className="btn btn-ghost btn-sm" onClick={() => setPickerOpen((o) => !o)}>
-          {pickerOpen ? "Fertig" : "Ändern"}
+          {txt(pickerOpen ? "Fertig" : "Ändern")}
         </button>
       </div>
       {pickerOpen && <>{smartChipsEl}{lessonSelectorEl}{chipsHelpEl}</>}
@@ -637,8 +639,8 @@ export function Practice() {
       <div className="practice-wrap">
         {scopeBar}
         <div className="empty">
-          <div className="big">Hier gibt es nichts zu üben</div>
-          <div>{pairLists.length ? "Wähle oben eine andere Wortliste oder einen Schnellzugriff." : "Lege unter „Wortlisten“ eine Liste an oder füge Wörter hinzu."}</div>
+          <div className="big">{txt("Hier gibt es nichts zu üben")}</div>
+          <div>{txt(pairLists.length ? "Wähle oben eine andere Wortliste oder einen Schnellzugriff." : "Lege unter „Wortlisten“ eine Liste an oder füge Wörter hinzu.")}</div>
         </div>
       </div>
     );
@@ -649,15 +651,15 @@ export function Practice() {
     const remainingN = st ? remaining(st) : 0;
     const total = st ? st.total : 0;
     if (remainingN > 0) {   // transient: first card about to be picked
-      return <div className="practice-wrap">{scopeBar}<div className="empty"><div className="big">Bereit</div><div>Einen Moment …</div></div></div>;
+      return <div className="practice-wrap">{scopeBar}<div className="empty"><div className="big">{txt("Bereit")}</div><div>{txt("Einen Moment …")}</div></div></div>;
     }
     if (total === 0) {     // nothing was due / everything already sits
       return (
         <div className="practice-wrap">
           {scopeBar}
           <div className="empty">
-            <div className="big">Alles sitzt — nichts fällig</div>
-            <div>In dieser Auswahl ist gerade nichts dran. Wähle oben eine andere Wortliste oder einen Schnellzugriff — oder komm später wieder.</div>
+            <div className="big">{txt("Alles sitzt — nichts fällig")}</div>
+            <div>{txt("In dieser Auswahl ist gerade nichts dran. Wähle oben eine andere Wortliste oder einen Schnellzugriff — oder komm später wieder.")}</div>
           </div>
         </div>
       );
@@ -668,11 +670,11 @@ export function Practice() {
         <div className="practice-wrap">
           {scopeBar}
           <div className="empty round-done">
-            <div className="big">Durchgeblättert</div>
-            <div className="round-tally">Du hast alle Karten dieser Auswahl angesehen. Durchblättern ändert deinen Lernstand nicht.</div>
+            <div className="big">{txt("Durchgeblättert")}</div>
+            <div className="round-tally">{txt("Du hast alle Karten dieser Auswahl angesehen. Durchblättern ändert deinen Lernstand nicht.")}</div>
             <div className="round-actions">
-              <button className="btn btn-primary" onClick={leaveRun}>Fertig</button>
-              <button className="btn btn-ghost btn-sm" onClick={() => beginRun(runWordsRef.current, true)}><Icon name="refresh" size={14} /> Nochmal durchblättern</button>
+              <button className="btn btn-primary" onClick={leaveRun}>{txt("Fertig")}</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => beginRun(runWordsRef.current, true)}><Icon name="refresh" size={14} /> {txt("Nochmal durchblättern")}</button>
             </div>
           </div>
         </div>
@@ -696,19 +698,19 @@ export function Practice() {
     const chips = (ids: string[], tone: string) => (
       <div className="round-chips">
         {ids.slice(0, 12).map((id) => <span key={id} className="round-chip" style={{ borderColor: tone }}>{wlbl(id)}</span>)}
-        {ids.length > 12 && <span className="round-chip round-chip-more">und {ids.length - 12} weitere</span>}
+        {ids.length > 12 && <span className="round-chip round-chip-more">{txt("und {n} weitere", { n: ids.length - 12 })}</span>}
       </div>
     );
     return (
       <div className="practice-wrap">
         {scopeBar}
         <div className="empty round-done">
-          <div className="big">Runde geschafft</div>
+          <div className="big">{txt("Runde geschafft")}</div>
 
           {sitIds.length > 0 && (
             <div className="round-group">
               <div className="round-group-head" style={{ color: "var(--ok)" }}>
-                <Icon name="thumb-up" size={17} /> {sitIds.length === 1 ? "Das sitzt" : `${sitIds.length} sitzen`}
+                <Icon name="thumb-up" size={17} /> {sitIds.length === 1 ? txt("Das sitzt") : txt("{n} sitzen", { n: sitIds.length })}
               </div>
               {chips(sitIds, "var(--ok)")}
             </div>
@@ -717,14 +719,14 @@ export function Practice() {
           {failedIds.length > 0 && (
             <div className="round-group">
               <div className="round-group-head" style={{ color: "var(--warn)" }}>
-                <Icon name="flame" size={17} /> {failedIds.length === 1 ? "Das sitzt noch nicht so gut" : `${failedIds.length} sitzen noch nicht so gut`}
+                <Icon name="flame" size={17} /> {failedIds.length === 1 ? txt("Das sitzt noch nicht so gut") : txt("{n} sitzen noch nicht so gut", { n: failedIds.length })}
               </div>
               {chips(failedIds, "var(--warn)")}
             </div>
           )}
 
           {back > 0 && (
-            <div className="round-tally">{back} {back === 1 ? "Wort kommt" : "Wörter kommen"} später zur Wiederholung zurück — das ist so gedacht</div>
+            <div className="round-tally">{txt(back === 1 ? "{n} Wort kommt später zur Wiederholung zurück — das ist so gedacht" : "{n} Wörter kommen später zur Wiederholung zurück — das ist so gedacht", { n: back })}</div>
           )}
 
           {grown.length > 0 && (
@@ -738,15 +740,15 @@ export function Practice() {
           <div className="round-actions">
             {failedIds.length > 0 && (
               <button className="btn btn-amber btn-h" onClick={startRoundRetry}>
-                <Icon name="flame" size={15} /> Die {failedIds.length} nochmal üben
+                <Icon name="flame" size={15} /> {txt("Die {n} nochmal üben", { n: failedIds.length })}
               </button>
             )}
-            <button className="btn btn-primary btn-h" onClick={leaveRun}>Für heute fertig</button>
+            <button className="btn btn-primary btn-h" onClick={leaveRun}>{txt("Für heute fertig")}</button>
           </div>
           <button className="btn btn-ghost btn-sm" onClick={() => beginRun(runWordsRef.current, true)}>
-            <Icon name="refresh" size={14} /> Ganze Übung nochmal
+            <Icon name="refresh" size={14} /> {txt("Ganze Übung nochmal")}
           </button>
-          <div className="faint" style={{ fontSize: 12.5, marginTop: 10 }}>Am besten morgen wieder — dann sitzt es dauerhaft</div>
+          <div className="faint" style={{ fontSize: 12.5, marginTop: 10 }}>{txt("Am besten morgen wieder — dann sitzt es dauerhaft")}</div>
         </div>
       </div>
     );
@@ -780,7 +782,7 @@ export function Practice() {
     // gehört einem 13-jährigen Benutzer, nicht einem Prüfungsprotokoll.
     correct: { tone: "ok", label: "RICHTIG" },
     almost: { tone: "warn", label: "FAST RICHTIG" },
-    wrong: { tone: "bad", label: "NICHT GANZ" },
+    wrong: { tone: "bad", label: "NICHT GANZ" },   // durch txt() beim Rendern
   };
 
   /* Zwei getrennte Anzeigen, beide NEBEN der Karte, nicht darauf:
@@ -796,10 +798,10 @@ export function Practice() {
   const roundProgressEl = mode === "memorize" ? (
     /* Durchblättern zählt nicht -- dann darf dort auch kein Fortschritt
      * stehen, der etwas anderes behauptet. */
-    <div className="round-progress round-progress-off">Durchblättern — zählt nicht für deinen Lernstand</div>
+    <div className="round-progress round-progress-off">{txt("Durchblättern — zählt nicht für deinen Lernstand")}</div>
   ) : (roundProg && roundProg.total > 0) ? (
     <div className="round-progress">
-      <div className="round-progress-head"><span>Übungsfortschritt</span><span>{roundProg.pct} %</span></div>
+      <div className="round-progress-head"><span>{txt("Übungsfortschritt")}</span><span>{roundProg.pct} %</span></div>
       <div className="round-progress-track"><i style={{ width: roundProg.pct + "%" }} /></div>
     </div>
   ) : null;
@@ -829,7 +831,7 @@ export function Practice() {
           hilft nicht: die Bühne setzt `perspective`, und das macht sie zum
           Bezugsrahmen für alles Feste darin. */}
       {focus && (
-        <button className="focus-exit" title="Vollbild verlassen (Esc)" onClick={() => setFocus(false)}>
+        <button className="focus-exit" title={txt("Vollbild verlassen (Esc)")} onClick={() => setFocus(false)}>
           <Icon name="x" size={18} />
         </button>
       )}
@@ -839,32 +841,32 @@ export function Practice() {
           sonst steht in jeder Zeile ein anders hoher Knopf. */}
       <div className="practice-controls p-controls">
         <label className="ctl">
-          <span className="ctl-label">Richtung</span>
+          <span className="ctl-label">{txt("Richtung")}</span>
           <select className="ctl-select" value={settings.direction}
             onChange={(e) => { store.setSettings({ direction: e.target.value }); restartCard(); }}>
             <option value="f2n">{P.foreignLabel} → {P.nativeLabel}</option>
             <option value="n2f">{P.nativeLabel} → {P.foreignLabel}</option>
-            <option value="mixed">Gemischt</option>
+            <option value="mixed">{txt("Gemischt")}</option>
           </select>
         </label>
         <label className="ctl">
-          <span className="ctl-label">Antwort</span>
+          <span className="ctl-label">{txt("Antwort")}</span>
           <select className="ctl-select" value={mode}
             onChange={(e) => { store.setSettings({ mode: e.target.value }); restartCard(); }}>
-            <option value="type">Eintippen</option>
-            <option value="choice">Auswählen</option>
-            <option value="recall">Selbstkontrolle</option>
-            <option value="memorize">Durchblättern</option>
+            <option value="type">{txt("Eintippen")}</option>
+            <option value="choice">{txt("Auswählen")}</option>
+            <option value="recall">{txt("Selbstkontrolle")}</option>
+            <option value="memorize">{txt("Durchblättern")}</option>
           </select>
         </label>
         <div className="grow" />
-        <button className="btn btn-ghost btn-h" onClick={leaveRun}><Icon name="x" size={14} /> Übung verlassen</button>
+        <button className="btn btn-ghost btn-h" onClick={leaveRun}><Icon name="x" size={14} /> {txt("Übung verlassen")}</button>
       </div>
 
       {runRef.current && runRef.current.cards >= (getCfg().GENUG_KARTEN || 40) && !enoughAck && (
         <div className="enough-hint">
-          <span>Genug für heute? Du hast schon {runRef.current.cards} Karten geübt.</span>
-          <button className="btn btn-ghost btn-sm" onClick={() => setEnoughAck(true)}>Weiter</button>
+          <span>{txt("Genug für heute? Du hast schon {n} Karten geübt.", { n: runRef.current.cards })}</span>
+          <button className="btn btn-ghost btn-sm" onClick={() => setEnoughAck(true)}>{txt("Weiter")}</button>
         </div>
       )}
 
@@ -875,7 +877,7 @@ export function Practice() {
         {roundProgressEl}
         <div className="card-frame">
           {!focus && (
-            <button className="card-expand" title="Karte gross zeigen" onClick={() => setFocus(true)}>
+            <button className="card-expand" title={txt("Karte gross zeigen")} onClick={() => setFocus(true)}>
               <Icon name="expand" size={16} />
             </button>
           )}
@@ -891,7 +893,7 @@ export function Practice() {
                   {srcKey !== NATIVE && latinContext(current) && (
                     <div className="card-sub">{latinContext(current)}</div>
                   )}
-                  {cardIsFlippable && <div className="prompt-hint">Tippe auf die Karte</div>}
+                  {cardIsFlippable && <div className="prompt-hint">{txt("Tippe auf die Karte")}</div>}
                 </div>
               </div>
             ) : (
@@ -902,7 +904,7 @@ export function Practice() {
                   {result ? (
                     <>
                       <div className="verdict" style={{ color: TONE_VAR[verdictMeta[result.verdict].tone] }}>
-                        {verdictMeta[result.verdict].label}
+                        {txt(verdictMeta[result.verdict].label)}
                       </div>
                       <div className="prompt-word" style={{ color: TONE_VAR[verdictMeta[result.verdict].tone] }}>
                         {result.targetDiff.map((c, i) => <span key={i} className={"ch " + c.status}>{c.ch}</span>)}
@@ -912,7 +914,7 @@ export function Practice() {
                         <div className="card-sub">{current.lernform}</div>
                       )}
                       {result.verdict !== "correct" && input.trim() && (
-                        <div className="card-yours">Du hast <b>{input.trim()}</b> geschrieben</div>
+                        <div className="card-yours">{txt("Du hast {wort} geschrieben", { wort: input.trim() })}</div>
                       )}
                       {examplesEl}
                     </>
@@ -940,19 +942,19 @@ export function Practice() {
             <>
               {isLat && tgtKey !== NATIVE && <LatinKeys />}
               <div className="answer-row">
-                <input ref={inputRef} className="field field-h" placeholder={`Auf ${labelOf(tgtKey)} eintippen …`}
+                <input ref={inputRef} className="field field-h" placeholder={txt("Auf {sprache} eintippen …", { sprache: labelOf(tgtKey) })}
                   value={input} onChange={(e) => setInput(e.target.value)} autoComplete="off"
                   autoCorrect="off" autoCapitalize="off" spellCheck="false" />
                 <button className="btn btn-primary btn-h" onClick={check} disabled={!input.trim()}>
-                  Prüfen <Icon name="arrowRight" size={16} />
+                  {txt("Prüfen")} <Icon name="arrowRight" size={16} />
                 </button>
               </div>
               <div className="toolbelt">
                 <button className="btn btn-ghost btn-sm" onClick={useHint} disabled={hintUsed}>
-                  <Icon name="hint" size={15} /> {hintUsed ? "Tipp steht schon da" : "Tipp"}
+                  <Icon name="hint" size={15} /> {txt(hintUsed ? "Tipp steht schon da" : "Tipp")}
                 </button>
                 <button className="btn btn-ghost btn-sm" onClick={() => finish(latinL3Answer ? scoreLatinForm("", current.lernform || "", answerOpts()) : scoreAnswer("", scoreTarget(current, tgtKey), answerOpts()), false)}>
-                  Weiss ich nicht
+                  {txt("Weiss ich nicht")}
                 </button>
               </div>
             </>
@@ -967,7 +969,7 @@ export function Practice() {
               </div>
               <div className="toolbelt">
                 <button className="btn btn-ghost btn-sm" onClick={useHint} disabled={hintUsed || choices.length <= 2}>
-                  <Icon name="hint" size={15} /> Eine falsche wegnehmen
+                  <Icon name="hint" size={15} /> {txt("Eine falsche wegnehmen")}
                 </button>
               </div>
             </>
@@ -975,12 +977,12 @@ export function Practice() {
             <>
               <div className="answer-row">
                 <button className="btn btn-primary btn-h grow-btn" onClick={reveal}>
-                  {mode === "recall" ? "Lösung zeigen" : "Umdrehen"} <Icon name="arrowRight" size={16} />
+                  {txt(mode === "recall" ? "Lösung zeigen" : "Umdrehen")} <Icon name="arrowRight" size={16} />
                 </button>
               </div>
               <div className="toolbelt">
                 <span className="faint">
-                  {mode === "recall" ? "Erst selber überlegen, dann aufdecken" : "Nur anschauen — das zählt nicht"}
+                  {txt(mode === "recall" ? "Erst selber überlegen, dann aufdecken" : "Nur anschauen — das zählt nicht")}
                 </span>
               </div>
             </>
@@ -989,10 +991,10 @@ export function Practice() {
           <>
             <div className="answer-row">
               <button className="btn btn-amber btn-h grow-btn" onClick={next} autoFocus>
-                Nächste Karte <Icon name="arrowRight" size={16} />
+                {txt("Nächste Karte")} <Icon name="arrowRight" size={16} />
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">Mit <b>Enter</b> geht es weiter</span></div>
+            <div className="toolbelt"><span className="faint">{txt("Mit Enter geht es weiter")}</span></div>
           </>
         ) : mode === "recall" ? (
           <>
@@ -1006,16 +1008,16 @@ export function Practice() {
                 <Icon name="flame" size={17} /> Das sitzt noch nicht so gut
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">Sei ehrlich — davon hängt ab, wann das Wort wiederkommt</span></div>
+            <div className="toolbelt"><span className="faint">{txt("Sei ehrlich — davon hängt ab, wann das Wort wiederkommt")}</span></div>
           </>
         ) : (
           <>
             <div className="answer-row">
               <button className="btn btn-amber btn-h grow-btn" onClick={next} autoFocus>
-                Nächste Karte <Icon name="arrowRight" size={16} />
+                {txt("Nächste Karte")} <Icon name="arrowRight" size={16} />
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">Durchblättern ändert deinen Lernstand nicht</span></div>
+            <div className="toolbelt"><span className="faint">{txt("Durchblättern ändert deinen Lernstand nicht")}</span></div>
           </>
         )}
       </div>

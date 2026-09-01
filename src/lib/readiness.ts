@@ -7,6 +7,7 @@
  * zählen nicht dagegen, sie zählen einfach nicht mit — sie stehen im Nenner,
  * denn eine Liste mit 200 ungeübten Wörtern ist nicht bereit. */
 import type { Settings } from "./types";
+import { txt } from "./i18n";
 
 export type Tone = "ok" | "warn" | "bad";
 
@@ -36,8 +37,8 @@ export function toneLegend(settings: Partial<Settings> = {}): { tone: Tone; labe
   const green = settings.readyGreen ?? 95;
   const amber = settings.readyAmber ?? 70;
   return [
-    { tone: "ok", label: `bereit (ab ${green} %)` },
-    { tone: "warn", label: `fast bereit (ab ${amber} %)` },
-    { tone: "bad", label: `noch üben (unter ${amber} %)` },
+    { tone: "ok", label: txt("bereit (ab {p} %)", { p: green }) },
+    { tone: "warn", label: txt("fast bereit (ab {p} %)", { p: amber }) },
+    { tone: "bad", label: txt("noch üben (unter {p} %)", { p: amber }) },
   ];
 }

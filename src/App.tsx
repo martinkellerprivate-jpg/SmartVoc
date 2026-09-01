@@ -8,6 +8,7 @@ import { useSync } from "./sync/SyncBridge";
 import { Icon } from "./ui/Icon";
 import { Ring } from "./ui/Ring";
 import { PAIRS, activePairs } from "./lib/pairs";
+import { setUiLang, detectUiLang, txt } from "./lib/i18n";
 import { STARTERS, activateStarter, isStarterActivated } from "./data/starter";
 import { AccountModal } from "./components/AccountModal";
 import { ImportShareModal } from "./components/ImportShareModal";
@@ -37,16 +38,16 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
       <div className="brand">
         <div className="brand-mark">S</div>
         <div>
-          <div className="brand-name">SmartVoc</div>
-          <div className="brand-sub">{p.foreignLabel} ⇄ {p.nativeLabel} · {nWords} Wörter</div>
+          <div className="brand-name">{txt("SmartVoc")}</div>
+          <div className="brand-sub">{p.foreignLabel} ⇄ {p.nativeLabel} · {txt("{n} Wörter", { n: nWords })}</div>
         </div>
       </div>
       <div className="topbar-spacer" />
       {auth.configured && (
         <>
-          <button className="tipbtn" title="Account & Sync" onClick={() => setAccountOpen(true)} style={{ gap: 8 }}>
+          <button className="tipbtn" title={txt("Account & Sync")} onClick={() => setAccountOpen(true)} style={{ gap: 8 }}>
             <span className="dot" style={{ width: 8, height: 8, borderRadius: "50%", background: SYNC_DOT[status] }} />
-            {auth.user ? (auth.username || "Konto") : "Anmelden"}
+            {auth.user ? (auth.username || txt("Konto")) : txt("Anmelden")}
           </button>
           <AccountModal open={accountOpen} onClose={() => setAccountOpen(false)} />
         </>
@@ -54,14 +55,14 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
       <Help />
       {/* Einstellungen verlassen die Leiste: sie sind kein Bereich, in dem man
           arbeitet, sondern etwas, das man einmal einstellt. */}
-      <button className={"icon-btn" + (tab === "settings" ? " active" : "")} title="Einstellungen"
+      <button className={"icon-btn" + (tab === "settings" ? " active" : "")} title={txt("Einstellungen")}
         aria-pressed={tab === "settings"} onClick={() => setTab(tab === "settings" ? "practice" : "settings")}>
         <Icon name="gear" size={17} />
       </button>
       {/* F-7TAGE/STREAK: Tage-in-Folge wandert in die Statistik; Kopf zeigt nur das Tagesziel. */}
-      <div className="metric" title="Heute geübte Karten">
+      <div className="metric" title={txt("Heute geübte Karten")}>
         <span className="ic"><Ring value={goalP} size={26} stroke={4} /></span>
-        <div><b>{meta.todayCount || 0}/{settings.dailyGoal || 20}</b><small>Tagesziel</small></div>
+        <div><b>{meta.todayCount || 0}/{settings.dailyGoal || 20}</b><small>{txt("Tagesziel")}</small></div>
       </div>
     </div>
   );
@@ -94,11 +95,15 @@ const TABS = [
   { id: "plan", label: "Übungsplan", icon: "calendar" },
   { id: "lists", label: "Wortlisten", icon: "list" },
   { id: "stats", label: "Statistik", icon: "chart" },
-];
+];   // Beschriftung laeuft beim Rendern durch txt()
 
 export function App() {
   const store = useStore();
   const { vocab, settings, setSettings } = store;
+  /* Die Sprache wird beim Rendern gesetzt, nicht in einem Effekt: t() liest
+   * sie beim Aufbau der Kinder, und ein Effekt liefe erst danach -- der erste
+   * Aufbau stuende dann in der falschen Sprache. */
+  setUiLang(settings.uiLang || detectUiLang());
   const nWords = vocab.filter((w: any) => w.pair === settings.pair).length;
   /* Alte gespeicherte Bereiche auf die neuen abbilden — sonst startet die App
    * nach dem Umbau auf einem Bereich, den es nicht mehr gibt. */
@@ -180,7 +185,7 @@ export function App() {
         {TABS.map((t) => (
           <button key={t.id} className="tab" role="tab" aria-selected={tab === t.id && tab !== "settings"} onClick={() => setTab(t.id)}>
             <Icon name={t.icon} size={17} />
-            <span className="tab-full">{t.label}</span>
+            <span className="tab-full">{txt(t.label)}</span>
             {t.id === "lists" && <span className="badge-count">{nWords}</span>}
           </button>
         ))}

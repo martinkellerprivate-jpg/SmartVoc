@@ -17,6 +17,7 @@
  *    Tages einzeln.
  * =================================================================== */
 import { useState, useMemo } from "react";
+import { txt } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { Icon } from "../ui/Icon";
 import { MasteryBar } from "../ui/MasteryBar";
@@ -24,11 +25,19 @@ import { PAIRS, activePairs } from "../lib/pairs";
 import { listProfile } from "../lib/engine";
 import { retentionFor } from "../lib/fsrs";
 import { readyPercent, readyTone, toneLegend, TONE_VAR } from "../lib/readiness";
+import { getUiLang } from "../lib/i18n";
 
 const DAY = 86400000;
 const startOfDay = (t: number) => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
-const MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+/* Monats- und Wochentagsnamen kommen vom Gerät, nicht aus einer eigenen
+ * Liste: sonst müsste jede Oberflächensprache hier zweimal gepflegt werden,
+ * und die Schreibweisen wichen von denen des Datumsfelds daneben ab. */
+const LOCALE = () => (getUiLang() === "en" ? "en-GB" : "de-CH");
+const MONTH_NAME = (m: number) =>
+  new Date(2021, m, 1).toLocaleDateString(LOCALE(), { month: "long" });
+const WEEKDAY_NAMES = () => Array.from({ length: 7 }, (_, i) =>
+  // 4. Januar 2021 war ein Montag.
+  new Date(2021, 0, 4 + i).toLocaleDateString(LOCALE(), { weekday: "short" }));
 
 export function PlanTab() {
   const store = useStore();
@@ -94,8 +103,8 @@ export function PlanTab() {
 
   const openList = openDay != null ? (byDay.get(openDay) || []) : termine.filter((t) => t.daysLeft >= 0);
   const openTitle = openDay != null
-    ? new Date(openDay).toLocaleDateString("de-CH", { weekday: "long", day: "numeric", month: "long", year: "numeric" })
-    : "Alle kommenden Termine";
+    ? new Date(openDay).toLocaleDateString(LOCALE(), { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+    : txt("Alle kommenden Termine");
 
   /* Mehrfachauswahl bleibt vorerst auf eine Sprache beschränkt: die Karte
    * zeigt heute die Richtung des aktiven Sprachpaars, ein Wort aus einer
@@ -121,21 +130,25 @@ export function PlanTab() {
     window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
   };
 
-  const countdown = (d: number) => d < 0 ? `vor ${-d} ${-d === 1 ? "Tag" : "Tagen"}` : d === 0 ? "heute" : d === 1 ? "morgen" : `in ${d} Tagen`;
+  const countdown = (d: number) =>
+    d < 0 ? txt(-d === 1 ? "vor {n} Tag" : "vor {n} Tagen", { n: -d })
+    : d === 0 ? txt("heute")
+    : d === 1 ? txt("morgen")
+    : txt("in {n} Tagen", { n: d });
 
   return (
     <div className="plantab">
       <div className="cal">
         <div className="cal-head">
-          <button className="icon-btn" title="Voriger Monat" onClick={() => shiftMonth(-1)}><Icon name="chevron-left" size={16} /></button>
-          <button className="cal-title" onClick={toThisMonth} title="Zum heutigen Monat">
-            {MONTHS[cursor.m]} {cursor.y}
+          <button className="icon-btn" title={txt("Voriger Monat")} onClick={() => shiftMonth(-1)}><Icon name="chevron-left" size={16} /></button>
+          <button className="cal-title" onClick={toThisMonth} title={txt("Zum heutigen Monat")}>
+            {MONTH_NAME(cursor.m)} {cursor.y}
           </button>
-          <button className="icon-btn" title="Nächster Monat" onClick={() => shiftMonth(1)}><Icon name="chevron-right" size={16} /></button>
+          <button className="icon-btn" title={txt("Nächster Monat")} onClick={() => shiftMonth(1)}><Icon name="chevron-right" size={16} /></button>
         </div>
 
         <div className="cal-grid cal-weekdays">
-          {WEEKDAYS.map((w) => <div key={w} className="cal-wd">{w}</div>)}
+          {WEEKDAY_NAMES().map((w) => <div key={w} className="cal-wd">{w}</div>)}
         </div>
         <div className="cal-grid">
           {grid.map((day) => {
@@ -148,7 +161,7 @@ export function PlanTab() {
                 className={"cal-day" + (inMonth ? "" : " out") + (day === today ? " today" : "") + (day === openDay ? " open" : "") + (n ? " has" : "")}
                 onClick={() => { setOpenDay(day === openDay ? null : day); setPicked([]); }}
                 disabled={!n && day !== today}
-                aria-label={`${d.getDate()}. ${MONTHS[d.getMonth()]}${n ? ` · ${n} ${n === 1 ? "Wortliste" : "Wortlisten"}` : ""}`}>
+                aria-label={`${d.getDate()}. ${MONTH_NAME(d.getMonth())}${n ? " · " + txt(n === 1 ? "{n} Wortliste" : "{n} Wortlisten", { n }) : ""}`}>
                 <span className="cal-num">{d.getDate()}</span>
                 {tone && <span className="cal-mark" style={{ background: TONE_VAR[tone] }}>{n > 1 ? n : ""}</span>}
               </button>
@@ -168,13 +181,13 @@ export function PlanTab() {
       <div className="plan-day">
         <div className="plan-day-head">
           <div className="section-title">{openTitle}</div>
-          {openDay != null && <button className="btn btn-ghost btn-sm" onClick={() => { setOpenDay(null); setPicked([]); }}>Alle Termine</button>}
+          {openDay != null && <button className="btn btn-ghost btn-sm" onClick={() => { setOpenDay(null); setPicked([]); }}>{txt("Alle Termine")}</button>}
         </div>
 
         {openList.length === 0 ? (
           <div className="empty">
-            <div className="big">Kein Termin</div>
-            <div>Gib einer Wortliste unter „Wortlisten“ ein Zieldatum — dann erscheint sie hier.</div>
+            <div className="big">{txt("Kein Termin")}</div>
+            <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum — dann erscheint sie hier.")}</div>
           </div>
         ) : (
           <div className="col" style={{ gap: 10 }}>
@@ -183,7 +196,7 @@ export function PlanTab() {
               return (
                 <div key={t.list.id} className={"planrow" + (picked.includes(t.list.id) ? " picked" : "")}>
                   <button className="planrow-pick" onClick={() => toggle(t.list.id)}
-                    aria-pressed={picked.includes(t.list.id)} aria-label={`${t.list.name} auswählen`}>
+                    aria-pressed={picked.includes(t.list.id)} aria-label={txt("{name} auswählen", { name: t.list.name })}>
                     <span className="planrow-box">{picked.includes(t.list.id) && <Icon name="check" size={12} />}</span>
                   </button>
                   <div className="planrow-main">
@@ -196,15 +209,15 @@ export function PlanTab() {
                     </div>
                     <div className="planrow-stand">
                       <span className="planrow-dot" style={{ background: TONE_VAR[t.tone] }} />
-                      <b>{t.pct} %</b> bereit
-                      <span className="faint"> · {t.prof.total} {t.prof.total === 1 ? "Wort" : "Wörter"}</span>
+                      <b>{t.pct} %</b> {txt("bereit")}
+                      <span className="faint"> · {txt(t.prof.total === 1 ? "{n} Wort" : "{n} Wörter", { n: t.prof.total })}</span>
                     </div>
                     {/* Miniansicht: Balken ohne Legende — die Legende steht im Kalender. */}
                     <MasteryBar dist={t.prof.dist} total={t.prof.total} showLegend={false} />
                   </div>
                   <div className="planrow-acts">
-                    <button className="btn btn-sm btn-primary" onClick={() => practise([t.list.id])}><Icon name="cards" size={14} /> Üben</button>
-                    <button className="btn btn-sm btn-ghost" onClick={() => showStats(t.list)}><Icon name="chart" size={14} /> Statistik</button>
+                    <button className="btn btn-sm btn-primary" onClick={() => practise([t.list.id])}><Icon name="cards" size={14} /> {txt("Üben")}</button>
+                    <button className="btn btn-sm btn-ghost" onClick={() => showStats(t.list)}><Icon name="chart" size={14} /> {txt("Statistik")}</button>
                   </div>
                 </div>
               );
@@ -214,11 +227,11 @@ export function PlanTab() {
 
         {picked.length > 1 && (
           <div className="plan-multi">
-            <span>{picked.length} Wortlisten ausgewählt</span>
+            <span>{txt("{n} Wortlisten ausgewählt", { n: picked.length })}</span>
             <button className="btn btn-sm btn-primary" onClick={() => practise(picked)}>
-              <Icon name="cards" size={14} /> Gemeinsam üben
+              <Icon name="cards" size={14} /> {txt("Gemeinsam üben")}
             </button>
-            <button className="btn btn-sm btn-ghost" onClick={() => setPicked([])}>Auswahl aufheben</button>
+            <button className="btn btn-sm btn-ghost" onClick={() => setPicked([])}>{txt("Auswahl aufheben")}</button>
           </div>
         )}
       </div>

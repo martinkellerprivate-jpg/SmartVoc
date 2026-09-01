@@ -3,6 +3,7 @@
  * with the derived due/interval clearly marked "berechnet". Read-only; the edit
  * path stays separate (own button). Never practised → no FSRS object (state New). */
 import { useStore } from "../store/StoreProvider";
+import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { PAIRS, fk, isLatinPair, NATIVE } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
@@ -53,11 +54,11 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
           <div className="row" style={{ gap: 9, alignItems: "center", marginBottom: 8 }}>
             <span className="dot" style={{ width: 12, height: 12, borderRadius: "50%", background: toneVar(prof.tone) }} />
             <span style={{ fontWeight: 700 }}>{STUFE[prof.stufe].label}</span>
-            {prof.istLeech && <span className="badge red" title="Oft vergessen trotz Übung — eine Eselsbrücke hilft."><Icon name="flame" size={11} /> Hartnäckig</span>}
-            {prof.istFaellig && <span className="badge amber"><span className="dot" />fällig</span>}
-            {prof.baldFaellig && <span className="badge slate"><span className="dot" />bald fällig</span>}
+            {prof.istLeech && <span className="badge red" title={txt("Oft vergessen trotz Übung — eine Eselsbrücke hilft.")}><Icon name="flame" size={11} /> {txt("Hartnäckig")}</span>}
+            {prof.istFaellig && <span className="badge amber"><span className="dot" />{txt("fällig")}</span>}
+            {prof.baldFaellig && <span className="badge slate"><span className="dot" />{txt("bald fällig")}</span>}
           </div>
-          {prof.istLeech && <div className="faint" style={{ fontSize: 12, marginBottom: 6 }}>Hartnäckig = oft vergessen trotz Übung. Eine Eselsbrücke (Bild, Reim, Beispielsatz) hilft mehr als reines Wiederholen.</div>}
+          {prof.istLeech && <div className="faint" style={{ fontSize: 12, marginBottom: 6 }}>{txt("Hartnäckig = oft vergessen trotz Übung. Eine Eselsbrücke (Bild, Reim, Beispielsatz) hilft mehr als reines Wiederholen.")}</div>}
           {card ? (
             <>
               <Row k="hält etwa" v={`${Math.round(prof.haeltTage)} Tage`} />
@@ -66,14 +67,14 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
               <Row k="Retention-Ziel" v={`${Math.round(retention * 100)} %`} hint={retention !== retentionFor(settings) ? "Lektions-Override" : "global"} />
             </>
           ) : (
-            <div className="muted" style={{ fontSize: 13 }}>Noch nicht geübt — es gibt noch kein FSRS-Objekt (state New).</div>
+            <div className="muted" style={{ fontSize: 13 }}>{txt("Noch nicht geübt — es gibt noch kein FSRS-Objekt (state New).")}</div>
           )}
         </div>
 
         {/* B — raw FSRS values */}
         {card && (
           <div className="panel" style={{ padding: "12px 14px", marginBottom: 12 }}>
-            <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>Rohwerte (FSRS)</div>
+            <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>{txt("Rohwerte (FSRS)")}</div>
             <Row k="stability" v={card.stability.toFixed(2)} />
             <Row k="difficulty" v={card.difficulty.toFixed(2)} />
             <Row k="reps · lapses" v={`${card.reps} · ${card.lapses}`} />
@@ -88,7 +89,7 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
         {/* example sentences (always shown here — this is the detail view) */}
         {[...(word.examples || []), ...(word.examplesDe || [])].filter(Boolean).length > 0 && (
           <div className="panel" style={{ padding: "12px 14px", marginBottom: 12 }}>
-            <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>Beispielsätze</div>
+            <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>{txt("Beispielsätze")}</div>
             <div className="card-examples" style={{ marginTop: 0, maxWidth: "none" }}>
               {(word.examples || []).map((s: string, i: number) => {
                 const de = ((word.examplesDe || [])[i] || "").trim();
@@ -113,8 +114,8 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
         </div>
 
         <div className="modal-foot" style={{ marginTop: 14 }}>
-          <button className="btn btn-ghost" onClick={onClose}>Schliessen</button>
-          {onEdit && <button className="btn btn-primary" onClick={() => { onEdit(word); onClose(); }}><Icon name="edit" size={15} /> Bearbeiten</button>}
+          <button className="btn btn-ghost" onClick={onClose}>{txt("Schliessen")}</button>
+          {onEdit && <button className="btn btn-primary" onClick={() => { onEdit(word); onClose(); }}><Icon name="edit" size={15} /> {txt("Bearbeiten")}</button>}
         </div>
       </div>
     </div>

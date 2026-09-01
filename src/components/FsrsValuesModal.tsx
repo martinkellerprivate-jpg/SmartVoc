@@ -4,6 +4,7 @@
  * happens here (WASM deferred); user weights == literature until a real fit
  * lands, so the two columns are equal by design today. */
 import { Icon } from "../ui/Icon";
+import { txt } from "../lib/i18n";
 import { defaultWeights, getCfg, RETENTION } from "../lib/fsrs";
 import { fitStatus, totalReviews } from "../lib/reviewlog";
 
@@ -35,8 +36,8 @@ export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
       <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 520, maxHeight: "84vh", overflowY: "auto" } as any}>
         <div className="modal-head">
           <div>
-            <div className="modal-title">FSRS-Werte</div>
-            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>Nur-Lese-Einblick in das Gedächtnis-Modell.</div>
+            <div className="modal-title">{txt("FSRS-Werte")}</div>
+            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>{txt("Nur-Lese-Einblick in das Gedächtnis-Modell.")}</div>
           </div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
@@ -46,11 +47,11 @@ export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
             <span className="dot" /> Auto-Anpassung: {status.kind === "off" ? "aus" : status.kind === "active" ? "aktiv" : "sammelt"}
           </div>
           <div style={{ fontSize: 13 }}>{status.text}</div>
-          <div className="faint" style={{ fontSize: 12, marginTop: 4 }}>Gesammelte Antworten im Verlauf: <b>{n}</b></div>
+          <div className="faint" style={{ fontSize: 12, marginTop: 4 }}>{txt("Gesammelte Antworten im Verlauf:")} <b>{n}</b></div>
         </div>
 
         <div className="panel" style={{ padding: "10px 12px", marginBottom: 12 }}>
-          <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>Abgeleitete Schwellen (aktuell)</div>
+          <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>{txt("Abgeleitete Schwellen (aktuell)")}</div>
           <Row k="Retention" u={`${Math.round(ret * 100)} %`} l="90 %" hint="Behaltensziel" />
           <Row k="S1" u={cfg.S1} l={3} hint="Tage: wackelt→sitzt fast" />
           <Row k="S2" u={cfg.S2} l={14} hint="Tage: sitzt fast→sitzt" />
@@ -60,8 +61,8 @@ export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
 
         <div className="panel" style={{ padding: "10px 12px" }}>
           <div className="row" style={{ justifyContent: "space-between", marginBottom: 4 }}>
-            <div className="section-title" style={{ fontSize: 12.5 }}>Modell-Gewichte w[0..18]</div>
-            <div className="faint" style={{ fontSize: 11 }}>deine · Literatur</div>
+            <div className="section-title" style={{ fontSize: 12.5 }}>{txt("Modell-Gewichte w[0..18]")}</div>
+            <div className="faint" style={{ fontSize: 11 }}>{txt("deine · Literatur")}</div>
           </div>
           {user.map((u: number, i: number) => <Row key={i} k={`w[${i}]`} u={u} l={lit[i]} hint={W_HINT[i]} />)}
           <div className="faint" style={{ fontSize: 11.5, marginTop: 8 }}>
@@ -71,7 +72,7 @@ export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
         </div>
 
         <div className="modal-foot" style={{ marginTop: 14 }}>
-          <button className="btn btn-primary" onClick={onClose}>Schliessen</button>
+          <button className="btn btn-primary" onClick={onClose}>{txt("Schliessen")}</button>
         </div>
       </div>
     </div>

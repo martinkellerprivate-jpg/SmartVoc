@@ -2,6 +2,7 @@
  * a free-text username, sync status, sign out. Rendered only when Supabase
  * is configured. */
 import { useState, useEffect } from "react";
+import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { useAuth } from "../sync/auth";
 import { useSync, type SyncStatus } from "../sync/SyncBridge";
@@ -108,7 +109,7 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
               {editingName ? (
                 <span className="row" style={{ gap: 6, alignItems: "center" }}>
                   Angemeldet als
-                  <input className="mini-input" autoFocus placeholder="Benutzername" value={nameDraft}
+                  <input className="mini-input" autoFocus placeholder={txt("Benutzername")} value={nameDraft}
                     onChange={(e) => setNameDraft(e.target.value)} onBlur={commitUsername}
                     onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).blur()} />
                 </span>
@@ -116,12 +117,12 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
                 <>
                   Angemeldet als <b style={{ color: "var(--ink)" }}>{auth.username || auth.email}</b>
                   <button className="icon-btn" style={{ width: 26, height: 26, marginLeft: 6, verticalAlign: "-6px" }}
-                    title="Benutzername bearbeiten" onClick={startEditName}><Icon name="edit" size={12} /></button>
+                    title={txt("Benutzername bearbeiten")} onClick={startEditName}><Icon name="edit" size={12} /></button>
                 </>
               )}
             </div>
             {!auth.username && !editingName && (
-              <div className="muted" style={{ fontSize: 12.5, marginTop: -8 }}>Noch kein Benutzername gesetzt — bisher zeigt die App deine E-Mail. Klicke den Stift, um einen festzulegen.</div>
+              <div className="muted" style={{ fontSize: 12.5, marginTop: -8 }}>{txt("Noch kein Benutzername gesetzt — bisher zeigt die App deine E-Mail. Klicke den Stift, um einen festzulegen.")}</div>
             )}
             {auth.username && !editingName && <div className="faint" style={{ fontSize: 12, marginTop: -8 }}>{auth.email}</div>}
             <div className="badge slate" style={{ alignSelf: "flex-start" }}><span className="dot" />{STATUS_LABEL[status]}</div>
@@ -129,15 +130,15 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
               Deine Wörter, Listen und Fortschritte werden mit der Cloud synchronisiert und stehen auf deinen Geräten zur Verfügung. Offline läuft alles weiter und wird beim nächsten Mal nachgeholt.
             </div>
             <div className="modal-foot">
-              <button className="btn btn-ghost" onClick={() => auth.signOut()}>Abmelden</button>
+              <button className="btn btn-ghost" onClick={() => auth.signOut()}>{txt("Abmelden")}</button>
             </div>
           </div>
         ) : mode === "newpw" ? (
           <div className="col" style={{ gap: 10 }}>
             <div className="muted" style={{ fontSize: 12.5, lineHeight: 1.45 }}>Setze ein neues Passwort für {auth.email || "deinen Account"}.</div>
-            <input className="field" type="password" placeholder="Neues Passwort" value={password} autoComplete="new-password" autoFocus
+            <input className="field" type="password" placeholder={txt("Neues Passwort")} value={password} autoComplete="new-password" autoFocus
               onChange={(e) => setPassword(e.target.value)} />
-            <input className="field" type="password" placeholder="Neues Passwort wiederholen" value={password2} autoComplete="new-password"
+            <input className="field" type="password" placeholder={txt("Neues Passwort wiederholen")} value={password2} autoComplete="new-password"
               onChange={(e) => setPassword2(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
             {error && <div className="badge red" style={{ alignSelf: "flex-start" }}><span className="dot" />{error}</div>}
             <button className="btn btn-primary" onClick={submit} disabled={busy || !password || !password2}>
@@ -146,25 +147,25 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
           </div>
         ) : mode === "reset" ? (
           <div className="col" style={{ gap: 10 }}>
-            <div className="muted" style={{ fontSize: 12.5, lineHeight: 1.45 }}>Wir schicken dir einen Link, mit dem du ein neues Passwort setzen kannst.</div>
-            <input className="field" type="email" placeholder="E-Mail" value={email} autoComplete="email" autoFocus
+            <div className="muted" style={{ fontSize: 12.5, lineHeight: 1.45 }}>{txt("Wir schicken dir einen Link, mit dem du ein neues Passwort setzen kannst.")}</div>
+            <input className="field" type="email" placeholder={txt("E-Mail")} value={email} autoComplete="email" autoFocus
               onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
             {error && <div className="badge red" style={{ alignSelf: "flex-start" }}><span className="dot" />{error}</div>}
             {info && <div className="muted" style={{ fontSize: 12.5 }}>{info}</div>}
             <button className="btn btn-primary" onClick={submit} disabled={busy || !email.trim()}>
               {busy ? <Icon name="refresh" size={15} /> : <Icon name="check" size={15} />} Link senden
             </button>
-            <button className="btn btn-ghost btn-sm" onClick={() => switchMode("in")}>Zurück zum Anmelden</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => switchMode("in")}>{txt("Zurück zum Anmelden")}</button>
           </div>
         ) : (
           <div className="col" style={{ gap: 10 }}>
             {mode === "up" && (
-              <input className="field" type="text" placeholder="Benutzername" value={username} autoComplete="nickname"
+              <input className="field" type="text" placeholder={txt("Benutzername")} value={username} autoComplete="nickname"
                 onChange={(e) => setUsername(e.target.value)} />
             )}
-            <input className="field" type="email" placeholder="E-Mail" value={email} autoComplete="email"
+            <input className="field" type="email" placeholder={txt("E-Mail")} value={email} autoComplete="email"
               onChange={(e) => setEmail(e.target.value)} />
-            <input className="field" type="password" placeholder="Passwort" value={password} autoComplete={mode === "in" ? "current-password" : "new-password"}
+            <input className="field" type="password" placeholder={txt("Passwort")} value={password} autoComplete={mode === "in" ? "current-password" : "new-password"}
               onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => e.key === "Enter" && submit()} />
             {error && <div className="badge red" style={{ alignSelf: "flex-start" }}><span className="dot" />{error}</div>}
             {info && <div className="muted" style={{ fontSize: 12.5 }}>{info}</div>}
@@ -175,7 +176,7 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
               <button className="btn btn-ghost btn-sm" onClick={() => switchMode(mode === "in" ? "up" : "in")}>
                 {mode === "in" ? "Noch kein Account? Registrieren" : "Schon registriert? Anmelden"}
               </button>
-              {mode === "in" && <button className="btn btn-ghost btn-sm" onClick={() => switchMode("reset")}>Passwort vergessen?</button>}
+              {mode === "in" && <button className="btn btn-ghost btn-sm" onClick={() => switchMode("reset")}>{txt("Passwort vergessen?")}</button>}
             </div>
           </div>
         )}

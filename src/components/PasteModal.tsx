@@ -2,6 +2,7 @@
  * hands them to the shared ReviewModal. Includes a pair-aware "AI prompt"
  * the user can paste into their own chat to get a correctly-formatted list. */
 import { useState, useEffect } from "react";
+import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { useToast } from "../ui/Toast";
 import { PAIRS, isLatinPair } from "../lib/pairs";
@@ -151,14 +152,14 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHi
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 560, width: "94vw" }}>
         <div className="modal-head">
-          <div className="modal-title">Einfügen <span className="muted" style={{ fontSize: 14, fontWeight: 500 }}>· {P.foreignLabel} ⇄ Deutsch</span></div>
+          <div className="modal-title">{txt("Einfügen")} <span className="muted" style={{ fontSize: 14, fontWeight: 500 }}>· {P.foreignLabel} ⇄ Deutsch</span></div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
 
         {draftHint && (
           <div className="tips-intro" style={{ marginBottom: 10, background: "var(--amber-bg)", color: "var(--amber-deep)" }}>
             <Icon name="camera" size={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />
-            Foto-Text erkannt — <b>grober Entwurf</b>, bitte korrigieren. Tipp: „KI-Prompt kopieren", in dein KI-Chat geben, das Ergebnis hier wieder einfügen — dann „Weiter zum Prüfen".
+            {txt("Foto-Text erkannt — grober Entwurf, bitte korrigieren. Tipp: „KI-Prompt kopieren“, in dein KI-Chat geben, das Ergebnis hier wieder einfügen — dann „Weiter zum Prüfen“.")}
           </div>
         )}
         <div className="tips-intro" style={{ marginBottom: 12 }}>
@@ -171,13 +172,13 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHi
           value={text} onChange={(e) => setText(e.target.value)} />
 
         <div className="toolbelt" style={{ justifyContent: "flex-start", marginTop: 10 }}>
-          <button className="btn btn-ghost btn-sm" onClick={pasteClipboard}><Icon name="download" size={14} /> Aus Zwischenablage</button>
+          <button className="btn btn-ghost btn-sm" onClick={pasteClipboard}><Icon name="download" size={14} /> {txt("Aus Zwischenablage")}</button>
           <button className="btn btn-ghost btn-sm" onClick={copyPrompt}><Icon name={copied ? "check" : "sparkle"} size={14} /> {copied ? "Prompt kopiert" : "KI-Prompt kopieren"}</button>
         </div>
 
         <div className="modal-foot">
-          <button className="btn btn-ghost" onClick={onClose}>Abbrechen</button>
-          <button className="btn btn-primary" disabled={!text.trim()} onClick={proceed}><Icon name="arrowRight" size={15} /> Weiter zum Prüfen</button>
+          <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
+          <button className="btn btn-primary" disabled={!text.trim()} onClick={proceed}><Icon name="arrowRight" size={15} /> {txt("Weiter zum Prüfen")}</button>
         </div>
       </div>
     </div>

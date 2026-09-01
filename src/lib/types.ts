@@ -129,6 +129,7 @@ export interface Settings {
   acceptPartial: boolean;
   latinMode: LatinMode;   // L2 (ask Grundform) | L3 (ask full Lernform)
   tipsFrequency: TipsFrequency;
+  uiLang?: "de" | "en";     // Oberflächensprache; leer = folgt dem Gerät
   scheme: Scheme;
   appearance: Appearance;
   readyGreen?: number;   // Ampel: ab wieviel Prozent gilt eine Liste als bereit

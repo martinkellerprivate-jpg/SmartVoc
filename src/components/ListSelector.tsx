@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { txt } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { Icon } from "../ui/Icon";
 import { SMART, smartCount } from "../lib/engine";
@@ -31,7 +32,7 @@ export function ListSelector({ selected, onChange, smart = ["tricky"], pair, mc 
       <button className="lchips-label lchips-toggle" onClick={() => set((o: boolean) => !o)}>
         <span style={{ fontSize: 10 }}>{open ? "▾" : "▸"}</span> <Icon name={icon as any} size={13} /> {label} ({n})
       </button>
-      {open && n > 0 && <button className="scope-all" onClick={() => toggleAll(toks)}>{toks.length && toks.every((t) => sel.includes(t)) ? "keine" : "alle"}</button>}
+      {open && n > 0 && <button className="scope-all" onClick={() => toggleAll(toks)}>{txt(toks.length && toks.every((t) => sel.includes(t)) ? "keine" : "alle")}</button>}
     </div>
   );
   const listToks = pairLists.map((l: any) => l.id);
@@ -40,7 +41,7 @@ export function ListSelector({ selected, onChange, smart = ["tricky"], pair, mc 
     <div className="lchips-wrap">
       <div className="lchips">
         <button className={"lchip" + (isAll ? " on" : "")} onClick={() => onChange([])}>
-          <Icon name="cards" size={14} /> Alle Wörter
+          <Icon name="cards" size={14} /> {txt("Alle Wörter")}
         </button>
         {(smart || []).map((key) => {
           const sc = SMART[key]; if (!sc) return null;
@@ -54,7 +55,7 @@ export function ListSelector({ selected, onChange, smart = ["tricky"], pair, mc 
       </div>
       {pairLists.length > 0 && (
         <div className="lchips lchips-topics">
-          {head(listsOpen, setListsOpen, "list", "Wortlisten", pairLists.length, listToks)}
+          {head(listsOpen, setListsOpen, "list", txt("Wortlisten"), pairLists.length, listToks)}
           {listsOpen && pairLists.map((l) => (
             <button key={l.id} className={"lchip" + (sel.includes(l.id) ? " on" : "")} onClick={() => toggle(l.id)}>
               {l.name} <span className="lchip-n">{countFor(l.id)}</span>
@@ -106,14 +107,14 @@ export function ListPicker({ open, title, subtitle, onPick, onClose, pair }) {
           <label className={"picker-row" + (choice === "__new" ? " on" : "")}>
             <input type="radio" name="lp" checked={choice === "__new"} onChange={() => setChoice("__new")} />
             <Icon name="plus" size={15} />
-            <input className="field" style={{ padding: "8px 11px" }} placeholder="New list name…"
+            <input className="field" style={{ padding: "8px 11px" }} placeholder={txt("Name der Wortliste …")}
               value={newName} onFocus={() => setChoice("__new")}
               onChange={(e) => { setNewName(e.target.value); setChoice("__new"); }} onKeyDown={(e) => e.key === "Enter" && confirm()} />
           </label>
         </div>
         <div className="modal-foot">
-          <button className="btn btn-ghost" onClick={onClose}>Cancel</button>
-          <button className="btn btn-primary" onClick={confirm}><Icon name="check" size={15} /> Add here</button>
+          <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
+          <button className="btn btn-primary" onClick={confirm}><Icon name="check" size={15} /> {txt("Hier hinzufügen")}</button>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { txt } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
@@ -241,7 +242,7 @@ export function WordList() {
 
   const WL_STUFE: any = { sitzt: ["green", "Sitzt"], sitzt_fast: ["amber", "Sitzt fast"], sitzt_schlecht: ["red", "Wackelt noch"], neu: ["blue", "Neu"], noch_nicht_geuebt: ["slate", "Noch nicht geübt"] };
   const catBadge = (w) => {
-    if (!practiceable(w)) return <span className="badge red"><span className="dot" />Needs translation</span>;
+    if (!practiceable(w)) return <span className="badge red"><span className="dot" />{txt("Übersetzung fehlt")}</span>;
     const [tone, label] = WL_STUFE[deriveProfile(stats[w.id]?.fsrs, retentionFor(settings)).stufe];   // V14: one source
     return <span className={"badge " + tone}><span className="dot" />{label}</span>;
   };
@@ -251,14 +252,14 @@ export function WordList() {
       {/* list bar */}
       <div className="listbar">
         <button className={"ltab" + (activeList === "__all" ? " on" : "")} onClick={() => setActiveList("__all")}>
-          Alle Wörter <span className="ltab-n">{pairVocab.length}</span>
+          {txt("Alle Wörter")} <span className="ltab-n">{pairVocab.length}</span>
         </button>
         {pairLists.map((l) => (
           <button key={l.id} className={"ltab" + (activeList === l.id ? " on" : "")} onClick={() => setActiveList(l.id)}>
             {l.name} <span className="ltab-n">{pairVocab.filter((w) => (w.lists || []).includes(l.id)).length}</span>
           </button>
         ))}
-        <button className="ltab ltab-new" onClick={newList}><Icon name="plus" size={14} /> Neue Liste</button>
+        <button className="ltab ltab-new" onClick={newList}><Icon name="plus" size={14} /> {txt("Neue Liste")}</button>
       </div>
 
       {/* active list header */}
@@ -272,14 +273,14 @@ export function WordList() {
             <div className="section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {listNameOf(activeList)}
               {/* PFLICHT 2: "Wörter ohne Liste" is device-local — not renamable/shareable/deletable as a list */}
-              {!activeIsNoList && <button className="icon-btn" style={{ width: 30, height: 30 }} title="Umbenennen"
+              {!activeIsNoList && <button className="icon-btn" style={{ width: 30, height: 30 }} title={txt("Umbenennen")}
                 onClick={() => { setEditingListId(activeList); setListName(listNameOf(activeList)); }}><Icon name="edit" size={14} /></button>}
             </div>
           )}
           <div className="grow" />
-          <button className="btn btn-sm btn-primary" onClick={() => practiseList(activeList)}><Icon name="cards" size={14} /> Üben</button>
-          {canShare && !activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={shareActiveList}><Icon name="upload" size={14} /> Teilen</button>}
-          {!activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={deleteActiveList}><Icon name="trash" size={14} /> Liste löschen</button>}
+          <button className="btn btn-sm btn-primary" onClick={() => practiseList(activeList)}><Icon name="cards" size={14} /> {txt("Üben")}</button>
+          {canShare && !activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>}
+          {!activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={deleteActiveList}><Icon name="trash" size={14} /> {txt("Liste löschen")}</button>}
         </div>
       )}
 
@@ -300,7 +301,7 @@ export function WordList() {
               onChange={(e) => setListDue(activeList, e.target.value)} />
             {/* Ein natives Datumsfeld laesst sich auf iOS nicht zuverlaessig leeren. */}
             {activeListObj?.dueDate && (
-              <button className="icon-btn" style={{ width: 26, height: 26 }} title="Zieldatum entfernen"
+              <button className="icon-btn" style={{ width: 26, height: 26 }} title={txt("Zieldatum entfernen")}
                 onClick={() => setListDue(activeList, "")}><Icon name="x" size={12} /></button>
             )}
           </label>
@@ -309,7 +310,7 @@ export function WordList() {
               <div className="exam-head">
                 <Icon name="target" size={13} /> {activeListStand.pg.daysLeft < 0 ? "Termin vorbei"
                   : activeListStand.pg.daysLeft === 0 ? "heute dran"
-                  : `noch ${activeListStand.pg.daysLeft} ${activeListStand.pg.daysLeft === 1 ? "Tag" : "Tage"}`} · <b>{activeListStand.pg.buckets.sicher.length} von {activeListStand.pg.total} sitzen sicher</b> <span className="faint">· Schätzung</span>
+                  : `noch ${activeListStand.pg.daysLeft} ${activeListStand.pg.daysLeft === 1 ? "Tag" : "Tage"}`} · <b>{activeListStand.pg.buckets.sicher.length} von {activeListStand.pg.total} sitzen sicher</b> <span className="faint">{txt("· Schätzung")}</span>
               </div>
               {activeListStand.pg.need > 0 && activeListStand.pg.daysLeft >= 0 && (
                 <div className="row" style={{ justifyContent: "space-between", marginTop: 7, gap: 8, flexWrap: "wrap" }}>
@@ -330,11 +331,11 @@ export function WordList() {
       <div className="bar">
         <div className="search">
           <Icon name="search" size={17} />
-          <input className="field" placeholder="Wörter suchen …" value={query} onChange={(e) => setQuery(e.target.value)} />
+          <input className="field" placeholder={txt("Wörter suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
-        <button className="btn btn-sm btn-amber" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> Einfügen</button>
-        {isConfigured && <button className="btn btn-sm" onClick={() => openImport()} title="Eine Liste, die dir jemand geteilt hat, übernehmen"><Icon name="download" size={15} /> Geteilte Liste importieren</button>}
-        <button className={"btn btn-sm" + (selectMode ? " btn-primary" : "")} onClick={() => { setSelectMode((m) => !m); setSelectedIds([]); }}><Icon name="check" size={15} /> {selectMode ? "Auswahl beenden" : "Auswählen"}</button>
+        <button className="btn btn-sm btn-amber" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> {txt("Einfügen")}</button>
+        {isConfigured && <button className="btn btn-sm" onClick={() => openImport()} title={txt("Eine Liste, die dir jemand geteilt hat, übernehmen")}><Icon name="download" size={15} /> {txt("Geteilte Liste importieren")}</button>}
+        <button className={"btn btn-sm" + (selectMode ? " btn-primary" : "")} onClick={() => { setSelectMode((m) => !m); setSelectedIds([]); }}><Icon name="check" size={15} /> {txt(selectMode ? "Auswahl beenden" : "Auswählen")}</button>
       </div>
 
       {/* add row */}
@@ -342,14 +343,14 @@ export function WordList() {
         <div className="row wrap" style={{ gap: 10 }}>
           {isLat ? (
             <>
-              <input className="field" style={{ width: 130 }} placeholder="Grundform" value={adding.fgn}
+              <input className="field" style={{ width: 130 }} placeholder={txt("Grundform")} value={adding.fgn}
                 onChange={(e) => setAdding({ ...adding, fgn: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-              <input className="field grow" style={{ minWidth: 180 }} placeholder="Lernform (z. B. canis, canis, m.)" value={adding.lernform}
+              <input className="field grow" style={{ minWidth: 180 }} placeholder={txt("Lernform (z. B. canis, canis, m.)")} value={adding.lernform}
                 onChange={(e) => setAdding({ ...adding, lernform: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
               <select className="field" style={{ width: "auto", minWidth: 110 }} value={adding.wortart} onChange={(e) => setAdding({ ...adding, wortart: e.target.value })}>
                 {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
               </select>
-              <input className="field grow" style={{ minWidth: 130 }} placeholder="Deutsch (der/die/das)" value={adding.de}
+              <input className="field grow" style={{ minWidth: 130 }} placeholder={txt("Deutsch (der/die/das)")} value={adding.de}
                 onChange={(e) => setAdding({ ...adding, de: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
             </>
           ) : (
@@ -357,21 +358,21 @@ export function WordList() {
               <input className="field grow" style={{ minWidth: 140 }} placeholder={P.foreignLabel} value={adding.fgn}
                 onChange={(e) => setAdding({ ...adding, fgn: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
               <Icon name="arrowRight" size={18} style={{ color: "var(--ink-faint)" }} />
-              <input className="field grow" style={{ minWidth: 140 }} placeholder="Deutsch (der/die/das)" value={adding.de}
+              <input className="field grow" style={{ minWidth: 140 }} placeholder={txt("Deutsch (der/die/das)")} value={adding.de}
                 onChange={(e) => setAdding({ ...adding, de: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
             </>
           )}
           <select className="field" style={{ width: "auto", minWidth: 120 }} value={adding.listId} onChange={(e) => setAdding({ ...adding, listId: e.target.value })}>
-            {pairLists.length === 0 && <option value="">— beim Hinzufügen neue Liste —</option>}
+            {pairLists.length === 0 && <option value="">{txt("— beim Hinzufügen neue Liste —")}</option>}
             {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
           </select>
           <button className="btn btn-primary" onClick={addWord} disabled={busy || (!adding.fgn.trim() && !adding.de.trim() && !adding.lernform.trim())}>
-            {busy ? <Icon name="refresh" size={15} /> : <Icon name="plus" size={15} />} Hinzufügen
+            {busy ? <Icon name="refresh" size={15} /> : <Icon name="plus" size={15} />} {txt("Hinzufügen")}
           </button>
         </div>
         {isLat && <LatinKeys hint="Feld antippen, dann Zeichen wählen" />}
         <div className="row" style={{ marginTop: 10 }}>
-          <input className="field" style={{ width: 150 }} placeholder="Aussprache (optional)" value={adding.phon}
+          <input className="field" style={{ width: 150 }} placeholder={txt("Aussprache (optional)")} value={adding.phon}
             onChange={(e) => setAdding({ ...adding, phon: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
           <input className="field grow" placeholder={`Beispielsatz auf Deutsch (optional)`} value={adding.ex1de}
             onChange={(e) => setAdding({ ...adding, ex1de: e.target.value })} />
@@ -379,12 +380,12 @@ export function WordList() {
             onChange={(e) => setAdding({ ...adding, ex1: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
         </div>
         <div className="faint" style={{ fontSize: 12, marginTop: 9, display: "flex", alignItems: "center", gap: 6 }}>
-          <Icon name="sparkle" size={13} /> {isLat ? "Latein: Grundform + volle Lernform (Stammformen) + Wortart eingeben." : "Es genügt eine Sprache — die andere wird übersetzt und zum Nachschauen vorgemerkt."}
+          <Icon name="sparkle" size={13} /> {txt(isLat ? "Latein: Grundform, volle Lernform und Wortart eingeben." : "Es genügt eine Sprache — die andere wird übersetzt und zum Nachschauen vorgemerkt.")}
         </div>
       </div>
 
       <div className="row" style={{ justifyContent: "space-between", marginBottom: 10 }}>
-        <span className="muted" style={{ fontSize: 13.5 }}><b style={{ color: "var(--ink)" }}>{filtered.length}</b> {filtered.length === 1 ? "Wort" : "Wörter"}{activeList !== "__all" ? ` in „${listNameOf(activeList)}“` : ""}</span>
+        <span className="muted" style={{ fontSize: 13.5 }}>{txt(filtered.length === 1 ? "{n} Wort" : "{n} Wörter", { n: filtered.length })}{activeList !== "__all" ? txt(" in „{liste}“", { liste: listNameOf(activeList) }) : ""}</span>
       </div>
 
       {/* Mehrfachauswahl -> in eine Wortliste */}
@@ -393,15 +394,15 @@ export function WordList() {
           <div className="row wrap" style={{ gap: 10, alignItems: "center" }}>
             <span style={{ fontWeight: 600 }}>{selectedIds.length} ausgewählt</span>
             <span className="grow" />
-            <input className="field" style={{ width: 160 }} placeholder="Neue Wortliste …" value={newListName} onChange={(e) => setNewListName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && createListFromSel()} />
-            <button className="btn btn-sm btn-primary" disabled={!selectedIds.length} onClick={createListFromSel}><Icon name="plus" size={14} /> Neue Wortliste</button>
+            <input className="field" style={{ width: 160 }} placeholder={txt("Neue Wortliste …")} value={newListName} onChange={(e) => setNewListName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && createListFromSel()} />
+            <button className="btn btn-sm btn-primary" disabled={!selectedIds.length} onClick={createListFromSel}><Icon name="plus" size={14} /> {txt("Neue Wortliste")}</button>
             {pairLists.length > 0 && (
               <>
                 <select className="field" style={{ width: "auto", minWidth: 130 }} value={addToListId} onChange={(e) => setAddToListId(e.target.value)}>
-                  <option value="">Zu Wortliste …</option>
+                  <option value="">{txt("Zu Wortliste …")}</option>
                   {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
                 </select>
-                <button className="btn btn-sm" disabled={!selectedIds.length || !addToListId} onClick={addSelToList}>Hinzufügen</button>
+                <button className="btn btn-sm" disabled={!selectedIds.length || !addToListId} onClick={addSelToList}>{txt("Hinzufügen")}</button>
               </>
             )}
           </div>
@@ -414,8 +415,8 @@ export function WordList() {
           <thead>
             <tr>
               <th style={{ width: "28%" }}>{P.foreignLabel}</th>
-              <th style={{ width: "28%" }}>Deutsch</th>
-              <th style={{ width: "30%" }}>Listen</th>
+              <th style={{ width: "28%" }}>{txt("Deutsch")}</th>
+              <th style={{ width: "30%" }}>{txt("Listen")}</th>
               <th style={{ width: "14%" }}></th>
             </tr>
           </thead>
@@ -426,7 +427,7 @@ export function WordList() {
                   <input className="mini-input" placeholder={isLat ? "Grundform" : undefined} value={draft.fgn} onChange={(e) => setDraft({ ...draft, fgn: e.target.value })} />
                   {isLat && (
                     <>
-                      <input className="mini-input" style={{ marginTop: 6 }} placeholder="Lernform" value={draft.lernform} onChange={(e) => setDraft({ ...draft, lernform: e.target.value })} />
+                      <input className="mini-input" style={{ marginTop: 6 }} placeholder={txt("Lernform")} value={draft.lernform} onChange={(e) => setDraft({ ...draft, lernform: e.target.value })} />
                       <select className="mini-input" style={{ marginTop: 6 }} value={draft.wortart} onChange={(e) => setDraft({ ...draft, wortart: e.target.value })}>
                         {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
                       </select>
@@ -443,14 +444,14 @@ export function WordList() {
                     ))}
                   </div>
                   {isLat && <LatinKeys />}
-                  <input className="mini-input" style={{ marginTop: 6, maxWidth: 160 }} placeholder="Aussprache" value={draft.phon} onChange={(e) => setDraft({ ...draft, phon: e.target.value })} />
+                  <input className="mini-input" style={{ marginTop: 6, maxWidth: 160 }} placeholder={txt("Aussprache")} value={draft.phon} onChange={(e) => setDraft({ ...draft, phon: e.target.value })} />
                   <input className="mini-input" style={{ marginTop: 6 }} placeholder={`Beispielsatz (${P.foreignLabel})`} value={draft.ex1} onChange={(e) => setDraft({ ...draft, ex1: e.target.value })} />
-                  <input className="mini-input" style={{ marginTop: 6 }} placeholder="Zweiter Beispielsatz (optional)" value={draft.ex2} onChange={(e) => setDraft({ ...draft, ex2: e.target.value })} />
+                  <input className="mini-input" style={{ marginTop: 6 }} placeholder={txt("Zweiter Beispielsatz (optional)")} value={draft.ex2} onChange={(e) => setDraft({ ...draft, ex2: e.target.value })} />
                 </td>
                 <td>
                   <div className="row" style={{ gap: 6 }}>
                     <button className="btn btn-primary btn-sm" onClick={() => saveEdit(w.id)}><Icon name="check" size={14} /></button>
-                    <button className="btn btn-ghost btn-sm" onClick={() => setEditingId(null)}>Cancel</button>
+                    <button className="btn btn-ghost btn-sm" onClick={() => setEditingId(null)}>{txt("Abbrechen")}</button>
                   </div>
                 </td>
               </tr>
@@ -463,7 +464,7 @@ export function WordList() {
                   {fgnOf(w) || <span className="faint">—</span>}
                   {isLat && w.lernform && <div className="faint" style={{ fontSize: 12, fontStyle: "italic" }}>{w.lernform}</div>}
                   {isLat && w.wortart && <div className="faint" style={{ fontSize: 11.5 }}>{w.wortart}</div>}
-                  {w.review && <span className="badge amber" style={{ marginTop: 4 }}><span className="dot" />Review</span>}
+                  {w.review && <span className="badge amber" style={{ marginTop: 4 }}><span className="dot" />{txt("Nachschauen")}</span>}
                 </td>
                 <td className="cell-de">{w.de || <span className="faint">—</span>}</td>
                 <td>
@@ -474,8 +475,8 @@ export function WordList() {
                 <td>
                   {!selectMode && (
                   <div className="row-actions" onClick={(e) => e.stopPropagation()}>
-                    <button className="icon-btn" style={{ width: 32, height: 32 }} title="Edit" onClick={() => startEdit(w)}><Icon name="edit" size={15} /></button>
-                    <button className="icon-btn" style={{ width: 32, height: 32 }} title="Delete" onClick={() => store.deleteWord(w.id)}><Icon name="trash" size={15} /></button>
+                    <button className="icon-btn" style={{ width: 32, height: 32 }} title={txt("Bearbeiten")} onClick={() => startEdit(w)}><Icon name="edit" size={15} /></button>
+                    <button className="icon-btn" style={{ width: 32, height: 32 }} title={txt("Löschen")} onClick={() => store.deleteWord(w.id)}><Icon name="trash" size={15} /></button>
                   </div>
                   )}
                 </td>
@@ -483,7 +484,7 @@ export function WordList() {
             ))}
           </tbody>
         </table>
-        {!filtered.length && <div className="empty"><div className="big">No words here yet</div><div>Füge eines oben hinzu oder nutze „Einfügen“.</div></div>}
+        {!filtered.length && <div className="empty"><div className="big">{txt("Noch keine Wörter")}</div><div>{txt("Füge eines oben hinzu oder nutze „Einfügen“.")}</div></div>}
       </div>
 
       <PasteModal open={pasteOpen} pair={pair} initialText={pasteSeed} draftHint={pasteDraft}
@@ -493,7 +494,7 @@ export function WordList() {
       <ReviewModal open={!!reviewRows} rows={reviewRows} pair={pair}
         onClose={() => setReviewRows(null)}
         onConfirm={(rows) => { setReviewRows(null); setPendingImport(rows); }} />
-      <ListPicker open={!!pendingImport} pair={pair} title="In welche Liste?"
+      <ListPicker open={!!pendingImport} pair={pair} title={txt("In welche Liste?")}
         subtitle={pendingImport ? `${pendingImport.length} Wort${pendingImport.length === 1 ? "" : "er"} bereit zum Import` : ""}
         onClose={() => setPendingImport(null)}
         onPick={(id, name) => { const p = pendingImport; setPendingImport(null); commitImport(p, id, name); }} />

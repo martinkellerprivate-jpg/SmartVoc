@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { txt } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
@@ -116,19 +117,19 @@ export function Stats() {
   const insights = useMemo(() => {
     const steps: any[] = [];
     const bald = rows.filter((r) => r.prof.baldFaellig);
-    if (bald.length) steps.push({ tone: "amber", text: `${bald.length} ${bald.length === 1 ? "Wort wird" : "Wörter werden"} bald fällig — heute auffrischen`, action: { label: "Üben", sel: "smart:baldfaellig" } });
+    if (bald.length) steps.push({ tone: "amber", text: txt(bald.length === 1 ? "{n} Wort wird bald fällig — heute auffrischen" : "{n} Wörter werden bald fällig — heute auffrischen", { n: bald.length }), action: { label: "Üben", sel: "smart:baldfaellig" } });
     const leech = rows.filter((r) => r.prof.istLeech);
-    if (leech.length) steps.push({ tone: "red", text: `${leech.length} hartnäckig (z. B. ${fgnOfId(leech[0].w.id)}) — eine Eselsbrücke hilft`, action: { label: "Üben", sel: "smart:leech" } });
+    if (leech.length) steps.push({ tone: "red", text: txt("{n} hartnäckig (z. B. {wort}) — eine Eselsbrücke hilft", { n: leech.length, wort: fgnOfId(leech[0].w.id) }), action: { label: "Üben", sel: "smart:leech" } });
     const c = retentionFor(settings);
     const kvs = rows.filter((r) => { const s = stats[r.w.id]?.fsrs?.stability || 0; return s >= 14 * 0.7 && s < 14; });
-    if (kvs.length) steps.push({ tone: "green", text: `${kvs.length} kurz vor „sitzt“ — ein Durchgang reicht`, action: { label: "Üben", sel: "smart:kurzvorsitzt" } });
+    if (kvs.length) steps.push({ tone: "green", text: txt("{n} kurz vor „sitzt“ — ein Durchgang reicht", { n: kvs.length }), action: { label: "Üben", sel: "smart:kurzvorsitzt" } });
     for (const l of (lists || [])) {
       if (l.pair !== pair || !l.dueDate) continue;
       const days = Math.ceil((l.dueDate - Date.now()) / 86400000);
       if (days < 0 || days > 14) continue;
       const risk = rows.filter((r) => (r.w.lists || []).includes(l.id)
         && ["sitzt_schlecht", "neu", "noch_nicht_geuebt"].includes(deriveProfile(stats[r.w.id]?.fsrs, c).stufe)).length;
-      if (risk > 0) { steps.push({ tone: "red", text: `„${l.name}" ist in ${days} ${days === 1 ? "Tag" : "Tagen"} dran — ${risk} ${risk === 1 ? "Wort wackelt" : "Wörter wackeln"} noch`, action: { label: "Gefährdete üben", sel: "list:" + l.id } }); break; }
+      if (risk > 0) { steps.push({ tone: "red", text: txt(risk === 1 ? "„{liste}“ ist in {tage} Tagen dran — {n} Wort wackelt noch" : "„{liste}“ ist in {tage} Tagen dran — {n} Wörter wackeln noch", { liste: l.name, tage: days, n: risk }), action: { label: "Gefährdete üben", sel: "list:" + l.id } }); break; }
     }
     return { steps };
   }, [rows, stats, lists, pair, settings, vocab]);
@@ -164,10 +165,10 @@ export function Stats() {
   const wannWieder = (p: any) => {
     if (p.due == null) return null;
     const tage = Math.round((p.due - Date.now()) / 86400000);
-    if (tage < 0) return "jetzt wieder dran";
-    if (tage === 0) return "heute wieder dran";
-    if (tage === 1) return "morgen wieder dran";
-    return `in ${tage} Tagen wieder dran`;
+    if (tage < 0) return txt("jetzt wieder dran");
+    if (tage === 0) return txt("heute wieder dran");
+    if (tage === 1) return txt("morgen wieder dran");
+    return txt("in {n} Tagen wieder dran", { n: tage });
   };
   const wortZeile = (r: any) => {
     const s = stats[r.w.id];
@@ -176,11 +177,11 @@ export function Stats() {
     const falsch = s ? (s.wrongCount || 0) : 0;
     const teile: string[] = [];
     if (r.seen) {
-      teile.push(`${richtig} × richtig`);
-      if (fast) teile.push(`${fast} × fast`);
-      if (falsch) teile.push(`${falsch} × falsch`);
+      teile.push(txt("{n} × richtig", { n: richtig }));
+      if (fast) teile.push(txt("{n} × fast", { n: fast }));
+      if (falsch) teile.push(txt("{n} × falsch", { n: falsch }));
     } else {
-      teile.push("noch nie geübt");
+      teile.push(txt("noch nie geübt"));
     }
     const wann = wannWieder(r.prof);
     if (wann) teile.push(wann);
@@ -203,22 +204,22 @@ export function Stats() {
             activeFilter={filter !== "all" ? filter : undefined} />
         </div>
       ) : (
-        <div className="empty"><div className="big">Noch keine Wörter</div><div>In dieser Auswahl ist noch nichts</div></div>
+        <div className="empty"><div className="big">{txt("Noch keine Wörter")}</div><div>{txt("In dieser Auswahl ist noch nichts")}</div></div>
       )}
 
       {/* ---------------- Jetzt üben ---------------- */}
       <div className="stats-section">
-        <div className="section-title">Jetzt üben</div>
-        <div className="muted stats-sub">Drei Wege quer zu den Stufen. Tippen startet die Übung</div>
+        <div className="section-title">{txt("Jetzt üben")}</div>
+        <div className="muted stats-sub">{txt("Drei Wege quer zu den Stufen. Tippen startet die Übung")}</div>
         <div className="lchips" style={{ justifyContent: "flex-start" }}>
           {[{ k: "leech", label: "Hartnäckig", tone: "red", help: "Oft vergessen trotz Übung — hier hilft eine Eselsbrücke" },
             { k: "frischfragil", label: "Frisch und wackelig", tone: "amber", help: "Gerade gelernt, sitzt noch nicht" },
             { k: "kurzvorsitzt", label: "Kurz vor „sitzt“", tone: "green", help: "Fast dauerhaft — ein Schubs reicht" }].map((c) => {
             const n = resolveSmart(c.k, vocab.filter((w) => w.pair === pair), stats, settings.masteryCorrect, { retention: ret }).filter(practiceable).length;
             return (
-              <button key={c.k} className={"lchip lchip-smart tone-" + c.tone} title={c.help} disabled={!n}
+              <button key={c.k} className={"lchip lchip-smart tone-" + c.tone} title={txt(c.help)} disabled={!n}
                 onClick={() => goPractice("smart:" + c.k)}>
-                <Icon name="target" size={13} /> {c.label} <span className="lchip-n">{n}</span>
+                <Icon name="target" size={13} /> {txt(c.label)} <span className="lchip-n">{n}</span>
               </button>
             );
           })}
@@ -229,7 +230,7 @@ export function Stats() {
               <div key={i} className="stats-step">
                 <span className="stats-step-dot" style={{ background: toneColor(it.tone) }} />
                 <span className="grow">{it.text}</span>
-                {it.action && <button className="btn btn-sm" onClick={() => goPractice(it.action.sel)}>{it.action.label}</button>}
+                {it.action && <button className="btn btn-sm" onClick={() => goPractice(it.action.sel)}>{txt(it.action.label)}</button>}
               </div>
             ))}
           </div>
@@ -239,32 +240,32 @@ export function Stats() {
       {/* ---------------- Nachschauen ---------------- */}
       <div className="stats-section">
         <div className="bar">
-          <div className="section-title grow">Nachschauen</div>
+          <div className="section-title grow">{txt("Nachschauen")}</div>
           {filter !== "all" && (
             <button className="btn btn-ghost btn-sm" onClick={() => setFilter("all")}>
-              <Icon name="x" size={14} /> {STUFE_META[filter].label}: Filter aufheben
+              <Icon name="x" size={14} /> {txt("{stufe}: Filter aufheben", { stufe: txt(STUFE_META[filter].label) })}
             </button>
           )}
           <div className="search" style={{ flex: "0 0 220px" }}>
             <Icon name="search" size={17} />
-            <input className="field" placeholder="Wort suchen …" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <input className="field" placeholder={txt("Wort suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
           </div>
         </div>
 
         <div className="stat-grid">
-          <StatCard icon="sparkle" k="Sitzt dauerhaft" v={`${totals.mastered} von ${totals.total}`}
-            sub={`${pct(totals.total ? totals.mastered / totals.total : 0)} % deiner Wörter`} color="var(--ok)" />
-          <StatCard icon="target" k="Trefferquote" v={`${pct(totals.overallAcc)} %`}
-            sub={`aus ${totals.reviews} Antworten`} color="var(--amber-deep)" />
-          <StatCard icon="flame" k="Tage in Folge" v={meta.streak || 0}
-            sub={meta.streak ? "dranbleiben" : "heute üben startet die Serie"} color="var(--bad)" />
+          <StatCard icon="sparkle" k={txt("Sitzt dauerhaft")} v={txt("{a} von {b}", { a: totals.mastered, b: totals.total })}
+            sub={txt("{p} % deiner Wörter", { p: pct(totals.total ? totals.mastered / totals.total : 0) })} color="var(--ok)" />
+          <StatCard icon="target" k={txt("Trefferquote")} v={`${pct(totals.overallAcc)} %`}
+            sub={txt("aus {n} Antworten", { n: totals.reviews })} color="var(--amber-deep)" />
+          <StatCard icon="flame" k={txt("Tage in Folge")} v={meta.streak || 0}
+            sub={txt(meta.streak ? "dranbleiben" : "heute üben startet die Serie")} color="var(--bad)" />
           <div className="stat-card">
-            <div className="k"><Icon name="target" size={15} /> Tagesziel</div>
+            <div className="k"><Icon name="target" size={15} /> {txt("Tagesziel")}</div>
             <div className="row" style={{ gap: 12, marginTop: 8, alignItems: "center" }}>
               <Ring value={goalP} size={48} stroke={6} />
               <div>
                 <div className="v" style={{ fontSize: 26, margin: 0 }}>{meta.todayCount || 0}<span className="faint" style={{ fontSize: 16 }}>/{settings.dailyGoal || 20}</span></div>
-                <div className="sub">Karten heute</div>
+                <div className="sub">{txt("Karten heute")}</div>
               </div>
             </div>
           </div>
@@ -280,7 +281,7 @@ export function Stats() {
               <span className="wordrow-right">
                 <span className="wordrow-state" style={{ color: STUFE_TONE[r.stufe] }}>
                   <span className="wordrow-dot" style={{ background: STUFE_TONE[r.stufe] }} />
-                  {STUFE_META[r.stufe].label}
+                  {txt(STUFE_META[r.stufe].label)}
                 </span>
                 <span className="wordrow-detail">{wortZeile(r)}</span>
               </span>
@@ -288,7 +289,7 @@ export function Stats() {
           ))}
         </div>
         {!view.length && rows.length > 0 && (
-          <div className="empty"><div className="big">Nichts gefunden</div><div>Andere Stufe wählen oder die Suche leeren</div></div>
+          <div className="empty"><div className="big">{txt("Nichts gefunden")}</div><div>{txt("Andere Stufe wählen oder die Suche leeren")}</div></div>
         )}
 
         <MasteryTrend days={trendDays} />
@@ -296,10 +297,10 @@ export function Stats() {
 
       {/* ---------------- Einstellen ---------------- */}
       <div className="stats-section">
-        <div className="section-title">Einstellen</div>
-        <div className="muted stats-sub">Der Lernstand lässt sich zurücksetzen. Deine Wörter und Wortlisten bleiben dabei erhalten</div>
+        <div className="section-title">{txt("Einstellen")}</div>
+        <div className="muted stats-sub">{txt("Der Lernstand lässt sich zurücksetzen. Deine Wörter und Wortlisten bleiben dabei erhalten")}</div>
         <button className="btn btn-ghost btn-sm" onClick={() => setResetOpen(true)}>
-          <Icon name="refresh" size={14} /> Lernstand zurücksetzen
+          <Icon name="refresh" size={14} /> {txt("Lernstand zurücksetzen")}
         </button>
       </div>
 
@@ -309,19 +310,19 @@ export function Stats() {
         <div className="modal-backdrop" onClick={() => setResetOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
             <div className="modal-head">
-              <div className="modal-title">Lernstand zurücksetzen</div>
+              <div className="modal-title">{txt("Lernstand zurücksetzen")}</div>
               <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setResetOpen(false)}><Icon name="x" size={16} /></button>
             </div>
-            <div className="muted" style={{ fontSize: 13.5, marginBottom: 14 }}>Das löscht Punkte und Verlauf. Deine Wörter und Wortlisten bleiben.</div>
+            <div className="muted" style={{ fontSize: 13.5, marginBottom: 14 }}>{txt("Das löscht Punkte und Verlauf. Deine Wörter und Wortlisten bleiben.")}</div>
             <div className="picker-list">
               <button className="picker-row" style={{ textAlign: "left", opacity: settings.statLists.length ? 1 : .5, cursor: settings.statLists.length ? "pointer" : "not-allowed" }}
                 disabled={!settings.statLists.length} onClick={resetSelected}>
                 <Icon name="filter" size={16} />
-                <span className="grow"><b>Nur die gewählten Wortlisten</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>{settings.statLists.length ? `${rows.length} ${rows.length === 1 ? "Wort" : "Wörter"} in deiner aktuellen Auswahl` : "Wähle oben zuerst eine Wortliste"}</div></span>
+                <span className="grow"><b>{txt("Nur die gewählten Wortlisten")}</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>{settings.statLists.length ? `${rows.length} ${rows.length === 1 ? "Wort" : "Wörter"} in deiner aktuellen Auswahl` : "Wähle oben zuerst eine Wortliste"}</div></span>
               </button>
               <button className="picker-row" style={{ textAlign: "left" }} onClick={resetAll}>
                 <Icon name="refresh" size={16} />
-                <span className="grow"><b>Alles</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>Alle Wortlisten, alle Sprachen und die Tagesserie</div></span>
+                <span className="grow"><b>{txt("Alles")}</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>{txt("Alle Wortlisten, alle Sprachen und die Tagesserie")}</div></span>
               </button>
             </div>
           </div>

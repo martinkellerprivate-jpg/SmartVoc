@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { txt } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
@@ -65,9 +66,9 @@ function Field({ title, desc, recLabel, atRec, children }: any) {
   return (
     <div className="set-row">
       <div className="set-info">
-        <div className="set-title">{title}{atRec && <span className="rec-pill">✓ Recommended</span>}</div>
+        <div className="set-title">{title}{atRec && <span className="rec-pill">{txt("✓ Empfohlen")}</span>}</div>
         {desc && <div className="set-desc">{desc}</div>}
-        {recLabel != null && <div className="set-rec">Best-practice default: <b>{recLabel}</b></div>}
+        {recLabel != null && <div className="set-rec">{txt("Empfohlen:")} <b>{recLabel}</b></div>}
       </div>
       <div className="set-control">{children}</div>
     </div>
@@ -130,7 +131,7 @@ export function SettingsTab() {
     <Field title={title} desc={desc} recLabel={fmt ? fmt((DEFAULTS as any)[k]) : (DEFAULTS as any)[k]} atRec={cfgVal(k) === (DEFAULTS as any)[k]}>
       <div className="col" style={{ gap: 6, width: "100%" }}>
         <SliderControl value={cfgVal(k)} min={min} max={max} step={step} onChange={(v: number) => set(k, v)} fmt={fmt} />
-        {cfgVal(k) !== (DEFAULTS as any)[k] && <button className="btn btn-ghost btn-sm" style={{ alignSelf: "flex-end" }} onClick={() => resetCfg(k)}><Icon name="refresh" size={13} /> Auf Standard</button>}
+        {cfgVal(k) !== (DEFAULTS as any)[k] && <button className="btn btn-ghost btn-sm" style={{ alignSelf: "flex-end" }} onClick={() => resetCfg(k)}><Icon name="refresh" size={13} /> {txt("Auf Standard")}</button>}
       </div>
     </Field>
   );
@@ -139,9 +140,9 @@ export function SettingsTab() {
     <div className="settings">
       <div className="set-head">
         <div>
-          <div className="section-title">Settings</div>
+          <div className="section-title">{txt("Einstellungen")}</div>
           <div className="muted" style={{ fontSize: 13.5, marginTop: 4, maxWidth: 540 }}>
-            Defaults follow learning-psychology best practice — spaced repetition, active recall, and a modest number of new words per day. Adjust anything; the <span style={{ color: "var(--green)", fontWeight: 700 }}>✓ Recommended</span> tag shows when a value is at its research-backed norm.
+            {txt("Die Voreinstellungen folgen der Lernpsychologie: verteiltes Üben, aktives Abrufen und wenige neue Wörter pro Tag. Du darfst alles ändern — die Marke „✓ Empfohlen“ zeigt, wo ein Wert auf dem belegten Normalwert steht.")}
           </div>
         </div>
         <button className="btn btn-sm" onClick={() => { resetSettings(); toast("Restored recommended settings", "refresh"); }}>
@@ -151,42 +152,42 @@ export function SettingsTab() {
 
       {/* Practice */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="cards" size={16} /> Üben</div>
-        <Field title="Default answer mode" recLabel="Type" atRec={atR("mode")}
-          desc="Typing the answer (active recall) builds the strongest memory. Recall = self-check flashcards; Memorize = browse only, no scoring.">
+        <div className="set-section-h"><Icon name="cards" size={16} /> {txt("Üben")}</div>
+        <Field title={txt("Antwortart")} recLabel={txt("Eintippen")} atRec={atR("mode")}
+          desc="Eintippen prägt am stärksten ein. Selbstkontrolle heisst: umdrehen und selbst beurteilen. Durchblättern zählt nicht für den Lernstand.">
           <select className="field" style={{ width: "100%" }} value={settings.mode} onChange={(e) => set("mode", e.target.value)}>
-            <option value="type">Type</option>
-            <option value="choice">Choose</option>
-            <option value="recall">Recall (self-check)</option>
-            <option value="memorize">Memorize (browse)</option>
+            <option value="type">{txt("Eintippen")}</option>
+            <option value="choice">{txt("Auswählen")}</option>
+            <option value="recall">{txt("Selbstkontrolle")}</option>
+            <option value="memorize">{txt("Durchblättern")}</option>
           </select>
         </Field>
-        <Field title="Multiple-choice options" recLabel={R.choicesCount} atRec={atR("choicesCount")}
-          desc="How many options appear in Choose mode.">
+        <Field title={txt("Anzahl Auswahlmöglichkeiten")} recLabel={R.choicesCount} atRec={atR("choicesCount")}
+          desc="Wie viele Möglichkeiten beim Auswählen zur Wahl stehen.">
           <SliderControl value={settings.choicesCount} min={2} max={6} step={1} onChange={(v) => set("choicesCount", v)} />
         </Field>
-        <Field title="Beispielsätze anzeigen" recLabel="On" atRec={atR("showExamples")}
+        <Field title={txt("Beispielsätze anzeigen")} recLabel={txt("An")} atRec={atR("showExamples")}
           desc="Zeigt die Beispielsätze eines Worts auf der Lösungsseite der Karte — dort, wo du die Antwort siehst. Ein Wort im Satz zu sehen, hilft beim Behalten. Sätze, die du nicht erfasst hast, ändern nichts.">
           <Toggle value={settings.showExamples !== false} onChange={(v) => set("showExamples", v)} />
         </Field>
-        <Field title="Aussprache anzeigen" recLabel="On" atRec={atR("showPhonetic")}
+        <Field title={txt("Aussprache anzeigen")} recLabel={txt("An")} atRec={atR("showPhonetic")}
           desc="Zeigt die Lautschrift eines Worts klein unter dem Fremdwort — überall dort, wo das Fremdwort selbst zu sehen ist. Wörter ohne erfasste Lautschrift bleiben unverändert.">
           <Toggle value={settings.showPhonetic !== false} onChange={(v) => set("showPhonetic", v)} />
         </Field>
-        <Field title="Daily goal (cards)" recLabel={`${R.dailyGoal} (~15 min)`} atRec={atR("dailyGoal")}
-          desc="A short daily session beats long, infrequent ones — daily exposure keeps memory fresh.">
+        <Field title={txt("Tagesziel (Karten)")} recLabel={`${R.dailyGoal} (etwa 15 Minuten)`} atRec={atR("dailyGoal")}
+          desc="Eine kurze Einheit jeden Tag bringt mehr als eine lange alle paar Tage.">
           <SliderControl value={settings.dailyGoal} min={10} max={80} step={5} onChange={(v) => set("dailyGoal", v)} />
         </Field>
       </div>
 
       {/* Pacing & repetition */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="flame" size={16} /> Wiederholung</div>
-        <Field title="New words per day" recLabel={`${R.newPerDay} (8–12 is ideal)`} atRec={atR("newPerDay")}
-          desc="Limiting how many brand-new words appear each day prevents overload — once reached, the day focuses on reviewing.">
+        <div className="set-section-h"><Icon name="flame" size={16} /> {txt("Wiederholung")}</div>
+        <Field title={txt("Neue Wörter pro Tag")} recLabel={`${R.newPerDay} (8 bis 12 sind ideal)`} atRec={atR("newPerDay")}
+          desc="Begrenzt, wie viele ganz neue Wörter pro Tag dazukommen. Ist die Zahl erreicht, geht es nur noch ums Wiederholen.">
           <SliderControl value={settings.newPerDay} min={3} max={30} step={1} onChange={(v) => set("newPerDay", v)} />
         </Field>
-        <Field title="Lernintensität" recLabel="Normal" atRec={(settings.targetRetention ?? 0.9) === 0.9}
+        <Field title={txt("Lernintensität")} recLabel="Normal" atRec={(settings.targetRetention ?? 0.9) === 0.9}
           desc="Wie gut die App ein Wort im Gedächtnis halten will, bevor sie es zur Wiederholung bringt. Intensiver = häufigere Wiederholung, sicherer im Behalten. Alles Weitere regelt die App automatisch.">
           <Seg value={(settings.targetRetention ?? 0.9) >= 0.95 ? "intensiv" : (settings.targetRetention ?? 0.9) <= 0.85 ? "locker" : "normal"}
             onChange={(v) => setSettings({ lernIntensity: v, targetRetention: { locker: 0.85, normal: 0.9, intensiv: 0.95 }[v] })}
@@ -196,33 +197,33 @@ export function SettingsTab() {
 
       {/* Answer checking */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="check" size={16} /> Antwortprüfung</div>
-        <Field title="Ignore capitalisation" recLabel="On" atRec={atR("lenientCase")}
-          desc="Treat “Hund” and “hund” as the same answer.">
+        <div className="set-section-h"><Icon name="check" size={16} /> {txt("Antwortprüfung")}</div>
+        <Field title={txt("Gross- und Kleinschreibung egal")} recLabel={txt("An")} atRec={atR("lenientCase")}
+          desc="„Hund“ und „hund“ gelten als dieselbe Antwort.">
           <Toggle value={settings.lenientCase} onChange={(v) => set("lenientCase", v)} />
         </Field>
-        <Field title="Strict umlauts / accents" recLabel="Off" atRec={atR("strictAccents")}
+        <Field title={txt("Umlaute und Akzente streng")} recLabel={txt("Aus")} atRec={atR("strictAccents")}
           desc="When off, “grun” for “grün” is a small mistake (partial credit) instead of fully wrong.">
           <Toggle value={settings.strictAccents} onChange={(v) => set("strictAccents", v)} />
         </Field>
-        <Field title="Article (der/die/das)" recLabel="Required (partial penalty)" atRec={atR("articleMode")}
-          desc="How a missing or wrong article is scored. Required = it must be there; Optional = the article is ignored entirely.">
+        <Field title={txt("Artikel (der/die/das)")} recLabel={txt("Nötig, kleiner Abzug")} atRec={atR("articleMode")}
+          desc="Wie ein fehlender oder falscher Artikel bewertet wird. Nötig heisst: er muss stehen. Freiwillig heisst: er wird gar nicht angeschaut.">
           <select className="field" style={{ width: "100%" }} value={settings.articleMode} onChange={(e) => set("articleMode", e.target.value)}>
-            <option value="required-full">Required · full penalty</option>
-            <option value="required-partial">Required · partial penalty</option>
-            <option value="optional">Optional</option>
+            <option value="required-full">{txt("Nötig · voller Abzug")}</option>
+            <option value="required-partial">{txt("Nötig · kleiner Abzug")}</option>
+            <option value="optional">{txt("Optional")}</option>
           </select>
         </Field>
-        <Field title="Allow near-misses" recLabel="On" atRec={atR("acceptPartial")}
-          desc="A single typo counts as almost-right (partial credit) and the slip is highlighted in the solution. Off = a near-miss is marked wrong.">
+        <Field title={txt("Fast richtig zulassen")} recLabel={txt("An")} atRec={atR("acceptPartial")}
+          desc="Ein einzelner Tippfehler zählt als fast richtig und wird in der Lösung hervorgehoben. Aus heisst: knapp daneben ist falsch.">
           <Toggle value={settings.acceptPartial} onChange={(v) => set("acceptPartial", v)} />
         </Field>
       </div>
 
       {/* Latein */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="swap" size={16} /> Sprachen</div>
-        <Field title="Sichtbare Sprachen"
+        <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprachen")}</div>
+        <Field title={txt("Sichtbare Sprachen")}
           desc="Bestimmt, welche Sprachen oben zur Auswahl stehen. Eine abgeschaltete Sprache wird nur ausgeblendet — ihre Wörter, Listen und Lernstände bleiben erhalten und sind sofort wieder da, wenn du sie erneut einschaltest.">
           <div className="col" style={{ gap: 8, width: "100%" }}>
             {Object.values(PAIRS).map((p: any) => (
@@ -236,15 +237,15 @@ export function SettingsTab() {
       </div>
 
       <div className="set-section">
-        <div className="set-section-h"><Icon name="list" size={16} /> Latein</div>
-        <Field title="Abfrage-Form" recLabel="L2 (Grundform)" atRec={atR("latinMode")}
+        <div className="set-section-h"><Icon name="list" size={16} /> {txt("Latein")}</div>
+        <Field title={txt("Abfrage-Form")} recLabel="L2 (Grundform)" atRec={atR("latinMode")}
           desc="Gilt nur für das Paar Latein ⇄ Deutsch. L2: die Karte zeigt die volle Lernform, abgefragt wird nur die Grundform. L3: du gibst die vollständigen Stammformen ein (Reihenfolge egal).">
           <select className="field" style={{ width: "100%" }} value={settings.latinMode} onChange={(e) => set("latinMode", e.target.value)}>
-            <option value="L2">L2 · Grundform abfragen</option>
-            <option value="L3">L3 · volle Lernform abfragen</option>
+            <option value="L2">{txt("L2 · Grundform abfragen")}</option>
+            <option value="L3">{txt("L3 · volle Lernform abfragen")}</option>
           </select>
         </Field>
-        <Field title="Längenstriche nicht nötig" recLabel="Aus (Längenstriche zählen)" atRec={!settings.latinMacronsOptional}
+        <Field title={txt("Längenstriche nicht nötig")} recLabel="Aus (Längenstriche zählen)" atRec={!settings.latinMacronsOptional}
           desc="Längenstriche (ā ē ī ō ū) sind auf Handy und Mac mühsam zu tippen. Aus: fehlt ein Strich, gibt es Punktabzug („fast“). Ein: die Antwort zählt als richtig — die Lösung markiert die Striche trotzdem rot, damit du sie siehst. Gilt nur für Latein.">
           <Toggle value={!!settings.latinMacronsOptional} onChange={(v) => set("latinMacronsOptional", v)} />
         </Field>
@@ -252,27 +253,40 @@ export function SettingsTab() {
 
       {/* Lernhilfen */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="hint" size={16} /> Lernhilfen</div>
-        <Field title="Lerntipp-Einblendungen" recLabel="Gelegentlich" atRec={atR("tipsFrequency")}
+        <div className="set-section-h"><Icon name="hint" size={16} /> {txt("Lernhilfen")}</div>
+        <Field title={txt("Lerntipp-Einblendungen")} recLabel="Gelegentlich" atRec={atR("tipsFrequency")}
           desc="Kurze Lerntipps tauchen an natürlichen Pausen auf (nie mitten in der Antwort) und lassen sich wegklicken.">
           <select className="field" style={{ width: "100%" }} value={settings.tipsFrequency} onChange={(e) => set("tipsFrequency", e.target.value)}>
-            <option value="off">Aus</option>
-            <option value="occasional">Gelegentlich</option>
-            <option value="frequent">Häufig</option>
+            <option value="off">{txt("Aus")}</option>
+            <option value="occasional">{txt("Gelegentlich")}</option>
+            <option value="frequent">{txt("Häufig")}</option>
+          </select>
+        </Field>
+      </div>
+
+      {/* Oberflächensprache */}
+      <div className="set-section">
+        <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprache der App")}</div>
+        <Field title={txt("Oberflächensprache")} recLabel={txt("Folgt dem Gerät")} atRec={!settings.uiLang}
+          desc={txt("Die Sprache der Bedienung. Deine Wörter und Wortlisten bleiben davon unberührt — die Übersetzungen sind immer Deutsch.")}>
+          <select className="field" style={{ width: "100%" }} value={settings.uiLang || ""} onChange={(e) => set("uiLang", e.target.value || undefined)}>
+            <option value="">{txt("Folgt dem Gerät")}</option>
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
           </select>
         </Field>
       </div>
 
       {/* Übungsplan — die Schwellen der Ampel */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="calendar" size={16} /> Übungsplan</div>
-        <Field title="Bereit ab" recLabel="95 %" atRec={atR("readyGreen")}
+        <div className="set-section-h"><Icon name="calendar" size={16} /> {txt("Übungsplan")}</div>
+        <Field title={txt("Bereit ab")} recLabel="95 %" atRec={atR("readyGreen")}
           desc="Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender.">
           <SliderControl value={settings.readyGreen ?? 95} min={80} max={100} step={1}
             onChange={(v) => set("readyGreen", Math.max(v, (settings.readyAmber ?? 70) + 1))}
             fmt={(v) => v + " %"} />
         </Field>
-        <Field title="Fast bereit ab" recLabel="70 %" atRec={atR("readyAmber")}
+        <Field title={txt("Fast bereit ab")} recLabel="70 %" atRec={atR("readyAmber")}
           desc="Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.">
           <SliderControl value={settings.readyAmber ?? 70} min={40} max={94} step={1}
             onChange={(v) => set("readyAmber", Math.min(v, (settings.readyGreen ?? 95) - 1))}
@@ -289,53 +303,53 @@ export function SettingsTab() {
 
       {/* Erscheinungsbild */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="swatch" size={16} /> Erscheinungsbild</div>
+        <div className="set-section-h"><Icon name="swatch" size={16} /> {txt("Erscheinungsbild")}</div>
         <CardPreview />
-        <Field title="Erscheinungsbild" recLabel="Automatisch" atRec={atR("appearance")}
+        <Field title={txt("Erscheinungsbild")} recLabel="Automatisch" atRec={atR("appearance")}
           desc="Hell, dunkel oder dem Gerät folgen. Getrennt vom Farbschema — beim Wechsel bleibt dein Schema erhalten.">
           <select className="field" style={{ width: "100%" }} value={settings.appearance} onChange={(e) => set("appearance", e.target.value)}>
-            <option value="auto">Automatisch (folgt dem Gerät)</option>
-            <option value="light">Hell</option>
-            <option value="dark">Dunkel</option>
+            <option value="auto">{txt("Automatisch (folgt dem Gerät)")}</option>
+            <option value="light">{txt("Hell")}</option>
+            <option value="dark">{txt("Dunkel")}</option>
           </select>
         </Field>
-        <Field title="Farbschema" recLabel="Kladde" atRec={atR("scheme")}
+        <Field title={txt("Farbschema")} recLabel="Kladde" atRec={atR("scheme")}
           desc="Grund, Tinte und Akzent für die ganze App. Jedes Schema gibt es hell und dunkel.">
           <select className="field" style={{ width: "100%" }} value={settings.scheme} onChange={(e) => set("scheme", e.target.value)}>
-            <option value="kladde">Kladde (warmes Kraftpapier)</option>
-            <option value="leinen">Leinen (kühler, Tintenblau)</option>
-            <option value="altpapier">Altpapier (graubraun, Stempelrot)</option>
+            <option value="kladde">{txt("Kladde (warmes Kraftpapier)")}</option>
+            <option value="leinen">{txt("Leinen (kühler, Tintenblau)")}</option>
+            <option value="altpapier">{txt("Altpapier (graubraun, Stempelrot)")}</option>
           </select>
         </Field>
-        <Field title="Kartenstil" recLabel="Liniert" atRec={atR("cardStyle")}
+        <Field title={txt("Kartenstil")} recLabel="Liniert" atRec={atR("cardStyle")}
           desc="Nur die Übungskarte. Nimmt die Farben des gewählten Schemas an.">
           <select className="field" style={{ width: "100%" }} value={settings.cardStyle} onChange={(e) => set("cardStyle", e.target.value)}>
-            <option value="ruled">Liniert</option>
-            <option value="plain">Blanko</option>
-            <option value="recycled">Altpapier</option>
-            <option value="linen">Leinen</option>
+            <option value="ruled">{txt("Liniert")}</option>
+            <option value="plain">{txt("Blanko")}</option>
+            <option value="recycled">{txt("Altpapier")}</option>
+            <option value="linen">{txt("Leinen")}</option>
           </select>
         </Field>
-        <Field title="Kartenschrift" recLabel="Serif" atRec={atR("cardFont")}
+        <Field title={txt("Kartenschrift")} recLabel="Serif" atRec={atR("cardFont")}
           desc="Schrift des grossen Karten-Worts und der Antwort. Die übrige Oberfläche bleibt gleich.">
           <select className="field" style={{ width: "100%" }} value={settings.cardFont} onChange={(e) => set("cardFont", e.target.value)}>
-            <option value="serif">Serif (Source Serif)</option>
-            <option value="arial">Arial</option>
-            <option value="handwriting">Handschrift (Patrick Hand)</option>
+            <option value="serif">{txt("Serif (Source Serif)")}</option>
+            <option value="arial">{txt("Arial")}</option>
+            <option value="handwriting">{txt("Handschrift (Patrick Hand)")}</option>
           </select>
         </Field>
       </div>
 
       {/* Grundwortschatz (Starter-Listen) */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="sparkle" size={16} /> Grundwortschatz</div>
+        <div className="set-section-h"><Icon name="sparkle" size={16} /> {txt("Grundwortschatz")}</div>
         {STARTERS.map((s) => {
           const done = isStarterActivated(settings, s.pair, s.stufe);
           return (
             <Field key={s.key} title={s.label} desc={`${s.count} häufige Wörter. Wird als eigene Wortliste hinzugefügt; bereits vorhandene Wörter werden übersprungen.`}>
               {done
-                ? <span className="badge green"><span className="dot" />Aktiviert</span>
-                : <button className="btn btn-sm" onClick={() => addStarter(s.pair, s.stufe)}><Icon name="plus" size={15} /> Hinzufügen</button>}
+                ? <span className="badge green"><span className="dot" />{txt("Aktiviert")}</span>
+                : <button className="btn btn-sm" onClick={() => addStarter(s.pair, s.stufe)}><Icon name="plus" size={15} /> {txt("Hinzufügen")}</button>}
             </Field>
           );
         })}
@@ -354,13 +368,13 @@ export function SettingsTab() {
               Für Neugierige. Die App funktioniert mit den Standardwerten optimal — alles hier ist optional und jederzeit zurücksetzbar.
             </div>
 
-            <Field title="Lerntempo" atRec={cfgVal("learningSpeed") === DEFAULTS.learningSpeed}
+            <Field title={txt("Lerntempo")} atRec={cfgVal("learningSpeed") === DEFAULTS.learningSpeed}
               recLabel="1,0× (normal)"
               desc="Wie schnell ein Wort an Festigkeit gewinnt, wenn du es richtig hast. Höher = die App nimmt schnellere Fortschritte an und fragt seltener nach (riskanter); niedriger = vorsichtiger, häufiger.">
               <div className="col" style={{ gap: 6, width: "100%" }}>
                 <SliderControl value={speed} min={0.6} max={1.6} step={0.05} onChange={(v: number) => set("learningSpeed", v)} fmt={(v: number) => v.toFixed(2) + "×"} />
-                <div className="set-rec" style={{ fontSize: 12.5 }}>Beispiel: 3× richtig hintereinander → hält <b>~{Math.round(haeltAtSpeed)} statt ~{Math.round(haeltBase)} Tage</b>.</div>
-                {speed !== DEFAULTS.learningSpeed && <button className="btn btn-ghost btn-sm" style={{ alignSelf: "flex-end" }} onClick={() => resetCfg("learningSpeed")}><Icon name="refresh" size={13} /> Auf Standard</button>}
+                <div className="set-rec" style={{ fontSize: 12.5 }}>{txt("Beispiel: 3× richtig hintereinander → hält")} <b>~{Math.round(haeltAtSpeed)} statt ~{Math.round(haeltBase)} Tage</b>.</div>
+                {speed !== DEFAULTS.learningSpeed && <button className="btn btn-ghost btn-sm" style={{ alignSelf: "flex-end" }} onClick={() => resetCfg("learningSpeed")}><Icon name="refresh" size={13} /> {txt("Auf Standard")}</button>}
               </div>
             </Field>
 
@@ -373,7 +387,7 @@ export function SettingsTab() {
             {advParam("examWindowDays", "Prüfungs-Fenster (Tage)", "Wie viele Tage vor einem Prüfungstermin die App dichter wiederholt (Prüfungs-Modus).", 1, 7, 1, (v: number) => `${v} T`)}
             {advParam("examRetention", "Prüfungs-Sicherheit", "Wie sicher Wörter kurz vor der Prüfung sitzen sollen — höher = häufigere Wiederholung im Prüfungs-Fenster.", 0.9, 0.99, 0.01, (v: number) => `${Math.round(v * 100)} %`)}
 
-            <div className="set-subhead">Übungsrunde — wie oft welche Wörter drankommen</div>
+            <div className="set-subhead">{txt("Übungsrunde — wie oft welche Wörter drankommen")}</div>
             {advParam("W_ROT", "Gewicht: wackelnde Wörter", "Wie oft rote (wackelnde) Wörter in einer Runde drankommen. Höher = häufiger. Sollten zusammen mit fälligen am meisten geübt werden.", 1, 10, 1)}
             {advParam("W_FAELLIG", "Gewicht: fällige Wörter", "Wie oft fällige (zur Auffrischung anstehende) Wörter drankommen.", 1, 10, 1)}
             {advParam("W_GRAU", "Gewicht: noch nie geübt", "Wie oft ganz neue, noch nie geübte Wörter drankommen.", 1, 10, 1)}
@@ -387,12 +401,12 @@ export function SettingsTab() {
             {advParam("STALE_MIN", "Pause bis Neustart (Minuten)", "Nach so vielen Minuten Pause beginnt die App die Übungsrunde frisch, damit sie zum aktuellen Stand passt.", 10, 120, 5, (v: number) => `${v} min`)}
             {advParam("GENUG_KARTEN", "Hinweis „Genug für heute“ ab", "Ab so vielen Karten in einer Runde schlägt die App eine Pause vor — ganz ohne Zwang.", 10, 100, 5)}
 
-            <Field title="Auto-Anpassung" atRec={!settings.autoFit} recLabel="Aus"
+            <Field title={txt("Auto-Anpassung")} atRec={!settings.autoFit} recLabel="Aus"
               desc="Lässt die App das Gedächtnis-Modell langfristig an deine Antworten anpassen. Sammelt ab sofort einen Lern-Verlauf; die eigentliche Feinjustierung folgt in einem späteren Update. Standard: aus.">
               <div className="col" style={{ gap: 6, width: "100%", alignItems: "flex-end" }}>
                 <Toggle value={!!settings.autoFit} onChange={(v: boolean) => set("autoFit", v)} />
                 <div className="set-rec" style={{ fontSize: 12.5 }}>{reviewStatus.text}</div>
-                <button className="btn btn-ghost btn-sm" onClick={() => setFsrsOpen(true)}><Icon name="chart" size={13} /> FSRS-Werte ansehen</button>
+                <button className="btn btn-ghost btn-sm" onClick={() => setFsrsOpen(true)}><Icon name="chart" size={13} /> {txt("FSRS-Werte ansehen")}</button>
               </div>
             </Field>
           </>
@@ -403,14 +417,14 @@ export function SettingsTab() {
 
       {/* Konto & Daten */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="download" size={16} /> Konto & Daten</div>
-        <Field title="Daten exportieren" desc="Lädt alle deine Wörter, Listen, Fortschritte und Einstellungen als JSON-Datei herunter.">
-          <button className="btn btn-sm" onClick={doExport}><Icon name="download" size={15} /> Exportieren</button>
+        <div className="set-section-h"><Icon name="download" size={16} /> {txt("Konto & Daten")}</div>
+        <Field title={txt("Daten exportieren")} desc="Lädt alle deine Wörter, Listen, Fortschritte und Einstellungen als JSON-Datei herunter.">
+          <button className="btn btn-sm" onClick={doExport}><Icon name="download" size={15} /> {txt("Exportieren")}</button>
         </Field>
-        <Field title="Datenschutz" desc="Wie deine Daten gespeichert werden.">
-          <button className="btn btn-sm btn-ghost" onClick={() => setPrivacyOpen(true)}>Datenschutz ansehen</button>
+        <Field title={txt("Datenschutz")} desc="Wie deine Daten gespeichert werden.">
+          <button className="btn btn-sm btn-ghost" onClick={() => setPrivacyOpen(true)}>{txt("Datenschutz ansehen")}</button>
         </Field>
-        <Field title="Account löschen" desc={cloudActive ? "Löscht deine Daten endgültig – lokal und in der Cloud. Das kann nicht rückgängig gemacht werden." : "Löscht alle Daten auf diesem Gerät. Das kann nicht rückgängig gemacht werden."}>
+        <Field title={txt("Account löschen")} desc={cloudActive ? "Löscht deine Daten endgültig – lokal und in der Cloud. Das kann nicht rückgängig gemacht werden." : "Löscht alle Daten auf diesem Gerät. Das kann nicht rückgängig gemacht werden."}>
           <button className="btn btn-sm" style={{ borderColor: "var(--red)", color: "var(--red)" }} onClick={() => { setConfirmText(""); setDelErr(""); setDelOpen(true); }}>
             <Icon name="trash" size={15} /> Löschen
           </button>
@@ -421,16 +435,16 @@ export function SettingsTab() {
         <div className="modal-backdrop" onClick={() => setPrivacyOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 480 }}>
             <div className="modal-head">
-              <div className="modal-title">Datenschutz</div>
+              <div className="modal-title">{txt("Datenschutz")}</div>
               <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setPrivacyOpen(false)}><Icon name="x" size={16} /></button>
             </div>
             <div className="muted" style={{ fontSize: 13.5, lineHeight: 1.5 }}>
-              <p style={{ marginBottom: 10 }}><b style={{ color: "var(--ink)" }}>Platzhalter — die vollständige Datenschutzerklärung folgt vor dem Launch.</b></p>
+              <p style={{ marginBottom: 10 }}><b style={{ color: "var(--ink)" }}>{txt("Platzhalter — die vollständige Datenschutzerklärung folgt vor dem Launch.")}</b></p>
               <p style={{ marginBottom: 8 }}>Deine Vokabeln, Listen und Fortschritte werden zuerst lokal auf deinem Gerät gespeichert. Wenn du dich anmeldest, werden sie zusätzlich mit der Cloud (Supabase) synchronisiert, damit sie auf deinen Geräten verfügbar sind.</p>
-              <p style={{ marginBottom: 8 }}>Du kannst deine Daten jederzeit als Datei exportieren und deinen Account vollständig löschen (oben unter „Konto & Daten").</p>
-              <p>Ohne Anmeldung bleibt alles ausschliesslich auf diesem Gerät.</p>
+              <p style={{ marginBottom: 8 }}>{txt("Du kannst deine Daten jederzeit als Datei exportieren und deinen Account vollständig löschen (oben unter „Konto & Daten\").")}</p>
+              <p>{txt("Ohne Anmeldung bleibt alles ausschliesslich auf diesem Gerät.")}</p>
             </div>
-            <div className="modal-foot"><button className="btn btn-primary" onClick={() => setPrivacyOpen(false)}>Verstanden</button></div>
+            <div className="modal-foot"><button className="btn btn-primary" onClick={() => setPrivacyOpen(false)}>{txt("Verstanden")}</button></div>
           </div>
         </div>
       )}
@@ -439,19 +453,19 @@ export function SettingsTab() {
         <div className="modal-backdrop" onClick={() => !delBusy && setDelOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
             <div className="modal-head">
-              <div className="modal-title">Account löschen</div>
+              <div className="modal-title">{txt("Account löschen")}</div>
               <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => !delBusy && setDelOpen(false)}><Icon name="x" size={16} /></button>
             </div>
             <div className="muted" style={{ fontSize: 13.5, lineHeight: 1.45, marginBottom: 12 }}>
               {cloudActive
                 ? "Das löscht deine Daten endgültig – auf diesem Gerät und in der Cloud. Danach wirst du abgemeldet."
                 : "Das löscht alle Vokabeln, Listen und Fortschritte auf diesem Gerät."}
-              {" "}Tippe zum Bestätigen <b style={{ color: "var(--ink)" }}>LÖSCHEN</b>.
+              {" "}Tippe zum Bestätigen <b style={{ color: "var(--ink)" }}>{txt("LÖSCHEN")}</b>.
             </div>
-            <input className="field" placeholder="LÖSCHEN" value={confirmText} onChange={(e) => setConfirmText(e.target.value)} autoFocus />
+            <input className="field" placeholder={txt("LÖSCHEN")} value={confirmText} onChange={(e) => setConfirmText(e.target.value)} autoFocus />
             {delErr && <div className="badge red" style={{ marginTop: 10 }}><span className="dot" />{delErr}</div>}
             <div className="modal-foot">
-              <button className="btn btn-ghost" disabled={delBusy} onClick={() => setDelOpen(false)}>Abbrechen</button>
+              <button className="btn btn-ghost" disabled={delBusy} onClick={() => setDelOpen(false)}>{txt("Abbrechen")}</button>
               <button className="btn" style={{ borderColor: "var(--red)", color: "var(--red)" }} disabled={delBusy || confirmText.trim().toUpperCase() !== "LÖSCHEN"} onClick={doDelete}>
                 {delBusy ? <Icon name="refresh" size={15} /> : <Icon name="trash" size={15} />} Endgültig löschen
               </button>

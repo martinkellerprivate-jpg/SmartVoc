@@ -5,6 +5,7 @@
  * interesting ones) collide — so count and label live together in the legend,
  * where colour + order + number make the mapping unambiguous at any width. */
 import { STUFE_ORDER } from "../lib/fsrs";
+import { txt } from "../lib/i18n";
 
 const TONE: Record<string, string> = {
   // „sitzt fast" trägt jetzt --warn: --amber ist ein Rostton und bezeichnet
@@ -27,12 +28,12 @@ export function MasteryBar({ dist, total, onSegment, activeFilter, showLegend = 
     <div className="mbar">
       {/* In Miniansichten steht die Gesamtzahl schon in der Zeile darueber --
           zweimal dieselbe Zahl liest sich wie zwei verschiedene. */}
-      {showLegend && <div className="mbar-total">{total} {total === 1 ? "Wort" : "Wörter"} insgesamt</div>}
+      {showLegend && <div className="mbar-total">{txt(total === 1 ? "{n} Wort insgesamt" : "{n} Wörter insgesamt", { n: total })}</div>}
       <div className="mbar-band">
         {present.map((k) => (
           <i key={k} className={onSegment ? "clickable" : ""} onClick={onSegment ? () => onSegment(k) : undefined}
             style={{ flex: dist[k], background: TONE[k], opacity: activeFilter && activeFilter !== k ? 0.35 : 1 }}
-            title={`${LEG[k]}: ${dist[k]}`} />
+            title={`${txt(LEG[k])}: ${dist[k]}`} />
         ))}
       </div>
       {showLegend && (
@@ -41,7 +42,7 @@ export function MasteryBar({ dist, total, onSegment, activeFilter, showLegend = 
             <span key={k} className={"mbar-leg" + (onSegment ? " clickable" : "")} style={{ color: TONE[k], opacity: activeFilter && activeFilter !== k ? 0.45 : 1 }}
               onClick={onSegment ? () => onSegment(k) : undefined}>
               <span className="mbar-leg-dot" style={{ background: TONE[k] }} />
-              <b>{dist[k]}</b> {LEG[k]}
+              <b>{dist[k]}</b> {txt(LEG[k])}
             </span>
           ))}
         </div>
@@ -55,9 +56,9 @@ export function MasteryTrend({ days }: { days: { d: string; c: number[] }[] }) {
   const recent = days.slice(-21);
   return (
     <div className="mtrend">
-      <div className="mtrend-head">Verlauf <span className="faint">· baut sich auf — füllt sich ab jetzt</span></div>
+      <div className="mtrend-head">{txt("Verlauf")} <span className="faint">{txt("· baut sich auf — füllt sich ab jetzt")}</span></div>
       {recent.length === 0 ? (
-        <div className="muted" style={{ fontSize: 12.5 }}>Noch keine Verlaufsdaten. Ab heute wird täglich ein Schnappschuss gespeichert.</div>
+        <div className="muted" style={{ fontSize: 12.5 }}>{txt("Noch keine Verlaufsdaten. Ab heute wird täglich ein Schnappschuss gespeichert.")}</div>
       ) : (
         <div className="mtrend-cols">
           {recent.map((day) => {

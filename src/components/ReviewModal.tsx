@@ -3,6 +3,7 @@
  * Fremd·Deutsch·Topic, Latin shows Grundform·Lernform·Wortart·Deutsch·Topic.
  * Rows are normalised on open so a scan's {fgn,de} fills the Latin grundform. */
 import { useState, useEffect } from "react";
+import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { PAIRS, isLatinPair } from "../lib/pairs";
 
@@ -52,7 +53,7 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: isLat ? 860 : 700, width: "94vw" }}>
         <div className="modal-head">
-          <div className="modal-title">Wörter prüfen <span className="muted" style={{ fontSize: 14, fontWeight: 500 }}>· {P.foreignLabel} ⇄ Deutsch</span></div>
+          <div className="modal-title">{txt("Wörter prüfen")} <span className="muted" style={{ fontSize: 14, fontWeight: 500 }}>· {P.foreignLabel} ⇄ Deutsch</span></div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
         <div className="muted" style={{ fontSize: 13.5, margin: "0 2px 12px" }}>
@@ -62,8 +63,8 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
         <div className="scan-review">
           <div className="scan-row-head" style={{ display: "grid", gridTemplateColumns: grid, gap: 8 }}>
             {isLat
-              ? <><span>Grundform</span><span>Lernform</span><span>Wortart</span><span>Deutsch</span><span>Beispielsätze</span><span>… auf Deutsch</span><span>Topic</span><span /></>
-              : <><span>{P.foreignLabel}</span><span>Deutsch</span><span>Aussprache</span><span>Beispielsätze</span><span>… auf Deutsch</span><span>Topic</span><span /></>}
+              ? <><span>{txt("Grundform")}</span><span>{txt("Lernform")}</span><span>{txt("Wortart")}</span><span>{txt("Deutsch")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf Deutsch")}</span><span /></>
+              : <><span>{P.foreignLabel}</span><span>{txt("Deutsch")}</span><span>{txt("Aussprache")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf Deutsch")}</span><span /></>}
           </div>
           {list.map((r, i) => (
             <div key={i} style={{ display: "grid", gridTemplateColumns: grid, gap: 8, alignItems: "center" }}>
@@ -75,8 +76,8 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
                     {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
                   </select>
                   <input className="mini-input" value={r.de ?? ""} placeholder="—" onChange={(e) => setCell(i, "de", e.target.value)} />
-                  <input className="mini-input" value={r.ex ?? ""} placeholder="—" title="Mehrere Sätze mit / trennen" onChange={(e) => setCell(i, "ex", e.target.value)} />
-                  <input className="mini-input" value={r.exde ?? ""} placeholder="—" title="Übersetzungen, gleiche Reihenfolge, mit / trennen" onChange={(e) => setCell(i, "exde", e.target.value)} />
+                  <input className="mini-input" value={r.ex ?? ""} placeholder="—" title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
+                  <input className="mini-input" value={r.exde ?? ""} placeholder="—" title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
                   <input className="mini-input" value={r.topic ?? ""} placeholder="—" onChange={(e) => setCell(i, "topic", e.target.value)} />
                 </>
               ) : (
@@ -84,8 +85,8 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
                   <input className="mini-input" value={r.fgn} placeholder="—" onChange={(e) => setCell(i, "fgn", e.target.value)} />
                   <input className="mini-input" value={r.de} placeholder="—" onChange={(e) => setCell(i, "de", e.target.value)} />
                   <input className="mini-input" value={r.phonetic ?? ""} placeholder="—" onChange={(e) => setCell(i, "phonetic", e.target.value)} />
-                  <input className="mini-input" value={r.ex ?? ""} placeholder="—" title="Mehrere Sätze mit / trennen" onChange={(e) => setCell(i, "ex", e.target.value)} />
-                  <input className="mini-input" value={r.exde ?? ""} placeholder="—" title="Übersetzungen, gleiche Reihenfolge, mit / trennen" onChange={(e) => setCell(i, "exde", e.target.value)} />
+                  <input className="mini-input" value={r.ex ?? ""} placeholder="—" title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
+                  <input className="mini-input" value={r.exde ?? ""} placeholder="—" title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
                   <input className="mini-input" value={r.topic} placeholder="—" onChange={(e) => setCell(i, "topic", e.target.value)} />
                 </>
               )}
@@ -93,10 +94,10 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
             </div>
           ))}
         </div>
-        <button className="btn btn-ghost btn-sm" style={{ marginTop: 10 }} onClick={addRow}><Icon name="plus" size={14} /> Zeile hinzufügen</button>
+        <button className="btn btn-ghost btn-sm" style={{ marginTop: 10 }} onClick={addRow}><Icon name="plus" size={14} /> {txt("Zeile hinzufügen")}</button>
 
         <div className="modal-foot">
-          <button className="btn btn-ghost" onClick={onClose}>Abbrechen</button>
+          <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
           <button className="btn btn-primary" disabled={!valid.length} onClick={() => onConfirm(valid)}>
             <Icon name="check" size={15} /> {valid.length} Wörter verwenden
           </button>
