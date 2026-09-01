@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
-import { speak } from "../ui/speak";
 import { translateWord } from "../lib/translate";
 import { deriveProfile, retentionFor } from "../lib/fsrs";
 import { listProfile, examPrognosis } from "../lib/engine";
@@ -50,8 +49,8 @@ export function WordList() {
   const [activeList, setActiveList] = useState("__all");   // '__all' | listId
   const [query, setQuery] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [draft, setDraft] = useState({ fgn: "", de: "", topic: "", lists: [] as any[], lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
-  const [adding, setAdding] = useState({ fgn: "", de: "", topic: "", listId: "", lernform: "", wortart: "Nomen", ex1: "", ex1de: "", phon: "" });
+  const [draft, setDraft] = useState({ fgn: "", de: "", lists: [] as any[], lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
+  const [adding, setAdding] = useState({ fgn: "", de: "", listId: "", lernform: "", wortart: "Nomen", ex1: "", ex1de: "", phon: "" });
   const [busy, setBusy] = useState(false);
   const [pendingImport, setPendingImport] = useState(null);
   const [editingListId, setEditingListId] = useState(null);
@@ -119,7 +118,7 @@ export function WordList() {
 
   /* ---- add a word (auto-complete the missing side) ---- */
   const addWord = useCallback(async () => {
-    const topic = adding.topic.trim() || "Custom", listId = adding.listId;
+    const listId = adding.listId;
     const examples = [(adding.ex1 || "").trim()];
     const examplesDe = [(adding.ex1de || "").trim()];
     const phonetic = (adding.phon || "").trim();
@@ -129,8 +128,8 @@ export function WordList() {
       const lernform = adding.lernform.trim();
       const de = adding.de.trim();
       if (!grundform && !lernform && !de) return;
-      store.addWord({ grundform, lernform, wortart: adding.wortart, de, topic, examples, examplesDe, phonetic, pair, lists: listId ? [listId] : [] });
-      setAdding((a) => ({ ...a, fgn: "", de: "", topic: "", lernform: "", ex1: "", ex1de: "", phon: "" }));
+      store.addWord({ grundform, lernform, wortart: adding.wortart, de, examples, examplesDe, phonetic, pair, lists: listId ? [listId] : [] });
+      setAdding((a) => ({ ...a, fgn: "", de: "", lernform: "", ex1: "", ex1de: "", phon: "" }));
       return;
     }
     let fgn = adding.fgn.trim(), de = adding.de.trim();
@@ -147,11 +146,11 @@ export function WordList() {
       toast(r.source === "none" ? "Couldn't translate — please fill it in" : `Auto-filled “${fgn}” — please review`, r.source === "none" ? "x" : "sparkle");
       setBusy(false);
     }
-    store.addWord({ [foreign]: fgn, de, topic, examples, examplesDe, phonetic, review, pair, lists: listId ? [listId] : [] });
-    setAdding((a) => ({ ...a, fgn: "", de: "", topic: "", ex1: "", ex1de: "", phon: "" }));
+    store.addWord({ [foreign]: fgn, de, examples, examplesDe, phonetic, review, pair, lists: listId ? [listId] : [] });
+    setAdding((a) => ({ ...a, fgn: "", de: "", ex1: "", ex1de: "", phon: "" }));
   }, [adding, store, toast, foreign, pair, isLat]);
 
-  const startEdit = (w) => { setEditingId(w.id); setDraft({ fgn: isLat ? (w.grundform || "") : (w[foreign] || ""), de: w.de, topic: w.topic || "", lists: w.lists || [], lernform: w.lernform || "", wortart: w.wortart || "Nomen", ex1: (w.examples || [])[0] || "", ex2: (w.examples || [])[1] || "", ex1de: (w.examplesDe || [])[0] || "", ex2de: (w.examplesDe || [])[1] || "", phon: w.phonetic || "" }); };
+  const startEdit = (w) => { setEditingId(w.id); setDraft({ fgn: isLat ? (w.grundform || "") : (w[foreign] || ""), de: w.de, lists: w.lists || [], lernform: w.lernform || "", wortart: w.wortart || "Nomen", ex1: (w.examples || [])[0] || "", ex2: (w.examples || [])[1] || "", ex1de: (w.examplesDe || [])[0] || "", ex2de: (w.examplesDe || [])[1] || "", phon: w.phonetic || "" }); };
   const saveEdit = (id) => {
     /* Index-treu speichern: examples[i] und examplesDe[i] gehören zusammen.
      * Deshalb hier KEIN filter(Boolean) — sonst rutscht die zweite Übersetzung
@@ -160,8 +159,8 @@ export function WordList() {
     const examplesDe = [draft.ex1de, draft.ex2de].map((s) => (s || "").trim());
     const phonetic = (draft.phon || "").trim();
     const patch = isLat
-      ? { grundform: draft.fgn.trim(), lernform: draft.lernform.trim(), wortart: draft.wortart, de: draft.de.trim(), topic: draft.topic.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false }
-      : { [foreign]: draft.fgn.trim(), de: draft.de.trim(), topic: draft.topic.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false };
+      ? { grundform: draft.fgn.trim(), lernform: draft.lernform.trim(), wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false }
+      : { [foreign]: draft.fgn.trim(), de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false };
     store.updateWord(id, patch); setEditingId(null);
   };
   const toggleDraftList = (lid) => setDraft((d) => ({ ...d, lists: d.lists.includes(lid) ? d.lists.filter((x) => x !== lid) : [...d.lists, lid] }));
@@ -180,8 +179,8 @@ export function WordList() {
     const members = pairVocab.filter((w) => (w.lists || []).includes(activeList));
     if (!members.length) { toast("Diese Liste hat noch keine Wörter", "x"); return; }
     const words = members.map((w) => isLat
-      ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.de || "", topic: w.topic || "" }
-      : { [foreign]: w[foreign] || "", de: w.de || "", topic: w.topic || "" });
+      ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.de || "" }
+      : { [foreign]: w[foreign] || "", de: w.de || "" });
     try {
       const token = await publishList({ name: l.name, pair, words });
       setShareName(l.name); setShareToken(token);
@@ -200,10 +199,9 @@ export function WordList() {
         const lernform = (r.lernform || "").trim();
         const wortart = (r.wortart || "").trim();
         const de = (r.de || "").trim();
-        const topic = (r.topic || "").trim() || "Imported";
         const examples = (r.examples || []).map((s) => String(s).trim()).filter(Boolean);
         const phonetic = (r.phonetic || "").trim();
-        if (grundform || lernform || de) result.push({ grundform, lernform, wortart, de, topic, examples, phonetic, review: false, pair, lists: [listId] });
+        if (grundform || lernform || de) result.push({ grundform, lernform, wortart, de, examples, phonetic, review: false, pair, lists: [listId] });
       }
       const key = (w) => ((w.grundform || "") + "|" + (w.de || "")).toLowerCase();
       const existing = new Set(pairVocab.map(key));
@@ -216,12 +214,12 @@ export function WordList() {
     }
     for (const r of pairs) {
       let fgn = (r.fgn || "").trim(), de = (r.de || "").trim();
-      const topic = (r.topic || "").trim() || "Imported"; let review = false;
+      let review = false;
       if (fgn && !de) { const tr = await translateWord(fgn, foreign, "de"); de = tr.text; review = true; if (tr.text) filled++; }
       else if (de && !fgn) { const tr = await translateWord(de, "de", foreign); fgn = tr.text; review = true; if (tr.text) filled++; }
       const examples = (r.examples || []).map((s) => String(s).trim()).filter(Boolean);
       const phonetic = (r.phonetic || "").trim();
-      if (fgn || de) result.push({ [foreign]: fgn, de, topic, examples, phonetic, review, pair, lists: [listId] });
+      if (fgn || de) result.push({ [foreign]: fgn, de, examples, phonetic, review, pair, lists: [listId] });
     }
     const existing = new Set(pairVocab.map((w) => ((w[foreign] || "") + "|" + w.de).toLowerCase()));
     const fresh = result.filter((w) => !existing.has(((w[foreign] || "") + "|" + w.de).toLowerCase()));
@@ -363,8 +361,6 @@ export function WordList() {
                 onChange={(e) => setAdding({ ...adding, de: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
             </>
           )}
-          <input className="field" style={{ width: 110 }} placeholder="Thema" value={adding.topic}
-            onChange={(e) => setAdding({ ...adding, topic: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
           <select className="field" style={{ width: "auto", minWidth: 120 }} value={adding.listId} onChange={(e) => setAdding({ ...adding, listId: e.target.value })}>
             {pairLists.length === 0 && <option value="">— beim Hinzufügen neue Liste —</option>}
             {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
@@ -446,7 +442,6 @@ export function WordList() {
                       </label>
                     ))}
                   </div>
-                  <input className="mini-input" style={{ marginTop: 8, maxWidth: 160 }} placeholder="Thema" value={draft.topic} onChange={(e) => setDraft({ ...draft, topic: e.target.value })} />
                   {isLat && <LatinKeys />}
                   <input className="mini-input" style={{ marginTop: 6, maxWidth: 160 }} placeholder="Aussprache" value={draft.phon} onChange={(e) => setDraft({ ...draft, phon: e.target.value })} />
                   <input className="mini-input" style={{ marginTop: 6 }} placeholder={`Beispielsatz (${P.foreignLabel})`} value={draft.ex1} onChange={(e) => setDraft({ ...draft, ex1: e.target.value })} />
@@ -467,7 +462,7 @@ export function WordList() {
                   {selectMode && <input type="checkbox" checked={selectedIds.includes(w.id)} readOnly style={{ marginRight: 8, accentColor: "var(--amber-deep)" }} />}
                   {fgnOf(w) || <span className="faint">—</span>}
                   {isLat && w.lernform && <div className="faint" style={{ fontSize: 12, fontStyle: "italic" }}>{w.lernform}</div>}
-                  {(w.topic || (isLat && w.wortart)) && <div className="faint" style={{ fontSize: 11.5 }}>{[isLat ? w.wortart : null, w.topic].filter(Boolean).join(" · ")}</div>}
+                  {isLat && w.wortart && <div className="faint" style={{ fontSize: 11.5 }}>{w.wortart}</div>}
                   {w.review && <span className="badge amber" style={{ marginTop: 4 }}><span className="dot" />Review</span>}
                 </td>
                 <td className="cell-de">{w.de || <span className="faint">—</span>}</td>
@@ -479,7 +474,6 @@ export function WordList() {
                 <td>
                   {!selectMode && (
                   <div className="row-actions" onClick={(e) => e.stopPropagation()}>
-                    <button className="icon-btn" style={{ width: 32, height: 32 }} title="Hear" onClick={() => speak(w.de, "de")}><Icon name="volume" size={15} /></button>
                     <button className="icon-btn" style={{ width: 32, height: 32 }} title="Edit" onClick={() => startEdit(w)}><Icon name="edit" size={15} /></button>
                     <button className="icon-btn" style={{ width: 32, height: 32 }} title="Delete" onClick={() => store.deleteWord(w.id)}><Icon name="trash" size={15} /></button>
                   </div>

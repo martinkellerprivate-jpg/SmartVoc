@@ -7,7 +7,7 @@ import { useToast } from "../ui/Toast";
 import { PAIRS, isLatinPair } from "../lib/pairs";
 
 /* EN/FR line splitter: columns Fremd | Deutsch | Topic. Same delimiters as the
- * scan heuristic (tab / : | – — - / 2+ spaces), but topic-aware (3rd column). */
+ * scan heuristic (tab / : | – — - / 2+ spaces). */
 /* Split one pasted line into columns.
  *
  * Two bugs used to live here, and both fired exactly on the rows the AI prompt
@@ -43,31 +43,29 @@ function splitForeign(text: string) {
     if (!s || s.length < 2) return;
     if (/^(unit|lesson|lektion|page|seite|vokabel|words?|english|fran|deutsch|german)\b/i.test(s) && !/[-–—:|\t]/.test(s)) return;
     const p = columns(s);
-    /* Ab acht Spalten gilt das neue Format, in dem jeder Beispielsatz sein
+    /* Ab sieben Spalten gilt das Format, in dem jeder Beispielsatz sein
      * deutsches Gegenstück mitbringt:
-     *   Fremd | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Topic | Aussprache
-     * Der KI-Prompt schreibt immer alle acht, leere eingeschlossen. Kürzere
-     * Zeilen sind altes Material und behalten ihre bisherige Bedeutung —
+     *   Fremd | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache
+     * Der KI-Prompt schreibt immer alle sieben, leere eingeschlossen.
+     * Kürzere Zeilen sind von Hand getippt und behalten ihre Bedeutung —
      * deshalb die Grenze bei der Spaltenzahl und nicht am Inhalt. */
-    if (p.length >= 8) {
+    if (p.length >= 7) {
       out.push({ fgn: p[0], de: p[1],
         examples: [p[2], p[4]], examplesDe: [p[3], p[5]],
-        topic: p[6], phonetic: p[7] });
+        phonetic: p[6] });
       return;
     }
-    // Fremd | Deutsch | Beispiel 1 | Beispiel 2 | Topic — extra columns are optional,
-    // so shorter rows keep their old meaning (…| Topic as the third column).
-    if (p.length >= 6) out.push({ fgn: p[0], de: p[1], examples: [p[2], p[3]].filter(Boolean), topic: p[4], phonetic: p[5] });
-    else if (p.length === 5) out.push({ fgn: p[0], de: p[1], examples: [p[2], p[3]].filter(Boolean), topic: p[4] });
-    else if (p.length === 4) out.push({ fgn: p[0], de: p[1], examples: [p[2]].filter(Boolean), topic: p[3] });
-    else if (p.length === 3) out.push({ fgn: p[0], de: p[1], topic: p[2] });
+    // Fremd | Deutsch | Beispiel 1 | Beispiel 2 — die Beispiele sind optional.
+    if (p.length >= 5) out.push({ fgn: p[0], de: p[1], examples: [p[2], p[3]].filter(Boolean), phonetic: p[4] });
+    else if (p.length === 4) out.push({ fgn: p[0], de: p[1], examples: [p[2], p[3]].filter(Boolean) });
+    else if (p.length === 3) out.push({ fgn: p[0], de: p[1], examples: [p[2]].filter(Boolean) });
     else if (p.length === 2) out.push({ fgn: p[0], de: p[1] });
     else out.push({ fgn: p[0], de: "" });
   });
   return out;
 }
 
-/* Latin line splitter: columns Grundform | Lernform | Wortart | Deutsch | Topic.
+/* Latin line splitter: columns Grundform | Lernform | Wortart | Deutsch.
  * Splits on tab / pipe / 2+ spaces — NOT comma, so "canis, canis, m." survives. */
 function splitLatin(text: string) {
   const out: any[] = [];
@@ -76,19 +74,18 @@ function splitLatin(text: string) {
     if (!s || s.length < 2) return;
     if (/^(unit|lektion|lesson|seite|page|wort|latein|deutsch|grundform)\b/i.test(s) && !/[\t|]/.test(s)) return;
     const p = columns(s);
-    /* Ab zehn Spalten das neue Format mit Übersetzung je Beispielsatz:
-     * Grundform | Lernform | Wortart | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Topic | Aussprache */
-    if (p.length >= 10) {
+    /* Ab neun Spalten das Format mit Übersetzung je Beispielsatz:
+     * Grundform | Lernform | Wortart | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache */
+    if (p.length >= 9) {
       out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3],
         examples: [p[4], p[6]], examplesDe: [p[5], p[7]],
-        topic: p[8], phonetic: p[9] });
+        phonetic: p[8] });
       return;
     }
-    // …| Deutsch | Beispiel 1 | Beispiel 2 | Topic (example columns optional)
-    if (p.length >= 8) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean), topic: p[6], phonetic: p[7] });
-    else if (p.length === 7) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean), topic: p[6] });
-    else if (p.length === 6) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4]].filter(Boolean), topic: p[5] });
-    else if (p.length === 5) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], topic: p[4] });
+    // …| Deutsch | Beispiel 1 | Beispiel 2 (die Beispiele sind optional)
+    if (p.length >= 7) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean), phonetic: p[6] });
+    else if (p.length === 6) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean) });
+    else if (p.length === 5) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4]].filter(Boolean) });
     else if (p.length === 4) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3] });
     else if (p.length === 3) out.push({ grundform: p[0], lernform: p[1], de: p[2] });
     else if (p.length === 2) out.push({ grundform: p[0], de: p[1] });

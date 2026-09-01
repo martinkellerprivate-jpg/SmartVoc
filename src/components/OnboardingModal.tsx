@@ -34,7 +34,7 @@ export function OnboardingModal() {
         </div>
         <div className="muted" style={{ fontSize: 14, lineHeight: 1.5, marginBottom: 14 }}>
           Möchtest du mit einem <b style={{ color: "var(--ink)" }}>Grundwortschatz</b> für {P.foreignLabel} ⇄ Deutsch starten?
-          {entry ? <> Das fügt <b style={{ color: "var(--ink)" }}>{entry.count}</b> häufige Wörter als eigene Liste hinzu — nach Themen sortiert.</> : null}
+          {entry ? <> Das fügt <b style={{ color: "var(--ink)" }}>{entry.count}</b> häufige Wörter als eigene Wortliste hinzu.</> : null}
           {" "}Du kannst das auch später in den Einstellungen tun.
         </div>
         <div className="modal-foot">

@@ -39,8 +39,8 @@ export function activateStarter(store: any, pair: string, stufe: number) {
   const foreign = fk(pair);
 
   const mapped = entry.words.map((w: any) => isLat
-    ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.german || "", topic: w.topic || "", pair }
-    : { [foreign]: w.foreign || "", de: w.german || "", topic: w.topic || "", pair });
+    ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.german || "", pair }
+    : { [foreign]: w.foreign || "", de: w.german || "", pair });
 
   const keyOf = (w: any) => (isLat ? ((w.grundform || "") + "|" + (w.de || "")) : ((w[foreign] || "") + "|" + (w.de || ""))).toLowerCase();
   const existing = new Set(store.vocab.filter((w: any) => w.pair === pair).map(keyOf));

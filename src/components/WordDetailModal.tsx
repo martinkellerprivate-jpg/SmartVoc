@@ -42,7 +42,7 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
         <div className="modal-head">
           <div>
             <div className="modal-title">{fgn}</div>
-            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>{word[NATIVE]}{word.topic ? ` · ${word.topic}` : ""}</div>
+            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>{word[NATIVE]}</div>
             {word.phonetic && <div className="card-phonetic" style={{ textAlign: "left", marginTop: 3 }}>[{String(word.phonetic).replace(/^\[|\]$/g, "")}]</div>}
           </div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>

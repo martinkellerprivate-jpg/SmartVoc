@@ -18,7 +18,6 @@ export interface Pair {
   foreignLabel: string;
   nativeLabel: string;
   short: string;
-  tts?: boolean;          // capability flag (Phase 1/2 seam — unused in P0)
 }
 
 export interface Word {
@@ -40,7 +39,6 @@ export interface Word {
    * simply shows nothing on the German side. */
   examplesDe?: string[];
   phonetic?: string;      // optional pronunciation of the foreign word, e.g. "dɒɡ" or "dohg"
-  topic?: string;
   lists?: string[];
   review?: boolean;
   source?: "seed" | "manual" | "import" | "none" | string;
@@ -91,7 +89,6 @@ export interface Lesson {
   origin?: string;                    // provenance label only (e.g. "Liste: Tiere"), no auto-sync
   // legacy (pre-V9) — tolerated on read, migrated to members on load:
   kind?: string;
-  source?: { type: "list" | "topic"; ref: string };
 }
 
 export interface DiffChar {
@@ -119,7 +116,6 @@ export interface ScoreOpts {
 export interface Settings {
   mode: string;
   choicesCount: number;
-  autoAudio: boolean;
   dailyGoal: number;
   newPerDay: number;
   targetRetention?: number;                            // V13 — THE retention source (0.85/0.90/0.95)

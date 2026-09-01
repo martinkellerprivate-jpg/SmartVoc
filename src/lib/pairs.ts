@@ -1,7 +1,6 @@
 /* Language pairs. Native side is always German; the foreign side is
  * stored on the word under its own key (en / fr).
  *
- * `tts` is a capability flag so Phase 1/2 (e.g. Latin: no TTS) can
  * dock without a refactor. In Phase 0 they cause NO visible change — only
  * the existing EN-DE / FR-DE pairs ship, both fully capable. */
 import type { Pair, PairId, Word } from "./types";
@@ -10,9 +9,9 @@ export const SMART_TRICKY = "__tricky";
 export const NATIVE = "de";
 
 export const PAIRS: Record<string, Pair> = {
-  "en-de": { id: "en-de", foreign: "en", foreignLabel: "English",  nativeLabel: "Deutsch", short: "EN", tts: true },
-  "fr-de": { id: "fr-de", foreign: "fr", foreignLabel: "Français", nativeLabel: "Deutsch", short: "FR", tts: true },
-  "la-de": { id: "la-de", foreign: "la", foreignLabel: "Latein",   nativeLabel: "Deutsch", short: "LA",     tts: false },
+  "en-de": { id: "en-de", foreign: "en", foreignLabel: "English",  nativeLabel: "Deutsch", short: "EN" },
+  "fr-de": { id: "fr-de", foreign: "fr", foreignLabel: "Français", nativeLabel: "Deutsch", short: "FR" },
+  "la-de": { id: "la-de", foreign: "la", foreignLabel: "Latein",   nativeLabel: "Deutsch", short: "LA" },
 };
 
 /* Which pairs the user wants to see. Purely a display filter: words of a
@@ -32,7 +31,4 @@ export const isLatinPair = (pair: PairId | string) => pair === "la-de";
 export const practiceable = (w: Word) =>
   !!(w && w.de && (isLatinPair(w.pair) ? (w.grundform || w.lernform) : w[fk(w.pair)]));
 
-/* Per-language capability: which languages have a Web-Speech voice.
- * Latin has none → callers hide/disable the audio control silently. */
-const LANG_TTS: Record<string, boolean> = { de: true, en: true, fr: true, la: false };
-export const hasTTS = (lang: string) => LANG_TTS[lang] !== false;
+

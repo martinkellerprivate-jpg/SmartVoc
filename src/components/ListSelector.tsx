@@ -4,30 +4,24 @@ import { Icon } from "../ui/Icon";
 import { SMART, smartCount } from "../lib/engine";
 
 /* ===================================================================
- * lists.jsx — list (lesson) selector chips + list-picker modal.
- * Both are scoped to a language pair when a `pair` prop is given.
+ * Wortlisten-Waehler (Chips) und Listen-Auswahlfenster.
+ * Beide auf ein Sprachpaar begrenzt, wenn `pair` gesetzt ist.
  * =================================================================== */
 
 export function ListSelector({ selected, onChange, smart = ["tricky"], pair, mc }) {
-  const { lists, lessons, vocab, stats } = useStore();
+  const { lists, vocab, stats } = useStore();
   const pairLists = (pair ? lists.filter((l) => l.pair === pair) : lists).filter((l: any) => !(l.system === "nolist" && !(pair ? vocab.filter((w) => w.pair === pair) : vocab).some((w: any) => (w.lists || []).includes(l.id))));
-  const pairLessons = (pair ? (lessons || []).filter((l: any) => l.pair === pair) : (lessons || []));
   const pairVocab = pair ? vocab.filter((w) => w.pair === pair) : vocab;
   const sel = selected || [];
   const isAll = sel.length === 0;
   const countFor = (id) => pairVocab.filter((w) => (w.lists || []).includes(id)).length;
-  const lessonCount = (l: any) => (l.members || []).length;
-  const topics: any[] = Array.from(new Set(pairVocab.map((w: any) => w.topic).filter(Boolean))).sort();
-  const topicCount = (t) => pairVocab.filter((w) => w.topic === t).length;
 
   const toggle = (id) => {
     const next = sel.includes(id) ? sel.filter((x) => x !== id) : [...sel, id];
     onChange(next);
   };
   // F-NAV-2: three collapsible groups (Lektionen default open) + "alle" per group.
-  const [lessonsOpen, setLessonsOpen] = useState(true);
   const [listsOpen, setListsOpen] = useState(false);
-  const [topicsOpen, setTopicsOpen] = useState(false);
   const toggleAll = (toks: string[]) => {
     const on = toks.length > 0 && toks.every((t) => sel.includes(t));
     onChange(on ? sel.filter((t) => !toks.includes(t)) : Array.from(new Set([...sel, ...toks])));
@@ -40,9 +34,7 @@ export function ListSelector({ selected, onChange, smart = ["tricky"], pair, mc 
       {open && n > 0 && <button className="scope-all" onClick={() => toggleAll(toks)}>{toks.length && toks.every((t) => sel.includes(t)) ? "keine" : "alle"}</button>}
     </div>
   );
-  const lessonToks = pairLessons.map((l: any) => "lesson:" + l.id);
   const listToks = pairLists.map((l: any) => l.id);
-  const topicToks = topics.map((t) => "t:" + t);
 
   return (
     <div className="lchips-wrap">
@@ -60,32 +52,12 @@ export function ListSelector({ selected, onChange, smart = ["tricky"], pair, mc 
           );
         })}
       </div>
-      {pairLessons.length > 0 && (
-        <div className="lchips lchips-topics">
-          {head(lessonsOpen, setLessonsOpen, "cards", "Lektionen", pairLessons.length, lessonToks)}
-          {lessonsOpen && pairLessons.map((l: any) => (
-            <button key={l.id} className={"lchip" + (sel.includes("lesson:" + l.id) ? " on" : "")} onClick={() => toggle("lesson:" + l.id)}>
-              {l.name} <span className="lchip-n">{lessonCount(l)}</span>
-            </button>
-          ))}
-        </div>
-      )}
       {pairLists.length > 0 && (
         <div className="lchips lchips-topics">
           {head(listsOpen, setListsOpen, "list", "Wortlisten", pairLists.length, listToks)}
           {listsOpen && pairLists.map((l) => (
             <button key={l.id} className={"lchip" + (sel.includes(l.id) ? " on" : "")} onClick={() => toggle(l.id)}>
               {l.name} <span className="lchip-n">{countFor(l.id)}</span>
-            </button>
-          ))}
-        </div>
-      )}
-      {topics.length > 0 && (
-        <div className="lchips lchips-topics">
-          {head(topicsOpen, setTopicsOpen, "filter", "Themen", topics.length, topicToks)}
-          {topicsOpen && topics.map((t) => (
-            <button key={t} className={"lchip lchip-topic" + (sel.includes("t:" + t) ? " on" : "")} onClick={() => toggle("t:" + t)}>
-              {t} <span className="lchip-n">{topicCount(t)}</span>
             </button>
           ))}
         </div>

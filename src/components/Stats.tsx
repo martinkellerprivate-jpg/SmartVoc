@@ -7,7 +7,6 @@ import { wordsForSelection, resolveSmart } from "../lib/engine";
 import { deriveProfile, retentionFor, STUFE_ORDER } from "../lib/fsrs";
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
-import { buildInsights } from "../lib/insights";
 import { MasteryBar, MasteryTrend } from "../ui/MasteryBar";
 import { ListSelector } from "./ListSelector";
 import { WordDetailModal } from "./WordDetailModal";
@@ -110,16 +109,12 @@ export function Stats() {
   const goalP = Math.min(1, (meta.todayCount || 0) / (settings.dailyGoal || 20));
   const setSortKey = (key) => setSort((s) => s.key === key ? { key, dir: -s.dir } : { key, dir: key === "word" ? 1 : -1 });
 
-  // F-STATS-INSIGHTS: FSRS-driven strengths & next steps (real numbers + actions).
+  /* Naechste Schritte: nur was gerade zutrifft, jeder Schritt mit einer Zahl
+   * und einer Handlung. Der Staerken-Abschnitt ist entfallen -- er gruppierte
+   * nach Themen, und die gibt es nicht mehr. */
   const fgnOfId = (id: string) => { const w = vocab.find((x: any) => x.id === id); return w ? fgnOf(w) : ""; };
   const insights = useMemo(() => {
     const steps: any[] = [];
-    // strength: topic with the highest mean stability among words that sit
-    const byTopic: Record<string, { s: number; n: number }> = {};
-    for (const r of rows) { if (r.stufe === "sitzt" && r.w.topic) { const t = byTopic[r.w.topic] || (byTopic[r.w.topic] = { s: 0, n: 0 }); t.s += r.prof.haeltTage; t.n++; } }
-    let strength: any = null;
-    for (const [t, v] of Object.entries(byTopic)) { if (v.n >= 2 && (!strength || v.s / v.n > strength.avg)) strength = { topic: t, n: v.n, avg: v.s / v.n }; }
-    // next steps (each only if it applies)
     const bald = rows.filter((r) => r.prof.baldFaellig);
     if (bald.length) steps.push({ tone: "amber", text: `${bald.length} ${bald.length === 1 ? "Wort wird" : "Wörter werden"} bald fällig — heute auffrischen`, action: { label: "Üben", sel: "smart:baldfaellig" } });
     const leech = rows.filter((r) => r.prof.istLeech);
@@ -135,7 +130,7 @@ export function Stats() {
         && ["sitzt_schlecht", "neu", "noch_nicht_geuebt"].includes(deriveProfile(stats[r.w.id]?.fsrs, c).stufe)).length;
       if (risk > 0) { steps.push({ tone: "red", text: `„${l.name}" ist in ${days} ${days === 1 ? "Tag" : "Tagen"} dran — ${risk} ${risk === 1 ? "Wort wackelt" : "Wörter wackeln"} noch`, action: { label: "Gefährdete üben", sel: "list:" + l.id } }); break; }
     }
-    return { strength, steps, enough: !!strength || steps.length > 0 };
+    return { steps };
   }, [rows, stats, lists, pair, settings, vocab]);
 
   // F-STATS-STRUKTUR: percentages that sum to exactly 100 (largest remainder).

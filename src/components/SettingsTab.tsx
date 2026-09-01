@@ -165,10 +165,6 @@ export function SettingsTab() {
           desc="How many options appear in Choose mode.">
           <SliderControl value={settings.choicesCount} min={2} max={6} step={1} onChange={(v) => set("choicesCount", v)} />
         </Field>
-        <Field title="Auto-play pronunciation" recLabel="Off" atRec={atR("autoAudio")}
-          desc="Read each new card aloud automatically. Great for listening practice; can distract in a quiet classroom.">
-          <Toggle value={settings.autoAudio} onChange={(v) => set("autoAudio", v)} />
-        </Field>
         <Field title="Beispielsätze anzeigen" recLabel="On" atRec={atR("showExamples")}
           desc="Zeigt die Beispielsätze eines Worts auf der Lösungsseite der Karte — dort, wo du die Antwort siehst. Ein Wort im Satz zu sehen, hilft beim Behalten. Sätze, die du nicht erfasst hast, ändern nichts.">
           <Toggle value={settings.showExamples !== false} onChange={(v) => set("showExamples", v)} />
@@ -336,7 +332,7 @@ export function SettingsTab() {
         {STARTERS.map((s) => {
           const done = isStarterActivated(settings, s.pair, s.stufe);
           return (
-            <Field key={s.key} title={s.label} desc={`${s.count} häufige Wörter, nach Themen sortiert. Wird als eigene Liste hinzugefügt (bereits vorhandene Wörter werden übersprungen).`}>
+            <Field key={s.key} title={s.label} desc={`${s.count} häufige Wörter. Wird als eigene Wortliste hinzugefügt; bereits vorhandene Wörter werden übersprungen.`}>
               {done
                 ? <span className="badge green"><span className="dot" />Aktiviert</span>
                 : <button className="btn btn-sm" onClick={() => addStarter(s.pair, s.stufe)}><Icon name="plus" size={15} /> Hinzufügen</button>}

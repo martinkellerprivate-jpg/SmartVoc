@@ -4,14 +4,13 @@ import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
 import { toneColor } from "../ui/Ring";
-import { speak } from "../ui/speak";
 import { scoreAnswer } from "../lib/scoring";
 import { resolveList, resolveSmart, listProfile, resolveToday } from "../lib/engine";
 import { buildQueue, pick, record, outcomeOf, pendingGrades, progress, remaining } from "../lib/runqueue";
 import { MasteryBar } from "../ui/MasteryBar";
 import { LatinKeys } from "../ui/LatinKeys";
 import { retrievabilityOf, isDueCard, retentionFor, initialCard, deriveProfile, STUFE, STUFE_ORDER, deriveRating, gradeFromCard, getCfg } from "../lib/fsrs";
-import { PAIRS, NATIVE, practiceable, hasTTS, isLatinPair } from "../lib/pairs";
+import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
 import { TipPopup } from "./TipPopup";
@@ -88,7 +87,6 @@ export function Practice() {
   // also valid practice scopes (started via „üben") but have no chip here.
   const SMART_REFS = ["heute", "due", "wackeln", "baldfaellig", "leech", "frischfragil", "kurzvorsitzt"];
   const pairLists = useMemo(() => (store.lists || []).filter((l: any) => l.pair === pair && !(l.system === "nolist" && !vocab.some((w: any) => w.pair === pair && (w.lists || []).includes(l.id)))), [store.lists, pair, vocab]);
-  const pairTopics = useMemo(() => Array.from(new Set(vocab.filter((w: any) => w.pair === pair).map((w: any) => w.topic).filter(Boolean))).sort() as string[], [vocab, pair]);
   // F-NAV-2: multiselect is EPHEMERAL UI state — NOT persisted, NOT synced (FIX C:
   // practiceSel stays a single token; 2+ scopes drive a deduped union at runtime only).
   const [multiSel, setMultiSel] = useState<string[]>([]);
@@ -107,11 +105,10 @@ export function Practice() {
   const rawSel = parseSel(settings.practiceSel);
   const selValid = rawSel.kind === "smart" ? SMART_REFS.includes(rawSel.ref)
     : rawSel.kind === "list" ? pairLists.some((l: any) => l.id === rawSel.ref)
-    : rawSel.kind === "topic" ? pairTopics.includes(rawSel.ref)
     : false;
   // V17: default learning path = "Heute dran"
   const effective = selValid ? rawSel : { kind: "smart", ref: "heute" };
-  const tokValid = (tok: string) => { const i = tok.indexOf(":"); const k = tok.slice(0, i), r = tok.slice(i + 1); return k === "list" ? pairLists.some((l: any) => l.id === r) : k === "topic" ? pairTopics.includes(r) : false; };
+  const tokValid = (tok: string) => { const i = tok.indexOf(":"); return pairLists.some((l: any) => l.id === tok.slice(i + 1)); };
   const validMulti = multiSel.filter(tokValid);
   const scopeTokens = validMulti.length ? validMulti : [effective.kind + ":" + effective.ref];
   const selKey = scopeTokens.join("|");
@@ -135,7 +132,6 @@ export function Practice() {
       if (ref === "due") opts.cap = settings.dailyGoal;
       return resolveSmart(ref, pv, stats, settings.masteryCorrect, opts).filter(practiceable);
     }
-    if (kind === "topic") return pv.filter((w) => w.topic === ref).filter(practiceable);
     /* Eine Wortliste bringt ihre eigene Sprache mit. Nur so kann der
      * Uebungsplan mehrere Listen ueber Sprachgrenzen hinweg zusammen ueben. */
     return vocab.filter((w) => (w.lists || []).includes(ref)).filter(practiceable);
@@ -169,13 +165,11 @@ export function Practice() {
   const [hintUsed, setHintUsed] = useState(false);
   const [choices, setChoices] = useState([]);
   const [picked, setPicked] = useState(null);
-  const [playing, setPlaying] = useState(false);
   const [session, setSession] = useState([]); // recent verdicts
   const [tip, setTip] = useState(null);        // current study-tip popup (Phase 6)
   const [focus, setFocus] = useState(false);   // V2: zoom / focus card mode
   // Die Wortlisten sind die eigentliche Wahl -- sie stehen offen da.
   const [listsOpen, setListsOpen] = useState(true);
-  const [topicsOpen, setTopicsOpen] = useState(false); // F-NAV: collapsible topics
   const [enoughAck, setEnoughAck] = useState(false);   // F-CARD-UI: "genug für heute" dismissed
   const [chipsHelp, setChipsHelp] = useState(false);   // FR3-5: smart-chip explainer popup
   /* Der Umfang-Wähler nimmt aufgeklappt gut 140 Pixel -- auf einem Handy ein
@@ -301,9 +295,7 @@ export function Practice() {
     // at launch that lands on top of the welcome dialog. Focus after a
     // deliberate tap (see useHint) stays, since there the user asked for it.
     if (!Capacitor.isNativePlatform()) setTimeout(() => inputRef.current && inputRef.current.focus(), 60);
-    const wSrc = srcKeyOf(w);
-    if (settings.autoAudio && hasTTS(wSrc)) setTimeout(() => speak(sideText(w, wSrc), wSrc), 130);
-  }, [poolById, distractorPool, settings.direction, runId, settings.choicesCount, settings.autoAudio]);
+  }, [poolById, distractorPool, settings.direction, runId, settings.choicesCount]);
 
   // V8: record the current word's resolution into the runqueue; fire ONE FSRS
   // grade at graduation. Memorize = pure exposition → seen, never graded.
@@ -469,11 +461,6 @@ export function Practice() {
     }
   }, [current, face, anim, mode, tgtKey]);
 
-  const playAudio = useCallback((text, lang) => {
-    setPlaying(true);
-    speak(text, lang);
-    setTimeout(() => setPlaying(false), 900);
-  }, []);
 
   // keyboard
   useEffect(() => {
@@ -585,10 +572,8 @@ export function Practice() {
   const listRetention = retentionFor(settings);
   const dotTone = (t) => t === "green" ? "var(--green)" : t === "amber" ? "var(--amber)" : t === "red" ? "var(--red)" : "var(--ink-faint)";
   const listsSorted = [...pairLists].sort((a: any, b: any) => (a.dueDate || Infinity) - (b.dueDate || Infinity) || (a.createdAt || 0) - (b.createdAt || 0));
-  // Ein Waehler, zwei Gruppen: Wortlisten (offen) und Themen (zu). Mehrfachwahl
-  // je Gruppe, "alle"/"keine" als Kopfzeile.
+  // Der Waehler kennt nur noch Wortlisten. Mehrfachwahl, "alle"/"keine" oben.
   const listCountOf = (id: string) => pairVocabAll.filter((w: any) => (w.lists || []).includes(id)).length;
-  const topicCountOf = (t: string) => pairVocabAll.filter((w: any) => w.topic === t).length;
   const toggleAll = (toks: string[]) => {
     const on = toks.length > 0 && toks.every((t) => multiSel.includes(t));
     const next = on ? multiSel.filter((t) => !toks.includes(t)) : Array.from(new Set([...multiSel, ...toks]));
@@ -604,8 +589,7 @@ export function Practice() {
     </div>
   );
   const listToks = listsSorted.map((l: any) => "list:" + l.id);
-  const topicToks = pairTopics.map((t) => "topic:" + t);
-  const lessonSelectorEl = (pairLists.length || pairTopics.length) ? (
+  const lessonSelectorEl = pairLists.length ? (
     <div className="scope-picker p-lessonsel">
       {pairLists.length > 0 && (
         <div className="lchips lesson-selector lchips-topics">
@@ -623,16 +607,6 @@ export function Practice() {
           })}
         </div>
       )}
-      {pairTopics.length > 0 && (
-        <div className="lchips lesson-selector lchips-topics">
-          {groupHead(topicsOpen, setTopicsOpen, "filter", "Themen", pairTopics.length, topicToks)}
-          {topicsOpen && pairTopics.map((t) => (
-            <button key={t} className={"lchip lchip-topic" + (isActiveTok("topic:" + t) ? " on" : "")} onClick={() => toggleScope("topic:" + t)}>
-              {t} <span className="lchip-n">{topicCountOf(t)}</span>
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   ) : null;
   // V-PLAN: the 7-day outlook is gone — replaced by the "Übungsplan" panel (header).
@@ -643,7 +617,6 @@ export function Practice() {
     const tok = scopeTokens[0] || "";
     const i = tok.indexOf(":"); const kind = tok.slice(0, i), ref = tok.slice(i + 1);
     if (kind === "smart") return (SMART_ACCESS.find((a) => a.ref === ref) || {}).label || "Schnellzugriff";
-    if (kind === "topic") return ref;
     return (pairLists.find((l: any) => l.id === ref) || {}).name || "Übung";
   })();
   const scopeBar = (

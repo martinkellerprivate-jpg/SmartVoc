@@ -4,1103 +4,883 @@
  "words": [
   {
    "foreign": "la mère",
-   "german": "die Mutter",
-   "topic": "Menschen & Familie"
+   "german": "die Mutter"
   },
   {
    "foreign": "le père",
-   "german": "der Vater",
-   "topic": "Menschen & Familie"
+   "german": "der Vater"
   },
   {
    "foreign": "les parents",
-   "german": "die Eltern",
-   "topic": "Menschen & Familie"
+   "german": "die Eltern"
   },
   {
    "foreign": "l'enfant",
-   "german": "das Kind",
-   "topic": "Menschen & Familie"
+   "german": "das Kind"
   },
   {
    "foreign": "le fils",
-   "german": "der Sohn",
-   "topic": "Menschen & Familie"
+   "german": "der Sohn"
   },
   {
    "foreign": "la fille",
-   "german": "die Tochter",
-   "topic": "Menschen & Familie"
+   "german": "die Tochter"
   },
   {
    "foreign": "le frère",
-   "german": "der Bruder",
-   "topic": "Menschen & Familie"
+   "german": "der Bruder"
   },
   {
    "foreign": "la sœur",
-   "german": "die Schwester",
-   "topic": "Menschen & Familie"
+   "german": "die Schwester"
   },
   {
    "foreign": "la grand-mère",
-   "german": "die Grossmutter",
-   "topic": "Menschen & Familie"
+   "german": "die Grossmutter"
   },
   {
    "foreign": "le grand-père",
-   "german": "der Grossvater",
-   "topic": "Menschen & Familie"
+   "german": "der Grossvater"
   },
   {
    "foreign": "la famille",
-   "german": "die Familie",
-   "topic": "Menschen & Familie"
+   "german": "die Familie"
   },
   {
    "foreign": "l'homme",
-   "german": "der Mann",
-   "topic": "Menschen & Familie"
+   "german": "der Mann"
   },
   {
    "foreign": "la femme",
-   "german": "die Frau",
-   "topic": "Menschen & Familie"
+   "german": "die Frau"
   },
   {
    "foreign": "le garçon",
-   "german": "der Junge",
-   "topic": "Menschen & Familie"
+   "german": "der Junge"
   },
   {
    "foreign": "la fille (jeune)",
-   "german": "das Mädchen",
-   "topic": "Menschen & Familie"
+   "german": "das Mädchen"
   },
   {
    "foreign": "le bébé",
-   "german": "das Baby",
-   "topic": "Menschen & Familie"
+   "german": "das Baby"
   },
   {
    "foreign": "l'ami",
-   "german": "der Freund",
-   "topic": "Menschen & Familie"
+   "german": "der Freund"
   },
   {
    "foreign": "le nom",
-   "german": "der Name",
-   "topic": "Menschen & Familie"
+   "german": "der Name"
   },
   {
    "foreign": "les gens",
-   "german": "die Leute",
-   "topic": "Menschen & Familie"
+   "german": "die Leute"
   },
   {
    "foreign": "le corps",
-   "german": "der Körper",
-   "topic": "Körper"
+   "german": "der Körper"
   },
   {
    "foreign": "la tête",
-   "german": "der Kopf",
-   "topic": "Körper"
+   "german": "der Kopf"
   },
   {
    "foreign": "les cheveux",
-   "german": "die Haare",
-   "topic": "Körper"
+   "german": "die Haare"
   },
   {
    "foreign": "le visage",
-   "german": "das Gesicht",
-   "topic": "Körper"
+   "german": "das Gesicht"
   },
   {
    "foreign": "l'œil",
-   "german": "das Auge",
-   "topic": "Körper"
+   "german": "das Auge"
   },
   {
    "foreign": "l'oreille",
-   "german": "das Ohr",
-   "topic": "Körper"
+   "german": "das Ohr"
   },
   {
    "foreign": "le nez",
-   "german": "die Nase",
-   "topic": "Körper"
+   "german": "die Nase"
   },
   {
    "foreign": "la bouche",
-   "german": "der Mund",
-   "topic": "Körper"
+   "german": "der Mund"
   },
   {
    "foreign": "la dent",
-   "german": "der Zahn",
-   "topic": "Körper"
+   "german": "der Zahn"
   },
   {
    "foreign": "la main",
-   "german": "die Hand",
-   "topic": "Körper"
+   "german": "die Hand"
   },
   {
    "foreign": "le bras",
-   "german": "der Arm",
-   "topic": "Körper"
+   "german": "der Arm"
   },
   {
    "foreign": "la jambe",
-   "german": "das Bein",
-   "topic": "Körper"
+   "german": "das Bein"
   },
   {
    "foreign": "le pied",
-   "german": "der Fuss",
-   "topic": "Körper"
+   "german": "der Fuss"
   },
   {
    "foreign": "le doigt",
-   "german": "der Finger",
-   "topic": "Körper"
+   "german": "der Finger"
   },
   {
    "foreign": "le cœur",
-   "german": "das Herz",
-   "topic": "Körper"
+   "german": "das Herz"
   },
   {
    "foreign": "l'animal",
-   "german": "das Tier",
-   "topic": "Tiere"
+   "german": "das Tier"
   },
   {
    "foreign": "le chien",
-   "german": "der Hund",
-   "topic": "Tiere"
+   "german": "der Hund"
   },
   {
    "foreign": "le chat",
-   "german": "die Katze",
-   "topic": "Tiere"
+   "german": "die Katze"
   },
   {
    "foreign": "le cheval",
-   "german": "das Pferd",
-   "topic": "Tiere"
+   "german": "das Pferd"
   },
   {
    "foreign": "la vache",
-   "german": "die Kuh",
-   "topic": "Tiere"
+   "german": "die Kuh"
   },
   {
    "foreign": "le cochon",
-   "german": "das Schwein",
-   "topic": "Tiere"
+   "german": "das Schwein"
   },
   {
    "foreign": "le mouton",
-   "german": "das Schaf",
-   "topic": "Tiere"
+   "german": "das Schaf"
   },
   {
    "foreign": "l'oiseau",
-   "german": "der Vogel",
-   "topic": "Tiere"
+   "german": "der Vogel"
   },
   {
    "foreign": "le poisson",
-   "german": "der Fisch",
-   "topic": "Tiere"
+   "german": "der Fisch"
   },
   {
    "foreign": "la souris",
-   "german": "die Maus",
-   "topic": "Tiere"
+   "german": "die Maus"
   },
   {
    "foreign": "le lapin",
-   "german": "das Kaninchen",
-   "topic": "Tiere"
+   "german": "das Kaninchen"
   },
   {
    "foreign": "l'ours",
-   "german": "der Bär",
-   "topic": "Tiere"
+   "german": "der Bär"
   },
   {
    "foreign": "le lion",
-   "german": "der Löwe",
-   "topic": "Tiere"
+   "german": "der Löwe"
   },
   {
    "foreign": "l'éléphant",
-   "german": "der Elefant",
-   "topic": "Tiere"
+   "german": "der Elefant"
   },
   {
    "foreign": "la nourriture",
-   "german": "das Essen",
-   "topic": "Essen & Trinken"
+   "german": "das Essen"
   },
   {
    "foreign": "le pain",
-   "german": "das Brot",
-   "topic": "Essen & Trinken"
+   "german": "das Brot"
   },
   {
    "foreign": "le beurre",
-   "german": "die Butter",
-   "topic": "Essen & Trinken"
+   "german": "die Butter"
   },
   {
    "foreign": "le fromage",
-   "german": "der Käse",
-   "topic": "Essen & Trinken"
+   "german": "der Käse"
   },
   {
    "foreign": "l'œuf",
-   "german": "das Ei",
-   "topic": "Essen & Trinken"
+   "german": "das Ei"
   },
   {
    "foreign": "le lait",
-   "german": "die Milch",
-   "topic": "Essen & Trinken"
+   "german": "die Milch"
   },
   {
    "foreign": "l'eau",
-   "german": "das Wasser",
-   "topic": "Essen & Trinken"
+   "german": "das Wasser"
   },
   {
    "foreign": "le jus",
-   "german": "der Saft",
-   "topic": "Essen & Trinken"
+   "german": "der Saft"
   },
   {
    "foreign": "la pomme",
-   "german": "der Apfel",
-   "topic": "Essen & Trinken"
+   "german": "der Apfel"
   },
   {
    "foreign": "la banane",
-   "german": "die Banane",
-   "topic": "Essen & Trinken"
+   "german": "die Banane"
   },
   {
    "foreign": "l'orange",
-   "german": "die Orange",
-   "topic": "Essen & Trinken"
+   "german": "die Orange"
   },
   {
    "foreign": "la pomme de terre",
-   "german": "die Kartoffel",
-   "topic": "Essen & Trinken"
+   "german": "die Kartoffel"
   },
   {
    "foreign": "la viande",
-   "german": "das Fleisch",
-   "topic": "Essen & Trinken"
+   "german": "das Fleisch"
   },
   {
    "foreign": "la soupe",
-   "german": "die Suppe",
-   "topic": "Essen & Trinken"
+   "german": "die Suppe"
   },
   {
    "foreign": "le gâteau",
-   "german": "der Kuchen",
-   "topic": "Essen & Trinken"
+   "german": "der Kuchen"
   },
   {
    "foreign": "le sucre",
-   "german": "der Zucker",
-   "topic": "Essen & Trinken"
+   "german": "der Zucker"
   },
   {
    "foreign": "le sel",
-   "german": "das Salz",
-   "topic": "Essen & Trinken"
+   "german": "das Salz"
   },
   {
    "foreign": "le petit-déjeuner",
-   "german": "das Frühstück",
-   "topic": "Essen & Trinken"
+   "german": "das Frühstück"
   },
   {
    "foreign": "le déjeuner",
-   "german": "das Mittagessen",
-   "topic": "Essen & Trinken"
+   "german": "das Mittagessen"
   },
   {
    "foreign": "le dîner",
-   "german": "das Abendessen",
-   "topic": "Essen & Trinken"
+   "german": "das Abendessen"
   },
   {
    "foreign": "la maison",
-   "german": "das Haus",
-   "topic": "Haus"
+   "german": "das Haus"
   },
   {
    "foreign": "la chambre",
-   "german": "das Zimmer",
-   "topic": "Haus"
+   "german": "das Zimmer"
   },
   {
    "foreign": "la porte",
-   "german": "die Tür",
-   "topic": "Haus"
+   "german": "die Tür"
   },
   {
    "foreign": "la fenêtre",
-   "german": "das Fenster",
-   "topic": "Haus"
+   "german": "das Fenster"
   },
   {
    "foreign": "le mur",
-   "german": "die Wand",
-   "topic": "Haus"
+   "german": "die Wand"
   },
   {
    "foreign": "le sol",
-   "german": "der Boden",
-   "topic": "Haus"
+   "german": "der Boden"
   },
   {
    "foreign": "la table",
-   "german": "der Tisch",
-   "topic": "Haus"
+   "german": "der Tisch"
   },
   {
    "foreign": "la chaise",
-   "german": "der Stuhl",
-   "topic": "Haus"
+   "german": "der Stuhl"
   },
   {
    "foreign": "le lit",
-   "german": "das Bett",
-   "topic": "Haus"
+   "german": "das Bett"
   },
   {
    "foreign": "la cuisine",
-   "german": "die Küche",
-   "topic": "Haus"
+   "german": "die Küche"
   },
   {
    "foreign": "la salle de bains",
-   "german": "das Badezimmer",
-   "topic": "Haus"
+   "german": "das Badezimmer"
   },
   {
    "foreign": "le jardin",
-   "german": "der Garten",
-   "topic": "Haus"
+   "german": "der Garten"
   },
   {
    "foreign": "la clé",
-   "german": "der Schlüssel",
-   "topic": "Haus"
+   "german": "der Schlüssel"
   },
   {
    "foreign": "la lampe",
-   "german": "die Lampe",
-   "topic": "Haus"
+   "german": "die Lampe"
   },
   {
    "foreign": "les vêtements",
-   "german": "die Kleidung",
-   "topic": "Kleidung"
+   "german": "die Kleidung"
   },
   {
    "foreign": "la chemise",
-   "german": "das Hemd",
-   "topic": "Kleidung"
+   "german": "das Hemd"
   },
   {
    "foreign": "le pantalon",
-   "german": "die Hose",
-   "topic": "Kleidung"
+   "german": "die Hose"
   },
   {
    "foreign": "la robe",
-   "german": "das Kleid",
-   "topic": "Kleidung"
+   "german": "das Kleid"
   },
   {
    "foreign": "la veste",
-   "german": "die Jacke",
-   "topic": "Kleidung"
+   "german": "die Jacke"
   },
   {
    "foreign": "le manteau",
-   "german": "der Mantel",
-   "topic": "Kleidung"
+   "german": "der Mantel"
   },
   {
    "foreign": "la chaussure",
-   "german": "der Schuh",
-   "topic": "Kleidung"
+   "german": "der Schuh"
   },
   {
    "foreign": "la chaussette",
-   "german": "die Socke",
-   "topic": "Kleidung"
+   "german": "die Socke"
   },
   {
    "foreign": "le chapeau",
-   "german": "der Hut",
-   "topic": "Kleidung"
+   "german": "der Hut"
   },
   {
    "foreign": "le gant",
-   "german": "der Handschuh",
-   "topic": "Kleidung"
+   "german": "der Handschuh"
   },
   {
    "foreign": "la couleur",
-   "german": "die Farbe",
-   "topic": "Farben"
+   "german": "die Farbe"
   },
   {
    "foreign": "rouge",
-   "german": "rot",
-   "topic": "Farben"
+   "german": "rot"
   },
   {
    "foreign": "bleu",
-   "german": "blau",
-   "topic": "Farben"
+   "german": "blau"
   },
   {
    "foreign": "vert",
-   "german": "grün",
-   "topic": "Farben"
+   "german": "grün"
   },
   {
    "foreign": "jaune",
-   "german": "gelb",
-   "topic": "Farben"
+   "german": "gelb"
   },
   {
    "foreign": "noir",
-   "german": "schwarz",
-   "topic": "Farben"
+   "german": "schwarz"
   },
   {
    "foreign": "blanc",
-   "german": "weiss",
-   "topic": "Farben"
+   "german": "weiss"
   },
   {
    "foreign": "brun",
-   "german": "braun",
-   "topic": "Farben"
+   "german": "braun"
   },
   {
    "foreign": "gris",
-   "german": "grau",
-   "topic": "Farben"
+   "german": "grau"
   },
   {
    "foreign": "rose",
-   "german": "rosa",
-   "topic": "Farben"
+   "german": "rosa"
   },
   {
    "foreign": "un",
-   "german": "eins",
-   "topic": "Zahlen"
+   "german": "eins"
   },
   {
    "foreign": "deux",
-   "german": "zwei",
-   "topic": "Zahlen"
+   "german": "zwei"
   },
   {
    "foreign": "trois",
-   "german": "drei",
-   "topic": "Zahlen"
+   "german": "drei"
   },
   {
    "foreign": "quatre",
-   "german": "vier",
-   "topic": "Zahlen"
+   "german": "vier"
   },
   {
    "foreign": "cinq",
-   "german": "fünf",
-   "topic": "Zahlen"
+   "german": "fünf"
   },
   {
    "foreign": "six",
-   "german": "sechs",
-   "topic": "Zahlen"
+   "german": "sechs"
   },
   {
    "foreign": "sept",
-   "german": "sieben",
-   "topic": "Zahlen"
+   "german": "sieben"
   },
   {
    "foreign": "huit",
-   "german": "acht",
-   "topic": "Zahlen"
+   "german": "acht"
   },
   {
    "foreign": "neuf",
-   "german": "neun",
-   "topic": "Zahlen"
+   "german": "neun"
   },
   {
    "foreign": "dix",
-   "german": "zehn",
-   "topic": "Zahlen"
+   "german": "zehn"
   },
   {
    "foreign": "cent",
-   "german": "hundert",
-   "topic": "Zahlen"
+   "german": "hundert"
   },
   {
    "foreign": "le nombre",
-   "german": "die Zahl",
-   "topic": "Zahlen"
+   "german": "die Zahl"
   },
   {
    "foreign": "le temps",
-   "german": "die Zeit",
-   "topic": "Zeit"
+   "german": "die Zeit"
   },
   {
    "foreign": "le jour",
-   "german": "der Tag",
-   "topic": "Zeit"
+   "german": "der Tag"
   },
   {
    "foreign": "la nuit",
-   "german": "die Nacht",
-   "topic": "Zeit"
+   "german": "die Nacht"
   },
   {
    "foreign": "le matin",
-   "german": "der Morgen",
-   "topic": "Zeit"
+   "german": "der Morgen"
   },
   {
    "foreign": "le soir",
-   "german": "der Abend",
-   "topic": "Zeit"
+   "german": "der Abend"
   },
   {
    "foreign": "l'heure",
-   "german": "die Stunde",
-   "topic": "Zeit"
+   "german": "die Stunde"
   },
   {
    "foreign": "la minute",
-   "german": "die Minute",
-   "topic": "Zeit"
+   "german": "die Minute"
   },
   {
    "foreign": "la semaine",
-   "german": "die Woche",
-   "topic": "Zeit"
+   "german": "die Woche"
   },
   {
    "foreign": "le mois",
-   "german": "der Monat",
-   "topic": "Zeit"
+   "german": "der Monat"
   },
   {
    "foreign": "l'année",
-   "german": "das Jahr",
-   "topic": "Zeit"
+   "german": "das Jahr"
   },
   {
    "foreign": "aujourd'hui",
-   "german": "heute",
-   "topic": "Zeit"
+   "german": "heute"
   },
   {
    "foreign": "demain",
-   "german": "morgen",
-   "topic": "Zeit"
+   "german": "morgen"
   },
   {
    "foreign": "hier",
-   "german": "gestern",
-   "topic": "Zeit"
+   "german": "gestern"
   },
   {
    "foreign": "le week-end",
-   "german": "das Wochenende",
-   "topic": "Zeit"
+   "german": "das Wochenende"
   },
   {
    "foreign": "l'école",
-   "german": "die Schule",
-   "topic": "Schule"
+   "german": "die Schule"
   },
   {
    "foreign": "le professeur",
-   "german": "der Lehrer",
-   "topic": "Schule"
+   "german": "der Lehrer"
   },
   {
    "foreign": "l'élève",
-   "german": "der Schüler",
-   "topic": "Schule"
+   "german": "der Schüler"
   },
   {
    "foreign": "le livre",
-   "german": "das Buch",
-   "topic": "Schule"
+   "german": "das Buch"
   },
   {
    "foreign": "le stylo",
-   "german": "der Stift",
-   "topic": "Schule"
+   "german": "der Stift"
   },
   {
    "foreign": "le crayon",
-   "german": "der Bleistift",
-   "topic": "Schule"
+   "german": "der Bleistift"
   },
   {
    "foreign": "le papier",
-   "german": "das Papier",
-   "topic": "Schule"
+   "german": "das Papier"
   },
   {
    "foreign": "le mot",
-   "german": "das Wort",
-   "topic": "Schule"
+   "german": "das Wort"
   },
   {
    "foreign": "la question",
-   "german": "die Frage",
-   "topic": "Schule"
+   "german": "die Frage"
   },
   {
    "foreign": "la réponse",
-   "german": "die Antwort",
-   "topic": "Schule"
+   "german": "die Antwort"
   },
   {
    "foreign": "les devoirs",
-   "german": "die Hausaufgabe",
-   "topic": "Schule"
+   "german": "die Hausaufgabe"
   },
   {
    "foreign": "la nature",
-   "german": "die Natur",
-   "topic": "Natur"
+   "german": "die Natur"
   },
   {
    "foreign": "le soleil",
-   "german": "die Sonne",
-   "topic": "Natur"
+   "german": "die Sonne"
   },
   {
    "foreign": "la lune",
-   "german": "der Mond",
-   "topic": "Natur"
+   "german": "der Mond"
   },
   {
    "foreign": "l'étoile",
-   "german": "der Stern",
-   "topic": "Natur"
+   "german": "der Stern"
   },
   {
    "foreign": "le ciel",
-   "german": "der Himmel",
-   "topic": "Natur"
+   "german": "der Himmel"
   },
   {
    "foreign": "l'arbre",
-   "german": "der Baum",
-   "topic": "Natur"
+   "german": "der Baum"
   },
   {
    "foreign": "la fleur",
-   "german": "die Blume",
-   "topic": "Natur"
+   "german": "die Blume"
   },
   {
    "foreign": "l'herbe",
-   "german": "das Gras",
-   "topic": "Natur"
+   "german": "das Gras"
   },
   {
    "foreign": "la montagne",
-   "german": "der Berg",
-   "topic": "Natur"
+   "german": "der Berg"
   },
   {
    "foreign": "la rivière",
-   "german": "der Fluss",
-   "topic": "Natur"
+   "german": "der Fluss"
   },
   {
    "foreign": "la mer",
-   "german": "das Meer",
-   "topic": "Natur"
+   "german": "das Meer"
   },
   {
    "foreign": "la pluie",
-   "german": "der Regen",
-   "topic": "Natur"
+   "german": "der Regen"
   },
   {
    "foreign": "la neige",
-   "german": "der Schnee",
-   "topic": "Natur"
+   "german": "der Schnee"
   },
   {
    "foreign": "le vent",
-   "german": "der Wind",
-   "topic": "Natur"
+   "german": "der Wind"
   },
   {
    "foreign": "le feu",
-   "german": "das Feuer",
-   "topic": "Natur"
+   "german": "das Feuer"
   },
   {
    "foreign": "la pierre",
-   "german": "der Stein",
-   "topic": "Natur"
+   "german": "der Stein"
   },
   {
    "foreign": "être",
-   "german": "sein",
-   "topic": "Verben"
+   "german": "sein"
   },
   {
    "foreign": "avoir",
-   "german": "haben",
-   "topic": "Verben"
+   "german": "haben"
   },
   {
    "foreign": "aller",
-   "german": "gehen",
-   "topic": "Verben"
+   "german": "gehen"
   },
   {
    "foreign": "venir",
-   "german": "kommen",
-   "topic": "Verben"
+   "german": "kommen"
   },
   {
    "foreign": "faire",
-   "german": "machen",
-   "topic": "Verben"
+   "german": "machen"
   },
   {
    "foreign": "dire",
-   "german": "sagen",
-   "topic": "Verben"
+   "german": "sagen"
   },
   {
    "foreign": "voir",
-   "german": "sehen",
-   "topic": "Verben"
+   "german": "sehen"
   },
   {
    "foreign": "manger",
-   "german": "essen",
-   "topic": "Verben"
+   "german": "essen"
   },
   {
    "foreign": "boire",
-   "german": "trinken",
-   "topic": "Verben"
+   "german": "trinken"
   },
   {
    "foreign": "dormir",
-   "german": "schlafen",
-   "topic": "Verben"
+   "german": "schlafen"
   },
   {
    "foreign": "lire",
-   "german": "lesen",
-   "topic": "Verben"
+   "german": "lesen"
   },
   {
    "foreign": "écrire",
-   "german": "schreiben",
-   "topic": "Verben"
+   "german": "schreiben"
   },
   {
    "foreign": "jouer",
-   "german": "spielen",
-   "topic": "Verben"
+   "german": "spielen"
   },
   {
    "foreign": "apprendre",
-   "german": "lernen",
-   "topic": "Verben"
+   "german": "lernen"
   },
   {
    "foreign": "parler",
-   "german": "sprechen",
-   "topic": "Verben"
+   "german": "sprechen"
   },
   {
    "foreign": "donner",
-   "german": "geben",
-   "topic": "Verben"
+   "german": "geben"
   },
   {
    "foreign": "prendre",
-   "german": "nehmen",
-   "topic": "Verben"
+   "german": "nehmen"
   },
   {
    "foreign": "acheter",
-   "german": "kaufen",
-   "topic": "Verben"
+   "german": "kaufen"
   },
   {
    "foreign": "courir",
-   "german": "rennen",
-   "topic": "Verben"
+   "german": "rennen"
   },
   {
    "foreign": "marcher",
-   "german": "laufen",
-   "topic": "Verben"
+   "german": "laufen"
   },
   {
    "foreign": "vivre",
-   "german": "leben",
-   "topic": "Verben"
+   "german": "leben"
   },
   {
    "foreign": "aimer",
-   "german": "lieben",
-   "topic": "Verben"
+   "german": "lieben"
   },
   {
    "foreign": "vouloir",
-   "german": "wollen",
-   "topic": "Verben"
+   "german": "wollen"
   },
   {
    "foreign": "savoir",
-   "german": "wissen",
-   "topic": "Verben"
+   "german": "wissen"
   },
   {
    "foreign": "penser",
-   "german": "denken",
-   "topic": "Verben"
+   "german": "denken"
   },
   {
    "foreign": "travailler",
-   "german": "arbeiten",
-   "topic": "Verben"
+   "german": "arbeiten"
   },
   {
    "foreign": "aider",
-   "german": "helfen",
-   "topic": "Verben"
+   "german": "helfen"
   },
   {
    "foreign": "trouver",
-   "german": "finden",
-   "topic": "Verben"
+   "german": "finden"
   },
   {
    "foreign": "ouvrir",
-   "german": "öffnen",
-   "topic": "Verben"
+   "german": "öffnen"
   },
   {
    "foreign": "fermer",
-   "german": "schliessen",
-   "topic": "Verben"
+   "german": "schliessen"
   },
   {
    "foreign": "grand",
-   "german": "gross",
-   "topic": "Adjektive"
+   "german": "gross"
   },
   {
    "foreign": "petit",
-   "german": "klein",
-   "topic": "Adjektive"
+   "german": "klein"
   },
   {
    "foreign": "bon",
-   "german": "gut",
-   "topic": "Adjektive"
+   "german": "gut"
   },
   {
    "foreign": "mauvais",
-   "german": "schlecht",
-   "topic": "Adjektive"
+   "german": "schlecht"
   },
   {
    "foreign": "nouveau",
-   "german": "neu",
-   "topic": "Adjektive"
+   "german": "neu"
   },
   {
    "foreign": "vieux",
-   "german": "alt",
-   "topic": "Adjektive"
+   "german": "alt"
   },
   {
    "foreign": "jeune",
-   "german": "jung",
-   "topic": "Adjektive"
+   "german": "jung"
   },
   {
    "foreign": "long",
-   "german": "lang",
-   "topic": "Adjektive"
+   "german": "lang"
   },
   {
    "foreign": "court",
-   "german": "kurz",
-   "topic": "Adjektive"
+   "german": "kurz"
   },
   {
    "foreign": "chaud",
-   "german": "heiss",
-   "topic": "Adjektive"
+   "german": "heiss"
   },
   {
    "foreign": "froid",
-   "german": "kalt",
-   "topic": "Adjektive"
+   "german": "kalt"
   },
   {
    "foreign": "heureux",
-   "german": "glücklich",
-   "topic": "Adjektive"
+   "german": "glücklich"
   },
   {
    "foreign": "triste",
-   "german": "traurig",
-   "topic": "Adjektive"
+   "german": "traurig"
   },
   {
    "foreign": "rapide",
-   "german": "schnell",
-   "topic": "Adjektive"
+   "german": "schnell"
   },
   {
    "foreign": "lent",
-   "german": "langsam",
-   "topic": "Adjektive"
+   "german": "langsam"
   },
   {
    "foreign": "facile",
-   "german": "einfach",
-   "topic": "Adjektive"
+   "german": "einfach"
   },
   {
    "foreign": "difficile",
-   "german": "schwierig",
-   "topic": "Adjektive"
+   "german": "schwierig"
   },
   {
    "foreign": "beau",
-   "german": "schön",
-   "topic": "Adjektive"
+   "german": "schön"
   },
   {
    "foreign": "fort",
-   "german": "stark",
-   "topic": "Adjektive"
+   "german": "stark"
   },
   {
    "foreign": "gentil",
-   "german": "nett",
-   "topic": "Adjektive"
+   "german": "nett"
   },
   {
    "foreign": "et",
-   "german": "und",
-   "topic": "Kleine Wörter"
+   "german": "und"
   },
   {
    "foreign": "ou",
-   "german": "oder",
-   "topic": "Kleine Wörter"
+   "german": "oder"
   },
   {
    "foreign": "mais",
-   "german": "aber",
-   "topic": "Kleine Wörter"
+   "german": "aber"
   },
   {
    "foreign": "ne...pas",
-   "german": "nicht",
-   "topic": "Kleine Wörter"
+   "german": "nicht"
   },
   {
    "foreign": "oui",
-   "german": "ja",
-   "topic": "Kleine Wörter"
+   "german": "ja"
   },
   {
    "foreign": "non",
-   "german": "nein",
-   "topic": "Kleine Wörter"
+   "german": "nein"
   },
   {
    "foreign": "avec",
-   "german": "mit",
-   "topic": "Kleine Wörter"
+   "german": "mit"
   },
   {
    "foreign": "sans",
-   "german": "ohne",
-   "topic": "Kleine Wörter"
+   "german": "ohne"
   },
   {
    "foreign": "ici",
-   "german": "hier",
-   "topic": "Kleine Wörter"
+   "german": "hier"
   },
   {
    "foreign": "là",
-   "german": "dort",
-   "topic": "Kleine Wörter"
+   "german": "dort"
   },
   {
    "foreign": "maintenant",
-   "german": "jetzt",
-   "topic": "Kleine Wörter"
+   "german": "jetzt"
   },
   {
    "foreign": "toujours",
-   "german": "immer",
-   "topic": "Kleine Wörter"
+   "german": "immer"
   },
   {
    "foreign": "jamais",
-   "german": "nie",
-   "topic": "Kleine Wörter"
+   "german": "nie"
   },
   {
    "foreign": "très",
-   "german": "sehr",
-   "topic": "Kleine Wörter"
+   "german": "sehr"
   },
   {
    "foreign": "aussi",
-   "german": "auch",
-   "topic": "Kleine Wörter"
+   "german": "auch"
   }
  ]
 }

@@ -84,7 +84,6 @@ export function wordsForSelection(vocab: Word[], stats: Record<string, Stat>, se
   const out: Word[] = [];
   for (const w of vocab) {
     let inc = (w.lists || []).some((l) => set.has(l));
-    if (!inc && w.topic && set.has("t:" + w.topic)) inc = true;
     if (!inc) { for (const k of smartActive) { if (SMART[k].test(w, stats[w.id], mc, now)) { inc = true; break; } } }
     if (inc) out.push(w);
   }
@@ -173,11 +172,10 @@ export function resolveList(list: any, vocab: Word[]): Word[] {
   return pairVocab.filter((w) => set.has(w.id));
 }
 
-/* V9: snapshot the current words of a list or topic into a member-id array. */
-export function snapshotMembers(vocab: Word[], pair: string, src: { type: "list" | "topic"; ref: string }): string[] {
+/* Die Woerter einer Wortliste als Id-Liste. */
+export function snapshotMembers(vocab: Word[], pair: string, listId: string): string[] {
   const pv = vocab.filter((w) => w.pair === pair);
-  const ws = src.type === "list" ? pv.filter((w) => (w.lists || []).includes(src.ref)) : pv.filter((w) => w.topic === src.ref);
-  return Array.from(new Set(ws.map((w) => w.id)));
+  return Array.from(new Set(pv.filter((w) => (w.lists || []).includes(listId)).map((w) => w.id)));
 }
 
 /* V9/V14: list mastery aggregate from deriveProfile (the ONE source). Returns

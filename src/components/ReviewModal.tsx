@@ -20,8 +20,8 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
     // shape would otherwise silently drop them on the way to the import.
     setList(src.map((r) => ({
       ...(isLat
-        ? { grundform: r.grundform ?? r.fgn ?? "", lernform: r.lernform ?? "", wortart: r.wortart || "Nomen", de: r.de ?? "", topic: r.topic ?? "" }
-        : { fgn: r.fgn ?? r.grundform ?? "", de: r.de ?? "", topic: r.topic ?? "" }),
+        ? { grundform: r.grundform ?? r.fgn ?? "", lernform: r.lernform ?? "", wortart: r.wortart || "Nomen", de: r.de ?? "" }
+        : { fgn: r.fgn ?? r.grundform ?? "", de: r.de ?? "" }),
       /* Satz und Übersetzung als zwei Spalten, jede mit " / " zwischen den
        * beiden Sätzen. Index-treu: Position 1 gehört zu Position 1. */
       ex: (r.examples || []).join(" / "),
@@ -34,7 +34,7 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
 
   const setCell = (i: number, k: string, v: string) => setList((l) => l.map((r, j) => j === i ? { ...r, [k]: v } : r));
   const removeRow = (i: number) => setList((l) => l.filter((_, j) => j !== i));
-  const addRow = () => setList((l) => [...l, isLat ? { grundform: "", lernform: "", wortart: "Nomen", de: "", topic: "", ex: "", exde: "", phonetic: "" } : { fgn: "", de: "", topic: "", ex: "", exde: "", phonetic: "" }]);
+  const addRow = () => setList((l) => [...l, isLat ? { grundform: "", lernform: "", wortart: "Nomen", de: "", ex: "", exde: "", phonetic: "" } : { fgn: "", de: "", ex: "", exde: "", phonetic: "" }]);
   const g = (r: any, k: string) => ((r?.[k] ?? "") + "").trim();
   const valid = list
     .filter((r) => isLat ? (g(r, "grundform") || g(r, "lernform") || g(r, "de")) : (g(r, "fgn") || g(r, "de")))
