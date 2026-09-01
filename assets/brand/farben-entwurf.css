@@ -1,0 +1,264 @@
+/* SmartVoc — Farbschemata. Drei Schemata, je hell und dunkel.
+   Namen wie in src/index.css; zusätzliche Rollen am Ende jedes Blocks:
+   --card-rule (Linien auf der Karte), --card-margin (Marginalie), --stack (Kartenstapel hinter der Karte).
+   Anwendung: <html data-scheme="kladde" data-appearance="auto">. */
+
+/* ===== KLADDE — hell ===== */
+[data-scheme="kladde"] {
+  --bg: #eae0cc;
+  --bg-2: #e2d6bd;
+  --card: #f7f1e2;
+  --card-2: #f0e8d6;
+  --ink: #2b2620;
+  --ink-soft: #6e6555;
+  --ink-faint: #6f6453;
+  --line: #dbcdb1;
+  --line-soft: #e7dec9;
+  --amber: #8a4a32;
+  --amber-deep: #6d3a26;
+  --amber-bg: #eddccf;
+  --green: #4f6a44;
+  --green-bg: #dfe6d8;
+  --red: #8a3f2e;
+  --red-bg: #f0dcd5;
+  --blue: #3f5f86;
+  --blue-bg: #dde3ec;
+  --slate: #6b6355;
+  --card-rule: #e7dec9;
+  --card-margin: rgba(138,74,50,.28);
+  --stack: #f0e8d6;
+}
+
+/* ===== KLADDE — dunkel ===== */
+[data-scheme="kladde"][data-appearance="dark"] {
+  --bg: #221f1a;
+  --bg-2: #2e2a23;
+  --card: #2b2721;
+  --card-2: #332e26;
+  --ink: #efe6d4;
+  --ink-soft: #b3a891;
+  --ink-faint: #a1957f;
+  --line: #413b31;
+  --line-soft: #37322a;
+  --amber: #c8815e;
+  --amber-deep: #dfa07c;
+  --amber-bg: #3a2b22;
+  --green: #8fae7f;
+  --green-bg: #2c3628;
+  --red: #d08a74;
+  --red-bg: #3a2823;
+  --blue: #8fabce;
+  --blue-bg: #26303c;
+  --slate: #9a8f7d;
+  --card-rule: #37322a;
+  --card-margin: rgba(200,129,94,.28);
+  --stack: #332e26;
+}
+@media (prefers-color-scheme: dark) {
+  [data-scheme="kladde"][data-appearance="auto"] {
+    --bg: #221f1a;
+    --bg-2: #2e2a23;
+    --card: #2b2721;
+    --card-2: #332e26;
+    --ink: #efe6d4;
+    --ink-soft: #b3a891;
+    --ink-faint: #a1957f;
+    --line: #413b31;
+    --line-soft: #37322a;
+    --amber: #c8815e;
+    --amber-deep: #dfa07c;
+    --amber-bg: #3a2b22;
+    --green: #8fae7f;
+    --green-bg: #2c3628;
+    --red: #d08a74;
+    --red-bg: #3a2823;
+    --blue: #8fabce;
+    --blue-bg: #26303c;
+    --slate: #9a8f7d;
+    --card-rule: #37322a;
+    --card-margin: rgba(200,129,94,.28);
+    --stack: #332e26;
+  }
+}
+
+/* ===== LEINEN — hell ===== */
+[data-scheme="leinen"] {
+  --bg: #e5dbc9;
+  --bg-2: #dcd1bb;
+  --card: #fffdf9;
+  --card-2: #f7f3ea;
+  --ink: #252a30;
+  --ink-soft: #5e6772;
+  --ink-faint: #626c78;
+  --line: #e0d8c9;
+  --line-soft: #ece5d8;
+  --amber: #33547f;
+  --amber-deep: #264264;
+  --amber-bg: #dee5ee;
+  --green: #3f6b4c;
+  --green-bg: #dbe6dd;
+  --red: #95402f;
+  --red-bg: #f0ddd7;
+  --blue: #33547f;
+  --blue-bg: #dee5ee;
+  --slate: #64707c;
+  --card-rule: #ece5d8;
+  --card-margin: rgba(51,84,127,.22);
+  --stack: #f7f3ea;
+}
+
+/* ===== LEINEN — dunkel ===== */
+[data-scheme="leinen"][data-appearance="dark"] {
+  --bg: #1d2126;
+  --bg-2: #282e35;
+  --card: #262b31;
+  --card-2: #2e343b;
+  --ink: #e8ebef;
+  --ink-soft: #a3adb8;
+  --ink-faint: #939da8;
+  --line: #39414a;
+  --line-soft: #333b43;
+  --amber: #6e9ccb;
+  --amber-deep: #96b9dd;
+  --amber-bg: #263341;
+  --green: #86b394;
+  --green-bg: #24322a;
+  --red: #d08a76;
+  --red-bg: #3a2723;
+  --blue: #6e9ccb;
+  --blue-bg: #263341;
+  --slate: #8b96a2;
+  --card-rule: #333b43;
+  --card-margin: rgba(110,156,203,.26);
+  --stack: #2e343b;
+}
+@media (prefers-color-scheme: dark) {
+  [data-scheme="leinen"][data-appearance="auto"] {
+    --bg: #1d2126;
+    --bg-2: #282e35;
+    --card: #262b31;
+    --card-2: #2e343b;
+    --ink: #e8ebef;
+    --ink-soft: #a3adb8;
+    --ink-faint: #939da8;
+    --line: #39414a;
+    --line-soft: #333b43;
+    --amber: #6e9ccb;
+    --amber-deep: #96b9dd;
+    --amber-bg: #263341;
+    --green: #86b394;
+    --green-bg: #24322a;
+    --red: #d08a76;
+    --red-bg: #3a2723;
+    --blue: #6e9ccb;
+    --blue-bg: #263341;
+    --slate: #8b96a2;
+    --card-rule: #333b43;
+    --card-margin: rgba(110,156,203,.26);
+    --stack: #2e343b;
+  }
+}
+
+/* ===== ALTPAPIER — hell ===== */
+[data-scheme="altpapier"] {
+  --bg: #d5cfbe;
+  --bg-2: #c9c2ae;
+  --card: #e7e1cf;
+  --card-2: #ded7c3;
+  --ink: #2c2a24;
+  --ink-soft: #5c5850;
+  --ink-faint: #5f5b52;
+  --line: #c6bfab;
+  --line-soft: #d3ccb9;
+  --amber: #8f3a2b;
+  --amber-deep: #71291d;
+  --amber-bg: #e0cfc6;
+  --green: #4a6640;
+  --green-bg: #d5dbc9;
+  --red: #8f3a2b;
+  --red-bg: #e3cdc5;
+  --blue: #3c5878;
+  --blue-bg: #d2d8e2;
+  --slate: #6a655b;
+  --card-rule: #d3ccb9;
+  --card-margin: rgba(143,58,43,.26);
+  --stack: #ded7c3;
+}
+
+/* ===== ALTPAPIER — dunkel ===== */
+[data-scheme="altpapier"][data-appearance="dark"] {
+  --bg: #222118;
+  --bg-2: #2c2b22;
+  --card: #2b2a22;
+  --card-2: #33322a;
+  --ink: #e6e2d6;
+  --ink-soft: #aaa598;
+  --ink-faint: #a09b8e;
+  --line: #403e34;
+  --line-soft: #363429;
+  --amber: #cf7a63;
+  --amber-deep: #e29a85;
+  --amber-bg: #3a2b25;
+  --green: #93b184;
+  --green-bg: #2b3527;
+  --red: #d0846c;
+  --red-bg: #3a2822;
+  --blue: #8ba8c8;
+  --blue-bg: #262f3a;
+  --slate: #979183;
+  --card-rule: #363429;
+  --card-margin: rgba(207,122,99,.28);
+  --stack: #33322a;
+}
+@media (prefers-color-scheme: dark) {
+  [data-scheme="altpapier"][data-appearance="auto"] {
+    --bg: #222118;
+    --bg-2: #2c2b22;
+    --card: #2b2a22;
+    --card-2: #33322a;
+    --ink: #e6e2d6;
+    --ink-soft: #aaa598;
+    --ink-faint: #a09b8e;
+    --line: #403e34;
+    --line-soft: #363429;
+    --amber: #cf7a63;
+    --amber-deep: #e29a85;
+    --amber-bg: #3a2b25;
+    --green: #93b184;
+    --green-bg: #2b3527;
+    --red: #d0846c;
+    --red-bg: #3a2822;
+    --blue: #8ba8c8;
+    --blue-bg: #262f3a;
+    --slate: #979183;
+    --card-rule: #363429;
+    --card-margin: rgba(207,122,99,.28);
+    --stack: #33322a;
+  }
+}
+
+/* Voreinstellung: Kladde, hell */
+:root {
+  --bg: #eae0cc;
+  --bg-2: #e2d6bd;
+  --card: #f7f1e2;
+  --card-2: #f0e8d6;
+  --ink: #2b2620;
+  --ink-soft: #6e6555;
+  --ink-faint: #6f6453;
+  --line: #dbcdb1;
+  --line-soft: #e7dec9;
+  --amber: #8a4a32;
+  --amber-deep: #6d3a26;
+  --amber-bg: #eddccf;
+  --green: #4f6a44;
+  --green-bg: #dfe6d8;
+  --red: #8a3f2e;
+  --red-bg: #f0dcd5;
+  --blue: #3f5f86;
+  --blue-bg: #dde3ec;
+  --slate: #6b6355;
+  --card-rule: #e7dec9;
+  --card-margin: rgba(138,74,50,.28);
+  --stack: #f0e8d6;
+}

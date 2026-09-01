@@ -21,7 +21,10 @@ export const RECOMMENDED: Partial<Settings> = {
   latinMacronsOptional: false, // Latein: Längenstriche standardmässig nötig (Punktabzug)
   latinMode: "L2",        // Latin: ask the Grundform, show the full Lernform
   tipsFrequency: "occasional", // sporadic study tips at natural pauses
-  skin: "paper",          // appearance: warm paper (today's look)
+  scheme: "kladde",       // Farbschema für die ganze App
+  appearance: "auto",     // hell / dunkel / folgt dem Gerät
+  readyGreen: 95,         // Ampel im Übungsplan — reine Darstellungsregel
+  readyAmber: 70,
   cardStyle: "ruled",     // lined card + red margin (today's look)
   cardFont: "serif",      // card text font (today's look)
 };

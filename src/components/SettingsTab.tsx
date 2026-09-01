@@ -11,6 +11,7 @@ import { PAIRS } from "../lib/pairs";
 import { DEFAULTS, previewStabilityGood, retentionFor } from "../lib/fsrs";
 import { fitStatus } from "../lib/reviewlog";
 import { FsrsValuesModal } from "./FsrsValuesModal";
+import { toneLegend, TONE_VAR } from "../lib/readiness";
 
 /* ===================================================================
  * settingsTab.jsx — adjustable engine parameters with research-backed
@@ -39,6 +40,23 @@ function SliderControl({ value, min, max, step, onChange, fmt }: any) {
     <div className="set-slider">
       <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} />
       <div className="set-val">{fmt ? fmt(value) : value}</div>
+    </div>
+  );
+}
+
+/* Lebende Vorschau. Sie hängt an keinem eigenen Zustand: Schema, Erscheinungs-
+ * bild, Kartentyp und Kartenschrift stehen als data-Attribute am <html>, also
+ * zeigt dieselbe Auszeichnung wie beim Üben automatisch die aktuelle Wahl. */
+function CardPreview() {
+  return (
+    <div className="set-preview" aria-hidden="true">
+      <div className="set-preview-card">
+        <div className="card-face">
+          <span className="ruled-margin" />
+          <div className="set-preview-word">le renard</div>
+          <div className="set-preview-ex">Le renard traverse le jardin.</div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -133,7 +151,7 @@ export function SettingsTab() {
 
       {/* Practice */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="cards" size={16} /> Practice</div>
+        <div className="set-section-h"><Icon name="cards" size={16} /> Üben</div>
         <Field title="Default answer mode" recLabel="Type" atRec={atR("mode")}
           desc="Typing the answer (active recall) builds the strongest memory. Recall = self-check flashcards; Memorize = browse only, no scoring.">
           <select className="field" style={{ width: "100%" }} value={settings.mode} onChange={(e) => set("mode", e.target.value)}>
@@ -167,7 +185,7 @@ export function SettingsTab() {
 
       {/* Pacing & repetition */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="flame" size={16} /> Review cycle & repetition</div>
+        <div className="set-section-h"><Icon name="flame" size={16} /> Wiederholung</div>
         <Field title="New words per day" recLabel={`${R.newPerDay} (8–12 is ideal)`} atRec={atR("newPerDay")}
           desc="Limiting how many brand-new words appear each day prevents overload — once reached, the day focuses on reviewing.">
           <SliderControl value={settings.newPerDay} min={3} max={30} step={1} onChange={(v) => set("newPerDay", v)} />
@@ -182,7 +200,7 @@ export function SettingsTab() {
 
       {/* Answer checking */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="check" size={16} /> Answer checking</div>
+        <div className="set-section-h"><Icon name="check" size={16} /> Antwortprüfung</div>
         <Field title="Ignore capitalisation" recLabel="On" atRec={atR("lenientCase")}
           desc="Treat “Hund” and “hund” as the same answer.">
           <Toggle value={settings.lenientCase} onChange={(v) => set("lenientCase", v)} />
@@ -249,24 +267,57 @@ export function SettingsTab() {
         </Field>
       </div>
 
+      {/* Übungsplan — die Schwellen der Ampel */}
+      <div className="set-section">
+        <div className="set-section-h"><Icon name="calendar" size={16} /> Übungsplan</div>
+        <Field title="Bereit ab" recLabel="95 %" atRec={atR("readyGreen")}
+          desc="Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender.">
+          <SliderControl value={settings.readyGreen ?? 95} min={80} max={100} step={1}
+            onChange={(v) => set("readyGreen", Math.max(v, (settings.readyAmber ?? 70) + 1))}
+            fmt={(v) => v + " %"} />
+        </Field>
+        <Field title="Fast bereit ab" recLabel="70 %" atRec={atR("readyAmber")}
+          desc="Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.">
+          <SliderControl value={settings.readyAmber ?? 70} min={40} max={94} step={1}
+            onChange={(v) => set("readyAmber", Math.min(v, (settings.readyGreen ?? 95) - 1))}
+            fmt={(v) => v + " %"} />
+        </Field>
+        <div className="set-legend-preview">
+          {toneLegend(settings).map((t) => (
+            <span key={t.tone} className="set-legend-item">
+              <span className="set-legend-dot" style={{ background: TONE_VAR[t.tone] }} />{t.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Erscheinungsbild */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="swatch" size={16} /> Erscheinungsbild</div>
-        <Field title="Skin" recLabel="Papier" atRec={atR("skin")}
-          desc="Farbwelt der ganzen App. Papier ist der gewohnte warme Look.">
-
-          <select className="field" style={{ width: "100%" }} value={settings.skin} onChange={(e) => set("skin", e.target.value)}>
-            <option value="paper">Papier (warm)</option>
+        <CardPreview />
+        <Field title="Erscheinungsbild" recLabel="Automatisch" atRec={atR("appearance")}
+          desc="Hell, dunkel oder dem Gerät folgen. Getrennt vom Farbschema — beim Wechsel bleibt dein Schema erhalten.">
+          <select className="field" style={{ width: "100%" }} value={settings.appearance} onChange={(e) => set("appearance", e.target.value)}>
+            <option value="auto">Automatisch (folgt dem Gerät)</option>
+            <option value="light">Hell</option>
             <option value="dark">Dunkel</option>
-            <option value="fresh">Frisch (kühl)</option>
+          </select>
+        </Field>
+        <Field title="Farbschema" recLabel="Kladde" atRec={atR("scheme")}
+          desc="Grund, Tinte und Akzent für die ganze App. Jedes Schema gibt es hell und dunkel.">
+          <select className="field" style={{ width: "100%" }} value={settings.scheme} onChange={(e) => set("scheme", e.target.value)}>
+            <option value="kladde">Kladde (warmes Kraftpapier)</option>
+            <option value="leinen">Leinen (kühler, Tintenblau)</option>
+            <option value="altpapier">Altpapier (graubraun, Stempelrot)</option>
           </select>
         </Field>
         <Field title="Kartenstil" recLabel="Liniert" atRec={atR("cardStyle")}
-          desc="Aussehen der Karteikarte – unabhängig vom Skin.">
+          desc="Nur die Übungskarte. Nimmt die Farben des gewählten Schemas an.">
           <select className="field" style={{ width: "100%" }} value={settings.cardStyle} onChange={(e) => set("cardStyle", e.target.value)}>
-            <option value="ruled">Liniert (mit Rand)</option>
-            <option value="plain">Glatt</option>
-            <option value="indexcard">Karteikarte (Reiter)</option>
+            <option value="ruled">Liniert</option>
+            <option value="plain">Blanko</option>
+            <option value="recycled">Altpapier</option>
+            <option value="linen">Leinen</option>
           </select>
         </Field>
         <Field title="Kartenschrift" recLabel="Serif" atRec={atR("cardFont")}

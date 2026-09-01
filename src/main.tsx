@@ -11,6 +11,7 @@ import "@fontsource/source-serif-4/600.css";
 import "@fontsource/source-serif-4/700.css";
 import "@fontsource/patrick-hand/400.css";
 import "./index.css";
+import "./schemes.css";
 import { ToastHost } from "./ui/Toast";
 import { StoreProvider } from "./store/StoreProvider";
 import { AuthProvider } from "./sync/auth";

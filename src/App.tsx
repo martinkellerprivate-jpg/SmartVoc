@@ -115,8 +115,16 @@ export function App() {
     if (!shown.some((p: any) => p.id === settings.pair)) setSettings({ pair: shown[0].id, selectedLists: [], statLists: [] });
   }, [settings.activePairs, settings.pair]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // appearance: apply the active skin to the document root (Phase 6 CR)
-  useEffect(() => { document.documentElement.dataset.skin = settings.skin || "paper"; }, [settings.skin]);
+  /* Aussehen: zwei getrennte Achsen am Wurzelelement. Das Farbschema gilt für
+   * die ganze App, das Erscheinungsbild folgt der Tageszeit — deshalb verliert
+   * ein Wechsel von hell auf dunkel das gewählte Schema nicht. */
+  useEffect(() => {
+    const r = document.documentElement.dataset;
+    r.scheme = settings.scheme || "kladde";
+    r.appearance = settings.appearance || "auto";
+    r.cardStyle = settings.cardStyle || "ruled";
+    r.cardFont = settings.cardFont || "serif";
+  }, [settings.scheme, settings.appearance, settings.cardStyle, settings.cardFont]);
 
   // V1: hide the fixed mobile bottom-nav while typing so the iOS keyboard
   // doesn't collide with it. Uses both focus events and the visualViewport API.

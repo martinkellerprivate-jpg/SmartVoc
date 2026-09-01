@@ -7,12 +7,15 @@
 import { STUFE_ORDER } from "../lib/fsrs";
 
 const TONE: Record<string, string> = {
-  sitzt: "var(--green)", sitzt_fast: "var(--amber)", sitzt_schlecht: "var(--red)",
+  // „sitzt fast" trägt jetzt --warn: --amber ist ein Rostton und bezeichnet
+  // zugleich die Hauptaktion. Eine Farbe, eine Bedeutung.
+  sitzt: "var(--ok)", sitzt_fast: "var(--warn)", sitzt_schlecht: "var(--bad)",
   neu: "var(--blue)", noch_nicht_geuebt: "var(--ink-faint)",
 };
 const LEG: Record<string, string> = {
-  sitzt: "sitzt sicher", sitzt_fast: "fast", sitzt_schlecht: "wackelt",
-  neu: "neu", noch_nicht_geuebt: "noch nie geübt",
+  // Kurz halten — die Legende steht unter jeder Leiste und darf nicht umbrechen.
+  sitzt: "sitzt", sitzt_fast: "fast", sitzt_schlecht: "wackelt",
+  neu: "neu", noch_nicht_geuebt: "ungeübt",
 };
 
 export function MasteryBar({ dist, total, onSegment, activeFilter, showLegend = true }:

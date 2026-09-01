@@ -613,8 +613,24 @@ table.vt tr:hover .row-actions { opacity: 1; }
 /* ---- card style ---- */
 [data-card-style="plain"] .card-face { background-image: none; }
 [data-card-style="plain"] .ruled-margin { display: none; }
-[data-card-style="indexcard"] .card-face { background-image: none; }
-[data-card-style="indexcard"] .ruled-margin { display: none; }
+/* Altpapier: feine Einschlüsse, keine Linien. */
+[data-card-style="recycled"] .card-face {
+  background-image:
+    radial-gradient(circle at 22% 34%, var(--line) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 68% 71%, var(--line) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 84% 22%, var(--line-soft) 0 1.4px, transparent 2px);
+  background-size: 90px 90px, 130px 130px, 70px 70px;
+}
+[data-card-style="recycled"] .ruled-margin { display: none; }
+
+/* Leinen: gewebter Grund und ein Innenrahmen. */
+[data-card-style="linen"] .card-face {
+  background-image:
+    repeating-linear-gradient(90deg, var(--line-soft) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(0deg, var(--line-soft) 0 1px, transparent 1px 4px);
+  box-shadow: inset 0 0 0 1px var(--line), inset 0 0 0 9px transparent, inset 0 0 0 10px var(--line-soft);
+}
+[data-card-style="linen"] .ruled-margin { display: none; }
 [data-card-style="indexcard"] .card-face::after {
   content: ""; position: absolute; top: -11px; left: 28px;
   width: 78px; height: 22px; background: var(--card-2);
@@ -625,68 +641,10 @@ table.vt tr:hover .row-actions { opacity: 1; }
    Overrides base + tone tokens. The -bg tones are darkened (not the light
    paper values) so diff marks (wrong/missing/extra) and badge backgrounds
    stay legible on a dark card. */
-[data-skin="dark"] {
-  --bg: oklch(0.21 0.012 70);
-  --bg-2: oklch(0.26 0.012 70);
-  --card: oklch(0.245 0.012 70);
-  --card-2: oklch(0.29 0.012 70);
-  --ink: oklch(0.92 0.02 85);
-  --ink-soft: oklch(0.78 0.02 85);
-  --ink-faint: oklch(0.60 0.02 85);
-  --line: oklch(0.37 0.012 70);
-  --line-soft: oklch(0.33 0.012 70);
-  --amber: oklch(0.64 0.11 72);
-  --amber-deep: oklch(0.80 0.11 78);
-  --amber-bg: oklch(0.33 0.05 75);
-  --green: oklch(0.80 0.13 150);
-  --green-bg: oklch(0.32 0.06 150);
-  --red: oklch(0.74 0.15 30);
-  --red-bg: oklch(0.34 0.09 33);
-  --blue: oklch(0.78 0.11 245);
-  --blue-bg: oklch(0.33 0.05 245);
-  --slate: oklch(0.70 0.02 60);
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.35), 0 1px 1px rgba(0,0,0,.25);
-  --shadow: 0 4px 14px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.30);
-  --shadow-lg: 0 18px 50px rgba(0,0,0,.55), 0 6px 16px rgba(0,0,0,.35);
-}
-[data-skin="dark"] body {
-  background-image:
-    radial-gradient(circle at 18% 12%, oklch(0.30 0.02 80 / .5), transparent 42%),
-    radial-gradient(circle at 88% 90%, oklch(0.28 0.03 60 / .45), transparent 48%);
-}
-/* dark: a couple of hard-coded light values need correcting */
-[data-skin="dark"] .btn-primary:hover { background: oklch(0.34 0.012 70); }
-[data-skin="dark"] .switch .knob { background: oklch(0.92 0.02 85); }
+/* Die früheren [data-skin]-Blöcke (paper/dark/fresh) sind entfallen.
+   Farben kommen jetzt aus src/schemes.css: [data-scheme] mal
+   [data-appearance], drei Paletten je hell und dunkel. */
 
-/* ---- skin: FRESH ---- cooler off-white, teal accent (replaces amber role) */
-[data-skin="fresh"] {
-  --bg: oklch(0.975 0.008 220);
-  --bg-2: oklch(0.945 0.011 220);
-  --card: oklch(0.995 0.004 220);
-  --card-2: oklch(0.965 0.009 220);
-  --ink: oklch(0.30 0.025 245);
-  --ink-soft: oklch(0.50 0.02 240);
-  --ink-faint: oklch(0.68 0.018 235);
-  --line: oklch(0.90 0.012 220);
-  --line-soft: oklch(0.94 0.01 220);
-  --amber: oklch(0.62 0.09 195);
-  --amber-deep: oklch(0.50 0.09 195);
-  --amber-bg: oklch(0.94 0.035 195);
-  --green: oklch(0.58 0.10 160);
-  --green-bg: oklch(0.94 0.045 160);
-  --red: oklch(0.585 0.13 28);
-  --red-bg: oklch(0.94 0.05 30);
-  --blue: oklch(0.56 0.10 235);
-  --blue-bg: oklch(0.94 0.04 235);
-  --slate: oklch(0.56 0.02 230);
-}
-[data-skin="fresh"] body {
-  background-image:
-    radial-gradient(circle at 18% 12%, oklch(0.99 0.02 200 / .7), transparent 42%),
-    radial-gradient(circle at 88% 90%, oklch(0.96 0.03 195 / .55), transparent 48%);
-}
-
-/* appearance preview swatches (Settings) */
 .skin-swatch { width: 22px; height: 22px; border-radius: 7px; border: 1px solid var(--line); display: inline-block; vertical-align: middle; }
 
 /* study-tip popup (Phase 6) — shown at a pause under the card */
@@ -738,3 +696,16 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   /* comfortable tap targets */
   .btn, .icon-btn, .lchip, .seg button, .pairseg button { min-height: 40px; }
 }
+
+/* ---- Vorschau und Ampellegende in den Einstellungen ---- */
+.set-preview { padding: 4px 0 14px; }
+/* Querformat wie die echte Karte, damit die Vorschau nicht etwas anderes
+   verspricht als das Üben zeigt. */
+.set-preview-card { position: relative; aspect-ratio: 8 / 5; max-width: 320px; margin: 0 auto; }
+.set-preview-card .card-face { padding: 18px; align-items: center; justify-content: center; gap: 6px; }
+.set-preview-card .ruled-margin { left: 34px; }
+.set-preview-word { font-family: var(--card-font); font-size: 30px; font-weight: 600; letter-spacing: -.015em; text-align: center; }
+.set-preview-ex { font-family: var(--card-font); font-style: italic; font-size: 13px; color: var(--ink-soft); text-align: center; }
+.set-legend-preview { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 10px 2px 2px; font-size: 12.5px; color: var(--ink-soft); }
+.set-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.set-legend-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }

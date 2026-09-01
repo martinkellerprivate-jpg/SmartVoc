@@ -7,8 +7,9 @@ export type Wortart = "Nomen" | "Verb" | "Adjektiv" | "Zahlwort" | "Adverb";
 export type LatinMode = "L2" | "L3";
 export type ErrorType = "article" | "accent" | "typo" | "wrong" | null;
 export type TipsFrequency = "off" | "occasional" | "frequent";
-export type Skin = "paper" | "dark" | "fresh";
-export type CardStyle = "ruled" | "plain" | "indexcard";
+export type Scheme = "kladde" | "leinen" | "altpapier";
+export type Appearance = "light" | "dark" | "auto";
+export type CardStyle = "ruled" | "plain" | "recycled" | "linen";
 export type CardFont = "serif" | "arial" | "handwriting";
 
 export interface Pair {
@@ -132,7 +133,10 @@ export interface Settings {
   acceptPartial: boolean;
   latinMode: LatinMode;   // L2 (ask Grundform) | L3 (ask full Lernform)
   tipsFrequency: TipsFrequency;
-  skin: Skin;
+  scheme: Scheme;
+  appearance: Appearance;
+  readyGreen?: number;   // Ampel: ab wieviel Prozent gilt eine Liste als bereit
+  readyAmber?: number;
   cardStyle: CardStyle;
   cardFont: CardFont;
   direction: "f2n" | "n2f";
