@@ -1,181 +1,127 @@
-# SmartVoc — vollständige CR-Liste
+# SmartVoc — CR-Liste
 
-Stand nach der Entwurfsrunde. Alles, was aus den Entscheiden folgt, in der
-Reihenfolge, in der es gebaut wird. Grundlage: rund 7000 Zeilen App-Code.
-
-**Status:** ✅ erledigt · ▶ bereit zum Bauen · ⛔ braucht eine Antwort von dir
+**Status:** ✅ gebaut und geprüft · ⛔ braucht dich · ⏸ bewusst geparkt
 
 ---
 
-## Stufe 1 — erledigt
+## Stufe 1 — Aufräumen vor dem Umbau
 
 | | CR | |
 |---|---|---|
 | ✅ | **CR-01** Foto-Scan (Tesseract) entfernt | 1063 → 622 kB |
-| ✅ | **CR-02** Excel-Import/-Export/-Vorlage entfernt | keine Fremdinhalte mehr |
+| ✅ | **CR-02** Excel-Import/-Export entfernt | keine Fremdinhalte mehr |
 | ✅ | **CR-03** Beispielsätze mit Übersetzung (`examplesDe`) | beide Kartenseiten |
 | ✅ | **CR-04** KI-Prompt neu — Abschreiben vom Foto zuerst | |
 | ✅ | **CR-05** Parser: Trennzeichen und Leerspalten | fünf Fälle geprüft |
 | ✅ | **CR-06** FSRS-Rampe: näherer Termin, häufiger dran | Ränder wertgleich |
-| ✅ | **CR-07** App-Zeichen, Favicons, Startbildschirm hell/dunkel | ohne Alpha |
+| ✅ | **CR-07** App-Zeichen, Favicons, Startbildschirm | ohne Alpha |
 | ✅ | **CR-08 / 09** Passwort-Reset Web und App | |
 | ✅ | **CR-10 / 11** Statusleiste und Tastatur auf iOS | |
 | ✅ | **CR-12** Umbenennung auf SmartVoc, Bundle-ID | |
 
----
-
 ## Stufe 2 — Farben und Darstellung
 
-Fundament: alles Folgende erbt davon.
+| | CR | |
+|---|---|---|
+| ✅ | **CR-13** Drei Farbschemata je hell und dunkel | zwei Achsen statt einer |
+| ✅ | **CR-14** `--amber` trägt nur noch eine Bedeutung | Mittelstufe → `--warn` |
+| ✅ | **CR-15** Kartentypen Liniert · Blanko · Altpapier · Leinen | in CSS gezeichnet |
+| ✅ | **CR-16** Einstellungen „Aussehen" mit lebender Vorschau | im Querformat der Karte |
+| ✅ | **CR-17** Ampelschwellen 95 % / 70 % als Einstellung | Legende leitet sich ab |
+| ✅ | **CR-18** Dunkle Darstellung durchgängig | Voreinstellung „automatisch" |
 
-- ▶ **CR-13** `farben.css` einsetzen — drei Schemata (Kladde, Leinen, Altpapier)
-  je hell und dunkel, über `[data-scheme]` und `[data-appearance]`.
-  Kontraste korrigieren: `--ink-soft` und `--ink-faint` fallen im Entwurf
-  zusammen und reissen AA in zwei von drei Schemata.
-- ⛔ **CR-14** `--amber` trägt zwei Bedeutungen — Hauptaktion **und** Stufe
-  „sitzt fast". Siehe **Frage 1**.
-- ▶ **CR-15** Kartentypen Liniert · Blanko · Altpapier · Leinen. Der Entwurf
-  beschreibt sie, liefert aber keine Vorlagen — ich zeichne sie in CSS.
-- ▶ **CR-16** Einstellungen „Aussehen": vier Regler nach Reichweite sortiert,
-  mit lebender Vorschau.
-- ▶ **CR-17** Ampelschwellen (95 % / 70 %) als Einstellung, Legende leitet sich
-  daraus ab.
-- ▶ **CR-18** Dunkle Darstellung durchgängig, Voreinstellung „Automatisch".
+Kontraste der Entwurfspalette korrigiert: `--ink-soft` und `--ink-faint` fielen
+in allen drei hellen Schemata zusammen und rissen AA.
 
 ## Stufe 3 — Navigation
 
-- ▶ **CR-19** Vier Bereiche: Üben · Übungsplan · Wortlisten · Statistik.
-- ▶ **CR-20** Lektionen und Wörter zu **Wortlisten** zusammenlegen. Betrifft
-  `LessonsTab`, `WordList`, `ListSelector`, `LessonBuilder`, `LessonWordPicker`.
-- ▶ **CR-21** Zieldatum an jeder Liste, nicht nur an Lektionen.
-- ▶ **CR-22** Hilfe (`?`) und Einstellungen (Zahnrad) in die Kopfzeile; die
-  Einstellungen verlassen die Leiste.
-- ▶ **CR-23** **Übungsplan als eigener Bereich**: Kalender mit Monatsnavigation
-  und Ampel, Listenansicht, Tagesfilter, Mehrfachauswahl, zwei Verben je Zeile
-  (Üben / Statistik). Ersetzt `PlanModal`.
-- ▶ **CR-24** Übungsplan sprachübergreifend — heute filtert er auf das aktive
-  Sprachpaar und verschweigt damit zwei Drittel der Termine.
-- ▶ **CR-25** Beherrschungsstand an jeder Liste: Balken plus Prozentzahl,
-  überall aus derselben Kennzahl wie die Ampel.
+| | CR | |
+|---|---|---|
+| ✅ | **CR-19** Vier Bereiche: Üben · Übungsplan · Wortlisten · Statistik | |
+| ✅ | **CR-20** Lektionen und Listen zu **Wortlisten** verschmolzen | Migration V16 |
+| ✅ | **CR-21** Zieldatum an jeder Wortliste | |
+| ✅ | **CR-22** Hilfe und Einstellungen in die Kopfzeile | |
+| ✅ | **CR-23** Übungsplan als eigener Bereich mit Kalender | ersetzt `PlanModal` |
+| ✅ | **CR-24** Übungsplan sprachübergreifend | |
+| ✅ | **CR-25** Beherrschungsstand an jeder Liste | eine Quelle: `readyPercent` |
 
 ## Stufe 4 — Die Karte
 
-`Practice.tsx`, 939 Zeilen — der grösste Brocken.
-
-- ▶ **CR-26** Zwei Seiten wie eine echte Karteikarte, Querformat, feste Höhe,
-  Überlänge scrollt innen.
-- ▶ **CR-27** Sprachkennzeichnung `LA → DE`; die gefüllte Seite zeigt, wo man ist.
-- ▶ **CR-28** Handlungszone folgt dem **Kartenzustand**, nicht dem Modus.
-- ▶ **CR-29** Antwort-Arten als Aufklapper: Eintippen · Multiple-Choice ·
-  Selbstkontrolle · **Durchblättern** (abgesetzt, „zählt nicht").
-- ▶ **CR-30** In Durchblättern ersetzt „zählt nicht" den Fortschrittsbalken.
-- ▶ **CR-31** Beide Fortschrittsbalken **von** der Karte herunter.
-- ▶ **CR-32** Vollbild hoch und quer: Karte schwebt in Schwarz, Ausgang und
-  Fortschritt daneben statt darauf.
-- ▶ **CR-33** Übung-Wähler: Deine Listen mehrfach, Smart Lists einfach.
-- ▶ **CR-34** Richtung im Sprachknopf als Pfeil statt Doppelpfeil.
-- ⛔ **CR-35** „Gemischt" als dritte Richtung. Siehe **Frage 2**.
-- ⛔ **CR-36** Gemischtsprachig üben. Siehe **Frage 3**.
-- ▶ **CR-37** Rundenabschluss: Daumen und Flamme, Wörter als Plättchen,
-  „Die 5 nochmal üben" / „Für heute fertig".
+| | CR | |
+|---|---|---|
+| ✅ | **CR-26** Zwei Seiten, Querformat, kein Scrollbalken | Passung vor Format |
+| ✅ | **CR-27** Sprachkennzeichnung `DE → EN`, volle Seite = aktuelle | |
+| ✅ | **CR-28** Handlungszone folgt dem **Kartenzustand** | |
+| ✅ | **CR-29** Antwortarten als Aufklapper | eine Höhe für alle |
+| ✅ | **CR-30** In Durchblättern ersetzt „zählt nicht" den Fortschritt | |
+| ✅ | **CR-31** Beide Fortschrittsbalken von der Karte herunter | |
+| ✅ | **CR-32** Vollbild hoch und quer | Ausgang neben der Karte |
+| ✅ | **CR-33** Übung-Wähler, nach der Wahl auf eine Zeile zugeklappt | 202 → 45 px |
+| ✅ | **CR-34** Richtung als Pfeil | |
+| ✅ | **CR-35** „Gemischt" als Richtung | FNV-1a, gemessen 25–31 von 57 |
+| ✅ | **CR-36** Gemischtsprachig üben | Ablenker folgen der Kartensprache |
+| ✅ | **CR-37** Rundenabschluss mit Plättchen, Daumen und Flamme | |
 
 ## Stufe 5 — Statistik
 
-- ▶ **CR-38** Verteilungsleiste als Kopf; die Legende **ist** die Kennzahlenreihe
-  und filtert die Tabelle. Nicht gewählte Stufen werden abgedunkelt, nicht entfernt.
-- ▶ **CR-39** Wortzeile vereinheitlicht: Zustand aus der etablierten Skala,
-  darunter „7 × richtig · 2 × falsch · in 4 Tagen wieder dran". Keine Sternchen,
-  keine Abkürzungen.
-- ▶ **CR-40** „Wie deine Wörter sitzen" streichen — das sagt die Leiste bereits.
-- ▶ **CR-41** Gliederung: Jetzt üben · Nachschauen · Einstellen.
-- ▶ **CR-42** „FSRS" verschwindet aus der Oberfläche → „Wie oft Wörter
-  wiederkommen".
-- ⛔ **CR-43** „Deine Stärken" hängt an den Themen. Siehe **Frage 4**.
+| | CR | |
+|---|---|---|
+| ✅ | **CR-38** Verteilungsleiste als Kopf, Legende filtert | abdunkeln statt entfernen |
+| ✅ | **CR-39** Wortzeile vereinheitlicht, keine Abkürzungen | statt sechs Spalten |
+| ✅ | **CR-40** „Wie deine Wörter sitzen" gestrichen | die Leiste sagt es |
+| ✅ | **CR-41** Gliederung: Jetzt üben · Nachschauen · Einstellen | |
+| ✅ | **CR-42** „FSRS" verschwindet aus der Oberfläche | |
+| ✅ | **CR-43** „Deine Stärken" gestrichen | dein Entscheid |
 
 ## Stufe 6 — Aufräumen und Inhalte
 
-- ▶ **CR-44** **Themen komplett entfernen.** Berührt 20 Dateien, darunter die
-  drei Startwortschatz-Dateien. Hängt an Frage 4.
-- ▶ **CR-45** Sprachausgabe entfernen (`speak.ts`, `autoAudio`, `hasTTS`,
-  Lautsprecher). Lautschrift bleibt, optional, in beiden Richtungen.
-- ▶ **CR-46** Grundwortschatz erscheint automatisch als Liste, sobald eine
-  Sprache zugeschaltet wird — und bleibt technisch abtrennbar für die spätere
-  Bezahlversion.
-- ▶ **CR-47** Hilfe dreiteilig: Anleitung (9 Kapitel) · Lerntipps (10, mit
-  Kurztext) · **Die Lerntheorie hinter dieser App** (Text steht).
-- ▶ **CR-48** Willkommen-Dialog raus aus dem Start.
-- ▶ **CR-49** Lerntipp-Einblendungen in den Einstellungen sichtbar machen.
+| | CR | |
+|---|---|---|
+| ✅ | **CR-44** Themen komplett entfernt | 647 Felder in den Daten |
+| ✅ | **CR-45** Sprachausgabe entfernt, Lautschrift bleibt | |
+| ✅ | **CR-46** Grundwortschatz erscheint automatisch | bleibt abtrennbar |
+| ✅ | **CR-47** Hilfe dreiteilig | 9 Kapitel · 10 Tipps · 811 Wörter Theorie |
+| ✅ | **CR-48** Willkommen-Dialog entfernt | |
+| ✅ | **CR-49** Lerntipp-Einblendungen in den Einstellungen | war schon da |
 
 ## Stufe 7 — Oberflächensprache
 
-- ⛔ **CR-50** Alle Texte in eine Übersetzungsschicht. **454 verschiedene
-  Zeichenketten** in `components/`, `App.tsx` und `ui/`. Siehe **Frage 5**.
+| | CR | |
+|---|---|---|
+| ✅ | **CR-50** Deutsch und Englisch | 265 Schlüssel, 262 übersetzt |
+
+Der deutsche Text ist der Schlüssel; fehlt eine Übersetzung, erscheint Deutsch.
+Die Hilfetexte stehen als zwei vollständige Fassungen (`help.de.tsx` /
+`help.en.tsx`) — Prosa lässt sich nicht satzweise übersetzen.
+
+**Nebenbefund:** der Durchlauf hat rund vierzig englische Beschriftungen in der
+*deutschen* Oberfläche sichtbar gemacht. Alle übersetzt.
 
 ## Stufe 8 — Store
 
-- ⛔ **CR-51** Konto löschen: `delete_account()` löscht auch aus `auth.users`;
-  ob die Funktion dort Rechte hat, ist ungetestet. Siehe **Frage 6**.
-- ▶ **CR-52** Datenschutztext und Impressum statt Platzhalter.
-- ▶ **CR-53** „Confirm email" vor dem Launch wieder ein.
-- ▶ **CR-54** Native Schicht: Haptik und System-Share.
-- ▶ **CR-55** `localStorage` → nativer Speicher (iOS darf WKWebView-Speicher
-  löschen). Alles läuft durch `src/lib/storage.ts`.
-- ⏸ **CR-56** Anmeldung über Apple und Google — geparkt bis zur bezahlten
-  Mitgliedschaft.
+| | CR | |
+|---|---|---|
+| ⛔ | **CR-51** Konto löschen — Testkonto anlegen und löschen | **du** |
+| ✅ | **CR-52** Datenschutz und Impressum statt Platzhalter | beide Sprachen |
+| ⛔ | **CR-53** „Confirm email" in Supabase vor dem Launch | **du** |
+| ✅ | **CR-54** Haptik und System-Teilen | |
+| ✅ | **CR-55** Nativer Speicher als Sicherung | überlebt ein Räumen durch iOS |
+| ⏸ | **CR-56** Anmeldung über Apple und Google | bis zur Bezahlversion |
 
 ---
 
-# Was ich nicht allein entscheiden kann
+# Was noch offen ist
 
-### Frage 1 · `--amber` trägt zwei Bedeutungen
-Rostrot ist heute die Farbe der **Hauptaktion** (Prüfen-Knopf, aktive Pille)
-**und** die Stufe **„sitzt fast"**. Zwei Dinge ohne Zusammenhang in einem Ton.
-Mein Vorschlag: `--amber` bleibt Marke und Aktion, die Mittelstufe wandert
-überall auf ein echtes Gelb (`--warn`). Im Entwurf ist es so gebaut.
-**Ja oder nein?**
-
-### Frage 2 · „Gemischt" als Richtung — in 1.0?
-Machbar und begrenzt auf `Practice.tsx`: die Richtung wird ein Wert pro Karte
-statt pro Runde. Bedingung: nur zusammen mit der Sprachkennzeichnung auf der
-Karte, sonst tippt man in der falschen Sprache und bekommt zu Unrecht Rot.
-
-### Frage 3 · Gemischtsprachig üben — in 1.0?
-Ebenfalls machbar, derselbe Umbau. **Eine Stelle darf man dabei nicht
-vergessen:** die Ablenker bei Multiple-Choice stammen aus dem Wortschatz des
-aktiven Paars. Gemischt muss der Vorrat der Sprache **der aktuellen Karte**
-folgen, sonst stehen französische Wörter unter einer lateinischen Frage.
-
-### Frage 4 · „Deine Stärken" ohne Themen
-`insights.ts` gruppiert nach `topic` und sagt Sätze wie *„Stark in Tiere"*.
-Fallen die Themen weg (CR-44), verliert dieser Abschnitt seine Achse.
-Drei Wege:
-1. **Nach Liste gruppieren** — „Stark in Lektion 4". Mein Vorschlag: die Listen
-   sind ohnehin die Einheit, in der du denkst.
-2. Nach Wortart gruppieren — geht nur für Latein.
-3. Den Abschnitt streichen.
-
-### Frage 5 · Oberflächensprache
-**454 Zeichenketten.** Zu klären:
-- Welche Sprachen zum Start — Deutsch und Englisch?
-- Wer übersetzt? Ich kann es, aber du müsstest gegenlesen; bei einer App für
-  Kinder ist der Ton wichtiger als die Wortwahl.
-- Reihenfolge: erst die Schicht einziehen (Deutsch bleibt Deutsch), dann
-  übersetzen. Sonst blockiert die Übersetzung alles andere.
-
-### Frage 6 · Konto löschen
+### ⛔ Konto löschen (CR-51)
 Apple verlangt eine funktionierende Konto-Löschung. Ob `delete_account()` aus
-`auth.users` löschen darf, kann ich nicht prüfen — dafür braucht es eine
-Anmeldung. **Du müsstest ein Testkonto anlegen und löschen**, dann sehe ich am
-Fehler, ob die Edge Function nötig wird.
+`auth.users` löschen darf, lässt sich ohne Anmeldung nicht prüfen. **Leg ein
+Testkonto an und lösche es** — am Fehler sehe ich, ob eine Edge Function nötig
+wird.
 
----
+### ⛔ Confirm email (CR-53)
+In Supabase unter *Authentication → Sign In / Providers → Email* wieder
+einschalten, bevor die App öffentlich wird.
 
-# Zwei Funde, die Arbeit sparen
-
-**Der Grundwortschatz ist schon da.** `src/data/starter/` enthält 227 englische,
-220 französische und 200 lateinische Einträge. CR-46 ist damit nur noch die
-Verdrahtung mit der Sprachwahl, kein Inhaltsprojekt. Was fehlt, sind die
-Übersetzungen der Beispielsätze — optional, also kein Hindernis.
-
-**Die Selbstkontrolle gibt es bereits** als `mode === "recall"`, samt Umdrehen
-der Karte. Sie braucht nur die neue Bedienoberfläche, nicht die Logik.
+### Letzte CR-Runde
+Du liest die englischen Texte gegen. Sie stehen in `src/lib/i18n.en.ts`
+(Oberfläche) und `src/components/help.en.tsx` (Anleitung, Tipps, Lerntheorie).

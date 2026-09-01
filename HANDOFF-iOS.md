@@ -51,7 +51,10 @@ zwischen den Zielen um. Details unter „Bauen und starten".
 | Bundle-ID | `ch.drkeller.smartvoc` — nach dem ersten Store-Eintrag fix |
 | Produktname | **SmartVoc** (vorher „Smart Vocables") |
 | Simulator | verifiziert auf iPhone 17 Pro, iOS 26.5 |
-| Bundle-Grösse | **622 kB** JS — war 1063 kB vor dem Abspecken |
+| Bundle-Grösse | **rund 650 kB** JS — war 1063 kB vor dem Abspecken |
+| Umbau | alle acht Stufen der CR-Liste gebaut und geprüft |
+| Oberflächensprache | Deutsch und Englisch, 265 Schlüssel |
+| Native Bausteine | Preferences (Speicher), Haptics, Share |
 | Apple-Account | kostenlos; 99 $/Jahr noch nicht gekauft |
 
 **Warum das Repository öffentlich ist.** Pages aus einem privaten Repository
@@ -160,26 +163,57 @@ Fallunterscheidung an der einen Stelle, die die Fähigkeit kapselt — so wie
 
 ## Nächste Schritte
 
-Der Umbau aus der Entwurfsrunde ist gross. Reihenfolge, damit jede Stufe die
-nächste leichter macht:
+Der Umbau aus der Entwurfsrunde ist **gebaut** — alle acht Stufen, geprüft im
+Browser und im Simulator. Was jetzt noch aussteht, steht in `CR-LISTE.md` und
+ist kurz:
 
-1. ~~Abspecken: Tesseract- und xlsx-Pfade entfernen~~ — **erledigt**, 1063 → 622 kB
-2. **Farbwerte und dunkle Darstellung.** `farben.css` aus dem Entwurf einsetzen,
-   drei Schemata mal hell/dunkel. Fundament — alles Weitere erbt davon.
-3. **Navigation.** Vier Bereiche (Üben · Übungsplan · Wortlisten · Statistik),
-   Lektionen und Wörter zusammenlegen, Hilfe und Einstellungen in die Kopfzeile.
-4. **Die Karte.** Zwei Seiten, Querformat, feste Höhe, Sprachkennzeichnung,
-   Handlungszone am Kartenzustand statt am Modus.
-5. **Übungsplan** als neuer Bereich: Kalender mit Ampel, Listenansicht,
-   Mehrfachauswahl, zwei Verben je Zeile.
-6. **Rundenabschluss**, Statistik-Umbau, Einstellungen (Aussehen, Schwellen,
-   Lerntipp-Häufigkeit), Hilfe in drei Teilen samt Lerntheorie-Text.
-7. **Oberflächensprache** (CR23) — alle Texte in eine Übersetzungsschicht. Gross,
-   und Voraussetzung für die einheitliche Benennung.
-8. Native Schicht: Haptik, Share
-9. Store-Material, bezahlte Mitgliedschaft, TestFlight
-10. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
-   Wegen (siehe „Bekannte Punkte" — Apple setzt die Mitgliedschaft voraus)
+1. **Konto löschen prüfen** (CR-51). Testkonto anlegen und löschen. Ob
+   `delete_account()` aus `auth.users` löschen darf, lässt sich ohne Anmeldung
+   nicht feststellen — und Apple verlangt eine funktionierende Löschung.
+2. **„Confirm email" wieder ein** (CR-53), in Supabase unter
+   *Authentication → Sign In / Providers → Email*, bevor die App öffentlich wird.
+3. **Englische Texte gegenlesen.** `src/lib/i18n.en.ts` für die Oberfläche,
+   `src/components/help.en.tsx` für Anleitung, Lerntipps und Lerntheorie.
+4. Store-Material, bezahlte Mitgliedschaft, TestFlight.
+5. Erst danach: Anmeldung über Apple und Google, beide zusammen und auf beiden
+   Wegen (siehe „Bekannte Punkte" — Apple setzt die Mitgliedschaft voraus).
+
+---
+
+## Wie die App gebaut ist
+
+Wer hier neu einsteigt, sollte fünf Entscheide kennen. Sie erklären das meiste.
+
+**Eine Wortliste, kein zweiter Begriff.** Früher gab es „Listen" (Mitgliedschaft
+am Wort über `w.lists`) und „Lektionen" (feste Mitgliederliste, Zieldatum,
+Prognose) — zwei Datenmodelle für dieselbe Sache. Seit Migration V16
+(`migrate.ts`) gibt es nur die Wortliste; Mitgliedschaft steht immer am Wort.
+Wer eine „Lektion" im Code findet, hat ein Überbleibsel gefunden.
+
+**Eine Kennzahl für „wie weit ist das?".** `readiness.ts` rechnet den
+Bereitschaftswert an genau einer Stelle. Kalenderampel, Listenkopf und Statistik
+lesen dieselbe Zahl — sie können nicht auseinanderlaufen. Ebenso die fünf
+Stufen: `deriveProfile` ist die einzige Quelle, `MasteryBar` die einzige
+Darstellung.
+
+**Richtung und Sprache gehören an die Karte, nicht an die Runde.** Deshalb
+funktionieren „Gemischt" und das gemeinsame Üben mehrerer Sprachen. Der Wähler
+oben zeigt die Einstellung, die Karte immer ihre eigene Richtung.
+
+**Die Karte passt sich an, statt zu scrollen.** `Practice.tsx` verkleinert den
+Inhalt in Stufen (`--fit`), und reicht die kleinste Stufe nicht, wächst die
+Karte über ihr 8:5 hinaus. Ein Balken auf der Karte ist der letzte Ausweg, nicht
+der erste.
+
+**Der deutsche Text ist der Übersetzungsschlüssel.** `txt("Übungsplan")` — kein
+erfundener Schlüssel, weil man im Code sehen soll, was auf dem Bildschirm steht.
+Fehlt eine Übersetzung, erscheint Deutsch. Die Funktion heisst `txt` und nicht
+`t`, weil `t` an einem Dutzend Stellen eine Laufvariable ist.
+
+Die längeren Hilfetexte sind **nicht** in der Wörterliste, sondern als zwei
+vollständige Fassungen in `help.de.tsx` und `help.en.tsx`. Prosa mit
+Hervorhebungen lässt sich nicht satzweise übersetzen, ohne Bruchstücke zu
+erzeugen — ein erster maschineller Versuch hat genau das getan.
 
 ---
 
