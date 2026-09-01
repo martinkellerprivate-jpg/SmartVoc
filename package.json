@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "build:ios": "CAP_PLATFORM=ios tsc --noEmit && CAP_PLATFORM=ios vite build",
     "ios": "npm run build:ios && npx cap sync ios",
-    "ios:open": "npx cap open ios"
+    "ios:open": "npx cap open ios",
+    "icons": "node scripts/gen-icons.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^8.5.0",
