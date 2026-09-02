@@ -62,13 +62,12 @@ input, button, textarea, select { font-family: inherit; }
   flex-wrap: wrap;
 }
 .brand { display: flex; align-items: center; gap: 12px; }
+/* Das Markenzeichen aus dem Entwurf, nicht mehr der Buchstabe S. Gross genug,
+   um es zu erkennen -- klein war die Beanstandung. */
 .brand-mark {
-  width: 42px; height: 42px; border-radius: 11px;
-  background: var(--ink); color: var(--card);
-  display: grid; place-items: center;
-  font-family: var(--serif); font-weight: 600; font-size: 22px;
-  box-shadow: var(--shadow-sm);
-  transform: rotate(-4deg);
+  width: 52px; height: 52px; flex: none;
+  object-fit: contain;
+  transform: rotate(-3deg);
 }
 .brand-name { font-family: var(--serif); font-size: 21px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
 .brand-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
@@ -454,7 +453,7 @@ table.vt tr:hover .row-actions { opacity: 1; }
 .acc-track > i { display: block; height: 100%; }
 
 /* stat cards grid */
-.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 22px; }
 .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; box-shadow: var(--shadow-sm); }
 .stat-card .k { font-size: 12.5px; color: var(--ink-soft); font-weight: 600; display: flex; align-items: center; gap: 7px; }
 /* Die Zahl darf mitwachsen, aber nicht umbrechen: "0 von 229" in zwei
@@ -1052,3 +1051,54 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .legal-body p { margin: 0 0 10px; }
 .legal-body h4 { font-family: var(--serif); font-size: 15px; color: var(--ink); margin: 16px 0 5px; }
 .legal-body h4:first-of-type { margin-top: 12px; }
+
+/* Sprachkennzeichnung: gefuellt ist die Seite, auf der man gerade steht. */
+.card-dir-chip { border-radius: 5px; padding: 2px 7px; border: 1px solid var(--line); color: var(--ink-soft); }
+.card-dir-chip.on { background: var(--ink); color: var(--card); border-color: var(--ink); }
+
+/* Der Tipp als Gluehbirne in der Karte, unten rechts -- ohne Beschriftung.
+   Er gehoert zur Frage, nicht in die Knopfreihe darunter. */
+.card-bulb {
+  position: absolute; right: 12px; bottom: 12px; z-index: 4;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: none; background: none; color: var(--ink-faint);
+  display: grid; place-items: center; cursor: pointer;
+}
+.card-bulb:hover { color: var(--amber-deep); }
+.card-bulb.used, .card-bulb:disabled { color: var(--amber); cursor: default; }
+
+/* ====================================================================
+   RUESTZEILE — Richtung, Tausch, Uebung in einer Reihe unter dem Kopf.
+   Pillen, wie im Entwurf: der Waehler liegt unsichtbar darueber, damit
+   die Pille aussieht wie eine Pille und trotzdem ein echtes Auswahlfeld
+   ist (Tastatur, Gerätewähler, alles inklusive).
+   ==================================================================== */
+.ruest { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-bottom: 4px; width: 100%; justify-content: flex-start; }
+.ruest-picker { padding-top: 10px; border-top: 1px dashed var(--line); margin-top: 8px; width: 100%; }
+.pill {
+  position: relative; display: inline-flex; align-items: center; gap: 7px;
+  height: 38px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap;
+}
+.pill:hover { border-color: var(--amber); }
+.pill-sq { width: 38px; padding: 0; justify-content: center; }
+.pill-on { background: var(--amber-deep); border-color: var(--amber-deep); color: #fff; font-weight: 600; }
+.pill-on:hover { border-color: var(--amber-deep); }
+.pill-quiet { color: var(--ink-soft); font-weight: 400; }
+.pill-n { background: oklch(1 0 0 / .22); border-radius: 999px; padding: 1px 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.pill:not(.pill-on) .pill-n { background: var(--bg-2); color: var(--ink-soft); }
+.pill .caret { font-size: 10px; color: currentColor; opacity: .7; }
+/* Das echte Auswahlfeld liegt unsichtbar auf der Pille. */
+.pill-sel select {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer; font: inherit;
+}
+
+/* Fortschritt als EINE Zeile: Beschriftung, Balken, Prozent. */
+.round-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.round-progress-label { font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+.round-progress .round-progress-track { flex: 1; height: 5px; border-radius: 999px; background: var(--bg-2); overflow: hidden; }
+.round-progress-pct { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.practice-wrap.focus-on .round-progress-label,
+.practice-wrap.focus-on .round-progress-pct { color: oklch(0.86 0.01 80); }

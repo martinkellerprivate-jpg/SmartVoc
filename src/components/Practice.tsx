@@ -21,6 +21,16 @@ import { lernTipps } from "./Help";
 /* ===================================================================
  * practice.jsx — the flashcard trainer.
  * =================================================================== */
+/* Die vier Antwortarten -- Beschriftung und Symbol an EINER Stelle, damit
+ * Waehler und Pille nicht auseinanderlaufen. "Multiple-Choice" heisst so,
+ * weil es so heisst; "Auswählen" war meine Erfindung. */
+const MODE_NAME: Record<string, string> = {
+  type: "Eintippen", choice: "Multiple-Choice", recall: "Selbstkontrolle", memorize: "Durchblättern",
+};
+const MODE_ICON: Record<string, string> = {
+  type: "edit", choice: "list", recall: "refresh", memorize: "cards",
+};
+
 const toneVarP = (t) => t === "green" ? "var(--green)" : t === "amber" ? "var(--amber)" : t === "red" ? "var(--red)" : t === "blue" ? "var(--blue)" : "var(--ink-faint)";
 
 export function Practice() {
@@ -624,16 +634,39 @@ export function Practice() {
     if (kind === "smart") return txt((SMART_ACCESS.find((a) => a.ref === ref) || {}).label || "Schnellzugriff");
     return (pairLists.find((l: any) => l.id === ref) || {}).name || "Übung";
   })();
+  /* Die Ruestzeile: was geuebt wird und in welche Richtung -- eine Reihe
+   * direkt unter dem Kopf, wie im Entwurf. Vorher war die Richtung ein
+   * beschrifteter Waehler weiter unten und der Umfang eine Textzeile; beides
+   * gehoert zusammen, weil man beides vor dem Start entscheidet. */
+  const richtungLabel = settings.direction === "mixed" ? txt("Gemischt")
+    : settings.direction === "n2f" ? `${P.nativeLabel} → ${P.foreignLabel}`
+    : `${P.foreignLabel} → ${P.nativeLabel}`;
   const scopeBar = (
     <div className="lchips-wrap scope-bar">
-      <div className="scope-line">
-        <span className="scope-line-label">{txt("Übung")}</span>
-        <span className="scope-line-name">{scopeSummary}</span>
-        <button className="btn btn-ghost btn-sm" onClick={() => setPickerOpen((o) => !o)}>
-          {txt(pickerOpen ? "Fertig" : "Ändern")}
+      <div className="ruest">
+        <label className="pill pill-sel">
+          <span>{richtungLabel}</span>
+          <select value={settings.direction} aria-label={txt("Richtung")}
+            onChange={(e) => { store.setSettings({ direction: e.target.value }); restartCard(); }}>
+            <option value="f2n">{P.foreignLabel} → {P.nativeLabel}</option>
+            <option value="n2f">{P.nativeLabel} → {P.foreignLabel}</option>
+            <option value="mixed">{txt("Gemischt")}</option>
+          </select>
+        </label>
+        {/* Der Tauschknopf dreht die Richtung, ohne den Waehler zu oeffnen --
+            der haeufigste Handgriff braucht keinen Umweg. */}
+        <button className="pill pill-sq" title={txt("Richtung tauschen")} aria-label={txt("Richtung tauschen")}
+          onClick={() => { store.setSettings({ direction: settings.direction === "n2f" ? "f2n" : "n2f" }); restartCard(); }}>
+          <Icon name="swap" size={16} />
+        </button>
+        <button className="pill pill-on" onClick={() => setPickerOpen((o) => !o)}>
+          <Icon name="calendar" size={15} />
+          <span>{scopeSummary}</span>
+          <span className="pill-n">{pool.length}</span>
+          <span className="caret">▾</span>
         </button>
       </div>
-      {pickerOpen && <>{smartChipsEl}{lessonSelectorEl}{chipsHelpEl}</>}
+      {pickerOpen && <div className="ruest-picker">{smartChipsEl}{lessonSelectorEl}{chipsHelpEl}</div>}
     </div>
   );
 
@@ -768,16 +801,19 @@ export function Practice() {
   const exFgn = (current?.examples || []).map((s: any) => String(s || "").trim());
   const exDe = (current?.examplesDe || []).map((s: any) => String(s || "").trim());
   const examplesIn = (lang: string) => (lang === NATIVE ? exDe : exFgn).filter(Boolean);
-  const cardExamples = examplesIn(tgtKey);
   // Pronunciation belongs to the FOREIGN word, so it may only appear where that
   // word itself is shown — otherwise it would hint at the answer.
   const phon = (settings.showPhonetic !== false && current?.phonetic) ? String(current.phonetic).trim() : "";
   const phoneticEl = phon ? <div className="card-phonetic">[{phon.replace(/^\[|\]$/g, "")}]</div> : null;
-  const examplesEl = (settings.showExamples !== false && cardExamples.length) ? (
-    <div className="card-examples">
-      {cardExamples.map((s: string, i: number) => <p key={i}>{s}</p>)}
-    </div>
-  ) : null;
+  /* Beide Seiten tragen ihre eigenen Beispielsaetze -- die Fremdseite die
+   * fremdsprachigen, die deutsche die Uebersetzungen. So sieht die Karte in
+   * beiden Richtungen gleich aus, und der Satz auf der Frageseite verraet
+   * nichts: er steht in derselben Sprache wie die Frage. */
+  const examplesFor = (key: string) => {
+    const list = examplesIn(key);
+    if (settings.showExamples === false || !list.length) return null;
+    return <div className="card-examples">{list.map((x: string, i: number) => <p key={i}>{x}</p>)}</div>;
+  };
 
   const verdictMeta: Record<string, { tone: string; label: string }> = {
     // Kein Haken, kein Kreuz -- das Wort selbst trägt die Farbe, und darüber
@@ -804,8 +840,9 @@ export function Practice() {
     <div className="round-progress round-progress-off">{txt("Durchblättern — zählt nicht für deinen Lernstand")}</div>
   ) : (roundProg && roundProg.total > 0) ? (
     <div className="round-progress">
-      <div className="round-progress-head"><span>{txt("Übungsfortschritt")}</span><span>{roundProg.pct} %</span></div>
-      <div className="round-progress-track"><i style={{ width: roundProg.pct + "%" }} /></div>
+      <span className="round-progress-label">{txt("Übungsfortschritt")}</span>
+      <span className="round-progress-track"><i style={{ width: roundProg.pct + "%" }} /></span>
+      <span className="round-progress-pct">{roundProg.pct} %</span>
     </div>
   ) : null;
 
@@ -816,11 +853,14 @@ export function Practice() {
   // Sprachkennzeichnung: die volle Seite ist die, auf der man gerade steht.
   const srcShort = srcKey === NATIVE ? "DE" : P.short;
   const tgtShort = tgtKey === NATIVE ? "DE" : P.short;
-  const dirMarkEl = (
-    <div className="card-dir" aria-label={`${srcShort} nach ${tgtShort}`}>
-      <span className="card-dir-from">{srcShort}</span>
+  /* Gefuellt ist die Seite, auf der man GERADE steht: vorne die Frage, hinten
+   * die Loesung. Vorher war immer die Fragesprache gefuellt -- dann sagte die
+   * Kennzeichnung zwar, in welche Richtung es geht, aber nicht, wo man ist. */
+  const dirMark = (aufLoesung: boolean) => (
+    <div className="card-dir" aria-label={`${srcShort} → ${tgtShort}`}>
+      <span className={"card-dir-chip" + (aufLoesung ? "" : " on")}>{srcShort}</span>
       <span className="card-dir-arrow">→</span>
-      <span className="card-dir-to">{tgtShort}</span>
+      <span className={"card-dir-chip" + (aufLoesung ? " on" : "")}>{tgtShort}</span>
     </div>
   );
 
@@ -840,31 +880,6 @@ export function Practice() {
       )}
       {scopeBar}
 
-      {/* Zwei Aufklapper, eine Höhe. Die Breite darf mitwachsen, die Höhe nie —
-          sonst steht in jeder Zeile ein anders hoher Knopf. */}
-      <div className="practice-controls p-controls">
-        <label className="ctl">
-          <span className="ctl-label">{txt("Richtung")}</span>
-          <select className="ctl-select" value={settings.direction}
-            onChange={(e) => { store.setSettings({ direction: e.target.value }); restartCard(); }}>
-            <option value="f2n">{P.foreignLabel} → {P.nativeLabel}</option>
-            <option value="n2f">{P.nativeLabel} → {P.foreignLabel}</option>
-            <option value="mixed">{txt("Gemischt")}</option>
-          </select>
-        </label>
-        <label className="ctl">
-          <span className="ctl-label">{txt("Antwort")}</span>
-          <select className="ctl-select" value={mode}
-            onChange={(e) => { store.setSettings({ mode: e.target.value }); restartCard(); }}>
-            <option value="type">{txt("Eintippen")}</option>
-            <option value="choice">{txt("Auswählen")}</option>
-            <option value="recall">{txt("Selbstkontrolle")}</option>
-            <option value="memorize">{txt("Durchblättern")}</option>
-          </select>
-        </label>
-        <div className="grow" />
-        <button className="btn btn-ghost btn-h" onClick={leaveRun}><Icon name="x" size={14} /> {txt("Übung verlassen")}</button>
-      </div>
 
       {runRef.current && runRef.current.cards >= (getCfg().GENUG_KARTEN || 40) && !enoughAck && (
         <div className="enough-hint">
@@ -889,20 +904,31 @@ export function Practice() {
               <div className="card-face" onClick={cardIsFlippable ? reveal : undefined}
                 style={cardIsFlippable ? { cursor: "pointer" } : undefined}>
                 <span className="ruled-margin" />
-                <div className="card-top">{dirMarkEl}</div>
+                <div className="card-top">{dirMark(false)}</div>
                 <div className="card-center" ref={centerRef}>
                   <div className="prompt-word">{sideText(current, srcKey)}</div>
                   {srcKey !== NATIVE && phoneticEl}
                   {srcKey !== NATIVE && latinContext(current) && (
                     <div className="card-sub">{latinContext(current)}</div>
                   )}
+                  {examplesFor(srcKey)}
                   {cardIsFlippable && <div className="prompt-hint">{txt("Tippe auf die Karte")}</div>}
                 </div>
+                {/* Der Tipp sitzt als Gluehbirne IN der Karte, unten rechts --
+                    ohne das Wort "Tipp". Unter der Karte war er ein Knopf
+                    unter vielen; hier gehoert er zur Frage. */}
+                {mode !== "memorize" && (
+                  <button className={"card-bulb" + (hintUsed ? " used" : "")} title={txt("Tipp")}
+                    aria-label={txt("Tipp")} disabled={hintUsed}
+                    onClick={(e) => { e.stopPropagation(); useHint(); }}>
+                    <Icon name="hint" size={17} />
+                  </button>
+                )}
               </div>
             ) : (
               <div className="card-face">
                 <span className="ruled-margin" />
-                <div className="card-top">{dirMarkEl}</div>
+                <div className="card-top">{dirMark(true)}</div>
                 <div className="card-center" ref={centerRef}>
                   {result ? (
                     <>
@@ -919,14 +945,14 @@ export function Practice() {
                       {result.verdict !== "correct" && input.trim() && (
                         <div className="card-yours">{txt("Du hast {wort} geschrieben", { wort: input.trim() })}</div>
                       )}
-                      {examplesEl}
+                      {examplesFor(tgtKey)}
                     </>
                   ) : (
                     <>
                       <div className="prompt-word">{revealText(current, tgtKey)}</div>
                       {tgtKey !== NATIVE && phoneticEl}
                       <div className="card-sub">{sideText(current, srcKey)}</div>
-                      {examplesEl}
+                      {examplesFor(tgtKey)}
                     </>
                   )}
                 </div>
@@ -952,14 +978,7 @@ export function Practice() {
                   {txt("Prüfen")} <Icon name="arrowRight" size={16} />
                 </button>
               </div>
-              <div className="toolbelt">
-                <button className="btn btn-ghost btn-sm" onClick={useHint} disabled={hintUsed}>
-                  <Icon name="hint" size={15} /> {txt(hintUsed ? "Tipp steht schon da" : "Tipp")}
-                </button>
-                <button className="btn btn-ghost btn-sm" onClick={() => finish(latinL3Answer ? scoreLatinForm("", current.lernform || "", answerOpts()) : scoreAnswer("", scoreTarget(current, tgtKey), answerOpts()), false)}>
-                  {txt("Weiss ich nicht")}
-                </button>
-              </div>
+
             </>
           ) : mode === "choice" ? (
             <>
@@ -993,6 +1012,11 @@ export function Practice() {
         ) : result ? (
           <>
             <div className="answer-row">
+              {/* Nach einer falschen Antwort zurueck auf die Frage schauen
+                  duerfen -- ohne neue Bewertung. Steht so im Entwurf. */}
+              {result.verdict !== "correct" && (
+                <button className="btn btn-h" onClick={() => flip("front")}>{txt("Nochmal zeigen")}</button>
+              )}
               <button className="btn btn-amber btn-h grow-btn" onClick={next} autoFocus>
                 {txt("Nächste Karte")} <Icon name="arrowRight" size={16} />
               </button>
@@ -1025,6 +1049,25 @@ export function Practice() {
         )}
       </div>
 
+      </div>
+
+      {/* Die Antwortart steht UNTER der Karte: sie ist eine Einstellung zum
+          Ueben, keine Frage, die vor der Karte beantwortet werden muss. */}
+      <div className="practice-controls p-controls">
+        <label className={"pill pill-sel" + (mode === "memorize" ? " pill-quiet" : "")}>
+          <Icon name={MODE_ICON[mode] || "edit"} size={15} />
+          <span>{txt(MODE_NAME[mode] || "Eintippen")}</span>
+          <span className="caret">▾</span>
+          <select value={mode} aria-label={txt("Antwortart")}
+            onChange={(e) => { store.setSettings({ mode: e.target.value }); restartCard(); }}>
+            <option value="type">{txt("Eintippen")}</option>
+            <option value="choice">{txt("Multiple-Choice")}</option>
+            <option value="recall">{txt("Selbstkontrolle")}</option>
+            <option value="memorize">{txt("Durchblättern")}</option>
+          </select>
+        </label>
+        <div className="grow" />
+        <button className="btn btn-ghost btn-sm" onClick={leaveRun}>{txt("Übung verlassen")}</button>
       </div>
 
       <TipPopup tip={tip} onClose={() => setTip(null)} />

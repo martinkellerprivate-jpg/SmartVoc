@@ -107,7 +107,6 @@ export function Stats() {
     return list;
   }, [rows, filter, query, sort, srcKey]);
 
-  const goalP = Math.min(1, (meta.todayCount || 0) / (settings.dailyGoal || 20));
   const setSortKey = (key) => setSort((s) => s.key === key ? { key, dir: -s.dir } : { key, dir: key === "word" ? 1 : -1 });
 
   /* Naechste Schritte: nur was gerade zutrifft, jeder Schritt mit einer Zahl
@@ -259,16 +258,6 @@ export function Stats() {
             sub={txt("aus {n} Antworten", { n: totals.reviews })} color="var(--amber-deep)" />
           <StatCard icon="flame" k={txt("Tage in Folge")} v={meta.streak || 0}
             sub={txt(meta.streak ? "dranbleiben" : "heute üben startet die Serie")} color="var(--bad)" />
-          <div className="stat-card">
-            <div className="k"><Icon name="target" size={15} /> {txt("Tagesziel")}</div>
-            <div className="row" style={{ gap: 12, marginTop: 8, alignItems: "center" }}>
-              <Ring value={goalP} size={48} stroke={6} />
-              <div>
-                <div className="v" style={{ fontSize: 26, margin: 0 }}>{meta.todayCount || 0}<span className="faint" style={{ fontSize: 16 }}>/{settings.dailyGoal || 20}</span></div>
-                <div className="sub">{txt("Karten heute")}</div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="wordrows">

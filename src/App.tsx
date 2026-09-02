@@ -9,6 +9,7 @@ import { Icon } from "./ui/Icon";
 import { Ring } from "./ui/Ring";
 import { PAIRS, activePairs } from "./lib/pairs";
 import { setUiLang, detectUiLang, txt } from "./lib/i18n";
+import markUrl from "./assets/mark.svg";
 import { STARTERS, activateStarter, isStarterActivated } from "./data/starter";
 import { AccountModal } from "./components/AccountModal";
 import { ImportShareModal } from "./components/ImportShareModal";
@@ -32,11 +33,10 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
   const pair = settings.pair;
   const p = PAIRS[pair] || PAIRS["en-de"];
   const nWords = vocab.filter((w: any) => w.pair === pair).length;
-  const goalP = Math.min(1, (meta.todayCount || 0) / (settings.dailyGoal || 20));
   return (
     <div className="topbar">
       <div className="brand">
-        <div className="brand-mark">S</div>
+        <img className="brand-mark" src={markUrl} alt="" />
         <div>
           <div className="brand-name">{txt("SmartVoc")}</div>
           <div className="brand-sub">{p.foreignLabel} ⇄ {p.nativeLabel} · {txt("{n} Wörter", { n: nWords })}</div>
@@ -59,11 +59,6 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
         aria-pressed={tab === "settings"} onClick={() => setTab(tab === "settings" ? "practice" : "settings")}>
         <Icon name="gear" size={17} />
       </button>
-      {/* F-7TAGE/STREAK: Tage-in-Folge wandert in die Statistik; Kopf zeigt nur das Tagesziel. */}
-      <div className="metric" title={txt("Heute geübte Karten")}>
-        <span className="ic"><Ring value={goalP} size={26} stroke={4} /></span>
-        <div><b>{meta.todayCount || 0}/{settings.dailyGoal || 20}</b><small>{txt("Tagesziel")}</small></div>
-      </div>
     </div>
   );
 }

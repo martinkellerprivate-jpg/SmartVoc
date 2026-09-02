@@ -409,4 +409,7 @@ export const EN: Record<string, string> = {
   "Übernimm meine Wortliste „{liste}“ in SmartVoc:": "Take my word list “{liste}” into SmartVoc:",
   "Kopiert": "Copied",
   "Kopieren": "Copy",
+  "Nochmal zeigen": "Show again",
+  "Richtung tauschen": "Swap direction",
+  "Multiple-Choice": "Multiple choice",
 };
