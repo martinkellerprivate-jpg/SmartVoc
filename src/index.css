@@ -690,6 +690,9 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
      Karte und Handlungszone eine Buehne bilden, greifen sie an der Buehne. */
   .practice-wrap { gap: 12px; }
   .scope-bar { order: 1; }
+  /* Ohne eigene Ordnung landet die leere Meldung vor der Ruestzeile -- und
+     ausgerechnet dann braucht man den Waehler zuerst. */
+  .practice-wrap > .empty { order: 2; }
   .practice-stage { order: 2; }
   .p-controls { order: 3; }
   .enough-hint { order: 4; }
@@ -1208,3 +1211,20 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .cal-day.today.open { border-color: var(--ink); }
 
 /* 4 — Handlung: unverändert, aber ab hier die einzige Verwendung von Rost. */
+
+/* Das Übungs-Blatt: eine Liste mit zwei Gruppen, scrollbar, mit Fuss.
+   Gleiche Form wie die anderen Menüs — es legt sich über die Seite und
+   schliesst beim Klick daneben, statt die Seite auseinanderzuschieben. */
+.scope-sheet { max-width: 520px; max-height: 82vh; display: flex; flex-direction: column; }
+.scope-sheet-body { overflow-y: auto; padding-right: 4px; }
+.scope-sheet .grp { display: flex; align-items: center; gap: 6px; }
+/* Kästchen für die Mehrfachwahl — die Wortlisten sind mehrfach wählbar,
+   und das muss man sehen, bevor man es ausprobiert. */
+.ckbox {
+  width: 19px; height: 19px; flex: none; margin-top: 1px;
+  border: 1.5px solid var(--line); border-radius: 6px;
+  display: grid; place-items: center; color: var(--card); background: var(--card-2);
+}
+.li.sel .ckbox { background: var(--ink); border-color: var(--ink); color: var(--card); }
+.li:disabled { opacity: .45; cursor: not-allowed; }
+.li:disabled:hover { border-color: var(--line); }

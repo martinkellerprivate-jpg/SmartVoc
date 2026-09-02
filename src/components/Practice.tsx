@@ -130,16 +130,25 @@ export function Practice() {
   const validMulti = multiSel.filter(tokValid);
   const scopeTokens = validMulti.length ? validMulti : [effective.kind + ":" + effective.ref];
   const selKey = scopeTokens.join("|");
-  // single pick: clear any multiselect + persist the single token (synced, backward-compatible)
-  const pickScope = (kind, ref) => { setMultiSel([]); store.setSettings({ practiceSel: kind + ":" + ref }); };
-  // multiselect toggle: a single remaining token mirrors to practiceSel (persistence);
-  // 2+ stay ephemeral (not synced).
-  const toggleScope = (tok: string) => {
-    const next = multiSel.includes(tok) ? multiSel.filter((x) => x !== tok) : [...multiSel, tok];
-    setMultiSel(next);
-    if (next.length === 1) store.setSettings({ practiceSel: next[0] });   // mirror single (persist); never in a render-phase updater
+  /* Die Auswahl ist EINE Menge. Was gewaehlt ist, steht in scopeTokens --
+   * egal ob eines oder mehrere. Setzen heisst: diese Menge neu schreiben,
+   * einmal fuer die Anzeige (multiSel) und einmal fuer die Dauer
+   * (practiceSel, nur bei genau einem). */
+  const setzeAuswahl = (toks: string[]) => {
+    if (!toks.length) { setMultiSel([]); store.setSettings({ practiceSel: "smart:heute" }); return; }
+    if (toks.length === 1) { setMultiSel([]); store.setSettings({ practiceSel: toks[0] }); return; }
+    setMultiSel(toks);
   };
-  const isActiveTok = (tok: string) => validMulti.length ? validMulti.includes(tok) : (effective.kind + ":" + effective.ref === tok);
+  const isActiveTok = (tok: string) => scopeTokens.includes(tok);
+  /* Smart Lists und Wortlisten schliessen einander aus: eine Smart List
+   * rechnet die App taeglich neu, eine Wortliste steht fest. Beides
+   * gleichzeitig zu meinen ergaebe keinen Umfang, den man beschreiben kann. */
+  const pickSmart = (ref: string) => setzeAuswahl(["smart:" + ref]);
+  const toggleListe = (id: string) => {
+    const tok = "list:" + id;
+    const bisher = scopeTokens.filter((t) => t.startsWith("list:"));
+    setzeAuswahl(bisher.includes(tok) ? bisher.filter((t) => t !== tok) : [...bisher, tok]);
+  };
   const wordsForToken = (tok: string): any[] => {
     const i = tok.indexOf(":"); const kind = tok.slice(0, i), ref = tok.slice(i + 1);
     const pv = vocab.filter((w) => w.pair === pair);
@@ -186,8 +195,6 @@ export function Practice() {
   const [session, setSession] = useState([]); // recent verdicts
   const [tip, setTip] = useState(null);        // current study-tip popup (Phase 6)
   const [focus, setFocus] = useState(false);   // V2: zoom / focus card mode
-  // Die Wortlisten sind die eigentliche Wahl -- sie stehen offen da.
-  const [listsOpen, setListsOpen] = useState(true);
   const [enoughAck, setEnoughAck] = useState(false);   // F-CARD-UI: "genug für heute" dismissed
   const [chipsHelp, setChipsHelp] = useState(false);   // FR3-5: smart-chip explainer popup
   /* Der Umfang-Wähler nimmt aufgeklappt gut 140 Pixel -- auf einem Handy ein
@@ -537,6 +544,13 @@ export function Practice() {
     el.classList.toggle("overflows", !card && el.scrollHeight > el.clientHeight + 1);
   }, [current?.id, face, result, focus, settings.cardFont, settings.showExamples]);
 
+  useEffect(() => {
+    if (!pickerOpen) return;
+    const onEsc = (e: any) => { if (e.key === "Escape") setPickerOpen(false); };
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, [pickerOpen]);
+
   // V2: leave focus mode on Escape (iOS can't force rotation — we only react).
   useEffect(() => {
     if (!focus) return;
@@ -550,29 +564,6 @@ export function Practice() {
   const smartCountOf = (ref) => ref === "heute"
     ? resolveToday(pairVocabAll, stats, store.lists, retentionFor(settings), settings.dailyGoal, settings.newPerDay).length
     : resolveSmart(ref, pairVocabAll, stats, settings.masteryCorrect, { retention: retentionFor(settings) }).filter(practiceable).length;
-  /* Smart Lists als eigene Gruppe mit Namen -- Wortlisten und Smart Lists
-   * schliessen einander aus, und das muss man sehen, nicht wissen muessen.
-   * Die Erklaerung steht unter jedem Namen statt hinter dem Fragezeichen:
-   * die Texte gab es schon, sie waren nur versteckt. */
-  const smartChipsEl = (
-    <div className="p-smart">
-      <div className="scope-group-head">
-        <span className="lchips-label"><Icon name="sparkle" size={13} /> {txt("Smart Lists")}</span>
-        <button className="chips-help" title={txt("Was bedeuten diese?")} aria-label={txt("Erklärung")} onClick={() => setChipsHelp(true)}>?</button>
-      </div>
-      <div className="smartlist">
-        {SMART_ACCESS.map((s) => (
-          <button key={s.ref}
-            className={"li" + (validMulti.length === 0 && effective.kind === "smart" && effective.ref === s.ref ? " sel" : "")}
-            onClick={() => pickScope("smart", s.ref)}>
-            <Icon name={s.icon as any} size={14} />
-            <span className="g">{txt(s.label)}<div className="m">{txt(s.kurz)}</div></span>
-            <span className="lchip-n">{smartCountOf(s.ref)}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
   // FR3-5: kindgerechte Erklärung der vier Schnellzugriffe (als Möglichkeit formuliert).
   const CHIP_HELP = [
     { label: "Heute dran", text: "Die Wörter, die du heute üben solltest — die App mischt Fälliges und Neues sinnvoll zusammen." },
@@ -605,41 +596,82 @@ export function Practice() {
   const listsSorted = [...pairLists].sort((a: any, b: any) => (a.dueDate || Infinity) - (b.dueDate || Infinity) || (a.createdAt || 0) - (b.createdAt || 0));
   // Der Waehler kennt nur noch Wortlisten. Mehrfachwahl, "alle"/"keine" oben.
   const listCountOf = (id: string) => pairVocabAll.filter((w: any) => (w.lists || []).includes(id)).length;
-  const toggleAll = (toks: string[]) => {
-    const on = toks.length > 0 && toks.every((t) => multiSel.includes(t));
-    const next = on ? multiSel.filter((t) => !toks.includes(t)) : Array.from(new Set([...multiSel, ...toks]));
-    setMultiSel(next);
-    if (next.length === 1) store.setSettings({ practiceSel: next[0] });
-  };
-  const groupHead = (open: boolean, set: any, icon: string, label: string, n: number, toks: string[]) => (
-    <div className="scope-group-head">
-      <button className="lchips-label lchips-toggle" onClick={() => set((o: boolean) => !o)}>
-        <span style={{ fontSize: 10 }}>{open ? "▾" : "▸"}</span> <Icon name={icon as any} size={13} /> {txt(label)} ({n})
-      </button>
-      {open && n > 0 && <button className="scope-all" onClick={() => toggleAll(toks)}>{txt(toks.every((t) => validMulti.includes(t)) && toks.length ? "keine" : "alle")}</button>}
-    </div>
-  );
-  const listToks = listsSorted.map((l: any) => "list:" + l.id);
-  const lessonSelectorEl = pairLists.length ? (
-    <div className="scope-picker p-lessonsel">
-      {pairLists.length > 0 && (
-        <div className="lchips lesson-selector lchips-topics">
-          {groupHead(listsOpen, setListsOpen, "list", "Wortlisten", pairLists.length, listToks)}
-          {listsOpen && listsSorted.map((l: any) => {
-            const pct = readyPercent(listProfile(l, vocab, stats, listRetention).dist);
-            const days = l.dueDate ? Math.ceil((l.dueDate - Date.now()) / 86400000) : null;
-            return (
-              <button key={l.id} className={"lchip" + (isActiveTok("list:" + l.id) ? " on" : "")} onClick={() => toggleScope("list:" + l.id)}>
-                <span className="dot" style={{ width: 9, height: 9, borderRadius: "50%", background: TONE_VAR[readyTone(pct, settings)] }} />
-                {l.name} <span className="lchip-n">{listCountOf(l.id)}</span>
-                {days != null && <span className="lchip-due" style={{ color: days <= 3 ? "var(--bad)" : "var(--ink-faint)" }}>{days < 0 ? txt("überfällig") : days === 0 ? txt("heute") : txt("{n} T", { n: days })}</span>}
-              </button>
-            );
-          })}
+  /* Der Waehler als Blatt statt als aufklappender Bereich.
+   *
+   * Die anderen beiden Pillen oeffnen ein Menue, das sich ueber die Seite
+   * legt und beim Klick daneben wieder schliesst. Der Umfang tat etwas
+   * anderes: er schob die Seite auseinander und blieb offen. Gleiche Form
+   * fuer gleiche Handlung -- also auch hier ein Blatt.
+   *
+   * Wortlisten stehen oben: sie sind die Wahl, die man selbst getroffen
+   * hat. Beide Gruppen sind offen; eine davon zugeklappt und die andere
+   * nicht waere wieder ein Unterschied ohne Bedeutung. */
+  const listRetentionW = retentionFor(settings);
+  const waehlerEl = pickerOpen ? (
+    <div className="modal-backdrop" onClick={() => setPickerOpen(false)}>
+      <div className="modal scope-sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-head">
+          <div className="modal-title">{txt("Was möchtest du üben?")}</div>
+          <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setPickerOpen(false)}><Icon name="x" size={16} /></button>
         </div>
-      )}
+
+        <div className="scope-sheet-body">
+          {pairLists.length > 0 && (
+            <>
+              <div className="grp">{txt("Wortlisten")} <span className="hint">— {txt("mehrere möglich")}</span></div>
+              <div className="list">
+                {listsSorted.map((l: any) => {
+                  const prof = listProfile(l, vocab, stats, listRetentionW);
+                  const pct = readyPercent(prof.dist);
+                  const an = isActiveTok("list:" + l.id);
+                  const days = l.dueDate ? Math.ceil((l.dueDate - Date.now()) / 86400000) : null;
+                  return (
+                    <button key={l.id} className={"li" + (an ? " sel" : "")} onClick={() => toggleListe(l.id)}>
+                      <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
+                      <span className="g">{l.name}
+                        <div className="m">
+                          {txt("{n} Wörter", { n: listCountOf(l.id) })} · {txt("{p} % bereit", { p: pct })}
+                          {days != null && " · " + (days < 0 ? txt("überfällig") : days === 0 ? txt("heute") : txt("in {n} Tagen", { n: days }))}
+                        </div>
+                      </span>
+                      <span className="dot" style={{ width: 9, height: 9, borderRadius: "50%", background: TONE_VAR[readyTone(pct, settings)], flex: "none", alignSelf: "center" }} />
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+
+          <div className="grp">
+            {txt("Smart Lists")} <span className="hint">— {txt("eine davon")}</span>
+            <button className="chips-help" title={txt("Was bedeuten diese?")} aria-label={txt("Erklärung")}
+              onClick={() => setChipsHelp(true)} style={{ marginLeft: "auto" }}>?</button>
+          </div>
+          <div className="list">
+            {SMART_ACCESS.map((sm) => {
+              const n = smartCountOf(sm.ref);
+              return (
+              /* Ein leerer Topf ist eine Sackgasse: waehlbar, aber danach
+                 gibt es nichts zu ueben. Dieselbe Regel wie bei den
+                 Schnellzugriffen in der Statistik. */
+              <button key={sm.ref} className={"li" + (isActiveTok("smart:" + sm.ref) ? " sel" : "")}
+                disabled={!n && !isActiveTok("smart:" + sm.ref)}
+                onClick={() => pickSmart(sm.ref)}>
+                <Icon name={sm.icon as any} size={14} />
+                <span className="g">{txt(sm.label)}<div className="m">{txt(sm.kurz)}</div></span>
+                <span className="lchip-n">{n}</span>
+              </button>
+            ); })}
+          </div>
+        </div>
+
+        <div className="modal-foot">
+          <button className="btn btn-primary" onClick={() => setPickerOpen(false)}>{txt("Fertig")}</button>
+        </div>
+      </div>
     </div>
   ) : null;
+
   // V-PLAN: the 7-day outlook is gone — replaced by the "Übungsplan" panel (header).
   /* Was gerade geübt wird, in einer Zeile. Mehrere Wortlisten werden gezählt,
    * nicht aufgezählt -- eine Zeile, die umbricht, ist keine Zeile mehr. */
@@ -682,7 +714,7 @@ export function Practice() {
           <span className="pill-n">{pool.length}</span>
         </button>
       </div>
-      {pickerOpen && <div className="ruest-picker">{smartChipsEl}{lessonSelectorEl}{chipsHelpEl}</div>}
+      {waehlerEl}{chipsHelpEl}
     </div>
   );
 

@@ -449,4 +449,8 @@ export const EN: Record<string, string> = {
   "Sitzt noch, wäre aber bald wieder dran": "Still solid, but due again soon",
   "Richtung zufällig gemischt": "Direction randomly mixed",
   "zufällig gemischt": "randomly mixed",
+  "Was möchtest du üben?": "What would you like to practise?",
+  "mehrere möglich": "several possible",
+  "eine davon": "one of these",
+  "{p} % bereit": "{p} % ready",
 };
