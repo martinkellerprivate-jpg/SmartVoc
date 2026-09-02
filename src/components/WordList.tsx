@@ -20,6 +20,7 @@ import { PasteModal } from "./PasteModal";
 import { WordDetailModal } from "./WordDetailModal";
 import { LatinKeys } from "../ui/LatinKeys";
 import { useImport } from "./importContext";
+import { PairPill } from "../ui/PairPill";
 
 const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Zahlwort", "Adverb"];
 
@@ -329,6 +330,7 @@ export function WordList() {
 
       {/* toolbar */}
       <div className="bar">
+        <PairPill />
         <div className="search">
           <Icon name="search" size={17} />
           <input className="field" placeholder={txt("Wörter suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />

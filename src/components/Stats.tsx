@@ -11,6 +11,7 @@ import { latinHeadword } from "../lib/latin";
 import { MasteryBar, MasteryTrend } from "../ui/MasteryBar";
 import { ListSelector } from "./ListSelector";
 import { WordDetailModal } from "./WordDetailModal";
+import { PairPill } from "../ui/PairPill";
 
 // V14: the four FSRS levels (one source). Tone/labels match V13 STUFE.
 const STUFE_META: Record<string, any> = {
@@ -224,6 +225,7 @@ export function Stats() {
       {/* Der Umfang als Pille, wie im Üben-Bereich: dieselbe Form für
           dieselbe Entscheidung. */}
       <div className="ruest">
+        <PairPill />
         <button className="pill pill-on" onClick={() => setPickerOpen((o) => !o)}>
           <Icon name="list" size={15} />
           <span>{umfangName}</span>

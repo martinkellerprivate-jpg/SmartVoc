@@ -447,4 +447,5 @@ export const EN: Record<string, string> = {
   "Länger nicht geübt — jetzt auffrischen": "Not practised for a while — refresh them now",
   "Schon geübt, sitzt aber noch nicht sicher": "Practised already, but not solid yet",
   "Sitzt noch, wäre aber bald wieder dran": "Still solid, but due again soon",
+  "Richtung zufällig gemischt": "Direction randomly mixed",
 };

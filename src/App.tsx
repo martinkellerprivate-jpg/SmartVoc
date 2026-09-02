@@ -63,25 +63,6 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
   );
 }
 
-function PairSwitcher() {
-  const { settings, setSettings } = useStore();
-  const pair = settings.pair;
-  const shown = activePairs(settings);
-  if (shown.length < 2) return null;   // nothing to switch between
-  return (
-    <div className="pairbar">
-      <div className="pairseg">
-        {shown.map((p) => (
-          <button key={p.id} className={pair === p.id ? "on" : ""}
-            onClick={() => { if (pair !== p.id) setSettings({ pair: p.id, selectedLists: [], statLists: [] }); }}>
-            {p.foreignLabel} ⇄ {p.nativeLabel}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 /* Vier Bereiche in der Reihenfolge des Tuns: üben, planen, verwalten,
  * nachschauen. Die Einstellungen sind kein Bereich mehr — sie sitzen als
  * Zahnrad in der Kopfzeile, wo man sie einmal aufsucht. */
@@ -185,9 +166,6 @@ export function App() {
           </button>
         ))}
       </div>
-      {/* Der Übungsplan gilt sprachübergreifend — dort wäre ein Sprachschalter
-          eine Einschränkung, die es gar nicht gibt. */}
-      {tab !== "settings" && tab !== "plan" && <PairSwitcher />}
       {tab === "practice" && <Practice />}
       {tab === "plan" && <PlanTab />}
       {tab === "lists" && <WordList />}

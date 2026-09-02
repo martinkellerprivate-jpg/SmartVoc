@@ -13,6 +13,7 @@ import { LatinKeys } from "../ui/LatinKeys";
 import { retrievabilityOf, isDueCard, retentionFor, initialCard, deriveProfile, STUFE, STUFE_ORDER, deriveRating, gradeFromCard, getCfg } from "../lib/fsrs";
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
+import { PairPill } from "../ui/PairPill";
 import { tapRichtig, tapFalsch } from "../lib/native";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
 import { TipPopup } from "./TipPopup";
@@ -653,27 +654,29 @@ export function Practice() {
    * direkt unter dem Kopf, wie im Entwurf. Vorher war die Richtung ein
    * beschrifteter Waehler weiter unten und der Umfang eine Textzeile; beides
    * gehoert zusammen, weil man beides vor dem Start entscheidet. */
-  const richtungLabel = settings.direction === "mixed" ? txt("Gemischt")
-    : settings.direction === "n2f" ? `${P.nativeLabel} → ${P.foreignLabel}`
-    : `${P.foreignLabel} → ${P.nativeLabel}`;
+  /* Geschlossen zeigt die Pille nur die Kürzel -- sie steht neben zwei
+   * weiteren Elementen in einer Zeile, die auf ein Handy passen muss.
+   * Gemischt bekommt den Doppelpfeil: keine Richtung, sondern beide. */
+  const kurzF = P.short, kurzN = "DE";
+  const richtungKurz = settings.direction === "mixed" ? `${kurzF} ⇄ ${kurzN}`
+    : settings.direction === "n2f" ? `${kurzN} → ${kurzF}`
+    : `${kurzF} → ${kurzN}`;
   const scopeBar = (
     <div className="lchips-wrap scope-bar">
       <div className="ruest">
+        <PairPill />
+        {/* Aufgeklappt in Worten, geschlossen als Kürzel: die Wahl braucht
+            Klarheit, die Anzeige braucht Platz. */}
         <label className="pill pill-sel">
-          <span>{richtungLabel}</span>
+          <span className="dir-kurz">{richtungKurz}</span>
+          <span className="caret">▾</span>
           <select value={settings.direction} aria-label={txt("Richtung")}
             onChange={(e) => { store.setSettings({ direction: e.target.value }); restartCard(); }}>
             <option value="f2n">{P.foreignLabel} → {P.nativeLabel}</option>
             <option value="n2f">{P.nativeLabel} → {P.foreignLabel}</option>
-            <option value="mixed">{txt("Gemischt")}</option>
+            <option value="mixed">{txt("Richtung zufällig gemischt")}</option>
           </select>
         </label>
-        {/* Der Tauschknopf dreht die Richtung, ohne den Waehler zu oeffnen --
-            der haeufigste Handgriff braucht keinen Umweg. */}
-        <button className="pill pill-sq" title={txt("Richtung tauschen")} aria-label={txt("Richtung tauschen")}
-          onClick={() => { store.setSettings({ direction: settings.direction === "n2f" ? "f2n" : "n2f" }); restartCard(); }}>
-          <Icon name="swap" size={16} />
-        </button>
         <button className="pill pill-on" onClick={() => setPickerOpen((o) => !o)}>
           <Icon name="calendar" size={15} />
           <span>{scopeSummary}</span>
