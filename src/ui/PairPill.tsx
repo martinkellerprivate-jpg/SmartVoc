@@ -21,10 +21,11 @@ export function PairPill() {
   const p = PAIRS[settings.pair] || PAIRS["en-de"];
   return (
     <label className="pill pill-sel">
-      {/* Kein Symbol davor: der Doppelpfeil steckt schon im Namen, und ein
-          zweiter daneben liest sich wie "tauschen" -- das macht die
-          Richtungs-Pille. */}
-      <span>{p.foreignLabel} ⇄ {p.nativeLabel}</span>
+      {/* Kein Symbol, kein Pfeil. Ein Sprachpaar HAT keine Richtung -- die
+          steht in der Pille daneben. Ein Doppelpfeil hier hiesse "tauschen"
+          und wäre eine zweite Bedeutung für dieselbe Form. Der Punkt
+          verbindet nur. Geschlossen die Kürzel, aufgeklappt ausgeschrieben. */}
+      <span>{p.short} · {"DE"}</span>
       <span className="caret">▾</span>
       <select value={settings.pair} aria-label={txt("Sprache")}
         onChange={(e) => {
@@ -33,7 +34,7 @@ export function PairPill() {
           if (e.target.value !== settings.pair) setSettings({ pair: e.target.value, selectedLists: [], statLists: [] });
         }}>
         {shown.map((x: any) => (
-          <option key={x.id} value={x.id}>{x.foreignLabel} ⇄ {x.nativeLabel}</option>
+          <option key={x.id} value={x.id}>{x.foreignLabel} · {x.nativeLabel}</option>
         ))}
       </select>
     </label>
