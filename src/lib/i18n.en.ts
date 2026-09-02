@@ -448,4 +448,5 @@ export const EN: Record<string, string> = {
   "Schon geübt, sitzt aber noch nicht sicher": "Practised already, but not solid yet",
   "Sitzt noch, wäre aber bald wieder dran": "Still solid, but due again soon",
   "Richtung zufällig gemischt": "Direction randomly mixed",
+  "zufällig gemischt": "randomly mixed",
 };

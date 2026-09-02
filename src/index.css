@@ -1170,3 +1170,41 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .dir-kurz { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
 /* Die alte Sprachleiste ist ersatzlos weg. */
 .pairbar, .pairseg { display: none; }
+
+/* ====================================================================
+   FARBROLLEN — vier Rollen, jede mit genau einem Aussehen.
+   Vorher zeigten VIER verschiedene Behandlungen dasselbe an ("das ist
+   gewählt"): Tintenfüllung, Rostrahmen, Rostfläche und ein dritter
+   Rostton. Und die Tintenfüllung bedeutete gleichzeitig "Hauptaktion".
+   Damit hiess dieselbe Farbe zweierlei — derselbe Fehler, den --amber
+   schon einmal gemacht hat.
+
+   1 ANZEIGE      sagt etwas, tut nichts      heller Grund, keine Linie
+   2 WAHL         öffnet oder schaltet um     Kartengrund + Linie
+     gewählt                                  Tintenrahmen, Grund bleibt hell
+   3 ORT          wo bin ich gerade           heller Grund + feiner Schatten
+   4 HANDLUNG     löst etwas aus              gefüllt: Tinte, oder Rost wenn dringlich
+
+   Rost bedeutet ab hier NUR noch Handlung. Grün/Gelb/Rot gehören allein
+   den Beherrschungsstufen. Auswahl ist nie eine Farbe, immer ein Rahmen.
+   ==================================================================== */
+
+/* 1 — Anzeige */
+.pill-n, .lchip-n { background: var(--bg-2); color: var(--ink-soft); border: none; }
+
+/* 2 — Wahl */
+.pill-on { background: var(--card); border-color: var(--line); color: var(--ink); font-weight: 600; }
+.pill-on:hover { border-color: var(--ink); }
+.lchip.on, .ltab.on {
+  background: var(--card); color: var(--ink);
+  border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink);
+}
+.li.sel { border-color: var(--ink); background: var(--card); box-shadow: inset 0 0 0 1px var(--ink); }
+.li:hover, .wort:hover, .planrow:hover { border-color: var(--ink-soft); }
+.cal-day.open { background: var(--bg-2); border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+/* „Heute" ist ein Zustand, keine Auswahl: neutraler Grund statt Farbe,
+   sonst sähen heute und gewählt gleich aus. */
+.cal-day.today { border-color: transparent; background: var(--bg-2); font-weight: 700; }
+.cal-day.today.open { border-color: var(--ink); }
+
+/* 4 — Handlung: unverändert, aber ab hier die einzige Verwendung von Rost. */

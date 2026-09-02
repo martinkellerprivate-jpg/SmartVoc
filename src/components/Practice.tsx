@@ -673,7 +673,7 @@ export function Practice() {
             onChange={(e) => { store.setSettings({ direction: e.target.value }); restartCard(); }}>
             <option value="f2n">{P.foreignLabel} → {P.nativeLabel}</option>
             <option value="n2f">{P.nativeLabel} → {P.foreignLabel}</option>
-            <option value="mixed">{txt("Richtung zufällig gemischt")}</option>
+            <option value="mixed">{P.nativeLabel} ⇄ {P.foreignLabel} ({txt("zufällig gemischt")})</option>
           </select>
         </label>
         <button className="pill pill-on" onClick={() => setPickerOpen((o) => !o)}>
