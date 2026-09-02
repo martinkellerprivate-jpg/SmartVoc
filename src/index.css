@@ -1102,3 +1102,45 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .round-progress-pct { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .practice-wrap.focus-on .round-progress-label,
 .practice-wrap.focus-on .round-progress-pct { color: oklch(0.86 0.01 80); }
+
+/* ====================================================================
+   LISTENZEILEN — die Bauform aus dem Entwurf. Eine Form für alle
+   Gruppen: Symbol, Text, Untertitel, Pfeil. Gruppen als kleine
+   Versalzeile darüber.
+   ==================================================================== */
+.list { display: flex; flex-direction: column; }
+.grp {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-faint); padding: 14px 2px 6px; font-weight: 700;
+}
+.li {
+  display: flex; align-items: flex-start; gap: 9px; width: 100%; text-align: left;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 11px 14px; margin-bottom: 6px; font: inherit; font-size: 13.5px;
+  color: var(--ink); cursor: pointer;
+}
+.li:hover { border-color: var(--amber); }
+.li > svg { flex: none; margin-top: 2px; opacity: .75; }
+.li .g { flex: 1; }
+.li .m { color: var(--ink-faint); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.li.sel { border-color: var(--amber); background: var(--amber-bg); }
+.quiet { padding: 8px 13px 4px; font-size: 12px; color: var(--ink-faint); text-align: center; }
+
+/* Eine Wortkarte: Wort und Stufe in einer Zeile, darunter die Übersetzung
+   und die Zahlen. Alles ausgeschrieben -- „in 4 T." spart vier Zeichen und
+   kostet die Hälfte der Leser. */
+.wort {
+  display: block; width: 100%; text-align: left; cursor: pointer; font: inherit; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 10px 14px 11px; margin-bottom: 6px;
+}
+.wort:hover { border-color: var(--amber); }
+.wtop { display: flex; align-items: baseline; gap: 8px; }
+.wf { flex: 1; font-family: var(--serif); font-size: 16px; }
+.wstufe { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; flex: none; }
+.wstufe i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.wde { font-size: 13px; color: var(--ink-soft); margin-top: 1px; }
+.wmeta { font-size: 11.5px; color: var(--ink-faint); margin-top: 6px; font-variant-numeric: tabular-nums; }
+
+.statstab .mbar { margin-top: 12px; }

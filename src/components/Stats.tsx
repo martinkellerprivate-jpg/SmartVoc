@@ -4,7 +4,7 @@ import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
 import { Ring, toneColor, pct } from "../ui/Ring";
-import { wordsForSelection, resolveSmart } from "../lib/engine";
+import { wordsForSelection, resolveSmart, resolveToday } from "../lib/engine";
 import { deriveProfile, retentionFor, STUFE_ORDER } from "../lib/fsrs";
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
@@ -60,6 +60,8 @@ export function Stats() {
   const [sort, setSort] = useState({ key: "priority", dir: 1 });
   const [resetOpen, setResetOpen] = useState(false);
   const [detail, setDetail] = useState<any>(null);   // Wortdetail
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [trendOpen, setTrendOpen] = useState(false);
 
   const ret = retentionFor(settings);
   const rows = useMemo(() => wordsForSelection(vocab.filter((w) => w.pair === pair), stats, settings.statLists, settings.masteryCorrect).map((w) => {
@@ -187,111 +189,117 @@ export function Stats() {
     return teile.join(" · ");
   };
 
+  /* Eine Zeile der Liste — Symbol, Text, Untertitel, Pfeil. Dieselbe Form
+   * für alle drei Gruppen, damit die Statistik eine Liste ist und nicht drei
+   * verschiedene Bauarten untereinander. */
+  const Zeile = ({ icon, titel, sub, sel, onClick }: any) => (
+    <button className={"li" + (sel ? " sel" : "")} onClick={onClick}>
+      {icon && <Icon name={icon} size={14} />}
+      <span className="g">{titel}{sub && <div className="m">{sub}</div>}</span>
+      <Icon name="arrowRight" size={14} />
+    </button>
+  );
+
+  const umfangName = !settings.statLists.length ? txt("Alle Wörter")
+    : settings.statLists.length > 1 ? txt("{n} Wortlisten", { n: settings.statLists.length })
+    : ((lists.find((l: any) => l.id === settings.statLists[0]) || {}).name || txt("Auswahl"));
+
+  const smartZeilen = [
+    { k: "heute", icon: "calendar", name: "Heute dran" },
+    { k: "wackeln", icon: "flame", name: "Wackeln noch" },
+    { k: "baldfaellig", icon: "clock", name: "Bald fällig" },
+    { k: "leech", icon: "flame", name: "Hartnäckig" },
+    { k: "kurzvorsitzt", icon: "target", name: "Kurz vor „sitzt“" },
+  ].map((c) => {
+    const n = c.k === "heute"
+      ? resolveToday(vocab.filter((w) => w.pair === pair), stats, lists, ret, settings.dailyGoal, settings.newPerDay).length
+      : resolveSmart(c.k, vocab.filter((w) => w.pair === pair), stats, settings.masteryCorrect, { retention: ret }).filter(practiceable).length;
+    return { ...c, n };
+  }).filter((c) => c.n > 0);
+
+  const gefiltert = filter !== "all";
+
   return (
-    <div>
-      <ListSelector selected={settings.statLists} onChange={(s) => store.setSettings({ statLists: s })} pair={pair} mc={settings.masteryCorrect} smart={[]} />
+    <div className="statstab">
+      {/* Der Umfang als Pille, wie im Üben-Bereich: dieselbe Form für
+          dieselbe Entscheidung. */}
+      <div className="ruest">
+        <button className="pill pill-on" onClick={() => setPickerOpen((o) => !o)}>
+          <Icon name="list" size={15} />
+          <span>{umfangName}</span>
+          <span className="pill-n">{rows.length}</span>
+          <span className="caret">▾</span>
+        </button>
+      </div>
+      {pickerOpen && (
+        <div className="ruest-picker">
+          <ListSelector selected={settings.statLists} onChange={(s) => store.setSettings({ statLists: s })} pair={pair} mc={settings.masteryCorrect} smart={[]} />
+        </div>
+      )}
 
       {/* Der Kopf IST die Verteilungsleiste. Ihre Legende ist zugleich die
-          Kennzahlenreihe und der Filter für die Liste darunter: eine Zahl,
-          eine Farbe, ein Ort. Nicht gewählte Stufen werden abgedunkelt,
-          nicht entfernt -- sonst verschwindet die Übersicht in dem Moment,
-          in dem man hineinschaut. */}
+          Kennzahlenreihe und der Filter: eine Zahl, eine Farbe, ein Ort.
+          Nicht gewählte Stufen werden abgedunkelt, nicht entfernt. */}
       {rows.length ? (
-        <div className="panel stats-head">
+        <>
           <MasteryBar dist={counts} total={rows.length}
             onSegment={(k) => setFilter(filter === k ? "all" : k)}
-            activeFilter={filter !== "all" ? filter : undefined} />
-        </div>
+            activeFilter={gefiltert ? filter : undefined} />
+          <div className="quiet">
+            {gefiltert
+              ? txt("Gefiltert auf „{stufe}“ — nochmal antippen hebt auf", { stufe: txt(STUFE_META[filter].label) })
+              : txt("Eintrag der Legende antippen filtert die Tabelle")}
+          </div>
+        </>
       ) : (
         <div className="empty"><div className="big">{txt("Noch keine Wörter")}</div><div>{txt("In dieser Auswahl ist noch nichts")}</div></div>
       )}
 
-      {/* ---------------- Jetzt üben ---------------- */}
-      <div className="stats-section">
-        <div className="section-title">{txt("Jetzt üben")}</div>
-        <div className="muted stats-sub">{txt("Drei Wege quer zu den Stufen. Tippen startet die Übung")}</div>
-        <div className="lchips" style={{ justifyContent: "flex-start" }}>
-          {[{ k: "leech", label: "Hartnäckig", tone: "red", help: "Oft vergessen trotz Übung — hier hilft eine Eselsbrücke" },
-            { k: "frischfragil", label: "Frisch und wackelig", tone: "amber", help: "Gerade gelernt, sitzt noch nicht" },
-            { k: "kurzvorsitzt", label: "Kurz vor „sitzt“", tone: "green", help: "Fast dauerhaft — ein Schubs reicht" }].map((c) => {
-            const n = resolveSmart(c.k, vocab.filter((w) => w.pair === pair), stats, settings.masteryCorrect, { retention: ret }).filter(practiceable).length;
-            return (
-              <button key={c.k} className={"lchip lchip-smart tone-" + c.tone} title={txt(c.help)} disabled={!n}
-                onClick={() => goPractice("smart:" + c.k)}>
-                <Icon name="target" size={13} /> {txt(c.label)} <span className="lchip-n">{n}</span>
-              </button>
-            );
-          })}
-        </div>
-        {insights.steps.length > 0 && (
-          <div className="col" style={{ gap: 8, marginTop: 12 }}>
-            {insights.steps.map((it: any, i: number) => (
-              <div key={i} className="stats-step">
-                <span className="stats-step-dot" style={{ background: toneColor(it.tone) }} />
-                <span className="grow">{it.text}</span>
-                {it.action && <button className="btn btn-sm" onClick={() => goPractice(it.action.sel)}>{txt(it.action.label)}</button>}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* ---------------- Nachschauen ---------------- */}
-      <div className="stats-section">
-        <div className="bar">
-          <div className="section-title grow">{txt("Nachschauen")}</div>
-          {filter !== "all" && (
-            <button className="btn btn-ghost btn-sm" onClick={() => setFilter("all")}>
-              <Icon name="x" size={14} /> {txt("{stufe}: Filter aufheben", { stufe: txt(STUFE_META[filter].label) })}
-            </button>
-          )}
-          <div className="search" style={{ flex: "0 0 220px" }}>
-            <Icon name="search" size={17} />
-            <input className="field" placeholder={txt("Wort suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
-          </div>
-        </div>
-
-        <div className="stat-grid">
-          <StatCard icon="sparkle" k={txt("Sitzt dauerhaft")} v={txt("{a} von {b}", { a: totals.mastered, b: totals.total })}
-            sub={txt("{p} % deiner Wörter", { p: pct(totals.total ? totals.mastered / totals.total : 0) })} color="var(--ok)" />
-          <StatCard icon="target" k={txt("Trefferquote")} v={`${pct(totals.overallAcc)} %`}
-            sub={txt("aus {n} Antworten", { n: totals.reviews })} color="var(--amber-deep)" />
-          <StatCard icon="flame" k={txt("Tage in Folge")} v={meta.streak || 0}
-            sub={txt(meta.streak ? "dranbleiben" : "heute üben startet die Serie")} color="var(--bad)" />
-        </div>
-
-        <div className="wordrows">
+      {gefiltert ? (
+        <div className="list">
           {view.map((r) => (
-            <button key={r.w.id} className="wordrow" onClick={() => setDetail(r.w)}>
-              <span className="wordrow-main">
-                <span className="wordrow-word">{fgnOf(r.w)}</span>
-                <span className="wordrow-de">{r.w[NATIVE]}</span>
-              </span>
-              <span className="wordrow-right">
-                <span className="wordrow-state" style={{ color: STUFE_TONE[r.stufe] }}>
-                  <span className="wordrow-dot" style={{ background: STUFE_TONE[r.stufe] }} />
-                  {txt(STUFE_META[r.stufe].label)}
+            <button key={r.w.id} className="wort" onClick={() => setDetail(r.w)}>
+              <div className="wtop">
+                <span className="wf">{fgnOf(r.w)}</span>
+                <span className="wstufe" style={{ color: STUFE_TONE[r.stufe] }}>
+                  <i style={{ background: STUFE_TONE[r.stufe] }} />{txt(STUFE_META[r.stufe].label)}
                 </span>
-                <span className="wordrow-detail">{wortZeile(r)}</span>
-              </span>
+              </div>
+              <div className="wde">{r.w[NATIVE]}</div>
+              <div className="wmeta">{wortZeile(r)}</div>
             </button>
           ))}
+          {!view.length && (
+            <div className="empty"><div className="big">{txt("Nichts gefunden")}</div><div>{txt("Andere Stufe wählen oder die Suche leeren")}</div></div>
+          )}
         </div>
-        {!view.length && rows.length > 0 && (
-          <div className="empty"><div className="big">{txt("Nichts gefunden")}</div><div>{txt("Andere Stufe wählen oder die Suche leeren")}</div></div>
-        )}
+      ) : (
+        <div className="list">
+          <div className="grp">{txt("Jetzt üben")}</div>
+          {smartZeilen.length ? smartZeilen.map((c, i) => (
+            <Zeile key={c.k} icon={c.icon} sel={i === 0}
+              titel={txt(c.name)}
+              sub={txt("{n} Wörter · Runde starten", { n: c.n })}
+              onClick={() => goPractice("smart:" + c.k)} />
+          )) : (
+            <div className="quiet">{txt("Gerade ist nichts fällig — komm später wieder")}</div>
+          )}
 
-        <MasteryTrend days={trendDays} />
-      </div>
+          <div className="grp">{txt("Nachschauen")}</div>
+          <Zeile titel={txt("Alle Wörter mit Lernstand")}
+            sub={txt("öffnet die Tabelle in den Wortlisten")}
+            onClick={() => window.dispatchEvent(new CustomEvent("vt-tab", { detail: "lists" }))} />
+          <Zeile titel={txt("Verlauf")} sub={txt("wie sich dein Lernstand aufbaut")}
+            onClick={() => setTrendOpen((o: boolean) => !o)} />
+          {trendOpen && <MasteryTrend days={trendDays} />}
 
-      {/* ---------------- Einstellen ---------------- */}
-      <div className="stats-section">
-        <div className="section-title">{txt("Einstellen")}</div>
-        <div className="muted stats-sub">{txt("Der Lernstand lässt sich zurücksetzen. Deine Wörter und Wortlisten bleiben dabei erhalten")}</div>
-        <button className="btn btn-ghost btn-sm" onClick={() => setResetOpen(true)}>
-          <Icon name="refresh" size={14} /> {txt("Lernstand zurücksetzen")}
-        </button>
-      </div>
+          <div className="grp">{txt("Einstellen")}</div>
+          <Zeile titel={txt("Wie oft Wörter wiederkommen")}
+            sub={txt("Feinjustierung des Lernrhythmus")}
+            onClick={() => window.dispatchEvent(new CustomEvent("vt-tab", { detail: "settings" }))} />
+          <Zeile titel={txt("Fortschritt zurücksetzen")} onClick={() => setResetOpen(true)} />
+        </div>
+      )}
 
       <WordDetailModal open={!!detail} word={detail} onClose={() => setDetail(null)} />
 
@@ -307,7 +315,7 @@ export function Stats() {
               <button className="picker-row" style={{ textAlign: "left", opacity: settings.statLists.length ? 1 : .5, cursor: settings.statLists.length ? "pointer" : "not-allowed" }}
                 disabled={!settings.statLists.length} onClick={resetSelected}>
                 <Icon name="filter" size={16} />
-                <span className="grow"><b>{txt("Nur die gewählten Wortlisten")}</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>{settings.statLists.length ? `${rows.length} ${rows.length === 1 ? "Wort" : "Wörter"} in deiner aktuellen Auswahl` : "Wähle oben zuerst eine Wortliste"}</div></span>
+                <span className="grow"><b>{txt("Nur die gewählten Wortlisten")}</b><div className="muted" style={{ fontSize: 12.5, fontWeight: 400 }}>{settings.statLists.length ? txt("{n} Wörter in deiner aktuellen Auswahl", { n: rows.length }) : txt("Wähle oben zuerst eine Wortliste")}</div></span>
               </button>
               <button className="picker-row" style={{ textAlign: "left" }} onClick={resetAll}>
                 <Icon name="refresh" size={16} />
