@@ -669,7 +669,6 @@ export function Practice() {
             Klarheit, die Anzeige braucht Platz. */}
         <label className="pill pill-sel">
           <span className="dir-kurz">{richtungKurz}</span>
-          <span className="caret">▾</span>
           <select value={settings.direction} aria-label={txt("Richtung")}
             onChange={(e) => { store.setSettings({ direction: e.target.value }); restartCard(); }}>
             <option value="f2n">{P.foreignLabel} → {P.nativeLabel}</option>
@@ -681,7 +680,6 @@ export function Practice() {
           <Icon name="calendar" size={15} />
           <span>{scopeSummary}</span>
           <span className="pill-n">{pool.length}</span>
-          <span className="caret">▾</span>
         </button>
       </div>
       {pickerOpen && <div className="ruest-picker">{smartChipsEl}{lessonSelectorEl}{chipsHelpEl}</div>}
@@ -1075,7 +1073,6 @@ export function Practice() {
         <label className={"pill pill-sel" + (mode === "memorize" ? " pill-quiet" : "")}>
           <Icon name={MODE_ICON[mode] || "edit"} size={15} />
           <span>{txt(MODE_NAME[mode] || "Eintippen")}</span>
-          <span className="caret">▾</span>
           <select value={mode} aria-label={txt("Antwortart")}
             onChange={(e) => { store.setSettings({ mode: e.target.value }); restartCard(); }}>
             <option value="type">{txt("Eintippen")}</option>

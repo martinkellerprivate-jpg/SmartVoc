@@ -26,7 +26,6 @@ export function PairPill() {
           und wäre eine zweite Bedeutung für dieselbe Form. Der Punkt
           verbindet nur. Geschlossen die Kürzel, aufgeklappt ausgeschrieben. */}
       <span>{p.short} · {"DE"}</span>
-      <span className="caret">▾</span>
       <select value={settings.pair} aria-label={txt("Sprache")}
         onChange={(e) => {
           /* Der Wechsel räumt die Auswahlen mit ab: eine Wortliste der einen

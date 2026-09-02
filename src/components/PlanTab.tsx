@@ -212,7 +212,6 @@ export function PlanTab() {
           <label className="pill pill-sel">
             <Icon name="swap" size={15} />
             <span>{nurPair ? (PAIRS[nurPair]?.foreignLabel || nurPair) : txt("Alle Sprachen")}</span>
-            <span className="caret">▾</span>
             <select value={nurPair} aria-label={txt("Sprache")} onChange={(e) => { setNurPair(e.target.value); setPicked([]); }}>
               <option value="">{txt("Alle Sprachen")}</option>
               {sichtbar.map((pp: any) => <option key={pp.id} value={pp.id}>{pp.foreignLabel} ⇄ {pp.nativeLabel}</option>)}

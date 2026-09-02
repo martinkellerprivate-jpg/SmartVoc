@@ -230,7 +230,6 @@ export function Stats() {
           <Icon name="list" size={15} />
           <span>{umfangName}</span>
           <span className="pill-n">{rows.length}</span>
-          <span className="caret">▾</span>
         </button>
       </div>
       {pickerOpen && (
