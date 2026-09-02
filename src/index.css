@@ -1144,3 +1144,20 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .wmeta { font-size: 11.5px; color: var(--ink-faint); margin-top: 6px; font-variant-numeric: tabular-nums; }
 
 .statstab .mbar { margin-top: 12px; }
+
+/* Smart Lists als Gruppe: Name, kurze Erklaerung, Anzahl. Die Erklaerung
+   stand vorher hinter einem Fragezeichen -- dort liest sie niemand. */
+.smartlist { display: flex; flex-direction: column; }
+.smartlist .li .lchip-n { flex: none; align-self: center; }
+.p-smart .scope-group-head { display: flex; align-items: center; justify-content: space-between; padding: 2px 2px 6px; }
+
+/* Ansichtsumschalter im Übungsplan und Zeilentext. */
+.seg-view { flex: none; }
+.seg-view button { display: inline-flex; align-items: center; gap: 6px; }
+.planrow-sub { font-size: 12.5px; color: var(--ink-soft); }
+.planrow-acts .btn { width: 38px; padding: 0; justify-content: center; }
+/* Gewählte Zeile trägt einen Tintenrahmen, keine Farbfläche -- Farbe gehört
+   dem Zustand, nicht der Auswahl. */
+.planrow.picked { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.planrow.picked .planrow-box { background: var(--ink); border-color: var(--ink); }
+.grp .hint { text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 11px; opacity: .85; }

@@ -48,9 +48,18 @@ export function PlanTab() {
   const [cursor, setCursor] = useState(() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; });
   const [openDay, setOpenDay] = useState<number | null>(null);
   const [picked, setPicked] = useState<string[]>([]);
+  /* Der Plan zeigt zunächst ALLE Sprachen — das ist sein Zweck. Wer nur eine
+   * sehen will, wählt sie hier; „Alle Sprachen" ist die Voreinstellung. */
+  const [nurPair, setNurPair] = useState<string>("");
+  /* Zwei Ansichten auf dieselben Daten. Der Kalender zeigt WANN, die Liste
+   * zeigt WAS — mit „Ohne Termin", die im Raster keinen Platz hat. */
+  const [ansicht, setAnsicht] = useState<"kalender" | "liste">("kalender");
 
   // Nur sichtbare Sprachen — eine abgeschaltete Sprache ist auch im Plan weg.
-  const shownPairs = useMemo(() => new Set(activePairs(settings).map((p: any) => p.id)), [settings.activePairs]);
+  const sichtbar = useMemo(() => activePairs(settings), [settings.activePairs]);
+  const shownPairs = useMemo(
+    () => new Set(sichtbar.filter((p: any) => !nurPair || p.id === nurPair).map((p: any) => p.id)),
+    [sichtbar, nurPair]);
 
   /* Jede Liste mit Zieldatum wird ein Termin. Der Stand wird einmal gerechnet
    * und überall weiterverwendet — Tagesfarbe, Zeile und Balken zeigen
@@ -68,6 +77,16 @@ export function PlanTab() {
     })
     .sort((a, b) => a.day - b.day || a.pct - b.pct),
     [lists, vocab, stats, retention, settings, shownPairs, today]);
+
+  const ohneTermin = useMemo(() => (lists || [])
+    .filter((l: any) => !l.dueDate && shownPairs.has(l.pair))
+    .map((l: any) => {
+      const prof = listProfile(l, vocab, stats, retention);
+      const pct = readyPercent(prof.dist);
+      return { list: l, prof, pct, tone: readyTone(pct, settings), daysLeft: null as any };
+    })
+    .filter((t) => t.prof.total > 0),
+    [lists, vocab, stats, retention, settings, shownPairs]);
 
   const byDay = useMemo(() => {
     const m = new Map<number, typeof termine>();
@@ -106,16 +125,11 @@ export function PlanTab() {
     ? new Date(openDay).toLocaleDateString(LOCALE(), { weekday: "long", day: "numeric", month: "long", year: "numeric" })
     : txt("Alle kommenden Termine");
 
-  /* Mehrfachauswahl bleibt vorerst auf eine Sprache beschränkt: die Karte
-   * zeigt heute die Richtung des aktiven Sprachpaars, ein Wort aus einer
-   * anderen Sprache käme leer heraus. Sobald die Karte ihre Sprache selbst
-   * trägt (Stufe 4), fällt diese Zeile weg und die Auswahl darf mischen. */
-  const pairOf = (id: string) => (lists || []).find((l: any) => l.id === id)?.pair;
-  const toggle = (id: string) => setPicked((p) => {
-    if (p.includes(id)) return p.filter((x) => x !== id);
-    const keep = p.filter((x) => pairOf(x) === pairOf(id));
-    return [...keep, id];
-  });
+  /* Die Auswahl darf Sprachen mischen. Seit die Karte ihre Sprache und
+   * Richtung selbst trägt, ist eine gemischtsprachige Runde kein Sonderfall
+   * mehr — auch die Ablenker beim Multiple-Choice folgen der Karte. */
+  const toggle = (id: string) => setPicked((p) =>
+    p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
   const practise = (ids: string[]) => {
     if (!ids.length) return;
     // Beim Üben einer Liste aus einer anderen Sprache mitwechseln, sonst
@@ -129,6 +143,53 @@ export function PlanTab() {
     store.setSettings({ pair: l.pair, statLists: [l.id] });
     window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
   };
+  /* Zwei Verben je Zeile, dieselben zwei fuer die Mehrfachauswahl -- sonst
+   * kann man mehrere Listen zwar zusammen ueben, aber nicht zusammen
+   * anschauen. */
+  const showStatsMany = (ids: string[]) => {
+    const erste = (lists || []).find((l: any) => l.id === ids[0]);
+    store.setSettings({ pair: erste ? erste.pair : settings.pair, statLists: ids });
+    window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
+  };
+
+  /* Die Zeile sagt, was zu tun ist, nicht bloss einen Prozentsatz: „in 11
+   * Tagen · 9 von 24 sitzen noch nicht". */
+  const zeilenText = (t: any) => {
+    const offen = t.prof.total - ((t.prof.dist.sitzt || 0) + (t.prof.dist.sitzt_fast || 0));
+    const stand = offen === 0
+      ? txt("alle {n} sitzen", { n: t.prof.total })
+      : txt("{a} von {b} sitzen noch nicht", { a: offen, b: t.prof.total });
+    return (t.daysLeft == null ? txt("läuft nebenher") : countdown(t.daysLeft)) + " · " + stand;
+  };
+  const planZeile = (t: any) => {
+    const Pp = PAIRS[t.list.pair] || PAIRS["en-de"];
+    const gewaehlt = picked.includes(t.list.id);
+    return (
+      <div key={t.list.id} className={"planrow" + (gewaehlt ? " picked" : "")}>
+        <button className="planrow-pick" onClick={() => toggle(t.list.id)}
+          aria-pressed={gewaehlt} aria-label={txt("{name} auswählen", { name: t.list.name })}>
+          <span className="planrow-box">{gewaehlt && <Icon name="check" size={12} />}</span>
+        </button>
+        <div className="planrow-main">
+          <div className="planrow-top">
+            <span className="planrow-name">{t.list.name}</span>
+            <span className="planrow-lang">{Pp.short}</span>
+          </div>
+          <div className="planrow-sub">{zeilenText(t)}</div>
+          {/* Miniansicht: Balken ohne Legende — die Legende steht im Kalender. */}
+          <MasteryBar dist={t.prof.dist} total={t.prof.total} showLegend={false} />
+        </div>
+        <div className="planrow-acts">
+          <button className="btn btn-sm btn-primary" title={txt("Üben")} onClick={() => practise([t.list.id])}>
+            <Icon name="cards" size={14} />
+          </button>
+          <button className="btn btn-sm btn-ghost" title={txt("Statistik")} onClick={() => showStats(t.list)}>
+            <Icon name="chart" size={14} />
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   const countdown = (d: number) =>
     d < 0 ? txt(-d === 1 ? "vor {n} Tag" : "vor {n} Tagen", { n: -d })
@@ -138,7 +199,29 @@ export function PlanTab() {
 
   return (
     <div className="plantab">
-      <div className="cal">
+      <div className="ruest">
+        <div className="seg seg-view" role="group" aria-label={txt("Ansicht")}>
+          <button aria-pressed={ansicht === "kalender"} onClick={() => setAnsicht("kalender")}>
+            <Icon name="calendar" size={14} /> {txt("Kalender")}
+          </button>
+          <button aria-pressed={ansicht === "liste"} onClick={() => { setAnsicht("liste"); setOpenDay(null); }}>
+            <Icon name="list" size={14} /> {txt("Liste")}
+          </button>
+        </div>
+        {sichtbar.length > 1 && (
+          <label className="pill pill-sel">
+            <Icon name="swap" size={15} />
+            <span>{nurPair ? (PAIRS[nurPair]?.foreignLabel || nurPair) : txt("Alle Sprachen")}</span>
+            <span className="caret">▾</span>
+            <select value={nurPair} aria-label={txt("Sprache")} onChange={(e) => { setNurPair(e.target.value); setPicked([]); }}>
+              <option value="">{txt("Alle Sprachen")}</option>
+              {sichtbar.map((pp: any) => <option key={pp.id} value={pp.id}>{pp.foreignLabel} ⇄ {pp.nativeLabel}</option>)}
+            </select>
+          </label>
+        )}
+      </div>
+
+      {ansicht === "kalender" && <div className="cal">
         <div className="cal-head">
           <button className="icon-btn" title={txt("Voriger Monat")} onClick={() => shiftMonth(-1)}><Icon name="chevron-left" size={16} /></button>
           <button className="cal-title" onClick={toThisMonth} title={txt("Zum heutigen Monat")}>
@@ -176,53 +259,55 @@ export function PlanTab() {
             </span>
           ))}
         </div>
-      </div>
+      </div>}
 
       <div className="plan-day">
-        <div className="plan-day-head">
-          <div className="section-title">{openTitle}</div>
-          {openDay != null && <button className="btn btn-ghost btn-sm" onClick={() => { setOpenDay(null); setPicked([]); }}>{txt("Alle Termine")}</button>}
-        </div>
-
-        {openList.length === 0 ? (
-          <div className="empty">
-            <div className="big">{txt("Kein Termin")}</div>
-            <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum — dann erscheint sie hier.")}</div>
-          </div>
+        {ansicht === "kalender" ? (
+          <>
+            <div className="plan-day-head">
+              <div className="grp">{openDay != null ? openTitle : txt("Anstehend")}
+                <span className="hint">— {openDay != null ? txt("Auswahl aufheben") : txt("alle Termine")}</span>
+              </div>
+              {openDay != null && <button className="btn btn-ghost btn-sm" onClick={() => { setOpenDay(null); setPicked([]); }}>{txt("Alle Termine")}</button>}
+            </div>
+            {openList.length === 0 ? (
+              <div className="empty">
+                <div className="big">{txt("Kein Termin")}</div>
+                <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum — dann erscheint sie hier.")}</div>
+              </div>
+            ) : <div className="col" style={{ gap: 8 }}>{openList.map(planZeile)}</div>}
+          </>
         ) : (
-          <div className="col" style={{ gap: 10 }}>
-            {openList.map((t) => {
-              const P = PAIRS[t.list.pair] || PAIRS["en-de"];
-              return (
-                <div key={t.list.id} className={"planrow" + (picked.includes(t.list.id) ? " picked" : "")}>
-                  <button className="planrow-pick" onClick={() => toggle(t.list.id)}
-                    aria-pressed={picked.includes(t.list.id)} aria-label={txt("{name} auswählen", { name: t.list.name })}>
-                    <span className="planrow-box">{picked.includes(t.list.id) && <Icon name="check" size={12} />}</span>
-                  </button>
-                  <div className="planrow-main">
-                    <div className="planrow-top">
-                      <span className="planrow-name">{t.list.name}</span>
-                      <span className="planrow-lang">{P.short}</span>
-                      <span className="planrow-when" style={{ color: t.daysLeft <= 3 && t.daysLeft >= 0 ? "var(--bad)" : "var(--ink-faint)" }}>
-                        {countdown(t.daysLeft)}
-                      </span>
-                    </div>
-                    <div className="planrow-stand">
-                      <span className="planrow-dot" style={{ background: TONE_VAR[t.tone] }} />
-                      <b>{t.pct} %</b> {txt("bereit")}
-                      <span className="faint"> · {txt(t.prof.total === 1 ? "{n} Wort" : "{n} Wörter", { n: t.prof.total })}</span>
-                    </div>
-                    {/* Miniansicht: Balken ohne Legende — die Legende steht im Kalender. */}
-                    <MasteryBar dist={t.prof.dist} total={t.prof.total} showLegend={false} />
-                  </div>
-                  <div className="planrow-acts">
-                    <button className="btn btn-sm btn-primary" onClick={() => practise([t.list.id])}><Icon name="cards" size={14} /> {txt("Üben")}</button>
-                    <button className="btn btn-sm btn-ghost" onClick={() => showStats(t.list)}><Icon name="chart" size={14} /> {txt("Statistik")}</button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          /* Listenansicht: dieselben Daten ohne Raster — dafür mit „Ohne
+             Termin", die im Kalender keinen Platz hat. */
+          <>
+            {termine.filter((t) => t.daysLeft >= 0 && t.daysLeft <= 7).length > 0 && (
+              <>
+                <div className="grp">{txt("Diese Woche")}</div>
+                <div className="col" style={{ gap: 8 }}>{termine.filter((t) => t.daysLeft >= 0 && t.daysLeft <= 7).map(planZeile)}</div>
+              </>
+            )}
+            {termine.filter((t) => t.daysLeft > 7).length > 0 && (
+              <>
+                <div className="grp">{txt("Später")}</div>
+                <div className="col" style={{ gap: 8 }}>{termine.filter((t) => t.daysLeft > 7).map(planZeile)}</div>
+              </>
+            )}
+            {ohneTermin.length > 0 && (
+              <>
+                <div className="grp">{txt("Ohne Termin")}</div>
+                <div className="col" style={{ gap: 8 }}>{ohneTermin.map(planZeile)}</div>
+              </>
+            )}
+            {!termine.length && !ohneTermin.length && (
+              <div className="empty"><div className="big">{txt("Kein Termin")}</div>
+                <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum — dann erscheint sie hier.")}</div></div>
+            )}
+          </>
+        )}
+
+        {termine.length > 1 && (
+          <div className="quiet">{txt("Wörter aus der Liste mit dem näheren Termin kommen öfter dran")}</div>
         )}
 
         {picked.length > 1 && (
@@ -230,6 +315,9 @@ export function PlanTab() {
             <span>{txt("{n} Wortlisten ausgewählt", { n: picked.length })}</span>
             <button className="btn btn-sm btn-primary" onClick={() => practise(picked)}>
               <Icon name="cards" size={14} /> {txt("Gemeinsam üben")}
+            </button>
+            <button className="btn btn-sm" onClick={() => showStatsMany(picked)}>
+              <Icon name="chart" size={14} /> {txt("Statistik")}
             </button>
             <button className="btn btn-sm btn-ghost" onClick={() => setPicked([])}>{txt("Auswahl aufheben")}</button>
           </div>

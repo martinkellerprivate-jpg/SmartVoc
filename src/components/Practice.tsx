@@ -91,10 +91,14 @@ export function Practice() {
   // live only in Stats, not here.
   const SMART_ACCESS = [
     // Beschriftung laeuft beim Rendern durch txt().
-    { ref: "heute", label: "Heute dran", icon: "calendar", tone: "green" },
-    { ref: "due", label: "Fällige Wörter", icon: "target", tone: "amber" },
-    { ref: "wackeln", label: "Wackeln noch", icon: "flame", tone: "red" },
-    { ref: "baldfaellig", label: "Bald fällig", icon: "clock", tone: "amber" },
+    { ref: "heute", label: "Heute dran", icon: "calendar", tone: "green",
+      kurz: "Fälliges und Neues sinnvoll gemischt" },
+    { ref: "due", label: "Fällige Wörter", icon: "target", tone: "amber",
+      kurz: "Länger nicht geübt — jetzt auffrischen" },
+    { ref: "wackeln", label: "Wackeln noch", icon: "flame", tone: "red",
+      kurz: "Schon geübt, sitzt aber noch nicht sicher" },
+    { ref: "baldfaellig", label: "Bald fällig", icon: "clock", tone: "amber",
+      kurz: "Sitzt noch, wäre aber bald wieder dran" },
   ];
   // visible chips above; the Stats insight lists (leech/frischfragil/kurzvorsitzt) are
   // also valid practice scopes (started via „üben") but have no chip here.
@@ -545,16 +549,27 @@ export function Practice() {
   const smartCountOf = (ref) => ref === "heute"
     ? resolveToday(pairVocabAll, stats, store.lists, retentionFor(settings), settings.dailyGoal, settings.newPerDay).length
     : resolveSmart(ref, pairVocabAll, stats, settings.masteryCorrect, { retention: retentionFor(settings) }).filter(practiceable).length;
+  /* Smart Lists als eigene Gruppe mit Namen -- Wortlisten und Smart Lists
+   * schliessen einander aus, und das muss man sehen, nicht wissen muessen.
+   * Die Erklaerung steht unter jedem Namen statt hinter dem Fragezeichen:
+   * die Texte gab es schon, sie waren nur versteckt. */
   const smartChipsEl = (
-    <div className="lchips smart-chips p-smart">
-      {SMART_ACCESS.map((s) => (
-        <button key={s.ref} title={txt("Schnellzugriff")}
-          className={"lchip lchip-smart tone-" + s.tone + (validMulti.length === 0 && effective.kind === "smart" && effective.ref === s.ref ? " on" : "")}
-          onClick={() => pickScope("smart", s.ref)}>
-          <Icon name={s.icon} size={14} /> {s.label} <span className="lchip-n">{smartCountOf(s.ref)}</span>
-        </button>
-      ))}
-      <button className="chips-help" title={txt("Was bedeuten diese?")} aria-label={txt("Erklärung")} onClick={() => setChipsHelp(true)}>?</button>
+    <div className="p-smart">
+      <div className="scope-group-head">
+        <span className="lchips-label"><Icon name="sparkle" size={13} /> {txt("Smart Lists")}</span>
+        <button className="chips-help" title={txt("Was bedeuten diese?")} aria-label={txt("Erklärung")} onClick={() => setChipsHelp(true)}>?</button>
+      </div>
+      <div className="smartlist">
+        {SMART_ACCESS.map((s) => (
+          <button key={s.ref}
+            className={"li" + (validMulti.length === 0 && effective.kind === "smart" && effective.ref === s.ref ? " sel" : "")}
+            onClick={() => pickScope("smart", s.ref)}>
+            <Icon name={s.icon as any} size={14} />
+            <span className="g">{txt(s.label)}<div className="m">{txt(s.kurz)}</div></span>
+            <span className="lchip-n">{smartCountOf(s.ref)}</span>
+          </button>
+        ))}
+      </div>
     </div>
   );
   // FR3-5: kindgerechte Erklärung der vier Schnellzugriffe (als Möglichkeit formuliert).

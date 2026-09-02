@@ -37,8 +37,8 @@ export function toneLegend(settings: Partial<Settings> = {}): { tone: Tone; labe
   const green = settings.readyGreen ?? 95;
   const amber = settings.readyAmber ?? 70;
   return [
-    { tone: "ok", label: txt("bereit (ab {p} %)", { p: green }) },
-    { tone: "warn", label: txt("fast bereit (ab {p} %)", { p: amber }) },
-    { tone: "bad", label: txt("noch üben (unter {p} %)", { p: amber }) },
+    { tone: "ok", label: txt("bereit ab {p} %", { p: green }) },
+    { tone: "warn", label: txt("auf Kurs ab {p} %", { p: amber }) },
+    { tone: "bad", label: txt("darunter") },
   ];
 }
