@@ -1419,3 +1419,11 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 /* Wort im Detail: das Wort selbst gross im Kopf, die Werte rechtsbündig. */
 .wd-wort { font-family: var(--serif); font-size: 22px; font-weight: 600; line-height: 1.15; }
 .wd-wert { flex: none; max-width: 58%; text-align: right; font-size: 12.5px; color: var(--ink); }
+
+/* Die Rüstzeile der Wortlisten bleibt EINE Zeile: Sprache, Suche, Neue
+   Liste. Auf 402 Punkten reicht der Platz nur, wenn die Suche schrumpfen
+   darf — sie ist das einzige Element, das ohne Schaden kürzer wird. */
+.wl > .ruest { flex-wrap: nowrap; gap: 7px; }
+.wl > .ruest .search { flex: 1 1 auto; min-width: 0; }
+.wl > .ruest .search .field { min-width: 0; }
+.wl > .ruest .pill { flex: none; }
