@@ -43,7 +43,7 @@ export function Help() {
   const TEILE = [
     { id: "anleitung", label: txt("Anleitung") },
     { id: "tipps", label: txt("Lerntipps") },
-    { id: "theorie", label: txt("Lerntheorie") },
+    { id: "theorie", label: txt("Dahinter") },
   ];
 
   return (
@@ -108,7 +108,14 @@ export function Help() {
                 </div>
               )}
 
-              {teil === "theorie" && <Lerntheorie />}
+              {teil === "theorie" && (
+                <>
+                  {/* Der Reiter muss kurz sein, der Titel darf es nicht:
+                      "Lerntheorie" allein sagt nichts über DIESE App. */}
+                  <h3 className="help-chapter-title">{txt("Die Theorie hinter SmartVoc")}</h3>
+                  <Lerntheorie />
+                </>
+              )}
             </div>
           </div>
         </div>

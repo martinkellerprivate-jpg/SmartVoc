@@ -37,10 +37,10 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
     <div className="topbar">
       <div className="brand">
         <img className="brand-mark" src={markUrl} alt="" />
-        <div>
-          <div className="brand-name">{txt("SmartVoc")}</div>
-          <div className="brand-sub">{p.foreignLabel} ⇄ {p.nativeLabel} · {txt("{n} Wörter", { n: nWords })}</div>
-        </div>
+        {/* Nur der Name. Sprachpaar und Wortzahl standen darunter -- beides
+            sagt die Rüstzeile schon, und auf dem Handy wurde die Zeile
+            ohnehin auf Breite null gedrückt. */}
+        <div className="brand-name">{txt("SmartVoc")}</div>
       </div>
       <div className="topbar-spacer" />
       {auth.configured && (

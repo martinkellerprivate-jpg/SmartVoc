@@ -142,7 +142,7 @@ export function LerntheorieEN() {
   return (
     <div className="help-theory">
       <p className="help-lead">
-        This app does not guess when a word should come back. It works it out — using a
+        SmartVoc does not guess when a word should come back. It works it out — using a
         model that has been researched for over a hundred years. About five minutes to read.
       </p>
 

@@ -453,4 +453,6 @@ export const EN: Record<string, string> = {
   "mehrere möglich": "several possible",
   "eine davon": "one of these",
   "{p} % bereit": "{p} % ready",
+  "Dahinter": "Behind it",
+  "Die Theorie hinter SmartVoc": "The theory behind SmartVoc",
 };

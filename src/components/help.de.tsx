@@ -145,7 +145,7 @@ export function LerntheorieDE() {
   return (
     <div className="help-theory">
       <p className="help-lead">
-        Diese App rät nicht, wann ein Wort wiederkommt. Sie rechnet es aus — mit einem
+        SmartVoc rät nicht, wann ein Wort wiederkommt. Es rechnet es aus — mit einem
         Modell, an dem seit über hundert Jahren geforscht wird. Etwa fünf Minuten Lesezeit.
       </p>
 
