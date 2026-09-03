@@ -117,7 +117,27 @@ export function resolveToday(pairVocab: Word[], stats: Record<string, any>, list
   out.sort((a, b) => retrievabilityOf(stats[a.id], effFor(a), now) - retrievabilityOf(stats[b.id], effFor(b), now));
   const news = pairVocab.filter((w) => practiceable(w) && !(stats[w.id]?.fsrs)).slice(0, Math.max(0, newPerDay || 0));
   for (const w of news) { if (out.length >= dailyGoal) break; add(w); }       // 3) new quota toward goal
-  return dailyGoal ? out.slice(0, Math.max(dailyGoal, 1)) : out;
+
+  /* Im Endspurt gilt die Tagesgrenze nicht fuer die Pruefungsliste.
+   *
+   * Die Grenze schuetzt vor Rueckstau -- ein Problem, das man ueber Wochen
+   * hat. Zwei Tage vor einer Pruefung hat man ein anderes: es muss heute
+   * hinein. Dann ist es falsch, Woerter zurueckzuhalten, die morgen
+   * abgefragt werden. Also: Woerter aus einer Liste, deren Termin im
+   * Endspurt-Fenster liegt, zaehlen nicht gegen die Grenze; sie gilt nur
+   * fuer alles Uebrige. Nach dem Termin faellt alles auf den Normalfall
+   * zurueck, ohne dass jemand etwas umstellen muss. */
+  const endspurt = new Set<string>();
+  for (const l of (lists || [])) {
+    if (l.pair !== pair || !l.dueDate) continue;
+    const daysLeft = (l.dueDate - now) / DAY_MS;
+    if (daysLeft < 0 || daysLeft > getCfg().examWindowDays) continue;
+    for (const w of pairVocab) if ((w.lists || []).includes(l.id)) endspurt.add(w.id);
+  }
+  if (!dailyGoal) return out;
+  const dringend = out.filter((w) => endspurt.has(w.id));
+  const rest = out.filter((w) => !endspurt.has(w.id));
+  return [...dringend, ...rest.slice(0, Math.max(dailyGoal - dringend.length, 0))];
 }
 
 /* V17 — 7-day outlook: words coming due per day (from deriveProfile.due) + Zieldaten der Listen. */

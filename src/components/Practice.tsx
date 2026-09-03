@@ -907,6 +907,21 @@ export function Practice() {
    * Karten im Bild. Bei der letzten Karte liegt nichts mehr dahinter. */
   const schichten = Math.max(0, Math.min(4, (runRef.current ? remaining(runRef.current) : 1) - 1));
 
+  /* Im Endspurt hebt die App die Tagesgrenze fuer die Pruefungsliste auf.
+   * Das ist richtig, aber es erklaert sich nicht von selbst: die Zahl
+   * springt ploetzlich von 30 auf 60. Also sagen, warum. */
+  const endspurtListe = useMemo(() => {
+    const fenster = getCfg().examWindowDays;
+    for (const l of (store.lists || [])) {
+      if (l.pair !== pair || !l.dueDate) continue;
+      const tage = Math.ceil((l.dueDate - Date.now()) / 86400000);
+      if (tage < 0 || tage > fenster) continue;
+      const n = vocab.filter((w: any) => (w.lists || []).includes(l.id)).length;
+      if (n) return { name: l.name, tage, n };
+    }
+    return null;
+  }, [store.lists, pair, vocab]);
+
   const roundProgressEl = mode === "memorize" ? (
     /* Durchblättern zählt nicht -- dann darf dort auch kein Fortschritt
      * stehen, der etwas anderes behauptet. */
@@ -971,6 +986,15 @@ export function Practice() {
       <div className="practice-stage">
       <div className="card-scene p-card">
         {roundProgressEl}
+        {endspurtListe && (
+          <div className="endspurt">
+            <Icon name="target" size={13} />
+            {txt(endspurtListe.tage === 0 ? "„{liste}“ ist heute dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt."
+              : endspurtListe.tage === 1 ? "„{liste}“ ist morgen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt."
+              : "„{liste}“ ist in {t} Tagen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.",
+              { liste: endspurtListe.name, n: endspurtListe.n, t: endspurtListe.tage })}
+          </div>
+        )}
         {result && (
           <div className="urteil" style={{ ["--u" as any]: TONE_VAR[verdictMeta[result.verdict].tone] }}>
             <Icon name={verdictMeta[result.verdict].icon as any} size={15} />

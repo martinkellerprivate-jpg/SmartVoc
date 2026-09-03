@@ -724,4 +724,7 @@ export const EN: Record<string, string> = {
   "Wie viele ganz neue Wörter höchstens dazukommen. Das ist dein einziger Hebel auf die Menge: der Lernalgorithmus plant jede Karte für sich und kennt kein Tagespensum — eine falsch beantwortete Karte kommt sogar früher wieder, nicht später. Weniger neue Wörter heisst also weniger Rückstau, nicht langsameres Lernen.": "How many brand-new words come in at most. This is your only lever on volume: the algorithm schedules each card on its own and knows no daily quota — a card you got wrong even comes back sooner, not later. Fewer new words therefore means less backlog, not slower learning.",
   "Wann eine Liste als bereit gilt": "When a list counts as ready",
   "Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender. Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.": "From this share of solid words a list counts as ready — green in the calendar. Below that the calendar shows red. The key picks up both numbers.",
+  "„{liste}“ ist heute dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.": "“{liste}” is due today — all {n} words are in play, the daily cap is suspended.",
+  "„{liste}“ ist morgen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.": "“{liste}” is due tomorrow — all {n} words are in play, the daily cap is suspended.",
+  "„{liste}“ ist in {t} Tagen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.": "“{liste}” is due in {t} days — all {n} words are in play, the daily cap is suspended.",
 };
