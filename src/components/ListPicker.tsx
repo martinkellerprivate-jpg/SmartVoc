@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { txt } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { Icon } from "../ui/Icon";
+import { listReadiness } from "../lib/readiness";
+import { retentionFor } from "../lib/fsrs";
 
 /* Das Fenster, in dem man eine Ziel-Wortliste waehlt oder eine neue anlegt.
  *
@@ -16,8 +18,11 @@ import { Icon } from "../ui/Icon";
 
 /* Modal to choose / create a target list (within `pair`). onPick(id, name). */
 export function ListPicker({ open, title, subtitle, onPick, onClose, pair }) {
-  const { lists, addList } = useStore();
+  const { lists, addList, vocab, stats, settings } = useStore();
   const pairLists = pair ? lists.filter((l) => l.pair === pair) : lists;
+  /* Der Stand steht auch hier -- eine Wortliste ohne ihren Stand zu zeigen
+   * heisst, den Nutzer blind waehlen zu lassen. */
+  const stand = (l: any) => listReadiness(l, vocab, stats, retentionFor(settings), settings);
   const [choice, setChoice] = useState(pairLists[0] ? pairLists[0].id : "__new");
   const [newName, setNewName] = useState("");
   useEffect(() => { if (open) { setChoice(pairLists[0] ? pairLists[0].id : "__new"); setNewName(""); } }, [open]);
@@ -48,7 +53,14 @@ export function ListPicker({ open, title, subtitle, onPick, onClose, pair }) {
           {pairLists.map((l) => (
             <label key={l.id} className={"picker-row" + (choice === l.id ? " on" : "")}>
               <input type="radio" name="lp" checked={choice === l.id} onChange={() => setChoice(l.id)} />
-              <span className="grow">{l.name}</span>
+              <span className="grow">{l.name}
+                {(() => { const st = stand(l); return st.total > 0 ? (
+                  <div className="muted" style={{ fontSize: 12, fontWeight: 400 }}>
+                    {txt("{n} Wörter", { n: st.total })} · {txt("{p} % bereit", { p: st.pct })}
+                  </div>) : null; })()}
+              </span>
+              {(() => { const st = stand(l); return st.total > 0 ? (
+                <span className="ltab-dot" style={{ background: st.farbe, marginRight: 0 }} />) : null; })()}
             </label>
           ))}
           <label className={"picker-row" + (choice === "__new" ? " on" : "")}>

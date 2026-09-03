@@ -88,6 +88,16 @@ export function WordList() {
 
   const pairLists = useMemo(() => lists.filter((l) => l.pair === pair), [lists, pair]);
   const activeListObj = lists.find((l: any) => l.id === activeList);
+  /* Der Stand JEDER Liste -- nicht nur der offenen. Wo kein Platz fuer
+   * Balken und Prozent ist, steht der Ampelpunkt; das ist dieselbe Zahl in
+   * der knapperen Darstellung. */
+  const listenStand = useMemo(() => {
+    const ret = retentionFor(settings);
+    const m: Record<string, any> = {};
+    for (const l of pairLists) m[l.id] = listReadiness(l, vocab, stats, ret, settings);
+    return m;
+  }, [pairLists, vocab, stats, settings]);
+
   /* Stand der offenen Liste. Nur rechnen, wenn eine offen ist -- ueber alle
    * Woerter zu mitteln waere eine andere Aussage als "diese Liste sitzt". */
   const activeListStand = useMemo(() => {
@@ -252,15 +262,19 @@ export function WordList() {
     <div>
       {/* list bar */}
       <div className="listbar">
+        {pairLists.map((l) => {
+          const st = listenStand[l.id];
+          return (
+            <button key={l.id} className={"ltab" + (activeList === l.id ? " on" : "")} onClick={() => setActiveList(l.id)}
+              title={st ? txt("{p} % bereit", { p: st.pct }) : undefined}>
+              {st && st.total > 0 && <span className="ltab-dot" style={{ background: st.farbe }} />}
+              {l.name} <span className="ltab-n">{pairVocab.filter((w) => (w.lists || []).includes(l.id)).length}</span>
+            </button>
+          );
+        })}
         <button className={"ltab" + (activeList === "__all" ? " on" : "")} onClick={() => setActiveList("__all")}>
           {txt("Alle Wörter")} <span className="ltab-n">{pairVocab.length}</span>
         </button>
-        {pairLists.map((l) => (
-          <button key={l.id} className={"ltab" + (activeList === l.id ? " on" : "")} onClick={() => setActiveList(l.id)}>
-            {l.name} <span className="ltab-n">{pairVocab.filter((w) => (w.lists || []).includes(l.id)).length}</span>
-          </button>
-        ))}
-        <button className="ltab ltab-new" onClick={newList}><Icon name="plus" size={14} /> {txt("Neue Liste")}</button>
       </div>
 
       {/* active list header */}
@@ -335,7 +349,8 @@ export function WordList() {
           <Icon name="search" size={17} />
           <input className="field" placeholder={txt("Wörter suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
-        <button className="btn btn-sm btn-amber" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> {txt("Einfügen")}</button>
+        <button className="btn btn-sm btn-primary" onClick={newList}><Icon name="plus" size={15} /> {txt("Neue Liste")}</button>
+        <button className="btn btn-sm" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> {txt("Einfügen")}</button>
         {isConfigured && <button className="btn btn-sm" onClick={() => openImport()} title={txt("Eine Liste, die dir jemand geteilt hat, übernehmen")}><Icon name="download" size={15} /> {txt("Geteilte Liste importieren")}</button>}
         <button className={"btn btn-sm" + (selectMode ? " btn-primary" : "")} onClick={() => { setSelectMode((m) => !m); setSelectedIds([]); }}><Icon name="check" size={15} /> {txt(selectMode ? "Auswahl beenden" : "Auswählen")}</button>
       </div>

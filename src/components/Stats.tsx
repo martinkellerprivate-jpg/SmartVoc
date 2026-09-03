@@ -7,6 +7,7 @@ import { deriveProfile, retentionFor, STUFE_ORDER } from "../lib/fsrs";
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { MasteryBar } from "../ui/MasteryBar";
+import { listReadiness } from "../lib/readiness";
 import { WordDetailModal } from "./WordDetailModal";
 import {
   ZEITRAEUME, type Zeitraum, sammleAntworten, antwortBilanz, fehlerarten,
@@ -173,11 +174,15 @@ export function Stats() {
                   <div className="list">
                     {lists.filter((l: any) => l.pair === statPair).map((l: any) => {
                       const an = settings.statLists.includes(l.id);
+                      const st = listReadiness(l, vocab, stats, ret, settings);
                       return (
                         <button key={l.id} className={"li" + (an ? " sel" : "")}
                           onClick={() => setzeUmfang(statPair, an ? settings.statLists.filter((x: string) => x !== l.id) : [...settings.statLists, l.id])}>
                           <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
-                          <span className="g">{l.name}</span>
+                          <span className="g">{l.name}
+                            {st.total > 0 && <div className="m">{txt("{n} Wörter", { n: st.total })} · {txt("{p} % bereit", { p: st.pct })}</div>}
+                          </span>
+                          {st.total > 0 && <span className="ltab-dot" style={{ background: st.farbe, marginRight: 0, alignSelf: "center" }} />}
                         </button>
                       );
                     })}
