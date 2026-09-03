@@ -10,7 +10,6 @@ import { deleteCloudAccount } from "../sync/share";
 import { STARTERS, activateStarter, isStarterActivated } from "../data/starter";
 import { PAIRS } from "../lib/pairs";
 import { DEFAULTS, previewStabilityGood, retentionFor } from "../lib/fsrs";
-import { fitStatus } from "../lib/reviewlog";
 import { FsrsValuesModal } from "./FsrsValuesModal";
 import { toneLegend, TONE_VAR } from "../lib/readiness";
 
@@ -128,9 +127,12 @@ export function SettingsTab() {
   const speed = cfgVal("learningSpeed");
   const haeltAtSpeed = previewStabilityGood(speed, advRet, 3);
   const haeltBase = previewStabilityGood(1, advRet, 3);
-  const reviewStatus = fitStatus(store.reviews || {}, !!settings.autoFit, false);
+  /* Uebersetzt wird hier, nicht an den sechzehn Aufrufstellen: die Texte
+   * gehoeren zum Regler, und ein vergessenes txt() an einer von sechzehn
+   * Stellen faellt niemandem auf, bis die Oberflaeche auf Englisch steht
+   * und zwei Absaetze deutsch bleiben. */
   const advParam = (k: string, title: string, desc: string, min: number, max: number, step: number, fmt?: any) => (
-    <Field title={title} desc={desc} recLabel={fmt ? fmt((DEFAULTS as any)[k]) : (DEFAULTS as any)[k]} atRec={cfgVal(k) === (DEFAULTS as any)[k]}>
+    <Field title={txt(title)} desc={txt(desc)} recLabel={fmt ? fmt((DEFAULTS as any)[k]) : (DEFAULTS as any)[k]} atRec={cfgVal(k) === (DEFAULTS as any)[k]}>
       <div className="col" style={{ gap: 6, width: "100%" }}>
         <SliderControl value={cfgVal(k)} min={min} max={max} step={step} onChange={(v: number) => set(k, v)} fmt={fmt} />
         {cfgVal(k) !== (DEFAULTS as any)[k] && <button className="btn btn-ghost btn-sm" style={{ alignSelf: "flex-end" }} onClick={() => resetCfg(k)}><Icon name="refresh" size={13} /> {txt("Auf Standard")}</button>}
@@ -156,7 +158,7 @@ export function SettingsTab() {
       <div className="set-section">
         <div className="set-section-h"><Icon name="cards" size={16} /> {txt("Üben")}</div>
         <Field title={txt("Antwortart")} recLabel={txt("Eintippen")} atRec={atR("mode")}
-          desc="Eintippen prägt am stärksten ein. Selbstkontrolle heisst: umdrehen und selbst beurteilen. Durchblättern zählt nicht für den Lernstand.">
+          desc={txt("Eintippen prägt am stärksten ein. Selbstkontrolle heisst: umdrehen und selbst beurteilen. Durchblättern zählt nicht für den Lernstand.")}>
           <select className="field" style={{ width: "100%" }} value={settings.mode} onChange={(e) => set("mode", e.target.value)}>
             <option value="type">{txt("Eintippen")}</option>
             <option value="choice">{txt("Auswählen")}</option>
@@ -165,19 +167,19 @@ export function SettingsTab() {
           </select>
         </Field>
         <Field title={txt("Anzahl Auswahlmöglichkeiten")} recLabel={R.choicesCount} atRec={atR("choicesCount")}
-          desc="Wie viele Möglichkeiten beim Auswählen zur Wahl stehen.">
+          desc={txt("Wie viele Möglichkeiten beim Auswählen zur Wahl stehen.")}>
           <SliderControl value={settings.choicesCount} min={2} max={6} step={1} onChange={(v) => set("choicesCount", v)} />
         </Field>
         <Field title={txt("Beispielsätze anzeigen")} recLabel={txt("An")} atRec={atR("showExamples")}
-          desc="Zeigt die Beispielsätze eines Worts auf der Lösungsseite der Karte — dort, wo du die Antwort siehst. Ein Wort im Satz zu sehen, hilft beim Behalten. Sätze, die du nicht erfasst hast, ändern nichts.">
+          desc={txt("Zeigt die Beispielsätze eines Worts auf der Lösungsseite der Karte — dort, wo du die Antwort siehst. Ein Wort im Satz zu sehen, hilft beim Behalten. Sätze, die du nicht erfasst hast, ändern nichts.")}>
           <Toggle value={settings.showExamples !== false} onChange={(v) => set("showExamples", v)} />
         </Field>
         <Field title={txt("Aussprache anzeigen")} recLabel={txt("An")} atRec={atR("showPhonetic")}
-          desc="Zeigt die Lautschrift eines Worts klein unter dem Fremdwort — überall dort, wo das Fremdwort selbst zu sehen ist. Wörter ohne erfasste Lautschrift bleiben unverändert.">
+          desc={txt("Zeigt die Lautschrift eines Worts klein unter dem Fremdwort — überall dort, wo das Fremdwort selbst zu sehen ist. Wörter ohne erfasste Lautschrift bleiben unverändert.")}>
           <Toggle value={settings.showPhonetic !== false} onChange={(v) => set("showPhonetic", v)} />
         </Field>
         <Field title={txt("Tagesziel (Karten)")} recLabel={`${R.dailyGoal} (etwa 15 Minuten)`} atRec={atR("dailyGoal")}
-          desc="Eine kurze Einheit jeden Tag bringt mehr als eine lange alle paar Tage.">
+          desc={txt("Eine kurze Einheit jeden Tag bringt mehr als eine lange alle paar Tage.")}>
           <SliderControl value={settings.dailyGoal} min={10} max={80} step={5} onChange={(v) => set("dailyGoal", v)} />
         </Field>
       </div>
@@ -186,11 +188,11 @@ export function SettingsTab() {
       <div className="set-section">
         <div className="set-section-h"><Icon name="flame" size={16} /> {txt("Wiederholung")}</div>
         <Field title={txt("Neue Wörter pro Tag")} recLabel={`${R.newPerDay} (8 bis 12 sind ideal)`} atRec={atR("newPerDay")}
-          desc="Begrenzt, wie viele ganz neue Wörter pro Tag dazukommen. Ist die Zahl erreicht, geht es nur noch ums Wiederholen.">
+          desc={txt("Begrenzt, wie viele ganz neue Wörter pro Tag dazukommen. Ist die Zahl erreicht, geht es nur noch ums Wiederholen.")}>
           <SliderControl value={settings.newPerDay} min={3} max={30} step={1} onChange={(v) => set("newPerDay", v)} />
         </Field>
-        <Field title={txt("Lernintensität")} recLabel="Normal" atRec={(settings.targetRetention ?? 0.9) === 0.9}
-          desc="Wie gut die App ein Wort im Gedächtnis halten will, bevor sie es zur Wiederholung bringt. Intensiver = häufigere Wiederholung, sicherer im Behalten. Alles Weitere regelt die App automatisch.">
+        <Field title={txt("Lernintensität")} recLabel={txt("Normal")} atRec={(settings.targetRetention ?? 0.9) === 0.9}
+          desc={txt("Wie gut die App ein Wort im Gedächtnis halten will, bevor sie es zur Wiederholung bringt. Intensiver = häufigere Wiederholung, sicherer im Behalten. Alles Weitere regelt die App automatisch.")}>
           <Seg value={(settings.targetRetention ?? 0.9) >= 0.95 ? "intensiv" : (settings.targetRetention ?? 0.9) <= 0.85 ? "locker" : "normal"}
             onChange={(v) => setSettings({ lernIntensity: v, targetRetention: { locker: 0.85, normal: 0.9, intensiv: 0.95 }[v] })}
             options={[{ v: "locker", label: "Locker" }, { v: "normal", label: "Normal" }, { v: "intensiv", label: "Intensiv" }]} />
@@ -201,15 +203,15 @@ export function SettingsTab() {
       <div className="set-section">
         <div className="set-section-h"><Icon name="check" size={16} /> {txt("Antwortprüfung")}</div>
         <Field title={txt("Gross- und Kleinschreibung egal")} recLabel={txt("An")} atRec={atR("lenientCase")}
-          desc="„Hund“ und „hund“ gelten als dieselbe Antwort.">
+          desc={txt("„Hund“ und „hund“ gelten als dieselbe Antwort.")}>
           <Toggle value={settings.lenientCase} onChange={(v) => set("lenientCase", v)} />
         </Field>
         <Field title={txt("Umlaute und Akzente streng")} recLabel={txt("Aus")} atRec={atR("strictAccents")}
-          desc="When off, “grun” for “grün” is a small mistake (partial credit) instead of fully wrong.">
+          desc={txt("When off, “grun” for “grün” is a small mistake (partial credit) instead of fully wrong.")}>
           <Toggle value={settings.strictAccents} onChange={(v) => set("strictAccents", v)} />
         </Field>
         <Field title={txt("Artikel (der/die/das)")} recLabel={txt("Nötig, kleiner Abzug")} atRec={atR("articleMode")}
-          desc="Wie ein fehlender oder falscher Artikel bewertet wird. Nötig heisst: er muss stehen. Freiwillig heisst: er wird gar nicht angeschaut.">
+          desc={txt("Wie ein fehlender oder falscher Artikel bewertet wird. Nötig heisst: er muss stehen. Freiwillig heisst: er wird gar nicht angeschaut.")}>
           <select className="field" style={{ width: "100%" }} value={settings.articleMode} onChange={(e) => set("articleMode", e.target.value)}>
             <option value="required-full">{txt("Nötig · voller Abzug")}</option>
             <option value="required-partial">{txt("Nötig · kleiner Abzug")}</option>
@@ -217,7 +219,7 @@ export function SettingsTab() {
           </select>
         </Field>
         <Field title={txt("Fast richtig zulassen")} recLabel={txt("An")} atRec={atR("acceptPartial")}
-          desc="Ein einzelner Tippfehler zählt als fast richtig und wird in der Lösung hervorgehoben. Aus heisst: knapp daneben ist falsch.">
+          desc={txt("Ein einzelner Tippfehler zählt als fast richtig und wird in der Lösung hervorgehoben. Aus heisst: knapp daneben ist falsch.")}>
           <Toggle value={settings.acceptPartial} onChange={(v) => set("acceptPartial", v)} />
         </Field>
       </div>
@@ -226,7 +228,7 @@ export function SettingsTab() {
       <div className="set-section">
         <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprachen")}</div>
         <Field title={txt("Sichtbare Sprachen")}
-          desc="Bestimmt, welche Sprachen oben zur Auswahl stehen. Eine abgeschaltete Sprache wird nur ausgeblendet — ihre Wörter, Listen und Lernstände bleiben erhalten und sind sofort wieder da, wenn du sie erneut einschaltest.">
+          desc={txt("Bestimmt, welche Sprachen oben zur Auswahl stehen. Eine abgeschaltete Sprache wird nur ausgeblendet — ihre Wörter, Listen und Lernstände bleiben erhalten und sind sofort wieder da, wenn du sie erneut einschaltest.")}>
           <div className="col" style={{ gap: 8, width: "100%" }}>
             {Object.values(PAIRS).map((p: any) => (
               <label key={p.id} className="row" style={{ gap: 10, alignItems: "center", justifyContent: "space-between" }}>
@@ -240,15 +242,15 @@ export function SettingsTab() {
 
       <div className="set-section">
         <div className="set-section-h"><Icon name="list" size={16} /> {txt("Latein")}</div>
-        <Field title={txt("Abfrage-Form")} recLabel="L2 (Grundform)" atRec={atR("latinMode")}
-          desc="Gilt nur für das Paar Latein ⇄ Deutsch. L2: die Karte zeigt die volle Lernform, abgefragt wird nur die Grundform. L3: du gibst die vollständigen Stammformen ein (Reihenfolge egal).">
+        <Field title={txt("Abfrage-Form")} recLabel={txt("L2 (Grundform)")} atRec={atR("latinMode")}
+          desc={txt("Gilt nur für das Paar Latein ⇄ Deutsch. L2: die Karte zeigt die volle Lernform, abgefragt wird nur die Grundform. L3: du gibst die vollständigen Stammformen ein (Reihenfolge egal).")}>
           <select className="field" style={{ width: "100%" }} value={settings.latinMode} onChange={(e) => set("latinMode", e.target.value)}>
             <option value="L2">{txt("L2 · Grundform abfragen")}</option>
             <option value="L3">{txt("L3 · volle Lernform abfragen")}</option>
           </select>
         </Field>
-        <Field title={txt("Längenstriche nicht nötig")} recLabel="Aus (Längenstriche zählen)" atRec={!settings.latinMacronsOptional}
-          desc="Längenstriche (ā ē ī ō ū) sind auf Handy und Mac mühsam zu tippen. Aus: fehlt ein Strich, gibt es Punktabzug („fast“). Ein: die Antwort zählt als richtig — die Lösung markiert die Striche trotzdem rot, damit du sie siehst. Gilt nur für Latein.">
+        <Field title={txt("Längenstriche nicht nötig")} recLabel={txt("Aus (Längenstriche zählen)")} atRec={!settings.latinMacronsOptional}
+          desc={txt("Längenstriche (ā ē ī ō ū) sind auf Handy und Mac mühsam zu tippen. Aus: fehlt ein Strich, gibt es Punktabzug („fast“). Ein: die Antwort zählt als richtig — die Lösung markiert die Striche trotzdem rot, damit du sie siehst. Gilt nur für Latein.")}>
           <Toggle value={!!settings.latinMacronsOptional} onChange={(v) => set("latinMacronsOptional", v)} />
         </Field>
       </div>
@@ -256,8 +258,8 @@ export function SettingsTab() {
       {/* Lernhilfen */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="hint" size={16} /> {txt("Lernhilfen")}</div>
-        <Field title={txt("Lerntipp-Einblendungen")} recLabel="Gelegentlich" atRec={atR("tipsFrequency")}
-          desc="Kurze Lerntipps tauchen an natürlichen Pausen auf (nie mitten in der Antwort) und lassen sich wegklicken.">
+        <Field title={txt("Lerntipp-Einblendungen")} recLabel={txt("Gelegentlich")} atRec={atR("tipsFrequency")}
+          desc={txt("Kurze Lerntipps tauchen an natürlichen Pausen auf (nie mitten in der Antwort) und lassen sich wegklicken.")}>
           <select className="field" style={{ width: "100%" }} value={settings.tipsFrequency} onChange={(e) => set("tipsFrequency", e.target.value)}>
             <option value="off">{txt("Aus")}</option>
             <option value="occasional">{txt("Gelegentlich")}</option>
@@ -282,14 +284,14 @@ export function SettingsTab() {
       {/* Übungsplan — die Schwellen der Ampel */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="calendar" size={16} /> {txt("Übungsplan")}</div>
-        <Field title={txt("Bereit ab")} recLabel="95 %" atRec={atR("readyGreen")}
-          desc="Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender.">
+        <Field title={txt("Bereit ab")} recLabel={txt("95 %")} atRec={atR("readyGreen")}
+          desc={txt("Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender.")}>
           <SliderControl value={settings.readyGreen ?? 95} min={80} max={100} step={1}
             onChange={(v) => set("readyGreen", Math.max(v, (settings.readyAmber ?? 70) + 1))}
             fmt={(v) => v + " %"} />
         </Field>
-        <Field title={txt("Fast bereit ab")} recLabel="70 %" atRec={atR("readyAmber")}
-          desc="Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.">
+        <Field title={txt("Fast bereit ab")} recLabel={txt("70 %")} atRec={atR("readyAmber")}
+          desc={txt("Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.")}>
           <SliderControl value={settings.readyAmber ?? 70} min={40} max={94} step={1}
             onChange={(v) => set("readyAmber", Math.min(v, (settings.readyGreen ?? 95) - 1))}
             fmt={(v) => v + " %"} />
@@ -307,24 +309,24 @@ export function SettingsTab() {
       <div className="set-section">
         <div className="set-section-h"><Icon name="swatch" size={16} /> {txt("Erscheinungsbild")}</div>
         <CardPreview />
-        <Field title={txt("Erscheinungsbild")} recLabel="Automatisch" atRec={atR("appearance")}
-          desc="Hell, dunkel oder dem Gerät folgen. Getrennt vom Farbschema — beim Wechsel bleibt dein Schema erhalten.">
+        <Field title={txt("Erscheinungsbild")} recLabel={txt("Automatisch")} atRec={atR("appearance")}
+          desc={txt("Hell, dunkel oder dem Gerät folgen. Getrennt vom Farbschema — beim Wechsel bleibt dein Schema erhalten.")}>
           <select className="field" style={{ width: "100%" }} value={settings.appearance} onChange={(e) => set("appearance", e.target.value)}>
             <option value="auto">{txt("Automatisch (folgt dem Gerät)")}</option>
             <option value="light">{txt("Hell")}</option>
             <option value="dark">{txt("Dunkel")}</option>
           </select>
         </Field>
-        <Field title={txt("Farbschema")} recLabel="Kladde" atRec={atR("scheme")}
-          desc="Grund, Tinte und Akzent für die ganze App. Jedes Schema gibt es hell und dunkel.">
+        <Field title={txt("Farbschema")} recLabel={txt("Kladde")} atRec={atR("scheme")}
+          desc={txt("Grund, Tinte und Akzent für die ganze App. Jedes Schema gibt es hell und dunkel.")}>
           <select className="field" style={{ width: "100%" }} value={settings.scheme} onChange={(e) => set("scheme", e.target.value)}>
             <option value="kladde">{txt("Kladde (warmes Kraftpapier)")}</option>
             <option value="leinen">{txt("Leinen (kühler, Tintenblau)")}</option>
             <option value="altpapier">{txt("Altpapier (graubraun, Stempelrot)")}</option>
           </select>
         </Field>
-        <Field title={txt("Kartenstil")} recLabel="Liniert" atRec={atR("cardStyle")}
-          desc="Nur die Übungskarte. Nimmt die Farben des gewählten Schemas an.">
+        <Field title={txt("Kartenstil")} recLabel={txt("Liniert")} atRec={atR("cardStyle")}
+          desc={txt("Nur die Übungskarte. Nimmt die Farben des gewählten Schemas an.")}>
           <select className="field" style={{ width: "100%" }} value={settings.cardStyle} onChange={(e) => set("cardStyle", e.target.value)}>
             <option value="ruled">{txt("Liniert")}</option>
             <option value="plain">{txt("Blanko")}</option>
@@ -332,8 +334,8 @@ export function SettingsTab() {
             <option value="linen">{txt("Leinen")}</option>
           </select>
         </Field>
-        <Field title={txt("Kartenschrift")} recLabel="Serif" atRec={atR("cardFont")}
-          desc="Schrift des grossen Karten-Worts und der Antwort. Die übrige Oberfläche bleibt gleich.">
+        <Field title={txt("Kartenschrift")} recLabel={txt("Serif")} atRec={atR("cardFont")}
+          desc={txt("Schrift des grossen Karten-Worts und der Antwort. Die übrige Oberfläche bleibt gleich.")}>
           <select className="field" style={{ width: "100%" }} value={settings.cardFont} onChange={(e) => set("cardFont", e.target.value)}>
             <option value="serif">{txt("Serif (Source Serif)")}</option>
             <option value="arial">{txt("Arial")}</option>
@@ -348,7 +350,7 @@ export function SettingsTab() {
         {STARTERS.map((s) => {
           const done = isStarterActivated(settings, s.pair, s.stufe);
           return (
-            <Field key={s.key} title={s.label} desc={`${s.count} häufige Wörter. Wird als eigene Wortliste hinzugefügt; bereits vorhandene Wörter werden übersprungen.`}>
+            <Field key={s.key} title={s.label} desc={txt("{n} häufige Wörter. Wird als eigene Wortliste hinzugefügt; bereits vorhandene Wörter werden übersprungen.", { n: s.count })}>
               {done
                 ? <span className="badge green"><span className="dot" />{txt("Aktiviert")}</span>
                 : <button className="btn btn-sm" onClick={() => addStarter(s.pair, s.stufe)}><Icon name="plus" size={15} /> {txt("Hinzufügen")}</button>}
@@ -367,12 +369,12 @@ export function SettingsTab() {
         {advOpen && (
           <>
             <div className="muted" style={{ fontSize: 13, marginBottom: 12, maxWidth: 560 }}>
-              Für Neugierige. Die App funktioniert mit den Standardwerten optimal — alles hier ist optional und jederzeit zurücksetzbar.
+              {txt("Für Neugierige. Die App funktioniert mit den Standardwerten optimal — alles hier ist optional und jederzeit zurücksetzbar.")}
             </div>
 
             <Field title={txt("Lerntempo")} atRec={cfgVal("learningSpeed") === DEFAULTS.learningSpeed}
-              recLabel="1,0× (normal)"
-              desc="Wie schnell ein Wort an Festigkeit gewinnt, wenn du es richtig hast. Höher = die App nimmt schnellere Fortschritte an und fragt seltener nach (riskanter); niedriger = vorsichtiger, häufiger.">
+              recLabel={txt("1,0× (normal)")}
+              desc={txt("Wie schnell ein Wort an Festigkeit gewinnt, wenn du es richtig hast. Höher = die App nimmt schnellere Fortschritte an und fragt seltener nach (riskanter); niedriger = vorsichtiger, häufiger.")}>
               <div className="col" style={{ gap: 6, width: "100%" }}>
                 <SliderControl value={speed} min={0.6} max={1.6} step={0.05} onChange={(v: number) => set("learningSpeed", v)} fmt={(v: number) => v.toFixed(2) + "×"} />
                 <div className="set-rec" style={{ fontSize: 12.5 }}>{txt("Beispiel: 3× richtig hintereinander → hält")} <b>~{Math.round(haeltAtSpeed)} statt ~{Math.round(haeltBase)} Tage</b>.</div>
@@ -403,13 +405,9 @@ export function SettingsTab() {
             {advParam("STALE_MIN", "Pause bis Neustart (Minuten)", "Nach so vielen Minuten Pause beginnt die App die Übungsrunde frisch, damit sie zum aktuellen Stand passt.", 10, 120, 5, (v: number) => `${v} min`)}
             {advParam("GENUG_KARTEN", "Hinweis „Genug für heute“ ab", "Ab so vielen Karten in einer Runde schlägt die App eine Pause vor — ganz ohne Zwang.", 10, 100, 5)}
 
-            <Field title={txt("Auto-Anpassung")} atRec={!settings.autoFit} recLabel="Aus"
-              desc="Lässt die App das Gedächtnis-Modell langfristig an deine Antworten anpassen. Sammelt ab sofort einen Lern-Verlauf; die eigentliche Feinjustierung folgt in einem späteren Update. Standard: aus.">
-              <div className="col" style={{ gap: 6, width: "100%", alignItems: "flex-end" }}>
-                <Toggle value={!!settings.autoFit} onChange={(v: boolean) => set("autoFit", v)} />
-                <div className="set-rec" style={{ fontSize: 12.5 }}>{reviewStatus.text}</div>
-                <button className="btn btn-ghost btn-sm" onClick={() => setFsrsOpen(true)}><Icon name="chart" size={13} /> {txt("FSRS-Werte ansehen")}</button>
-              </div>
+            <Field title={txt("Das Gedächtnis-Modell")}
+              desc={txt("Womit die App rechnet: das Behaltensziel, die abgeleiteten Schwellen und die 19 Modell-Gewichte. Nur zum Ansehen — die App passt diese Werte nicht an dich an und zeichnet dafür auch nichts auf.")}>
+              <button className="btn btn-ghost btn-sm" onClick={() => setFsrsOpen(true)}><Icon name="chart" size={13} /> {txt("Werte ansehen")}</button>
             </Field>
           </>
         )}
@@ -420,7 +418,7 @@ export function SettingsTab() {
       {/* Konto & Daten */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="download" size={16} /> {txt("Konto & Daten")}</div>
-        <Field title={txt("Daten exportieren")} desc="Lädt alle deine Wörter, Listen, Fortschritte und Einstellungen als JSON-Datei herunter.">
+        <Field title={txt("Daten exportieren")} desc={txt("Lädt alle deine Wörter, Listen, Fortschritte und Einstellungen als JSON-Datei herunter.")}>
           <button className="btn btn-sm" onClick={doExport}><Icon name="download" size={15} /> {txt("Exportieren")}</button>
         </Field>
         <Field title={txt("Datenschutz")} desc={txt("Was gespeichert wird, wo es liegt und was nicht passiert.")}>
@@ -432,7 +430,7 @@ export function SettingsTab() {
         <Field title={txt("Fortschritt zurücksetzen")} desc={txt("Löscht Punkte und Verlauf. Deine Wörter und Wortlisten bleiben.")}>
           <button className="btn btn-sm btn-ghost" onClick={() => setResetOpen(true)}><Icon name="refresh" size={15} /> {txt("Zurücksetzen")}</button>
         </Field>
-        <Field title={txt("Account löschen")} desc={cloudActive ? "Löscht deine Daten endgültig – lokal und in der Cloud. Das kann nicht rückgängig gemacht werden." : "Löscht alle Daten auf diesem Gerät. Das kann nicht rückgängig gemacht werden."}>
+        <Field title={txt("Account löschen")} desc={cloudActive ? txt("Löscht deine Daten endgültig — lokal und in der Cloud. Das kann nicht rückgängig gemacht werden.") : txt("Löscht alle Daten auf diesem Gerät. Das kann nicht rückgängig gemacht werden.")}>
           <button className="btn btn-sm" style={{ borderColor: "var(--red)", color: "var(--red)" }} onClick={() => { setConfirmText(""); setDelErr(""); setDelOpen(true); }}>
             <Icon name="trash" size={15} /> Löschen
           </button>

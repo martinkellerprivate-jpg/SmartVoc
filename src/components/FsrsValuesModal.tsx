@@ -6,7 +6,6 @@
 import { Icon } from "../ui/Icon";
 import { txt } from "../lib/i18n";
 import { defaultWeights, getCfg, RETENTION } from "../lib/fsrs";
-import { fitStatus, totalReviews } from "../lib/reviewlog";
 
 const W_HINT: Record<number, string> = {
   0: "Start-Stabilität (Again)", 1: "Start-Stabilität (Hard)", 2: "Start-Stabilität (Good)", 3: "Start-Stabilität (Easy)",
@@ -19,8 +18,6 @@ export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
   const user = lit;                       // no custom fit yet (fitActive = false)
   const ret = settings.targetRetention ?? RETENTION;
   const cfg = getCfg();
-  const status = fitStatus(reviews || {}, !!settings.autoFit, false);
-  const n = totalReviews(reviews || {});
 
   const Row = ({ k, u, l, hint }: any) => (
     <div className="row" style={{ justifyContent: "space-between", gap: 10, padding: "4px 0", borderBottom: "1px solid var(--line-soft)" }}>
@@ -43,14 +40,6 @@ export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
         </div>
 
         <div className="panel" style={{ padding: "10px 12px", marginBottom: 12 }}>
-          <div className={"badge " + (status.kind === "active" ? "green" : status.kind === "ready" ? "amber" : "slate")} style={{ marginBottom: 6 }}>
-            <span className="dot" /> Auto-Anpassung: {status.kind === "off" ? "aus" : status.kind === "active" ? "aktiv" : "sammelt"}
-          </div>
-          <div style={{ fontSize: 13 }}>{status.text}</div>
-          <div className="faint" style={{ fontSize: 12, marginTop: 4 }}>{txt("Gesammelte Antworten im Verlauf:")} <b>{n}</b></div>
-        </div>
-
-        <div className="panel" style={{ padding: "10px 12px", marginBottom: 12 }}>
           <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>{txt("Abgeleitete Schwellen (aktuell)")}</div>
           <Row k="Retention" u={`${Math.round(ret * 100)} %`} l="90 %" hint="Behaltensziel" />
           <Row k="S1" u={cfg.S1} l={3} hint="Tage: wackelt→sitzt fast" />
@@ -66,8 +55,7 @@ export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
           </div>
           {user.map((u: number, i: number) => <Row key={i} k={`w[${i}]`} u={u} l={lit[i]} hint={W_HINT[i]} />)}
           <div className="faint" style={{ fontSize: 11.5, marginTop: 8 }}>
-            Solange die Auto-Anpassung keine eigene Feinjustierung gelernt hat, sind „deine“ Werte gleich den
-            Literatur-Standardwerten. Das ist normal und gut.
+            {txt("Die App rechnet mit den Werten aus der Forschung, für alle gleich. Sie passt sie nicht an dich an und zeichnet dafür auch nichts auf — was hier steht, ist der vollständige Einblick.")}
           </div>
         </div>
 
