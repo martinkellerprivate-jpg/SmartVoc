@@ -12,6 +12,7 @@ import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { isConfigured } from "../lib/supabase";
+import { istWeb } from "../lib/native";
 import { useAuth } from "../sync/auth";
 import { publishList } from "../sync/share";
 import { ListPicker } from "./ListPicker";
@@ -85,6 +86,68 @@ export function WordList() {
     setSelectedIds([]); setAddToListId(""); setSelectMode(false);
   };
   const canShare = isConfigured && !!auth.user;
+  /* Tabellen nur im Web und nur angemeldet. `auth.ready` gehoert dazu:
+   * sonst blitzt der Bereich beim Start auf oder weg, waehrend die Sitzung
+   * noch geprueft wird. */
+  const tabellen = istWeb() && auth.ready && isConfigured && !!auth.user;
+  const dateiRef = useRef<any>(null);
+
+  const leseTabelle = useCallback(async (file: any) => {
+    if (!file) return;
+    setBusy(true);
+    try {
+      const XLSX = await import("xlsx");            // eigenes Buendelstueck
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: "array" });
+      const rows: any[] = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
+      const parsed: any[] = [];
+      for (const row of rows) {
+        const deK = findKey(row, /germ|deut|^de$/i);
+        const ex1K = findKey(row, /beispiel.*1|example.*1|satz.*1/i);
+        const ex2K = findKey(row, /beispiel.*2|example.*2|satz.*2/i);
+        const phK = findKey(row, /ausspr|phonet|lautschr|pronunc|ipa/i);
+        const phonetic = (phK ? String(row[phK]) : "").trim();
+        const exK = ex1K ? null : findKey(row, /beispiel|example|satz|phrase/i);
+        const examples = [
+          ...(ex1K ? [String(row[ex1K])] : []),
+          ...(ex2K ? [String(row[ex2K])] : []),
+          ...(exK ? String(row[exK]).split(/\r?\n/) : []),
+        ].map((x) => x.trim()).filter(Boolean);
+        if (isLat) {
+          const gfK = findKey(row, /grundform|grund|^la$|latein|lat/i);
+          const lfK = findKey(row, /lernform|stammform|formen/i);
+          const waK = findKey(row, /wortart|wort.?art|^art$|pos/i);
+          const grundform = (gfK ? String(row[gfK]) : "").trim();
+          const lernform = (lfK ? String(row[lfK]) : "").trim();
+          const wortart = (waK ? String(row[waK]) : "").trim();
+          const de = (deK ? String(row[deK]) : "").trim();
+          if (grundform || lernform || de) parsed.push({ grundform, lernform, wortart, de, examples, phonetic });
+          continue;
+        }
+        const skip = new Set([deK, ex1K, ex2K, exK, phK].filter(Boolean) as string[]);
+        const fgnK = findKey(row, /eng|fran|fren|^fr$|^en$/i) || Object.keys(row).find((k) => !skip.has(k));
+        const fgn = (fgnK ? String(row[fgnK]) : "").trim();
+        const de = (deK ? String(row[deK]) : "").trim();
+        if (fgn || de) parsed.push({ fgn, de, examples, phonetic });
+      }
+      setBusy(false);
+      if (!parsed.length) { toast(txt("In dieser Datei stehen keine Wörter"), "x"); return; }
+      setReviewRows(parsed);          // derselbe Weg wie beim Einfügen: erst ansehen, dann übernehmen
+    } catch (e) { setBusy(false); toast(txt("Diese Datei liess sich nicht lesen"), "x"); }
+  }, [toast, isLat]);
+
+  const ladeVorlage = async () => {
+    const XLSX = await import("xlsx");
+    const head = isLat
+      ? ["Grundform", "Lernform", "Wortart", "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2"]
+      : [P.foreignLabel, "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2"];
+    const ws = XLSX.utils.aoa_to_sheet([head, ...exampleRows.map((r: any[]) => r.slice(0, head.length))]);
+    ws["!cols"] = head.map((_, i) => ({ wch: i === 0 ? 18 : i === 1 ? 24 : 26 }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Wortschatz");
+    XLSX.writeFile(wb, "smartvoc-vorlage.xlsx");
+    toast(txt("Vorlage geladen — ausfüllen und wieder einlesen"), "download");
+  };
 
   const pairLists = useMemo(() => lists.filter((l) => l.pair === pair), [lists, pair]);
   const activeListObj = lists.find((l: any) => l.id === activeList);
@@ -352,6 +415,18 @@ export function WordList() {
         <button className="btn btn-sm btn-primary" onClick={newList}><Icon name="plus" size={15} /> {txt("Neue Liste")}</button>
         <button className="btn btn-sm" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> {txt("Einfügen")}</button>
         {isConfigured && <button className="btn btn-sm" onClick={() => openImport()} title={txt("Eine Liste, die dir jemand geteilt hat, übernehmen")}><Icon name="download" size={15} /> {txt("Geteilte Liste importieren")}</button>}
+        {tabellen && (
+          <>
+            <button className="btn btn-sm" onClick={() => dateiRef.current?.click()} title={txt("Eine Excel- oder CSV-Datei einlesen")}>
+              <Icon name="upload" size={15} /> {txt("Tabelle einlesen")}
+            </button>
+            <button className="btn btn-sm btn-ghost" onClick={ladeVorlage} title={txt("Eine leere Tabelle zum Ausfüllen")}>
+              <Icon name="download" size={15} /> {txt("Vorlage")}
+            </button>
+            <input ref={dateiRef} type="file" accept=".xlsx,.xls,.csv" style={{ display: "none" }}
+              onChange={(e) => { const f = e.target.files?.[0]; leseTabelle(f); e.target.value = ""; }} />
+          </>
+        )}
         <button className={"btn btn-sm" + (selectMode ? " btn-primary" : "")} onClick={() => { setSelectMode((m) => !m); setSelectedIds([]); }}><Icon name="check" size={15} /> {txt(selectMode ? "Auswahl beenden" : "Auswählen")}</button>
       </div>
 

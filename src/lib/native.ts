@@ -13,6 +13,14 @@ import { Share } from "@capacitor/share";
 
 const nativ = () => Capacitor.isNativePlatform();
 
+/* Die Plattform-Frage gehoert hierher, wie alles andere Geraetenahe auch.
+ * Bauteile fragen `istWeb()`, nicht Capacitor -- so gibt es einen Begriff
+ * und eine Quelle. Bewusst NICHT ueber import.meta.env: das waere ein
+ * zweiter Wahrheitswert neben isNativePlatform(), und die zwei koennen im
+ * Entwicklungsserver auseinanderfallen. */
+export const istApp = () => Capacitor.isNativePlatform();
+export const istWeb = () => !Capacitor.isNativePlatform();
+
 /* Haptik sparsam: nur dort, wo das Gerät eine Rückmeldung gibt, die der
  * Bildschirm nicht geben kann — beim Bewerten einer Antwort. Nicht bei
  * jedem Knopfdruck; ein dauernd vibrierendes Gerät ist ermüdend. */

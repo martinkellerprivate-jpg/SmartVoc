@@ -25,6 +25,11 @@ export default defineConfig({
   base,
   // Separate folders so a web deploy can never pick up an iOS bundle by accident.
   build: { outDir: forIOS ? "dist-ios" : "dist" },
+  /* Tabellen (Excel/CSV) gibt es nur im Web. Der dynamische Import in
+   * WordList sorgt dafuer, dass xlsx nie geladen wird, wo es die Knoepfe
+   * nicht gibt -- aber die 429 kB laegen trotzdem als eigene Datei im
+   * App-Paket. Im iOS-Build zeigt xlsx deshalb auf einen Platzhalter. */
+  resolve: forIOS ? { alias: { xlsx: "/src/lib/xlsx-leer.ts" } } : {},
   plugins: [
     react(),
     ...(forIOS
