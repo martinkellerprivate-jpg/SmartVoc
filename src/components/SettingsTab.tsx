@@ -305,43 +305,50 @@ export function SettingsTab() {
         </div>
       </div>
 
-      {/* Erscheinungsbild */}
+      {/* Aussehen — vier Umschalter, nach Reichweite sortiert: erst was das
+          ganze Gerät betrifft, zuletzt was nur die Karte betrifft. Darunter
+          die Karte selbst als Vorschau, damit man sieht statt zu raten.
+          Vorher waren es vier Auswahlfelder mit Erklaertexten -- korrekt,
+          aber man musste jedes oeffnen, um zu sehen, was drinsteht. */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="swatch" size={16} /> {txt("Erscheinungsbild")}</div>
+        <div className="set-section-h"><Icon name="swatch" size={16} /> {txt("Aussehen")}</div>
+
+        <div className="grp">{txt("Erscheinungsbild")} <span className="hint">— {txt("folgt dem Gerät")}</span></div>
+        <div className="seg seg-voll">
+          {[["auto", "Automatisch"], ["light", "Hell"], ["dark", "Dunkel"]].map(([v, l]) => (
+            <button key={v} aria-pressed={settings.appearance === v} onClick={() => set("appearance", v)}>{txt(l)}</button>
+          ))}
+        </div>
+
+        <div className="grp">{txt("Farbschema")} <span className="hint">— {txt("gilt für die ganze App")}</span></div>
+        <div className="seg seg-voll">
+          {[["kladde", "Kladde"], ["leinen", "Leinen"], ["altpapier", "Altpapier"]].map(([v, l]) => (
+            <button key={v} aria-pressed={settings.scheme === v} onClick={() => set("scheme", v)}>{txt(l)}</button>
+          ))}
+        </div>
+
+        <div className="grp">{txt("Karte")} <span className="hint">— {txt("nur die Übungskarte")}</span></div>
+        <div className="seg seg-voll">
+          {[["ruled", "Liniert"], ["plain", "Blanko"], ["recycled", "Altpapier"], ["linen", "Leinen"]].map(([v, l]) => (
+            <button key={v} aria-pressed={settings.cardStyle === v} onClick={() => set("cardStyle", v)}>{txt(l)}</button>
+          ))}
+        </div>
+
+        <div className="grp">{txt("Kartenschrift")} <span className="hint">— {txt("nur die Übungskarte")}</span></div>
+        <div className="seg seg-voll">
+          {[["serif", "Serif"], ["arial", "Grotesk"], ["handwriting", "Handschrift"]].map(([v, l]) => (
+            <button key={v} aria-pressed={settings.cardFont === v} onClick={() => set("cardFont", v)}>{txt(l)}</button>
+          ))}
+        </div>
+
         <CardPreview />
-        <Field title={txt("Erscheinungsbild")} recLabel={txt("Automatisch")} atRec={atR("appearance")}
-          desc={txt("Hell, dunkel oder dem Gerät folgen. Getrennt vom Farbschema — beim Wechsel bleibt dein Schema erhalten.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.appearance} onChange={(e) => set("appearance", e.target.value)}>
-            <option value="auto">{txt("Automatisch (folgt dem Gerät)")}</option>
-            <option value="light">{txt("Hell")}</option>
-            <option value="dark">{txt("Dunkel")}</option>
-          </select>
-        </Field>
-        <Field title={txt("Farbschema")} recLabel={txt("Kladde")} atRec={atR("scheme")}
-          desc={txt("Grund, Tinte und Akzent für die ganze App. Jedes Schema gibt es hell und dunkel.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.scheme} onChange={(e) => set("scheme", e.target.value)}>
-            <option value="kladde">{txt("Kladde (warmes Kraftpapier)")}</option>
-            <option value="leinen">{txt("Leinen (kühler, Tintenblau)")}</option>
-            <option value="altpapier">{txt("Altpapier (graubraun, Stempelrot)")}</option>
-          </select>
-        </Field>
-        <Field title={txt("Kartenstil")} recLabel={txt("Liniert")} atRec={atR("cardStyle")}
-          desc={txt("Nur die Übungskarte. Nimmt die Farben des gewählten Schemas an.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.cardStyle} onChange={(e) => set("cardStyle", e.target.value)}>
-            <option value="ruled">{txt("Liniert")}</option>
-            <option value="plain">{txt("Blanko")}</option>
-            <option value="recycled">{txt("Altpapier")}</option>
-            <option value="linen">{txt("Leinen")}</option>
-          </select>
-        </Field>
-        <Field title={txt("Kartenschrift")} recLabel={txt("Serif")} atRec={atR("cardFont")}
-          desc={txt("Schrift des grossen Karten-Worts und der Antwort. Die übrige Oberfläche bleibt gleich.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.cardFont} onChange={(e) => set("cardFont", e.target.value)}>
-            <option value="serif">{txt("Serif (Source Serif)")}</option>
-            <option value="arial">{txt("Arial")}</option>
-            <option value="handwriting">{txt("Handschrift (Patrick Hand)")}</option>
-          </select>
-        </Field>
+
+        {!(atR("appearance") && atR("scheme") && atR("cardStyle") && atR("cardFont")) && (
+          <button className="btn btn-ghost btn-sm" style={{ alignSelf: "center", marginTop: 10 }}
+            onClick={() => { set("appearance", "auto"); set("scheme", "kladde"); set("cardStyle", "ruled"); set("cardFont", "serif"); }}>
+            <Icon name="refresh" size={13} /> {txt("Zurücksetzen auf Automatisch · Kladde · Liniert · Serif")}
+          </button>
+        )}
       </div>
 
       {/* Grundwortschatz (Starter-Listen) */}

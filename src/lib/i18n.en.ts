@@ -694,4 +694,12 @@ export const EN: Record<string, string> = {
   "In der Liste": "In the list",
   "{n} richtig": "{n} right",
   "{n} falsch": "{n} wrong",
+  "Aussehen": "Appearance",
+  "folgt dem Gerät": "follows the device",
+  "gilt für die ganze App": "applies to the whole app",
+  "Karte": "Card",
+  "Zurücksetzen auf Automatisch · Kladde · Liniert · Serif": "Reset to Automatic · Notebook · Ruled · Serif",
+  "Falsch": "Wrong",
+  "Richtig": "Right",
+  "nur die Übungskarte": "the practice card only",
 };

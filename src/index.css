@@ -1613,3 +1613,35 @@ select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 .li-alle { margin-top: 14px; position: relative; }
 .li-alle::before { content: ""; position: absolute; left: 14px; right: 14px; top: -8px;
                    border-top: 1px solid var(--line); }
+
+/* ==================================================================
+ * Der Kartenstapel — gestern entschieden, heute gebaut.
+ *
+ * Hinter der Karte liegt der Rest des Durchgangs: eine Schicht je
+ * verbleibende Karte, grafisch bei vier gekappt, also höchstens fünf
+ * Karten im Bild. Bei zwei verbleibenden eine Schicht, bei der letzten
+ * keine. Der Stapel schrumpft sichtbar, während man übt — er ersetzt den
+ * Zähler nicht, er bestätigt ihn.
+ *
+ * Eckig, nicht rund: eine Karteikarte hat rechte Winkel. Der grosse
+ * Radius liess sie wie eine Bildschirmkachel aussehen.
+ * ================================================================== */
+.card-stapel { position: absolute; inset: 0; pointer-events: none; }
+.card-stapel span {
+  position: absolute; inset: 0;
+  background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+  /* Jede Schicht sitzt etwas tiefer und schmaler — wie Papier, das nicht
+     ganz bündig liegt. Die hinterste ist am blassesten. */
+  transform: translateY(calc(var(--i) * 5px)) scale(calc(1 - var(--i) * 0.018));
+  opacity: calc(1 - var(--i) * 0.16);
+  box-shadow: 0 2px 6px rgba(43, 38, 32, .07);
+}
+
+/* Rechte Winkel für die Karte selbst und alles, was auf ihr sitzt. */
+.card-face { border-radius: 4px; }
+
+/* Ein Umschalter über die volle Breite — für die vier Regler im Aussehen.
+   Die Knöpfe teilen sich den Platz gleichmässig, damit die Reihe ruhig
+   wirkt und nicht nach Wortlänge springt. */
+.seg-voll { display: flex; width: 100%; }
+.seg-voll button { flex: 1; padding: 9px 6px; font-size: 13px; justify-content: center; }

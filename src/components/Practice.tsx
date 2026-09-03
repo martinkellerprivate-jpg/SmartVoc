@@ -902,6 +902,11 @@ export function Practice() {
   for (const id of scopeIds) { const st = deriveProfile(stats[id]?.fsrs, masteryRetention).stufe; scopeDist[st] = (scopeDist[st] || 0) + 1; }
   const roundProg = runRef.current ? progress(runRef.current) : null;
 
+  /* Wie viele Schichten hinter der Karte liegen. Der Entwurf: eine je
+   * verbleibende Karte, grafisch bei vier gekappt -- also hoechstens fuenf
+   * Karten im Bild. Bei der letzten Karte liegt nichts mehr dahinter. */
+  const schichten = Math.max(0, Math.min(4, (runRef.current ? remaining(runRef.current) : 1) - 1));
+
   const roundProgressEl = mode === "memorize" ? (
     /* Durchblättern zählt nicht -- dann darf dort auch kein Fortschritt
      * stehen, der etwas anderes behauptet. */
@@ -973,6 +978,13 @@ export function Practice() {
           </div>
         )}
         <div className="card-frame">
+          {schichten > 0 && (
+            <div className="card-stapel" aria-hidden="true">
+              {Array.from({ length: schichten }, (_, i) => (
+                <span key={i} style={{ ["--i" as any]: schichten - i }} />
+              ))}
+            </div>
+          )}
           {!focus && (
             <button className="card-expand" title={txt("Karte gross zeigen")} onClick={() => setFocus(true)}>
               <Icon name="expand" size={16} />
