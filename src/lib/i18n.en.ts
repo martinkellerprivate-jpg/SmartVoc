@@ -761,4 +761,18 @@ export const EN: Record<string, string> = {
   "Wortlisten, für die du ein Datum gesetzt hast — wann sie geprüft werden und wie weit du bist.": "Word lists you have given a date — when they are tested and how far along you are.",
   "{n} Liste": "{n} list",
   "{n} Listen": "{n} lists",
+
+  /* Zwei Ebenen in den Wortlisten, Rueckfragen vor dem Loeschen (T-26, T-27). */
+  "Das Wort wird endgültig gelöscht — mit seinem Lernstand. Das lässt sich nicht rückgängig machen.": "The word will be deleted for good — along with its progress. This cannot be undone.",
+  "Die Wortliste „{name}“ wird gelöscht. Die Wörter selbst bleiben erhalten und verlassen nur diese Liste.": "The word list “{name}” will be deleted. The words themselves are kept and only leave this list.",
+  "Mehr Wörter dazu": "Add more words",
+  "Wort gelöscht": "Word deleted",
+  "Wortliste löschen": "Delete word list",
+  "Wortliste „{name}“ gelöscht": "Word list “{name}” deleted",
+  "Wörter ansehen und bearbeiten": "View and edit the words",
+  "Wörter löschen": "Delete words",
+  "Zieldatum entfernt": "Target date removed",
+  "Zurück, dort stehen die Wege zum Füllen": "Go back — the ways to fill it are there",
+  "suchen, ändern, löschen": "search, change, delete",
+  "{n} Wörter werden endgültig gelöscht — mit ihrem Lernstand. Das lässt sich nicht rückgängig machen.": "{n} words will be deleted for good — along with their progress. This cannot be undone.",
 };

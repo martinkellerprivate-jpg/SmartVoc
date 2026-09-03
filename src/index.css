@@ -1573,8 +1573,15 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .wl-fest { flex: 0 1 auto; min-height: 0; max-height: 38%;
            overflow-y: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .wl-fest::-webkit-scrollbar { display: none; }
-/* Was die Spalten benennt, rollt nie mit. */
-.wl-spalten { flex: none; }
+/* Die Woerter rollen sichtbar -- das ist die Liste, an der man arbeitet.
+   Der Block darueber rollt lautlos, damit nicht zwei Balken nebeneinander
+   stehen. */
+.wl-roll-sichtbar { scrollbar-width: thin; scrollbar-gutter: stable; }
+
+/* Der Weg zu den Woertern: eine Zeile wie jede andere, aber mit Luft
+   darueber -- sie trennt die Angaben zur Liste von der Arbeit daran. */
+.li-woerter { margin-top: 14px; }
+.li-woerter .lchip-n { margin-left: auto; }
 .wl-roll { flex: 1; min-height: 0; overflow-y: auto; padding-top: 2px; }
 
 .wl-stand { display: flex; align-items: center; gap: 10px; margin-top: 10px; }

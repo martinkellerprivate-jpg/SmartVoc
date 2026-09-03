@@ -24,6 +24,7 @@ import { LatinKeys } from "../ui/LatinKeys";
 import { useImport } from "./importContext";
 import { PairPill } from "../ui/PairPill";
 import { useAlsUnterkopf } from "../ui/ScreenHead";
+import { Bestaetigen } from "../ui/Bestaetigen";
 import { FeldEingabe, FeldAuswahl } from "../ui/FeldZeile";
 import { LernstandBlock } from "../ui/LernstandBlock";
 import { SMART_ACCESS } from "../lib/smartlists";
@@ -60,6 +61,12 @@ export function WordList() {
    * einmal -- sie vermischte die Wahl der Liste mit der Arbeit an den
    * Woertern, und genau darin verlor man sich. */
   const [offen, setOffen] = useState<{ art: "liste" | "smart" | "alle"; ref: string } | null>(null);
+  /* Die Woerter einer Liste sind eine eigene Ebene: der Bildschirm davor
+   * zeigt die Liste selbst, dieser hier nur ihre Woerter. */
+  const [woerterOffen, setWoerterOffen] = useState(false);
+  const [loeschFrage, setLoeschFrage] = useState(false);
+  const [listeLoeschen, setListeLoeschen] = useState(false);
+  const [wortLoeschen, setWortLoeschen] = useState<string | null>(null);
   const activeList = offen?.art === "liste" ? offen.ref : "__all";
   const [listMenu, setListMenu] = useState(false);
   const [neuesWortOffen, setNeuesWortOffen] = useState(false);
@@ -183,6 +190,7 @@ export function WordList() {
   const pairVocab = useMemo(() => vocab.filter((w) => w.pair === pair), [vocab, pair]);
 
   useEffect(() => { setOffen(null); }, [pair]);
+  useEffect(() => { setWoerterOffen(false); setGewaehlt([]); }, [offen]);
   useEffect(() => {
     setAdding((a) => ({ ...a, listId: (activeList !== "__all" ? activeList : (pairLists[0] && pairLists[0].id)) || "" }));
   }, [activeList, pairLists]);
@@ -266,9 +274,15 @@ export function WordList() {
     return id;
   };
   const commitRename = () => { if (editingListId) store.renameList(editingListId, listName.trim() || "Untitled"); setEditingListId(null); };
+  /* `confirm()` ist der Systemdialog: er sieht in der App fremd aus, und in
+   * einer WebView kann er auch ganz ausbleiben -- dann loescht der Knopf
+   * ohne Rueckfrage. Alle drei Loeschwege fragen jetzt mit demselben
+   * Bauteil und melden danach zurueck. */
   const deleteActiveList = () => {
     const l = lists.find((x) => x.id === activeList); if (!l) return;
-    if (confirm(txt("Die Wortliste „{name}“ löschen? Die Wörter bleiben erhalten und verlassen nur diese Liste.", { name: l.name }))) { store.deleteList(activeList); setOffen(null); toast(txt("Wortliste gelöscht"), "trash"); }
+    store.deleteList(activeList);
+    setListeLoeschen(false); setOffen(null);
+    toast(txt("Wortliste „{name}“ gelöscht", { name: l.name }), "trash");
   };
 
   /* ---- share the active list (copy-on-import snapshot) ---- */
@@ -346,6 +360,34 @@ export function WordList() {
   /* Die Fenster gelten auf beiden Ebenen, also stehen sie einmal hier. */
   const modale = (
     <>
+      {/* Die drei Rueckfragen vor dem Loeschen -- eine Bauart, an einer
+          Stelle, damit keine davon vergessen wird. */}
+      <Bestaetigen offen={listeLoeschen} titel={txt("Wortliste löschen")} gefahr
+        text={txt("Die Wortliste „{name}“ wird gelöscht. Die Wörter selbst bleiben erhalten und verlassen nur diese Liste.",
+          { name: lists.find((x: any) => x.id === activeList)?.name || "" })}
+        knopf={txt("Löschen")} onClose={() => setListeLoeschen(false)} tun={deleteActiveList} />
+
+      <Bestaetigen offen={loeschFrage} titel={gewaehlt.length === 1 ? txt("Wort löschen") : txt("Wörter löschen")} gefahr
+        text={gewaehlt.length === 1
+          ? txt("Das Wort wird endgültig gelöscht — mit seinem Lernstand. Das lässt sich nicht rückgängig machen.")
+          : txt("{n} Wörter werden endgültig gelöscht — mit ihrem Lernstand. Das lässt sich nicht rückgängig machen.", { n: gewaehlt.length })}
+        knopf={txt("Löschen")} onClose={() => setLoeschFrage(false)}
+        tun={() => {
+          const n = gewaehlt.length;
+          gewaehlt.forEach((id) => store.deleteWord(id));
+          setGewaehlt([]); setLoeschFrage(false);
+          toast(txt(n === 1 ? "Wort gelöscht" : "{n} Wörter gelöscht", { n }), "trash");
+        }} />
+
+      <Bestaetigen offen={!!wortLoeschen} titel={txt("Wort löschen")} gefahr
+        text={txt("Das Wort wird endgültig gelöscht — mit seinem Lernstand. Das lässt sich nicht rückgängig machen.")}
+        knopf={txt("Löschen")} onClose={() => setWortLoeschen(null)}
+        tun={() => {
+          store.deleteWord(wortLoeschen);
+          setWortLoeschen(null); setEditingId(null);
+          toast(txt("Wort gelöscht"), "trash");
+        }} />
+
       <PasteModal open={pasteOpen} pair={pair} initialText={pasteSeed} draftHint={pasteDraft}
         onClose={() => setPasteOpen(false)}
         onParsed={(rows: any) => { setPasteOpen(false); setReviewRows(rows); }} />
@@ -402,7 +444,7 @@ export function WordList() {
               {(() => { const w = vocab.find((x: any) => x.id === editingId); return w ? <LernstandBlock word={w} /> : null; })()}
               {isLat && <LatinKeys hint={txt("Feld antippen, dann Zeichen wählen")} />}
               <div className="modal-foot">
-                <button className="btn btn-ghost" onClick={() => { store.deleteWord(editingId); setEditingId(null); }}>
+                <button className="btn btn-ghost" onClick={() => setWortLoeschen(editingId)}>
                   <Icon name="trash" size={14} /> {txt("Wort löschen")}
                 </button>
                 <button className="btn btn-primary" onClick={() => saveEdit(editingId)}>{txt("Speichern")}</button>
@@ -528,191 +570,203 @@ export function WordList() {
     );
   };
 
-  /* Der Titel der geoeffneten Liste steht in der einen Kopfzeile der App. */
-  useAlsUnterkopf(offen ? titelImBlick : null, () => setOffen(null));
+  /* Der Titel steht in der einen Kopfzeile der App, und der Zurueck-Knopf
+   * fuehrt EINE Ebene zurueck: von den Woertern zur Liste, von der Liste
+   * zur Uebersicht. */
+  useAlsUnterkopf(offen ? titelImBlick : null,
+    () => { if (woerterOffen) setWoerterOffen(false); else setOffen(null); });
 
-  /* =============================================== Eine Liste geöffnet */
+  /* =============================================== Eine Liste geöffnet
+   *
+   * Zwei Ebenen statt einer. Vorher stand alles auf einem Bildschirm: die
+   * Angaben zur Liste, die Werkzeuge, der Spaltenkopf und darunter die
+   * Wörter -- und weil beides zugleich sichtbar bleiben sollte, brauchte es
+   * zwei Rollbereiche übereinander. Das war eine Bauart, die man erklären
+   * muss, und auf dem Handy sah man sechs Wörter.
+   *
+   * Jetzt: die Liste selbst (Termin, Fortschritt, Wege zum Füllen) auf der
+   * einen Ebene, ihre Wörter hinter einem Knopf auf der nächsten. Dort ist
+   * der Bildschirm nackt -- Suche, Auswahl, Spaltenkopf, Wörter -- und die
+   * Wörter rollen, wie eine Liste rollt.
+   */
   if (offen) {
     const l = offen.art === "liste" ? lists.find((x: any) => x.id === offen.ref) : null;
     const istSystemliste = l?.system === "nolist";
-    const q = listenSuche.toLowerCase().trim();
-    const sichtbar = q
-      ? woerterImBlick.filter((w: any) => fgnOf(w).toLowerCase().includes(q)
-          || (w.lernform || "").toLowerCase().includes(q) || (w.de || "").toLowerCase().includes(q))
-      : woerterImBlick;
-    const nurEines = gewaehlt.length === 1;
     /* Eine Smart List ist ein Blick, keine Ablage: die App stellt sie jeden
      * Tag neu zusammen. Wer darin ein Wort loeschte, loeschte es aus seiner
      * echten Liste -- ohne zu sehen, aus welcher. Also nur ansehen.
      * "Alle Woerter" ist dagegen ein echter Bestand und bleibt bearbeitbar. */
     const bearbeitbar = offen.art === "liste" || offen.art === "alle";
-    return (
-      <div className="wl wl-liste">
-        {/* Alles bis zur Tabellenüberschrift steht fest; gescrollt wird nur
-            die Liste. Sonst verliert man beim Blättern den Bezug -- welche
-            Liste, wie weit, welche Spalte. */}
-        {/* Der obere Teil rollt selbst, lautlos: auf dem Handy nimmt er sonst
-            die halbe Höhe, und man sieht sechs Wörter. Gerollt wird er ohne
-            Balken -- sichtbar rollt nur die Wortliste. Was die Spalten
-            benennt, steht darunter fest, sonst rollt die Überschrift weg,
-            die man beim Blättern gerade braucht. */}
-        <div className="wl-fest">
-          {l && (
-            <div className="ruest">
-              <label className="pill pill-sel">
-                <Icon name="calendar" size={14} />
-                <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
-                <input type="date" value={l.dueDate ? new Date(l.dueDate).toISOString().slice(0, 10) : ""}
-                  onChange={(e) => setListDue(l.id, e.target.value)} aria-label={txt("Zieldatum")} />
-              </label>
-              {l.dueDate && (
-                <button className="icon-btn" title={txt("Zieldatum entfernen")} onClick={() => setListDue(l.id, "")}>
-                  <Icon name="trash" size={13} />
-                </button>
-              )}
-              {!istSystemliste && (
-                <button className="pill" onClick={() => { setEditingListId(l.id); setListName(l.name); }}>
-                  <Icon name="edit" size={14} /> {txt("Umbenennen")}
-                </button>
-              )}
-              {canShare && !istSystemliste && (
-                <button className="pill" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>
-              )}
-            </div>
-          )}
-          {editingListId === offen.ref && (
-            <input className="mini-input" style={{ marginTop: 8, fontFamily: "var(--serif)", fontSize: 17 }} autoFocus
-              value={listName} onChange={(e) => setListName(e.target.value)} onBlur={commitRename}
-              onKeyDown={(e) => e.key === "Enter" && commitRename()} />
-          )}
 
-          {standImBlick.total > 0 && (
-            <div className="wl-stand">
-              <MasteryBar dist={standImBlick.dist} total={standImBlick.total} />
-              {/* Klein und oben, damit er nicht stört: die Statistik ist hier
-                  nicht das Thema. */}
-              <button className="wl-statlink" onClick={() => {
-                store.setSettings({ statPair: pair, statLists: offen.art === "liste" ? [offen.ref] : [] });
-                window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
-              }}><Icon name="chart" size={12} /> {txt("Statistik")}</button>
-            </div>
-          )}
-
-          {/* Wörter dazu und suchen -- oben, wo man beides erwartet. */}
-          <div className="ruest wl-werkzeug">
-            {offen.art === "liste" && (
-              <>
+    /* ------------------------------------------- Ebene 3: die Wörter */
+    if (woerterOffen) {
+      const q = listenSuche.toLowerCase().trim();
+      const sichtbar = q
+        ? woerterImBlick.filter((w: any) => fgnOf(w).toLowerCase().includes(q)
+            || (w.lernform || "").toLowerCase().includes(q) || (w.de || "").toLowerCase().includes(q))
+        : woerterImBlick;
+      const nurEines = gewaehlt.length === 1;
+      return (
+        <div className="wl wl-liste">
+          {/* Alles bis und mit Spaltenkopf ist EIN Block -- er rollt lautlos
+              mit, wenn der Bildschirm zu kurz wird. Die Wörter rollen
+              getrennt davon, mit sichtbarem Balken. */}
+          <div className="wl-fest">
+            <div className="ruest wl-werkzeug">
+              {offen.art === "liste" && (
                 <button className="pill pill-on" onClick={() => { setAdding((a: any) => ({ ...a, listId: offen.ref })); setNeuesWortOffen(true); }}>
                   <Icon name="plus" size={14} /> {txt("Wort")}
                 </button>
-                <button className="pill" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
-                  <Icon name="list" size={14} /> {txt("Mehrere")}
+              )}
+              <div className="search">
+                <Icon name="search" size={16} />
+                <input className="field" placeholder={txt("In dieser Liste suchen …")}
+                  value={listenSuche} onChange={(e) => setListenSuche(e.target.value)} />
+              </div>
+            </div>
+
+            {!bearbeitbar ? (
+              <div className="quiet links" style={{ paddingTop: 8 }}>
+                {txt("Diese Liste stellt die App täglich neu zusammen — hier lässt sich nichts ändern.")}
+              </div>
+            ) : (
+              <div className="ruest wl-auswahl">
+                <span className="wl-nsel">{gewaehlt.length ? txt("{n} gewählt", { n: gewaehlt.length }) : txt("Zeile antippen zum Auswählen")}</span>
+                <button className="btn btn-sm" disabled={!nurEines}
+                  onClick={() => { const w = vocab.find((x: any) => x.id === gewaehlt[0]); if (w) startEdit(w); }}>
+                  <Icon name="edit" size={14} /> {txt("Bearbeiten")}
                 </button>
-              </>
+                <button className="btn btn-sm" disabled={!gewaehlt.length} onClick={() => setLoeschFrage(true)}>
+                  <Icon name="trash" size={14} /> {txt("Löschen")}
+                </button>
+              </div>
             )}
-            <div className="search">
-              <Icon name="search" size={16} />
-              <input className="field" placeholder={txt("In dieser Liste suchen …")}
-                value={listenSuche} onChange={(e) => setListenSuche(e.target.value)} />
-            </div>
+
+            {bearbeitbar && sichtbar.length > 0 && (
+              <div className="wl-alle">
+                <button onClick={() => setGewaehlt(sichtbar.map((w: any) => w.id))}
+                  disabled={gewaehlt.length === sichtbar.length}>{txt("Alle auswählen")}</button>
+                <button onClick={() => setGewaehlt([])} disabled={!gewaehlt.length}>{txt("Auswahl aufheben")}</button>
+              </div>
+            )}
+
+            {sichtbar.length > 0 && (
+              <div className="wz-kopf">
+                <span className="wz-f">{P.foreignLabel}</span>
+                <span className="wz-d">{P.nativeLabel}</span>
+              </div>
+            )}
           </div>
 
-          {/* Löschen und Bearbeiten stehen immer da, ausgegraut bis etwas
-              gewählt ist -- so lernt man sie kennen, ohne sie zu suchen. */}
-          {!bearbeitbar ? (
-            <div className="quiet links" style={{ paddingTop: 8 }}>
-              {txt("Diese Liste stellt die App täglich neu zusammen — hier lässt sich nichts ändern.")}
-            </div>
-          ) : (
-          <div className="ruest wl-auswahl">
-            <span className="wl-nsel">{gewaehlt.length ? txt("{n} gewählt", { n: gewaehlt.length }) : txt("Zeile antippen zum Auswählen")}</span>
-            <button className="btn btn-sm" disabled={!nurEines}
-              onClick={() => { const w = vocab.find((x: any) => x.id === gewaehlt[0]); if (w) startEdit(w); }}>
-              <Icon name="edit" size={14} /> {txt("Bearbeiten")}
-            </button>
-            <button className="btn btn-sm" disabled={!gewaehlt.length}
-              onClick={() => {
-                if (!confirm(txt(gewaehlt.length === 1 ? "Dieses Wort endgültig löschen?" : "Diese {n} Wörter endgültig löschen?", { n: gewaehlt.length }))) return;
-                gewaehlt.forEach((id) => store.deleteWord(id));
-                toast(txt(gewaehlt.length === 1 ? "Wort gelöscht" : "{n} Wörter gelöscht", { n: gewaehlt.length }), "trash");
-                setGewaehlt([]);
-              }}><Icon name="trash" size={14} /> {txt("Löschen")}</button>
+          <div className="wl-roll wl-roll-sichtbar">
+            {sichtbar.length ? sichtbar.map(wortZeile) : (
+              <div className="empty">
+                <div className="big">{q ? txt("Nichts gefunden") : txt("Noch keine Wörter")}</div>
+                <div>{q ? txt("Anderer Suchbegriff, oder das Feld leeren") : txt("Zurück, dort stehen die Wege zum Füllen")}</div>
+              </div>
+            )}
           </div>
-          )}
 
+          {modale}
         </div>
+      );
+    }
 
-        {/* Der Spaltenkopf: steht immer, rollt nie. */}
-        <div className="wl-spalten">
-          {/* Alles oder nichts — als zwei Wörter über der Liste. Ohne das
-              blieb nur, dreissig Zeilen einzeln anzutippen. „Auswahl
-              aufheben" ist blass, solange nichts gewählt ist: der Weg
-              zurück muss sichtbar sein, aber nicht anklickbar wirken. */}
-          {bearbeitbar && sichtbar.length > 0 && (
-            <div className="wl-alle">
-              <button onClick={() => setGewaehlt(sichtbar.map((w: any) => w.id))}
-                disabled={gewaehlt.length === sichtbar.length}>{txt("Alle auswählen")}</button>
-              <button onClick={() => setGewaehlt([])} disabled={!gewaehlt.length}>{txt("Auswahl aufheben")}</button>
-            </div>
-          )}
+    /* ------------------------------------------- Ebene 2: die Liste */
+    return (
+      <div className="wl">
+        {l && (
+          <div className="ruest">
+            <label className="pill pill-sel">
+              <Icon name="calendar" size={14} />
+              <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
+              <input type="date" value={l.dueDate ? new Date(l.dueDate).toISOString().slice(0, 10) : ""}
+                onChange={(e) => setListDue(l.id, e.target.value)} aria-label={txt("Zieldatum")} />
+            </label>
+            {l.dueDate && (
+              <button className="icon-btn" title={txt("Zieldatum entfernen")}
+                onClick={() => { setListDue(l.id, ""); toast(txt("Zieldatum entfernt"), "calendar"); }}>
+                <Icon name="trash" size={13} />
+              </button>
+            )}
+            {!istSystemliste && (
+              <button className="pill" onClick={() => { setEditingListId(l.id); setListName(l.name); }}>
+                <Icon name="edit" size={14} /> {txt("Umbenennen")}
+              </button>
+            )}
+            {canShare && !istSystemliste && (
+              <button className="pill" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>
+            )}
+          </div>
+        )}
+        {editingListId === offen.ref && (
+          <input className="mini-input" style={{ marginTop: 8, fontFamily: "var(--serif)", fontSize: 17 }} autoFocus
+            value={listName} onChange={(e) => setListName(e.target.value)} onBlur={commitRename}
+            onKeyDown={(e) => e.key === "Enter" && commitRename()} />
+        )}
 
-          {sichtbar.length > 0 && (
-            <div className="wz-kopf">
-              <span className="wz-f">{P.foreignLabel}</span>
-              <span className="wz-d">{P.nativeLabel}</span>
-            </div>
-          )}
-        </div>
+        {standImBlick.total > 0 && (
+          <div className="wl-stand">
+            <MasteryBar dist={standImBlick.dist} total={standImBlick.total} />
+            <button className="wl-statlink" onClick={() => {
+              store.setSettings({ statPair: pair, statLists: offen.art === "liste" ? [offen.ref] : [] });
+              window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
+            }}><Icon name="chart" size={12} /> {txt("Statistik")}</button>
+          </div>
+        )}
 
-        <div className="wl-roll">
-          {sichtbar.length ? sichtbar.map(wortZeile) : q ? (
-            <div className="empty">
-              <div className="big">{txt("Nichts gefunden")}</div>
-              <div>{txt("Anderer Suchbegriff, oder das Feld leeren")}</div>
-            </div>
-          ) : (
-            /* Eine leere Liste ist der Moment, in dem man die Wege braucht --
-               nicht ein Satz, der auf Knöpfe weiter oben zeigt. Vier Wege,
-               nach Aufwand geordnet: der bequemste zuerst. */
-            <div className="list" style={{ marginTop: 4 }}>
-              <div className="grp">{txt("Wie füllst du diese Liste?")}</div>
-              {isConfigured && (
-                <button className="li" onClick={() => openImport()}>
-                  <Icon name="download" size={15} />
-                  <span className="g">{txt("Geteilte Liste übernehmen")}<div className="m">{txt("jemand hat dir einen Link geschickt")}</div></span>
-                  <Icon name="arrowRight" size={14} />
-                </button>
-              )}
-              <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
-                <Icon name="list" size={15} />
-                <span className="g">{txt("Liste einfügen")}<div className="m">{txt("aus dem Heft, einem Buch oder von einer KI")}</div></span>
+        {/* Der Weg zu den Wörtern -- eine Zeile wie jede andere, mit der
+            Zahl daneben, damit man weiss, was einen erwartet. */}
+        <button className="li li-woerter" onClick={() => { setListenSuche(""); setGewaehlt([]); setWoerterOffen(true); }}>
+          <Icon name="list" size={15} />
+          <span className="g">{txt("Wörter ansehen und bearbeiten")}
+            <div className="m">{txt("suchen, ändern, löschen")}</div></span>
+          <span className="lchip-n">{standImBlick.total}</span>
+          <Icon name="arrowRight" size={14} />
+        </button>
+
+        {/* Die Wege zum Füllen. Vorher erschienen sie nur in einer leeren
+            Liste -- gebraucht werden sie auch danach, beim nächsten Kapitel. */}
+        {offen.art === "liste" && (
+          <div className="list" style={{ marginTop: 4 }}>
+            <div className="grp">{standImBlick.total ? txt("Mehr Wörter dazu") : txt("Wie füllst du diese Liste?")}</div>
+            {isConfigured && (
+              <button className="li" onClick={() => openImport()}>
+                <Icon name="download" size={15} />
+                <span className="g">{txt("Geteilte Liste übernehmen")}<div className="m">{txt("jemand hat dir einen Link geschickt")}</div></span>
                 <Icon name="arrowRight" size={14} />
               </button>
-              <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(true); setPasteOpen(true); }}>
-                <Icon name="sparkle" size={15} />
-                <span className="g">{txt("KI-Prompt zum Abschreiben")}<div className="m">{txt("Foto der Heftseite an eine KI, Ergebnis hier einfügen")}</div></span>
-                <Icon name="arrowRight" size={14} />
-              </button>
-              <button className="li" onClick={() => { setAdding((x: any) => ({ ...x, listId: offen.ref })); setNeuesWortOffen(true); }}>
-                <Icon name="plus" size={15} />
-                <span className="g">{txt("Wörter einzeln eintippen")}<div className="m">{txt("dieselbe Maske wie beim Bearbeiten")}</div></span>
-                <Icon name="arrowRight" size={14} />
-              </button>
-              {tabellen && (
-                <button className="li" onClick={() => dateiRef.current?.click()}>
-                  <Icon name="upload" size={15} />
-                  <span className="g">{txt("Tabelle einlesen")}<div className="m">{txt("Excel oder CSV — nur in der Webversion")}</div></span>
-                  <Icon name="arrowRight" size={14} />
-                </button>
-              )}
-            </div>
-          )}
-          {l && !istSystemliste && (
-            <button className="wl-loeschen" onClick={deleteActiveList}>
-              <Icon name="trash" size={13} /> {txt("Diese Wortliste löschen")}
+            )}
+            <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
+              <Icon name="list" size={15} />
+              <span className="g">{txt("Liste einfügen")}<div className="m">{txt("aus dem Heft, einem Buch oder von einer KI")}</div></span>
+              <Icon name="arrowRight" size={14} />
             </button>
-          )}
-        </div>
+            <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(true); setPasteOpen(true); }}>
+              <Icon name="sparkle" size={15} />
+              <span className="g">{txt("KI-Prompt zum Abschreiben")}<div className="m">{txt("Foto der Heftseite an eine KI, Ergebnis hier einfügen")}</div></span>
+              <Icon name="arrowRight" size={14} />
+            </button>
+            <button className="li" onClick={() => { setAdding((x: any) => ({ ...x, listId: offen.ref })); setNeuesWortOffen(true); }}>
+              <Icon name="plus" size={15} />
+              <span className="g">{txt("Wörter einzeln eintippen")}<div className="m">{txt("dieselbe Maske wie beim Bearbeiten")}</div></span>
+              <Icon name="arrowRight" size={14} />
+            </button>
+            {tabellen && (
+              <button className="li" onClick={() => dateiRef.current?.click()}>
+                <Icon name="upload" size={15} />
+                <span className="g">{txt("Tabelle einlesen")}<div className="m">{txt("Excel oder CSV — nur in der Webversion")}</div></span>
+                <Icon name="arrowRight" size={14} />
+              </button>
+            )}
+          </div>
+        )}
+
+        {l && !istSystemliste && (
+          <button className="wl-loeschen" onClick={() => setListeLoeschen(true)}>
+            <Icon name="trash" size={13} /> {txt("Diese Wortliste löschen")}
+          </button>
+        )}
 
         {modale}
       </div>

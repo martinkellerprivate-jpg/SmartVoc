@@ -3,6 +3,7 @@ import { txt } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
+import { Bestaetigen } from "../ui/Bestaetigen";
 import { RECOMMENDED } from "../lib/defaults";
 import { useAuth } from "../sync/auth";
 import { exportAllData, deleteLocalData } from "../lib/accountData";
@@ -115,32 +116,6 @@ function Blatt({ offen, titel, desc, rec, atRec, onZuruecksetzen, onClose, child
         )}
         <div className="modal-foot">
           <button className="btn btn-primary" onClick={onClose}>{txt("Fertig")}</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* Ein Schritt, der sich nicht rueckgaengig machen laesst, fragt vorher --
- * und zwar alle drei gleich: Einstellungen zuruecksetzen, Fortschritt
- * zuruecksetzen, Konto loeschen. Vorher fragten zwei davon und der dritte
- * tat es sofort; und die beiden, die fragten, sahen verschieden aus. */
-function Bestaetigen({ offen, titel, text, knopf, gefahr, aus, tun, onClose, children }: any) {
-  if (!offen) return null;
-  return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
-        <div className="modal-head">
-          <div className="modal-title">{titel}</div>
-          <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
-        </div>
-        <div className="muted" style={{ fontSize: 13.5, lineHeight: 1.45 }}>{text}</div>
-        {children}
-        <div className="modal-foot">
-          <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
-          <button className={"btn " + (gefahr ? "" : "btn-primary")}
-            style={gefahr ? { borderColor: "var(--bad)", color: "var(--bad)" } : undefined}
-            disabled={!!aus} onClick={tun}>{knopf}</button>
         </div>
       </div>
     </div>
