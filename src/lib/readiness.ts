@@ -62,8 +62,13 @@ export function toneLegend(_settings: Partial<Settings> = {}): { tone: Tone; lab
   ];
 }
 
-/** Ein Satz unter der Legende — die Regel, nach der ein Tag seine Farbe
- *  bekommt. Ohne ihn bleibt offen, was passiert, wenn an einem Tag zwei
- *  Listen fällig sind. */
-export const AMPEL_SATZ =
-  "Die Farbe eines Tages sagt, wie weit die Wörter sitzen, die bis dahin dran sind. Liegen mehrere Listen auf demselben Tag, zählt die schwächste — die Zahl in der Ecke sagt, wie viele es sind.";
+/* Der Satz unter der Legende. Er hatte drei Zeilen und erklärte unter
+ * anderem, was eine Zahl in der Ecke des Tages bedeutet — was man nicht
+ * erklären muss, wenn im Tag „2 Listen" steht. Übrig bleibt das eine, was
+ * man nicht sehen kann: worauf sich die Farbe bezieht und ab wann sie
+ * umschlägt. Die Schwellen kommen aus den Einstellungen, damit hier nie
+ * eine andere Zahl steht als dort. */
+export function ampelSatz(settings: Partial<Settings> = {}): string {
+  return txt("So viele Wörter der Liste sitzen schon: ab {g} % bereit, ab {a} % auf Kurs, darunter im Rückstand.",
+    { g: settings.readyGreen ?? 95, a: settings.readyAmber ?? 70 });
+}

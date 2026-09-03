@@ -24,7 +24,7 @@ import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, activePairs } from "../lib/pairs";
 
 import { retentionFor } from "../lib/fsrs";
-import { toneLegend, listReadiness, TONE_KLASSE, AMPEL_SATZ } from "../lib/readiness";
+import { toneLegend, listReadiness, TONE_KLASSE, ampelSatz } from "../lib/readiness";
 import { getUiLang } from "../lib/i18n";
 
 const DAY = 86400000;
@@ -199,6 +199,15 @@ export function PlanTab() {
 
   return (
     <div className="plantab">
+      {/* Eine Überschrift, bevor irgendetwas gezeigt wird. Der Kalender stand
+          ohne ein Wort da: wer die App zum ersten Mal öffnet, sieht farbige
+          Tage und weiss nicht, wovon sie handeln. Der Name des Reiters unten
+          in der Leiste ist keine Erklärung. */}
+      <div className="tab-kopf">
+        <div className="section-title">{txt("Übungsplan")}</div>
+        <div className="muted">{txt("Wortlisten, für die du ein Datum gesetzt hast — wann sie geprüft werden und wie weit du bist.")}</div>
+      </div>
+
       <div className="ruest">
         <div className="seg seg-view" role="group" aria-label={txt("Ansicht")}>
           <button aria-pressed={ansicht === "kalender"} onClick={() => setAnsicht("kalender")}>
@@ -245,12 +254,11 @@ export function PlanTab() {
                 disabled={!n && day !== today}
                 aria-label={`${d.getDate()}. ${MONTH_NAME(d.getMonth())}${n ? " · " + txt(n === 1 ? "{n} Wortliste" : "{n} Wortlisten", { n }) : ""}`}>
                 <span className="cal-num">{d.getDate()}</span>
-                {/* Nicht ein Punkt im Tag, sondern der ganze Tag: der Punkt
-                    war so klein, dass drei Farben nebeneinander gleich
-                    aussahen. Die Zahl in der Ecke erscheint nur, wenn an
-                    dem Tag mehr als eine Liste faellig ist -- dann sagt die
-                    Farbe die schwaechste von ihnen. */}
-                {n > 1 && <span className="cal-cnt">{n}</span>}
+                {/* Ausgeschrieben unter dem Datum, nicht als Zahl in der
+                    Ecke: eine nackte 2 muss man erklaeren, „2 Listen" nicht.
+                    Der ganze Tag traegt die Ampelfarbe -- bei mehreren
+                    Listen die der schwaechsten. */}
+                {n > 0 && <span className="cal-listen">{txt(n === 1 ? "{n} Liste" : "{n} Listen", { n })}</span>}
               </button>
             );
           })}
@@ -263,7 +271,7 @@ export function PlanTab() {
             </span>
           ))}
         </div>
-        <div className="cal-legend-satz">{txt(AMPEL_SATZ)}</div>
+        <div className="cal-legend-satz">{ampelSatz(settings)}</div>
       </div>}
 
       <div className="plan-day">

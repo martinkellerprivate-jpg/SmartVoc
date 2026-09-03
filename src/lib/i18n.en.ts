@@ -757,5 +757,8 @@ export const EN: Record<string, string> = {
   /* Kalenderampel (T-22). */
   "Auf Kurs": "On track",
   "Im Rückstand": "Behind",
-  "Die Farbe eines Tages sagt, wie weit die Wörter sitzen, die bis dahin dran sind. Liegen mehrere Listen auf demselben Tag, zählt die schwächste — die Zahl in der Ecke sagt, wie viele es sind.": "A day's colour says how well the words due by then have stuck. If several lists fall on the same day, the weakest one counts — the number in the corner says how many there are.",
+  "So viele Wörter der Liste sitzen schon: ab {g} % bereit, ab {a} % auf Kurs, darunter im Rückstand.": "How many of the list's words have stuck: {g} % and up is ready, {a} % and up is on track, below that you are behind.",
+  "Wortlisten, für die du ein Datum gesetzt hast — wann sie geprüft werden und wie weit du bist.": "Word lists you have given a date — when they are tested and how far along you are.",
+  "{n} Liste": "{n} list",
+  "{n} Listen": "{n} lists",
 };

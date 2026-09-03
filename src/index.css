@@ -553,6 +553,12 @@ table.vt tr:hover .row-actions { opacity: 1; }
 
 /* ---------- settings ---------- */
 .settings { max-width: 760px; }
+/* Die Ueberschrift eines Bereichs: Name und ein Satz, worum es geht.
+   Gleiche Form wie der Kopf der Einstellungen -- zwei Bauarten fuer
+   dieselbe Sache waeren eine zu viel. */
+.tab-kopf { margin-bottom: 8px; }
+.tab-kopf .muted { font-size: 13.5px; margin-top: 4px; max-width: 560px; line-height: 1.45; }
+
 .set-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
 .set-section { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow-sm); margin-bottom: 16px; overflow: hidden; }
 .set-section-h { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); padding: 13px 18px; background: var(--card-2); border-bottom: 1px solid var(--line); }
@@ -813,8 +819,9 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   /* Feste Hoehe statt aspect-ratio: bei sieben Spalten auf einem breiten
      Fenster wuerde ein quadratischer Tag ueber hundert Pixel hoch -- der
      Monat passte dann nicht mehr auf den Schirm. */
-  position: relative; height: clamp(42px, 6vw, 64px);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  position: relative; height: clamp(48px, 6.4vw, 66px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 0 2px;
   border: 1px solid transparent; border-radius: 10px; background: none;
   color: var(--ink); font-size: 13.5px; font-variant-numeric: tabular-nums;
   cursor: default;
@@ -839,10 +846,14 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .cal-day.today { box-shadow: inset 0 0 0 1.5px var(--ink); font-weight: 700; }
 .cal-day.open { box-shadow: 0 0 0 2px var(--ink); }
 .cal-day.today.open { box-shadow: inset 0 0 0 1.5px var(--ink), 0 0 0 2px var(--ink); }
-/* Liegen mehrere Listen auf dem Tag, steht ihre Zahl in der Ecke -- die
-   Farbe zeigt dann die schwaechste von ihnen. */
-.cal-cnt { position: absolute; top: 3px; right: 5px; line-height: 1;
-           font-size: 9.5px; font-weight: 700; color: var(--ink-soft); }
+/* Unter dem Datum steht ausgeschrieben, worum es an diesem Tag geht.
+   Vorher stand dort eine nackte Zahl in der Ecke, die der Erklaertext
+   uebersetzen musste -- „2 Listen" braucht keine Uebersetzung. */
+.cal-listen { max-width: 100%; padding: 1px 3px; border-radius: 5px;
+              background: var(--card); color: var(--ink-soft);
+              font-size: 8.5px; font-weight: 700; line-height: 1.3;
+              letter-spacing: .01em; white-space: nowrap;
+              overflow: hidden; text-overflow: clip; }
 
 .cal-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-soft); font-size: 12.5px; color: var(--ink-soft); }
 .cal-leg { display: inline-flex; align-items: center; gap: 7px; }
@@ -897,7 +908,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   .planrow { flex-wrap: wrap; }
   .planrow-acts { flex-direction: row; width: 100%; }
   .planrow-acts .btn { flex: 1; justify-content: center; }
-  .cal-day { height: 40px; font-size: 12.5px; }
+  .cal-day { height: 46px; font-size: 12.5px; }
 }
 
 /* ====================================================================
