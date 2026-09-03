@@ -551,6 +551,11 @@ export function WordList() {
         {/* Alles bis zur Tabellenüberschrift steht fest; gescrollt wird nur
             die Liste. Sonst verliert man beim Blättern den Bezug -- welche
             Liste, wie weit, welche Spalte. */}
+        {/* Der obere Teil rollt selbst, lautlos: auf dem Handy nimmt er sonst
+            die halbe Höhe, und man sieht sechs Wörter. Gerollt wird er ohne
+            Balken -- sichtbar rollt nur die Wortliste. Was die Spalten
+            benennt, steht darunter fest, sonst rollt die Überschrift weg,
+            die man beim Blättern gerade braucht. */}
         <div className="wl-fest">
           {l && (
             <div className="ruest">
@@ -635,6 +640,10 @@ export function WordList() {
           </div>
           )}
 
+        </div>
+
+        {/* Der Spaltenkopf: steht immer, rollt nie. */}
+        <div className="wl-spalten">
           {/* Alles oder nichts — als zwei Wörter über der Liste. Ohne das
               blieb nur, dreissig Zeilen einzeln anzutippen. „Auswahl
               aufheben" ist blass, solange nichts gewählt ist: der Weg

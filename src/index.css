@@ -1531,8 +1531,14 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 /* Der feste Teil rollt bei Bedarf mit -- aber leise: auf einem kurzen
    Bildschirm muss man an die Werkzeuge kommen, ohne dass zwei Rollbalken
    nebeneinander stehen. Sichtbar rollt nur die Wortliste. */
-.wl-fest { flex: 0 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+/* Der obere Teil darf hoechstens die Haelfte der Hoehe belegen und rollt
+   darueber hinaus selbst -- ohne Balken, damit nicht zwei nebeneinander
+   stehen. Auf dem Handy nahm er sonst mehr Platz als die Liste. */
+.wl-fest { flex: 0 1 auto; min-height: 0; max-height: 38%;
+           overflow-y: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .wl-fest::-webkit-scrollbar { display: none; }
+/* Was die Spalten benennt, rollt nie mit. */
+.wl-spalten { flex: none; }
 .wl-roll { flex: 1; min-height: 0; overflow-y: auto; padding-top: 2px; }
 
 .wl-stand { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
@@ -1550,7 +1556,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 
 /* Die Tabellenüberschrift und die Zeilen teilen dasselbe Raster. */
 .wz-kopf, .wz { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: baseline; }
-.wz-kopf { padding: 10px 13px 5px; font-size: 9.5px; letter-spacing: .09em;
+.wz-kopf { padding: 10px 13px 5px 25px; font-size: 9.5px; letter-spacing: .09em;
            text-transform: uppercase; color: var(--ink-faint); font-weight: 700;
            border-bottom: 1px solid var(--line); }
 
@@ -1559,15 +1565,16 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    zu tönen machte die Liste bunt und arbeitete gegen „schlank". */
 /* Farbe ausdrücklich setzen: iOS gibt Text in einem <button> sonst die
    Systemfarbe, und die Fremdwörter erschienen blau wie Verweise. */
-/* Der Streifen links ist eine gerade Linie, kein mitgebogener Rand: als
-   Rahmenkante folgte er der Rundung und lief oben und unten spitz aus. */
-.wz { position: relative; width: 100%; text-align: left; background: var(--card); color: var(--ink);
+/* Der Balken steht NEBEN der Karte, nicht in ihr: als Rahmenkante folgte
+   er der Rundung und lief oben und unten spitz aus. Jetzt ein eigenes,
+   gerades Stueck mit etwas Luft dazwischen. */
+.wz { position: relative; width: calc(100% - 11px); margin-left: 11px;
+      text-align: left; background: var(--card); color: var(--ink);
       font: inherit; -webkit-appearance: none; appearance: none;
       border: 1px solid var(--line);
-      border-radius: 10px; padding: 10px 13px 10px 17px; margin-top: 5px; cursor: pointer;
-      overflow: hidden; }
-.wz::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-              background: var(--stufe, var(--line)); }
+      border-radius: 10px; padding: 10px 13px; margin-top: 5px; cursor: pointer; }
+.wz::before { content: ""; position: absolute; left: -11px; top: 1px; bottom: 1px; width: 4px;
+              border-radius: 2px; background: var(--stufe, var(--line)); }
 .wz:hover { border-color: var(--ink-soft); }
 .wz.sel { box-shadow: inset 0 0 0 1px var(--ink); border-color: var(--ink);
           background: var(--bg-2); }

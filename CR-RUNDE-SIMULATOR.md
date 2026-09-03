@@ -125,3 +125,19 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | T-16 | Kontrollkästchen app-weit entfernt. Auswahl heisst überall: **dunklerer Grund (`--bg-2`) plus Rahmen in Schriftfarbe**. |
 | T-17 | (a) Der Farbstreifen ist ein eigenes Element und läuft gerade. (b) Die Hülle hat jetzt eine begrenzte Höhe (`100dvh`), der Inhalt rollt in `.app-body` — dadurch kann der Listenkopf über den Zeilen stehen bleiben; der feste Teil rollt bei Bedarf lautlos mit. (c) Der Tabellenkopf schreibt die Sprachen aus. |
 | T-18 | „Alle auswählen“ / „Auswahl aufheben“ als Textzeile über dem Tabellenkopf; die zweite ist blass, solange nichts gewählt ist. |
+
+## Dritte Runde am Simulator
+
+| Nr | Bereich | CR |
+|---|---|---|
+| T-19 | Einstellungen · Erweitert | Dem Einleitungstext fehlt der **Abstand zum Rand** — er beginnt an der Kastenkante. |
+| T-20 | Wortlisten · Wortzeile | Der farbige Balken links soll ein **eigener, gerader Balken neben der Karte** sein — nicht in das Rechteck eingebaut. |
+| T-21 | Wortlisten · Rollen | Der obere, feste Bereich soll **selbst rollbar** sein, nur **ohne Rollbalken**. Der Tabellenkopf bleibt dabei stehen. |
+
+### Umgesetzt am 3. September 2026 (zweiter Durchgang)
+
+| Nr | Wie gelöst |
+|---|---|
+| T-19 | Der Einleitungstext der erweiterten Einstellungen hat dieselbe Polsterung wie die Zeilen darunter (18 px). |
+| T-20 | Der Balken ist ein eigenes Stück links **neben** der Karte: 4 px breit, gerade, mit 7 px Luft. Der Spaltenkopf ist um dieselbe Strecke eingerückt. |
+| T-21 | Der obere Bereich belegt höchstens 38 % der Höhe und rollt darüber hinaus selbst — ohne Rollbalken. Was die Spalten benennt („Alle auswählen“ und der Tabellenkopf), steht in einem eigenen Streifen darunter und rollt nie mit. |

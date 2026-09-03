@@ -545,7 +545,7 @@ export function SettingsTab() {
         </button>
         {advOpen && (
           <>
-            <div className="muted" style={{ fontSize: 13, marginBottom: 12, maxWidth: 560 }}>
+            <div className="muted" style={{ fontSize: 13, padding: "12px 18px 0", maxWidth: 560 }}>
               {txt("Für Neugierige. Die App funktioniert mit den Standardwerten optimal — alles hier ist optional und jederzeit zurücksetzbar.")}
             </div>
 
