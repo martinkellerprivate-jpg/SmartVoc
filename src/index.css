@@ -1645,3 +1645,24 @@ select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
    wirkt und nicht nach Wortlänge springt. */
 .seg-voll { display: flex; width: 100%; }
 .seg-voll button { flex: 1; padding: 9px 6px; font-size: 13px; justify-content: center; }
+
+/* Eine Einstellung als Zeile: Name links, Wert rechts, Pfeil. Die Erklärung
+   steht im Blatt, das sich beim Antippen öffnet — nicht darunter. Zwanzig
+   Einstellungen mit vollem Erklärtext ergaben eine Wand aus Absätzen. */
+.setz { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+        background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+        padding: 12px 14px; margin-bottom: 6px; font: inherit; font-size: 13.5px;
+        color: var(--ink); cursor: pointer; }
+.setz:hover { border-color: var(--ink-soft); }
+.setz-t { flex: 1; min-width: 0; font-weight: 600; }
+.setz-sub { display: block; font-size: 11.5px; font-weight: 400; color: var(--ink-faint); margin-top: 2px; }
+.setz-w { flex: none; max-width: 48%; text-align: right; color: var(--ink-soft);
+          font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.setz-schalter { cursor: pointer; }
+/* Ein Punkt statt der Marke „✓ Empfohlen": in einer Zeile ist für sie kein
+   Platz, und der Punkt sagt dasselbe, wenn man ihn einmal gelernt hat. */
+.rec-punkt { display: inline-block; width: 5px; height: 5px; border-radius: 999px;
+             background: var(--ok); margin-left: 7px; vertical-align: 2px; }
+.setz-rec { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-soft);
+            font-size: 12.5px; color: var(--ink-soft); }

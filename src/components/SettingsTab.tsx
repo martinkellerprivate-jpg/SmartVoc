@@ -61,18 +61,91 @@ function CardPreview() {
   );
 }
 
+/* Eine Einstellung als ZEILE: Name links, Wert rechts, Pfeil. Die Erklaerung
+ * steht im Blatt, das sich beim Antippen oeffnet -- nicht darunter.
+ *
+ * Vorher trug jede Einstellung ihren ganzen Erklaertext auf der Seite. Das
+ * war vollstaendig und unlesbar: zwanzig Einstellungen ergaben eine Wand aus
+ * Absaetzen, durch die man scrollte, ohne etwas zu finden. Wer eine
+ * Einstellung sucht, sucht ihren Namen; wer sie versteht, will den Wert
+ * sehen; und nur wer zweifelt, braucht den Absatz.
+ */
+function ZeileWert({ titel, wert, atRec, onClick }: any) {
+  return (
+    <button className="setz" onClick={onClick}>
+      <span className="setz-t">{titel}{atRec && <span className="rec-punkt" title={txt("Empfohlen")} />}</span>
+      <span className="setz-w">{wert}</span>
+      <Icon name="arrowRight" size={14} />
+    </button>
+  );
+}
+
+/* Ein Schalter braucht kein Blatt -- an oder aus ist die ganze Auskunft.
+ * Die Zeile darunter sagt, was er bewirkt, in fuenf Woertern. */
+function ZeileSchalter({ titel, sub, value, onChange }: any) {
+  return (
+    <label className="setz setz-schalter">
+      <span className="setz-t">{titel}{sub && <span className="setz-sub">{sub}</span>}</span>
+      <Toggle value={value} onChange={onChange} />
+    </label>
+  );
+}
+
+/* Das Blatt zu einer Einstellung: Name, Erklaerung, Bedienelement, und die
+ * Voreinstellung als Zeile darunter -- mit einem Knopf zurueck zu ihr. */
+function Blatt({ offen, titel, desc, rec, atRec, onZuruecksetzen, onClose, children }: any) {
+  if (!offen) return null;
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+        <div className="modal-head">
+          <div className="modal-title">{titel}</div>
+          <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
+        </div>
+        {desc && <p className="said" style={{ marginTop: 0 }}>{desc}</p>}
+        <div style={{ marginTop: 12 }}>{children}</div>
+        {rec != null && (
+          <div className="setz-rec">
+            <span>{txt("Empfohlen:")} <b>{rec}</b></span>
+            {!atRec && onZuruecksetzen && (
+              <button className="btn btn-ghost btn-sm" onClick={onZuruecksetzen}>
+                <Icon name="refresh" size={13} /> {txt("Zurück zur Empfehlung")}
+              </button>
+            )}
+          </div>
+        )}
+        <div className="modal-foot">
+          <button className="btn btn-primary" onClick={onClose}>{txt("Fertig")}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Field({ title, desc, recLabel, atRec, children }: any) {
   return (
     <div className="set-row">
       <div className="set-info">
         <div className="set-title">{title}{atRec && <span className="rec-pill">{txt("✓ Empfohlen")}</span>}</div>
         {desc && <div className="set-desc">{desc}</div>}
-        {recLabel != null && <div className="set-rec">{txt("Empfohlen:")} <b>{recLabel}</b></div>}
+        {recLabel != null && !atRec && <div className="set-rec">{txt("Empfohlen:")} <b>{recLabel}</b></div>}
       </div>
       <div className="set-control">{children}</div>
     </div>
   );
+
 }
+
+/* Drei Tempi statt eines Reglers von 3 bis 30. Die Zahl steht daneben --
+ * wer sie kennt, findet sich zurecht; wer nicht, waehlt ein Wort. */
+const TEMPI = [
+  { n: 5,  name: "Gemächlich", sub: "wenig Neues, viel Wiederholung" },
+  { n: 10, name: "Normal",     sub: "acht bis zwölf sind der belegte Normalwert" },
+  { n: 20, name: "Zügig",      sub: "für Prüfungsphasen — mehr Rückstau" },
+];
+const TEMPO_NAME = (n: number) => (TEMPI.find((t) => t.n === n) || { name: String(n) }).name;
+
+const MODUS: Record<string,string> = { type: "Eintippen", choice: "Auswählen", recall: "Selbstkontrolle", memorize: "Nur durchblättern" };
 
 export function SettingsTab() {
   const store = useStore();
@@ -85,6 +158,7 @@ export function SettingsTab() {
   // Konto & Daten (Phase 7)
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [resetOpen, setResetOpen] = useState(false);
+  const [blatt, setBlatt] = useState<string | null>(null);
   const [imprintOpen, setImprintOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
@@ -150,54 +224,124 @@ export function SettingsTab() {
           </div>
         </div>
         <button className="btn btn-sm" onClick={() => { resetSettings(); toast("Restored recommended settings", "refresh"); }}>
-          <Icon name="refresh" size={14} /> Reset to recommended
+          <Icon name="refresh" size={14} /> {txt("Auf die Voreinstellungen zurücksetzen")}
         </button>
       </div>
 
       {/* Practice */}
+      {/* Üben — als Zeilenliste wie im Entwurf. Name links, Wert rechts;
+          die Erklärung öffnet sich als Blatt. Schalter bleiben in der Zeile,
+          denn an oder aus ist die ganze Auskunft. */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="cards" size={16} /> {txt("Üben")}</div>
-        <Field title={txt("Antwortart")} recLabel={txt("Eintippen")} atRec={atR("mode")}
-          desc={txt("Eintippen prägt am stärksten ein. Selbstkontrolle heisst: umdrehen und selbst beurteilen. Durchblättern zählt nicht für den Lernstand.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.mode} onChange={(e) => set("mode", e.target.value)}>
-            <option value="type">{txt("Eintippen")}</option>
-            <option value="choice">{txt("Auswählen")}</option>
-            <option value="recall">{txt("Selbstkontrolle")}</option>
-            <option value="memorize">{txt("Durchblättern")}</option>
-          </select>
-        </Field>
-        <Field title={txt("Anzahl Auswahlmöglichkeiten")} recLabel={R.choicesCount} atRec={atR("choicesCount")}
-          desc={txt("Wie viele Möglichkeiten beim Auswählen zur Wahl stehen.")}>
-          <SliderControl value={settings.choicesCount} min={2} max={6} step={1} onChange={(v) => set("choicesCount", v)} />
-        </Field>
-        <Field title={txt("Beispielsätze anzeigen")} recLabel={txt("An")} atRec={atR("showExamples")}
-          desc={txt("Zeigt die Beispielsätze eines Worts auf der Lösungsseite der Karte — dort, wo du die Antwort siehst. Ein Wort im Satz zu sehen, hilft beim Behalten. Sätze, die du nicht erfasst hast, ändern nichts.")}>
-          <Toggle value={settings.showExamples !== false} onChange={(v) => set("showExamples", v)} />
-        </Field>
-        <Field title={txt("Aussprache anzeigen")} recLabel={txt("An")} atRec={atR("showPhonetic")}
-          desc={txt("Zeigt die Lautschrift eines Worts klein unter dem Fremdwort — überall dort, wo das Fremdwort selbst zu sehen ist. Wörter ohne erfasste Lautschrift bleiben unverändert.")}>
-          <Toggle value={settings.showPhonetic !== false} onChange={(v) => set("showPhonetic", v)} />
-        </Field>
-        <Field title={txt("Tagesziel (Karten)")} recLabel={`${R.dailyGoal} (etwa 15 Minuten)`} atRec={atR("dailyGoal")}
-          desc={txt("Eine kurze Einheit jeden Tag bringt mehr als eine lange alle paar Tage.")}>
-          <SliderControl value={settings.dailyGoal} min={10} max={80} step={5} onChange={(v) => set("dailyGoal", v)} />
-        </Field>
+
+        <ZeileWert titel={txt("Antwortart")} atRec={atR("mode")}
+          wert={txt(MODUS[settings.mode] || settings.mode)} onClick={() => setBlatt("mode")} />
+        <ZeileWert titel={txt("Höchstens pro Tag")} atRec={atR("dailyGoal")}
+          wert={txt("{n} Karten", { n: settings.dailyGoal })} onClick={() => setBlatt("dailyGoal")} />
+        <ZeileWert titel={txt("Neue Wörter pro Tag")} atRec={atR("newPerDay")}
+          wert={txt(TEMPO_NAME(settings.newPerDay))} onClick={() => setBlatt("newPerDay")} />
+        <ZeileWert titel={txt("Vorschläge bei Multiple-Choice")} atRec={atR("choicesCount")}
+          wert={String(settings.choicesCount)} onClick={() => setBlatt("choicesCount")} />
+        <ZeileWert titel={txt("Lernintensität")} atRec={(settings.targetRetention ?? 0.9) === 0.9}
+          wert={txt({ locker: "Locker", normal: "Normal", intensiv: "Intensiv" }[
+            (settings.targetRetention ?? 0.9) >= 0.95 ? "intensiv" : (settings.targetRetention ?? 0.9) <= 0.85 ? "locker" : "normal"])}
+          onClick={() => setBlatt("intensity")} />
+        <ZeileSchalter titel={txt("Beispielsätze anzeigen")} sub={txt("auf der Lösungsseite")}
+          value={settings.showExamples !== false} onChange={(v: boolean) => set("showExamples", v)} />
+        <ZeileSchalter titel={txt("Lautschrift anzeigen")} sub={txt("unter dem Fremdwort")}
+          value={settings.showPhonetic !== false} onChange={(v: boolean) => set("showPhonetic", v)} />
+        <ZeileWert titel={txt("Lerntipp-Einblendungen")} atRec={atR("tipsFrequency")}
+          wert={txt({ off: "Aus", occasional: "Gelegentlich", frequent: "Häufig" }[settings.tipsFrequency] || "Gelegentlich")}
+          onClick={() => setBlatt("tips")} />
+        <ZeileWert titel={txt("Wann eine Liste als bereit gilt")} atRec={atR("readyGreen") && atR("readyAmber")}
+          wert={txt("grün ab {g} %, gelb ab {a} %", { g: settings.readyGreen ?? 95, a: settings.readyAmber ?? 70 })}
+          onClick={() => setBlatt("ready")} />
       </div>
 
-      {/* Pacing & repetition */}
-      <div className="set-section">
-        <div className="set-section-h"><Icon name="flame" size={16} /> {txt("Wiederholung")}</div>
-        <Field title={txt("Neue Wörter pro Tag")} recLabel={`${R.newPerDay} (8 bis 12 sind ideal)`} atRec={atR("newPerDay")}
-          desc={txt("Begrenzt, wie viele ganz neue Wörter pro Tag dazukommen. Ist die Zahl erreicht, geht es nur noch ums Wiederholen.")}>
-          <SliderControl value={settings.newPerDay} min={3} max={30} step={1} onChange={(v) => set("newPerDay", v)} />
-        </Field>
-        <Field title={txt("Lernintensität")} recLabel={txt("Normal")} atRec={(settings.targetRetention ?? 0.9) === 0.9}
-          desc={txt("Wie gut die App ein Wort im Gedächtnis halten will, bevor sie es zur Wiederholung bringt. Intensiver = häufigere Wiederholung, sicherer im Behalten. Alles Weitere regelt die App automatisch.")}>
-          <Seg value={(settings.targetRetention ?? 0.9) >= 0.95 ? "intensiv" : (settings.targetRetention ?? 0.9) <= 0.85 ? "locker" : "normal"}
-            onChange={(v) => setSettings({ lernIntensity: v, targetRetention: { locker: 0.85, normal: 0.9, intensiv: 0.95 }[v] })}
-            options={[{ v: "locker", label: "Locker" }, { v: "normal", label: "Normal" }, { v: "intensiv", label: "Intensiv" }]} />
-        </Field>
-      </div>
+      <Blatt offen={blatt === "mode"} titel={txt("Antwortart")} onClose={() => setBlatt(null)}
+        desc={txt("Eintippen prägt am stärksten ein. Selbstkontrolle heisst: umdrehen und selbst beurteilen. Durchblättern zählt nicht für den Lernstand.")}
+        rec={txt("Eintippen")} atRec={atR("mode")} onZuruecksetzen={() => set("mode", R.mode)}>
+        <div className="list">
+          {Object.keys(MODUS).map((v) => (
+            <button key={v} className={"li" + (settings.mode === v ? " sel" : "")} onClick={() => set("mode", v)}>
+              <span className="ckbox">{settings.mode === v && <Icon name="check" size={12} />}</span>
+              <span className="g">{txt(MODUS[v])}</span>
+            </button>
+          ))}
+        </div>
+      </Blatt>
+
+      <Blatt offen={blatt === "dailyGoal"} titel={txt("Höchstens pro Tag")} onClose={() => setBlatt(null)}
+        desc={txt("So viele Karten schlägt „Heute dran“ höchstens vor. Kein Ziel und keine Serie — die Grenze schützt nur davor, nach einer Pause von zweihundert fälligen Wörtern erschlagen zu werden.")}
+        rec={txt("{n} Karten", { n: R.dailyGoal })} atRec={atR("dailyGoal")} onZuruecksetzen={() => set("dailyGoal", R.dailyGoal)}>
+        <SliderControl value={settings.dailyGoal} min={10} max={80} step={5} onChange={(v: number) => set("dailyGoal", v)} />
+      </Blatt>
+
+      {/* Worte statt einer Zahl: „wie viele neue Woerter pro Tag" kann
+          niemand beantworten, der sich nicht selbst gut kennt. Drei Tempi mit
+          der Zahl daneben beantworten dieselbe Frage in einer Sprache, die
+          man ohne Selbstversuch versteht. */}
+      <Blatt offen={blatt === "newPerDay"} titel={txt("Neue Wörter pro Tag")} onClose={() => setBlatt(null)}
+        desc={txt("Wie viele ganz neue Wörter höchstens dazukommen. Das ist dein einziger Hebel auf die Menge: der Lernalgorithmus plant jede Karte für sich und kennt kein Tagespensum — eine falsch beantwortete Karte kommt sogar früher wieder, nicht später. Weniger neue Wörter heisst also weniger Rückstau, nicht langsameres Lernen.")}
+        rec={txt(TEMPO_NAME(R.newPerDay))} atRec={atR("newPerDay")} onZuruecksetzen={() => set("newPerDay", R.newPerDay)}>
+        <div className="list">
+          {TEMPI.map((t) => (
+            <button key={t.n} className={"li" + (settings.newPerDay === t.n ? " sel" : "")} onClick={() => set("newPerDay", t.n)}>
+              <span className="ckbox">{settings.newPerDay === t.n && <Icon name="check" size={12} />}</span>
+              <span className="g">{txt(t.name)}<div className="m">{txt(t.sub)}</div></span>
+              <span className="lchip-n">{t.n}</span>
+            </button>
+          ))}
+        </div>
+      </Blatt>
+
+      <Blatt offen={blatt === "choicesCount"} titel={txt("Vorschläge bei Multiple-Choice")} onClose={() => setBlatt(null)}
+        desc={txt("Wie viele Möglichkeiten beim Auswählen zur Wahl stehen.")}
+        rec={String(R.choicesCount)} atRec={atR("choicesCount")} onZuruecksetzen={() => set("choicesCount", R.choicesCount)}>
+        <SliderControl value={settings.choicesCount} min={2} max={6} step={1} onChange={(v: number) => set("choicesCount", v)} />
+      </Blatt>
+
+      <Blatt offen={blatt === "intensity"} titel={txt("Lernintensität")} onClose={() => setBlatt(null)}
+        desc={txt("Wie gut die App ein Wort im Gedächtnis halten will, bevor sie es zur Wiederholung bringt. Intensiver = häufigere Wiederholung, sicherer im Behalten. Alles Weitere regelt die App automatisch.")}
+        rec={txt("Normal")} atRec={(settings.targetRetention ?? 0.9) === 0.9}
+        onZuruecksetzen={() => setSettings({ lernIntensity: "normal", targetRetention: 0.9 })}>
+        <Seg value={(settings.targetRetention ?? 0.9) >= 0.95 ? "intensiv" : (settings.targetRetention ?? 0.9) <= 0.85 ? "locker" : "normal"}
+          onChange={(v: string) => setSettings({ lernIntensity: v, targetRetention: { locker: 0.85, normal: 0.9, intensiv: 0.95 }[v] })}
+          options={[{ v: "locker", label: "Locker" }, { v: "normal", label: "Normal" }, { v: "intensiv", label: "Intensiv" }]} />
+      </Blatt>
+
+      <Blatt offen={blatt === "tips"} titel={txt("Lerntipp-Einblendungen")} onClose={() => setBlatt(null)}
+        desc={txt("Kurze Lerntipps tauchen an natürlichen Pausen auf (nie mitten in der Antwort) und lassen sich wegklicken.")}
+        rec={txt("Gelegentlich")} atRec={atR("tipsFrequency")} onZuruecksetzen={() => set("tipsFrequency", R.tipsFrequency)}>
+        <div className="list">
+          {[["off", "Aus"], ["occasional", "Gelegentlich"], ["frequent", "Häufig"]].map(([v, l]) => (
+            <button key={v} className={"li" + (settings.tipsFrequency === v ? " sel" : "")} onClick={() => set("tipsFrequency", v)}>
+              <span className="ckbox">{settings.tipsFrequency === v && <Icon name="check" size={12} />}</span>
+              <span className="g">{txt(l)}</span>
+            </button>
+          ))}
+        </div>
+      </Blatt>
+
+      <Blatt offen={blatt === "ready"} titel={txt("Wann eine Liste als bereit gilt")} onClose={() => setBlatt(null)}
+        desc={txt("Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender. Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.")}
+        rec={txt("grün ab {g} %, gelb ab {a} %", { g: 95, a: 70 })}
+        atRec={atR("readyGreen") && atR("readyAmber")}
+        onZuruecksetzen={() => setSettings({ readyGreen: 95, readyAmber: 70 })}>
+        <div className="col" style={{ gap: 14 }}>
+          <div>
+            <div className="setz-t" style={{ marginBottom: 6 }}>{txt("Bereit ab")}</div>
+            <SliderControl value={settings.readyGreen ?? 95} min={80} max={100} step={1}
+              onChange={(v: number) => set("readyGreen", Math.max(v, (settings.readyAmber ?? 70) + 1))} fmt={(v: number) => v + " %"} />
+          </div>
+          <div>
+            <div className="setz-t" style={{ marginBottom: 6 }}>{txt("Fast bereit ab")}</div>
+            <SliderControl value={settings.readyAmber ?? 70} min={40} max={94} step={1}
+              onChange={(v: number) => set("readyAmber", Math.min(v, (settings.readyGreen ?? 95) - 1))} fmt={(v: number) => v + " %"} />
+          </div>
+        </div>
+      </Blatt>
 
       {/* Answer checking */}
       <div className="set-section">
@@ -227,17 +371,22 @@ export function SettingsTab() {
       {/* Latein */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprachen")}</div>
-        <Field title={txt("Sichtbare Sprachen")}
-          desc={txt("Bestimmt, welche Sprachen oben zur Auswahl stehen. Eine abgeschaltete Sprache wird nur ausgeblendet — ihre Wörter, Listen und Lernstände bleiben erhalten und sind sofort wieder da, wenn du sie erneut einschaltest.")}>
-          <div className="col" style={{ gap: 8, width: "100%" }}>
-            {Object.values(PAIRS).map((p: any) => (
-              <label key={p.id} className="row" style={{ gap: 10, alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 14 }}>{p.foreignLabel} ⇄ {p.nativeLabel}</span>
-                <Toggle value={activeIds.includes(p.id)} onChange={() => togglePair(p.id)} />
-              </label>
-            ))}
-          </div>
-        </Field>
+        <div className="grp">{txt("Sprachen")} <span className="hint">— {txt("zu- und abschaltbar")}</span></div>
+        <div className="list">
+          {Object.values(PAIRS).map((p: any) => {
+            const an = activeIds.includes(p.id);
+            const n = store.vocab.filter((w: any) => w.pair === p.id).length;
+            return (
+              <button key={p.id} className={"li" + (an ? " sel" : "")} onClick={() => togglePair(p.id)} aria-pressed={an}>
+                <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
+                <span className="g">{p.foreignLabel} ⇄ {p.nativeLabel}
+                  <div className="m">{n ? txt("{n} Wörter", { n }) : txt("noch keine Wörter")}</div>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="quiet links">{txt("Beim Zuschalten kommt der Grundwortschatz automatisch als eigene Liste dazu. Eine abgeschaltete Sprache wird nur ausgeblendet — ihre Wörter, Listen und Lernstände bleiben erhalten.")}</div>
       </div>
 
       <div className="set-section">
@@ -271,14 +420,17 @@ export function SettingsTab() {
       {/* Oberflächensprache */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprache der App")}</div>
-        <Field title={txt("Oberflächensprache")} recLabel={txt("Folgt dem Gerät")} atRec={!settings.uiLang}
-          desc={txt("Die Sprache der Bedienung. Deine Wörter und Wortlisten bleiben davon unberührt — die Übersetzungen sind immer Deutsch.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.uiLang || ""} onChange={(e) => set("uiLang", e.target.value || undefined)}>
-            <option value="">{txt("Folgt dem Gerät")}</option>
-            <option value="de">Deutsch</option>
-            <option value="en">English</option>
-          </select>
-        </Field>
+        <div className="grp">{txt("Oberflächensprache")}</div>
+        <div className="list">
+          {[["de", "Deutsch", ""], ["en", "English", ""], ["", "Gerätesprache", "folgt der Einstellung des Telefons"]].map(([v, l, sub]) => (
+            <button key={v || "auto"} className={"li" + ((settings.uiLang || "") === v ? " sel" : "")}
+              onClick={() => set("uiLang", v || undefined)} aria-pressed={(settings.uiLang || "") === v}>
+              <span className="ckbox">{(settings.uiLang || "") === v && <Icon name="check" size={12} />}</span>
+              <span className="g">{l === "Gerätesprache" ? txt(l) : l}{sub && <div className="m">{txt(sub)}</div>}</span>
+            </button>
+          ))}
+        </div>
+        <div className="quiet links">{txt("Die Sprache der Bedienung. Deine Wörter und Wortlisten bleiben davon unberührt — die Übersetzungen sind immer Deutsch.")}</div>
       </div>
 
       {/* Übungsplan — die Schwellen der Ampel */}
