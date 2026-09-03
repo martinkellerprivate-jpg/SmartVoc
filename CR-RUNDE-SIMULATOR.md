@@ -1,6 +1,28 @@
 # CR-Runde am Simulator — offen, wird gesammelt
 
-Stand: läuft. Nichts davon ist umgesetzt, solange hier „offen" steht.
+Stand: erste Umsetzungsrunde ist gemacht und im Simulator gesehen.
+
+**Umgesetzt:** S-01 Legende statt Prozentzahl · S-02 Suche in der Liste ·
+S-03 Umbenennen-Pille statt zweitem Zahnrad, Löschen unter der Liste mit
+Bestätigung · S-04 und S-08 Wort und Mehrere oben · S-05 Teilen ·
+S-06 schlanke Zeilen, Farbe als Streifen links · S-07 Auswahl mit Tintenrand,
+Bearbeiten und Löschen ausgegraut bis zur Auswahl, Bearbeiten nur bei einem ·
+S-09 Tabellenkopf FR/DE · S-10 Kopf fixiert, nur die Liste rollt ·
+S-12 eine Liste je Wort (Migration V18) · S-13 Liste üben weg ·
+S-14 kleiner Statistik-Link · S-15 eine Kopfzeile app-weit mit rundem
+Zurück-Knopf · S-21 Tintenrand statt Rost, dazu 13 weitere Rost-Hover
+app-weit korrigiert.
+
+**Noch offen:** S-11 Look and Feel im Ganzen · S-16 und S-22 Einfügen und die
+leere Liste · S-17 Beispieltext · S-18 und S-19 Formular und Lernstand-Block ·
+S-20 Neue Liste vereinfachen.
+
+**Nachtrag vom Nutzer:** Smart Lists sind nur zum Ansehen, kein Ändern und
+kein Löschen. Umgesetzt.
+
+**Eigener Befund unterwegs:** Text in einem button bekommt auf iOS die
+Systemfarbe, die Fremdwörter erschienen blau wie Verweise. App-weit behoben,
+damit es an der nächsten Stelle nicht wieder passiert.
 
 | Nr | Bereich | CR |
 |---|---|---|
