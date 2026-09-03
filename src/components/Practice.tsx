@@ -1085,11 +1085,6 @@ export function Practice() {
                   </button>
                 ))}
               </div>
-              <div className="toolbelt">
-                <button className="btn btn-ghost btn-sm" onClick={useHint} disabled={hintUsed || choices.length <= 2}>
-                  <Icon name="hint" size={15} /> {txt("Eine falsche wegnehmen")}
-                </button>
-              </div>
             </>
           ) : (
             <>
