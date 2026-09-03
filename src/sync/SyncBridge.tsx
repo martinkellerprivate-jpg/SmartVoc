@@ -48,7 +48,6 @@ export function SyncBridge({ children }: { children: React.ReactNode }) {
   const docsRef = useRef<Record<string, any>>({});
   docsRef.current = {
     vocab: store.vocab, lists: store.lists, stats: store.stats, meta: store.meta, settings: store.settings,
-    reviews: store.reviews,   // F-SETTINGS-ADVANCED: 7th synced doc
   };
   const userIdRef = useRef<string | null>(null);
   userIdRef.current = auth.user?.id ?? null;

@@ -146,6 +146,5 @@ export interface Settings {
   // undefined falls back to the named DEFAULTS in fsrs.ts.
   S1?: number; S2?: number; MIN_REPS?: number; D_LEECH?: number; LAPSE_LEECH?: number; PUFFER?: number;
   examRetention?: number; examWindowDays?: number; examRampDays?: number; learningSpeed?: number;
-  autoFit?: boolean;       // Auto-Anpassung (Default false; WASM-Fit deferred)
   [key: string]: any;
 }

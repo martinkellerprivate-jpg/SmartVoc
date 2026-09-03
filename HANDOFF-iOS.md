@@ -354,3 +354,28 @@ Sicherung übernimmt jetzt GitHub.
 - Deutsche UI-Texte: **keine geraden Anführungszeichen in JSX-Attributen** —
   `"` beendet den String. `„…"` verwenden.
 - Testdaten nach dem Prüfen aufräumen
+
+---
+
+## Noch zu tun in Supabase: das alte Antwort-Protokoll löschen
+
+Bis zum 3. September schrieb die App bei jeder bewerteten Antwort einen
+Eintrag mit Wort, Zeitpunkt, Bewertung und Kartenzustand — als Vorbereitung
+für eine Anpassung der Modell-Parameter, die es in V1 nicht geben wird.
+
+In der App ist das erledigt: der Schreiber ist entfernt, `reviews` fällt aus
+der Synchronisierung, und beim Start räumt `entferneAltesProtokoll()` den
+lokalen Speicher auf — auf dem Gerät wie im nativen Speicher.
+
+**Was von hier aus niemand löschen kann, ist die Kopie in der Cloud.** Wer
+sich angemeldet hat, hat einen Datensatz mit `doc = 'reviews'` in Supabase
+liegen. Der wird jetzt weder gelesen noch überschrieben, aber er ist da.
+Vor dem Launch löschen:
+
+```sql
+delete from user_documents where doc_key = 'reviews';
+```
+
+Danach erhebt und
+speichert die App nichts mehr über das Lernverhalten hinaus, was für die
+Planung der Wiederholungen nötig ist.

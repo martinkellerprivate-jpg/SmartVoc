@@ -413,7 +413,7 @@ export function SettingsTab() {
         )}
       </div>
 
-      <FsrsValuesModal open={fsrsOpen} onClose={() => setFsrsOpen(false)} settings={settings} reviews={store.reviews} />
+      <FsrsValuesModal open={fsrsOpen} onClose={() => setFsrsOpen(false)} settings={settings} />
 
       {/* Konto & Daten */}
       <div className="set-section">

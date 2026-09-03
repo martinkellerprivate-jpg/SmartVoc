@@ -339,6 +339,7 @@ export function Stats() {
               {fehler.gesamt > 0 && (
                 <>
                   <div className="grp"><Icon name="flame" size={14} />{txt("Deine Stolpersteine")} <em>— {txt("woran es scheitert")}</em></div>
+                  <div className="card">
                   <div className="quiet links">{txt("{n} deiner {g} Antworten sassen nicht auf Anhieb. Das war der Grund:", { n: fehler.gesamt, g: bilanz.gesamt })}</div>
                   <div className="stumble">
                     {fehler.zeilen.map((z) => (
@@ -351,6 +352,7 @@ export function Stats() {
                       </div>
                     ))}
                   </div>
+                  </div>
                 </>
               )}
             </>
@@ -362,17 +364,19 @@ export function Stats() {
           {hartnaeckig.length > 0 && (
             <>
               <div className="grp"><Icon name="flame" size={14} />{txt("Hartnäckig")} <em>— {txt("oft geübt, immer wieder vergessen")}</em></div>
-              <div className="lenses">
-                {hartnaeckig.slice(0, 12).map((r: any) => (
-                  <span key={r.w.id} className={"lens" + ((r.prof.lapses || 0) >= 5 ? " hot" : "")}>{fgnOf(r.w)}</span>
-                ))}
+              <div className="card">
+                <div className="lenses">
+                  {hartnaeckig.slice(0, 12).map((r: any) => (
+                    <span key={r.w.id} className={"lens" + ((r.prof.lapses || 0) >= 5 ? " hot" : "")}>{fgnOf(r.w)}</span>
+                  ))}
+                </div>
+                {hartnaeckig.length > 12 && (
+                  <button className="li" style={{ marginTop: 10, width: "100%" }} onClick={() => setSchirm("hartnaeckig")}>
+                    <span className="g">{txt("Alle {n} ansehen", { n: hartnaeckig.length })}</span>
+                    <Icon name="arrowRight" size={14} />
+                  </button>
+                )}
               </div>
-              {hartnaeckig.length > 12 && (
-                <button className="li" style={{ marginTop: 8, width: "100%" }} onClick={() => setSchirm("hartnaeckig")}>
-                  <span className="g">{txt("Alle {n} ansehen", { n: hartnaeckig.length })}</span>
-                  <Icon name="arrowRight" size={14} />
-                </button>
-              )}
             </>
           )}
 

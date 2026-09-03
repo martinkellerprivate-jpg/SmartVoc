@@ -17,12 +17,12 @@ import { StoreProvider } from "./store/StoreProvider";
 import { AuthProvider } from "./sync/auth";
 import { SyncBridge } from "./sync/SyncBridge";
 import { App } from "./App";
-import { hydrateFromNative } from "./lib/storage";
+import { hydrateFromNative, entferneAltesProtokoll } from "./lib/storage";
 
 /* Auf iOS zuerst die native Sicherung in den Arbeitsspeicher zurueckholen --
  * vor dem ersten Rendern, weil der Laden seine Anfangswerte synchron aus
  * localStorage liest. Im Browser kehrt das sofort zurueck. */
-hydrateFromNative().finally(() => {
+hydrateFromNative().then(entferneAltesProtokoll).finally(() => {
   createRoot(document.getElementById("root")!).render(
     <ToastHost>
       <AuthProvider>

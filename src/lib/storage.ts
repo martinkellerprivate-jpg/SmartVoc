@@ -28,7 +28,6 @@ export const LS = {
   settings: "vt_v1_settings",
   lists: "vt_v1_lists",
   lessons: "vt_v1_lessons",   // nur noch zum Lesen: V16 löst sie in Wortlisten auf
-  reviews: "vt_v1_reviews",   // fortlaufendes FSRS-Protokoll für eine spätere Anpassung
 };
 
 const nativ = () => Capacitor.isNativePlatform();
@@ -64,6 +63,25 @@ export async function hydrateFromNative(): Promise<void> {
 }
 
 /** Beim Löschen der lokalen Daten muss auch die Sicherung weg. */
+/* Einmalig: das alte Antwort-Protokoll wegräumen.
+ *
+ * Bis heute schrieb die App bei jeder bewerteten Antwort einen Eintrag mit
+ * Wort, Zeitpunkt, Bewertung und Kartenzustand -- als Vorbereitung für eine
+ * Anpassung der Modell-Parameter, die es in V1 nicht geben wird. Der
+ * Schreiber ist weg; was schon auf dem Gerät liegt, muss aber ebenfalls
+ * verschwinden, sonst bliebe eine Aufzeichnung zurück, für die es keinen
+ * Zweck mehr gibt. Läuft beim Start, kostet nichts, wenn nichts da ist.
+ *
+ * Die Kopie in der Cloud kann von hier aus niemand löschen -- das steht in
+ * HANDOFF-iOS.md als eigener Schritt.
+ */
+export async function entferneAltesProtokoll(): Promise<void> {
+  const alt = "vt_v1_reviews";
+  try { if (localStorage.getItem(alt) === null) return; } catch (e) { return; }
+  try { localStorage.removeItem(alt); } catch (e) {}
+  if (nativ()) { try { await Preferences.remove({ key: alt }); } catch (e) {} }
+}
+
 export async function clearAll(): Promise<void> {
   for (const key of Object.values(LS)) {
     try { localStorage.removeItem(key); } catch (e) {}

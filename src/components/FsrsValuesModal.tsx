@@ -1,62 +1,113 @@
-/* F-SETTINGS-ADVANCED — read-only FSRS values modal.
- * Shows the 19 model weights w[0..18] (user vs. literature), the retention
- * target, the derived thresholds, and a state-aware status line. No fitting
- * happens here (WASM deferred); user weights == literature until a real fit
- * lands, so the two columns are equal by design today. */
+/* Der Nur-Lese-Blick auf das Gedächtnis-Modell.
+ *
+ * Hier standen die Werte unter ihren Kürzeln aus dem Papier: S1, S2,
+ * MIN_REPS, w[0] bis w[18]. Wer die Kürzel kennt, braucht diesen Bildschirm
+ * nicht; wer sie nicht kennt, liest neunzehn Zahlen ohne Bedeutung. Jeder
+ * Wert trägt jetzt einen Namen, der sagt, was er tut.
+ *
+ * Zwei Spalten gibt es nur noch dort, wo sie etwas bedeuten: bei den
+ * Schwellen, die man selbst verstellen kann. Die neunzehn Gewichte sind für
+ * alle gleich — die App passt sie nicht an und zeichnet dafür nichts auf.
+ */
 import { Icon } from "../ui/Icon";
 import { txt } from "../lib/i18n";
 import { defaultWeights, getCfg, RETENTION } from "../lib/fsrs";
 
-const W_HINT: Record<number, string> = {
-  0: "Start-Stabilität (Again)", 1: "Start-Stabilität (Hard)", 2: "Start-Stabilität (Good)", 3: "Start-Stabilität (Easy)",
-  4: "Start-Schwierigkeit", 5: "Schwierigkeits-Abfall", 6: "Schwierigkeits-Anstieg",
-};
+/* Die neunzehn Gewichte in Worten. Reihenfolge und Bedeutung folgen dem
+ * FSRS-Modell; die Formulierung folgt dem, was ein Mensch davon wissen will.
+ * Vier Gruppen: womit ein Wort startet, wie zäh es eingeschätzt wird, wie
+ * die Haltedauer wächst, und was nach einem Fehler übrig bleibt. */
+const GEWICHT: { name: string; erklaerung: string }[] = [
+  { name: "Erster Halt — gar nicht gewusst", erklaerung: "Tage, die ein neues Wort hält, wenn du es beim ersten Mal nicht konntest" },
+  { name: "Erster Halt — mit Mühe",          erklaerung: "dasselbe, wenn du lange überlegen musstest" },
+  { name: "Erster Halt — gewusst",           erklaerung: "dasselbe, wenn du es konntest" },
+  { name: "Erster Halt — leicht",            erklaerung: "dasselbe, wenn es dir leichtfiel" },
+  { name: "Anfangs-Zähigkeit",               erklaerung: "wie schwer die App ein Wort einschätzt, bevor sie dich kennt" },
+  { name: "Zähigkeit — Abflachen",           erklaerung: "wie schnell diese erste Einschätzung nachgibt" },
+  { name: "Zähigkeit — Ausschlag",           erklaerung: "wie stark eine einzelne Antwort die Einschätzung verschiebt" },
+  { name: "Zähigkeit — Zug zur Mitte",       erklaerung: "wie stark sie langfristig zum Mittelwert zurückwandert" },
+  { name: "Zuwachs beim Halten",             erklaerung: "wie stark die Haltedauer nach einer richtigen Antwort wächst" },
+  { name: "Bremse bei langem Halt",          erklaerung: "je länger ein Wort schon hält, desto weniger kommt dazu" },
+  { name: "Bonus fürs knappe Erinnern",      erklaerung: "je knapper du es noch wusstest, desto mehr bringt die Wiederholung" },
+  { name: "Nach einem Fehler — Grundwert",   erklaerung: "wie viel Haltedauer ein Wort behält, das du wieder vergessen hast" },
+  { name: "Nach einem Fehler — Zähigkeit",   erklaerung: "wie stark die Zähigkeit dabei mitspricht" },
+  { name: "Nach einem Fehler — bisheriger Halt", erklaerung: "wie stark zählt, wie lange es vorher schon hielt" },
+  { name: "Nach einem Fehler — Vergessensgrad", erklaerung: "wie stark zählt, wie weit es schon weg war" },
+  { name: "Abschlag für „mit Mühe“",         erklaerung: "wie viel weniger es bringt, wenn du lange überlegen musstest" },
+  { name: "Zuschlag für „leicht“",           erklaerung: "wie viel mehr es bringt, wenn es dir leichtfiel" },
+  { name: "Am selben Tag — Zuwachs",         erklaerung: "was eine zweite Abfrage am selben Tag noch bringt" },
+  { name: "Am selben Tag — Dämpfung",        erklaerung: "wie schnell dieser Zuwachs abnimmt" },
+];
 
-export function FsrsValuesModal({ open, onClose, settings, reviews }: any) {
+export function FsrsValuesModal({ open, onClose, settings }: any) {
   if (!open) return null;
-  const lit = defaultWeights();
-  const user = lit;                       // no custom fit yet (fitActive = false)
+  const gewichte = defaultWeights();
   const ret = settings.targetRetention ?? RETENTION;
   const cfg = getCfg();
 
-  const Row = ({ k, u, l, hint }: any) => (
-    <div className="row" style={{ justifyContent: "space-between", gap: 10, padding: "4px 0", borderBottom: "1px solid var(--line-soft)" }}>
-      <span className="faint" style={{ fontSize: 12, flex: "0 0 70px" }}>{k}</span>
-      <span className="grow faint" style={{ fontSize: 11.5 }}>{hint || ""}</span>
-      <span style={{ fontFamily: "var(--mono)", fontSize: 12.5, width: 64, textAlign: "right" }}>{typeof u === "number" ? u.toFixed(3) : u}</span>
-      <span style={{ fontFamily: "var(--mono)", fontSize: 12.5, width: 64, textAlign: "right", color: "var(--ink-faint)" }}>{typeof l === "number" ? l.toFixed(3) : l}</span>
+  /* Eine Schwelle: Name, Erklärung, dein Wert, der Standard. Zwei Spalten,
+   * weil man diese Werte selbst verstellen kann und dann sehen will, wie
+   * weit man vom Standard weg ist. */
+  const Schwelle = ({ name, erklaerung, wert, standard }: any) => (
+    <div className="wertzeile">
+      <span className="wz-name">{txt(name)}<span className="wz-erk">{txt(erklaerung)}</span></span>
+      <span className="wz-zahl">{wert}</span>
+      <span className="wz-zahl wz-std">{standard}</span>
+    </div>
+  );
+
+  /* Ein Gewicht: Name, Erklärung, Wert. Nur eine Zahl — es gibt keinen
+   * zweiten Wert, mit dem man vergleichen könnte. */
+  const Gewicht = ({ name, erklaerung, wert }: any) => (
+    <div className="wertzeile">
+      <span className="wz-name">{txt(name)}<span className="wz-erk">{txt(erklaerung)}</span></span>
+      <span className="wz-zahl">{wert.toFixed(2)}</span>
     </div>
   );
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 520, maxHeight: "84vh", overflowY: "auto" } as any}>
+      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 560, maxHeight: "84vh", overflowY: "auto" } as any}>
         <div className="modal-head">
           <div>
-            <div className="modal-title">{txt("FSRS-Werte")}</div>
-            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>{txt("Nur-Lese-Einblick in das Gedächtnis-Modell.")}</div>
+            <div className="modal-title">{txt("Womit die App rechnet")}</div>
+            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>
+              {txt("Das Gedächtnis-Modell heisst FSRS. Nur zum Ansehen — hier lässt sich nichts verstellen.")}
+            </div>
           </div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
 
-        <div className="panel" style={{ padding: "10px 12px", marginBottom: 12 }}>
-          <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>{txt("Abgeleitete Schwellen (aktuell)")}</div>
-          <Row k="Retention" u={`${Math.round(ret * 100)} %`} l="90 %" hint="Behaltensziel" />
-          <Row k="S1" u={cfg.S1} l={3} hint="Tage: wackelt→sitzt fast" />
-          <Row k="S2" u={cfg.S2} l={14} hint="Tage: sitzt fast→sitzt" />
-          <Row k="MIN_REPS" u={cfg.MIN_REPS} l={2} hint="Reps bis nicht mehr „neu“" />
-          <Row k="Tempo" u={cfg.learningSpeed} l={1} hint="Lerntempo-Faktor" />
+        <div className="panel" style={{ padding: "10px 13px", marginBottom: 12 }}>
+          <div className="wertkopf">
+            <span className="section-title" style={{ fontSize: 12.5 }}>{txt("Deine Schwellen")}</span>
+            <span className="wz-zahl faint" style={{ fontSize: 10.5 }}>{txt("deine")}</span>
+            <span className="wz-zahl faint" style={{ fontSize: 10.5 }}>{txt("Standard")}</span>
+          </div>
+          <Schwelle name="Behaltensziel" erklaerung="wie sicher du ein Wort können sollst, wenn es wiederkommt"
+            wert={`${Math.round(ret * 100)} %`} standard="90 %" />
+          <Schwelle name="Grenze zu „sitzt fast“" erklaerung="ab so vielen Tagen Haltedauer wackelt ein Wort nicht mehr"
+            wert={`${cfg.S1} T`} standard="3 T" />
+          <Schwelle name="Grenze zu „sitzt“" erklaerung="ab so vielen Tagen Haltedauer gilt es als sicher"
+            wert={`${cfg.S2} T`} standard="14 T" />
+          <Schwelle name="Richtige bis „nicht mehr neu“" erklaerung="so oft muss ein frisches Wort sitzen, bevor es die Stufe verlässt"
+            wert={`${cfg.MIN_REPS}×`} standard="2×" />
+          <Schwelle name="Lerntempo" erklaerung="wie schnell die App annimmt, dass ein Wort fester wird"
+            wert={`${cfg.learningSpeed}×`} standard="1×" />
+          <div className="faint" style={{ fontSize: 11.5, marginTop: 8 }}>
+            {txt("Diese fünf kannst du in den erweiterten Einstellungen verstellen.")}
+          </div>
         </div>
 
-        <div className="panel" style={{ padding: "10px 12px" }}>
-          <div className="row" style={{ justifyContent: "space-between", marginBottom: 4 }}>
-            <div className="section-title" style={{ fontSize: 12.5 }}>{txt("Modell-Gewichte w[0..18]")}</div>
-            <div className="faint" style={{ fontSize: 11 }}>{txt("deine · Literatur")}</div>
+        <div className="panel" style={{ padding: "10px 13px" }}>
+          <div className="section-title" style={{ fontSize: 12.5, marginBottom: 2 }}>{txt("Die neunzehn Stellschrauben des Modells")}</div>
+          <div className="faint" style={{ fontSize: 11.5, marginBottom: 8 }}>
+            {txt("Mit diesen Zahlen rechnet das Modell aus, wie lange ein Wort hält. Sie stammen aus der Forschung und sind für alle gleich — die App passt sie nicht an dich an und zeichnet dafür auch nichts auf.")}
           </div>
-          {user.map((u: number, i: number) => <Row key={i} k={`w[${i}]`} u={u} l={lit[i]} hint={W_HINT[i]} />)}
-          <div className="faint" style={{ fontSize: 11.5, marginTop: 8 }}>
-            {txt("Die App rechnet mit den Werten aus der Forschung, für alle gleich. Sie passt sie nicht an dich an und zeichnet dafür auch nichts auf — was hier steht, ist der vollständige Einblick.")}
-          </div>
+          {gewichte.map((w: number, i: number) => (
+            <Gewicht key={i} name={GEWICHT[i]?.name || `Wert ${i + 1}`}
+              erklaerung={GEWICHT[i]?.erklaerung || ""} wert={w} />
+          ))}
         </div>
 
         <div className="modal-foot" style={{ marginTop: 14 }}>

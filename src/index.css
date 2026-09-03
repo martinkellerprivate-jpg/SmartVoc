@@ -1352,3 +1352,24 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    Balken, nur in der Darstellung, die in eine Pille passt. */
 .ltab-dot { display: inline-block; width: 7px; height: 7px; border-radius: 999px;
             margin-right: 6px; vertical-align: 1px; flex: none; }
+
+/* Eine Wertzeile im Modell-Fenster: Name und Erklärung links, Zahlen rechts.
+   Die Erklärung steht unter dem Namen statt daneben — sonst bleiben bei
+   neunzehn Zeilen für den Namen zwei Wörter Platz. */
+.wertzeile { display: flex; align-items: baseline; gap: 10px; padding: 7px 0;
+             border-bottom: 1px solid var(--line-soft); }
+.wertzeile:last-child { border-bottom: none; }
+.wz-name { flex: 1; min-width: 0; font-size: 12.5px; }
+.wz-erk { display: block; font-size: 11px; color: var(--ink-faint); margin-top: 1px; line-height: 1.4; }
+.wz-zahl { width: 62px; flex: none; text-align: right; font-variant-numeric: tabular-nums;
+           font-size: 12.5px; font-weight: 600; }
+.wz-std { color: var(--ink-faint); font-weight: 400; }
+.wertkopf { display: flex; align-items: baseline; gap: 10px; padding-bottom: 6px;
+            border-bottom: 1px solid var(--line); margin-bottom: 2px; }
+.wertkopf .section-title { flex: 1; }
+
+/* Linsen in einer Karte: die Karte ist schon hell, also braucht die Linse
+   keinen eigenen hellen Grund mehr -- sonst verschwindet ihr Rand. */
+.card .lens { background: var(--bg-2); }
+.card .stumble { margin-top: 2px; }
+.card > .quiet.links { padding-top: 0; }
