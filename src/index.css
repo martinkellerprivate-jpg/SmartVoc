@@ -67,10 +67,21 @@ input, button, textarea, select { font-family: inherit; }
   flex-wrap: nowrap; min-width: 0;
 }
 .topbar > * { flex: none; }
-.topbar .tipbtn { flex: 0 1 auto; min-width: 0; overflow: hidden;
-                  text-overflow: ellipsis; white-space: nowrap; }
+/* Der Anmelde-Knopf schrumpft NICHT. Vorher gab er nach, und das Wort
+   stiess rechts an den Rand der Pille -- die Polsterung war aufgebraucht.
+   Ein Knopf, dessen Beschriftung den Rand beruehrt, sieht kaputt aus.
+   Platz kommt stattdessen von der Marke: Zeichen und Name duerfen auf
+   schmalen Bildschirmen etwas kleiner sein, ohne dass etwas verloren geht. */
+.topbar .tipbtn { flex: none; white-space: nowrap; }
 .topbar .brand { min-width: 0; }
 .topbar .brand-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 430px) {
+  .topbar { gap: 8px; }
+  .topbar .brand { gap: 9px; }
+  .topbar .brand-mark { width: 36px; height: 36px; }
+  .topbar .brand-name { font-size: 22px; }
+  .topbar .tipbtn { padding: 7px 13px; font-size: 12.5px; }
+}
 .brand { display: flex; align-items: center; gap: 12px; }
 /* Das Markenzeichen aus dem Entwurf, nicht mehr der Buchstabe S. Gross genug,
    um es zu erkennen -- klein war die Beanstandung. */
@@ -393,12 +404,19 @@ table.vt tr.row-click:hover td { background: var(--bg-2); }
 .answer-zone { width: min(560px, 100%); display: flex; flex-direction: column; gap: 12px; }
 .answer-row { display: flex; gap: 10px; }
 .answer-row .field { font-size: 17px; padding: 15px 17px; }
-.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+/* Zwei mal zwei, auch auf dem Handy. Eine Antwort pro Zeile brauchte den
+   halben Bildschirm, obwohl die Antworten kurze Woerter sind. */
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .choice {
   text-align: left; border: 1.5px solid var(--line); background: var(--card);
-  border-radius: 13px; padding: 15px 17px; font-size: 16px; font-weight: 600; color: var(--ink);
-  box-shadow: var(--shadow-sm); transition: all .14s ease; display: flex; align-items: center; gap: 11px;
+  border-radius: 13px; padding: 12px 13px; font-weight: 600; color: var(--ink);
+  box-shadow: var(--shadow-sm); transition: all .14s ease;
+  display: flex; align-items: center; gap: 9px; min-width: 0;
+  /* Die Schrift passt sich der Laenge an: --fit wird beim Rendern gesetzt,
+     wenn das Wort sonst nicht in die Zelle passt. */
+  font-size: calc(15px * var(--fit, 1));
 }
+.choice > .lab { min-width: 0; overflow-wrap: anywhere; hyphens: auto; }
 .choice:hover:not(:disabled) { border-color: var(--amber); transform: translateY(-1px); box-shadow: var(--shadow); }
 .choice .key { width: 24px; height: 24px; border-radius: 7px; background: var(--bg-2); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--ink-soft); font-family: var(--mono); }
 .choice.correct { border-color: var(--green); background: var(--green-bg); }
@@ -599,7 +617,6 @@ table.vt tr:hover .row-actions { opacity: 1; }
 
 @media (max-width: 760px) {
   .stat-grid, .cat-grid { grid-template-columns: 1fr 1fr; }
-  .choices { grid-template-columns: 1fr; }
   .brand-sub { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {

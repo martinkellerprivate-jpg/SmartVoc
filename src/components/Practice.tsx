@@ -184,6 +184,13 @@ export function Practice() {
   const [session, setSession] = useState([]); // recent verdicts
   const [tip, setTip] = useState(null);        // current study-tip popup (Phase 6)
   const [focus, setFocus] = useState(false);   // V2: zoom / focus card mode
+  /* Zwei mal zwei Antworten heisst halb so breite Zellen. Ein langes Wort
+   * ("die Geschwindigkeit") passt dann nicht mehr -- statt es abzuschneiden
+   * oder die Kaesten unterschiedlich hoch werden zu lassen, verkleinert sich
+   * die Schrift so weit wie noetig und nicht weiter. Gemessen wird nach dem
+   * Zeichnen, weil vorher niemand weiss, wie breit "Geschwindigkeit" in der
+   * gewaehlten Schrift ist. */
+  const choicesRef = useRef<HTMLDivElement | null>(null);
   const [enoughAck, setEnoughAck] = useState(false);   // F-CARD-UI: "genug für heute" dismissed
   const [chipsHelp, setChipsHelp] = useState(false);   // FR3-5: smart-chip explainer popup
   /* Der Umfang-Wähler nimmt aufgeklappt gut 140 Pixel -- auf einem Handy ein
@@ -539,6 +546,29 @@ export function Practice() {
     window.addEventListener("keydown", onEsc);
     return () => window.removeEventListener("keydown", onEsc);
   }, [pickerOpen]);
+
+  /* Schrift der Antwortkaesten an die Laenge anpassen. Erst auf 1 zuruecksetzen,
+   * damit ein kurzes Wort nach einem langen wieder gross wird, dann in Schritten
+   * verkleinern, solange etwas ueberlaeuft -- hoechstens bis 0.72, darunter
+   * waere es nicht mehr angenehm zu lesen. */
+  useLayoutEffect(() => {
+    const box = choicesRef.current;
+    if (!box || mode !== "choice") return;
+    const zellen = Array.from(box.querySelectorAll<HTMLElement>(".choice"));
+    if (!zellen.length) return;
+    box.style.setProperty("--fit", "1");
+    let f = 1;
+    for (let i = 0; i < 8; i++) {
+      const passtNicht = zellen.some((z) => {
+        const lab = z.querySelector<HTMLElement>(".lab");
+        return lab ? lab.scrollWidth > lab.clientWidth + 1 : false;
+      });
+      if (!passtNicht) break;
+      f = Math.max(0.72, +(f - 0.06).toFixed(2));
+      box.style.setProperty("--fit", String(f));
+      if (f <= 0.72) break;
+    }
+  }, [choices, mode, current?.id, settings.cardFont]);
 
   // V2: leave focus mode on Escape (iOS can't force rotation — we only react).
   useEffect(() => {
@@ -1047,10 +1077,11 @@ export function Practice() {
             </>
           ) : mode === "choice" ? (
             <>
-              <div className="choices">
+              <div className="choices" ref={choicesRef}>
                 {choices.map((opt, i) => (
                   <button key={opt.id} className="choice" onClick={() => choose(opt)}>
-                    <span className="key">{i + 1}</span>{scoreTarget(opt, tgtKey)}
+                    <span className="key">{i + 1}</span>
+                    <span className="lab">{scoreTarget(opt, tgtKey)}</span>
                   </button>
                 ))}
               </div>
