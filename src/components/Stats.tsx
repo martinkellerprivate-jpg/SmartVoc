@@ -420,6 +420,11 @@ const Donut = ({ anteil }: { anteil: number }) => {
 
 /* ==================================================== Alle Wörter (Bildschirm) */
 function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, suche, setSuche, counts, onWort, detail, onZurueck }: any) {
+  /* Die Erklaerzeile unter der Tabelle sagt, was die Spalten bedeuten. Das
+   * Fragezeichen an "Treffer" sagt zusaetzlich, was gezaehlt wird -- die
+   * Feinheit, dass ein fehlender Akzent als Treffer gilt, passt in keine
+   * Legende und ueberrascht sonst genau die, die nachrechnen. */
+  const [trefferInfo, setTrefferInfo] = useState(false);
   const view = useMemo(() => {
     const q = suche.toLowerCase().trim();
     let l = rows.filter((r: any) => (filter === "all" || r.stufe === filter)
@@ -454,13 +459,21 @@ function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, suc
       <input className="mini-input" style={{ marginTop: 10 }} value={suche} placeholder={txt("Wort suchen")}
         onChange={(e) => setSuche(e.target.value)} />
 
+      {trefferInfo && (
+        <div className="infonote">{txt("Als Treffer zählt jede Antwort, die nicht ganz daneben war — ein fehlender Akzent oder ein Buchstabendreher also auch. Ein Wort, das noch nie abgefragt wurde, zeigt einen Strich.")}</div>
+      )}
+
       <table className="wtable">
         <thead><tr>
           <th onClick={() => sortiere("word")}>{txt("Wort")}</th>
           <th>{txt("Stufe")}</th>
           <th onClick={() => sortiere("haelt")}>{txt("hält")}</th>
           <th>{txt("dran am")}</th>
-          <th onClick={() => sortiere("treffer")}>{txt("Treffer")}</th>
+          <th onClick={() => sortiere("treffer")}>{txt("Treffer")}
+            <span className="info" role="button" tabIndex={0} aria-label={txt("Was zählt als Treffer?")}
+              onClick={(e) => { e.stopPropagation(); setTrefferInfo((o) => !o); }}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); e.preventDefault(); setTrefferInfo((o) => !o); } }}>?</span>
+          </th>
         </tr></thead>
         <tbody>
           {view.map((r: any) => (

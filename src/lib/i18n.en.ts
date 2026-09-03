@@ -526,4 +526,6 @@ export const EN: Record<string, string> = {
   "Zurücksetzen": "Reset",
   "Das löscht Punkte, Verlauf und die Tagesserie — in allen Sprachen. Deine Wörter und Wortlisten bleiben. Rückgängig machen lässt es sich nicht.": "This clears points, history and your daily run — in every language. Your words and word lists stay. It cannot be undone.",
   "Lernstand zurückgesetzt": "Progress reset",
+  "Was zählt als Treffer?": "What counts as a hit?",
+  "Als Treffer zählt jede Antwort, die nicht ganz daneben war — ein fehlender Akzent oder ein Buchstabendreher also auch. Ein Wort, das noch nie abgefragt wurde, zeigt einen Strich.": "A hit is any answer that was not completely off — a missing accent or a swapped letter counts too. A word that has never been asked shows a dash.",
 };
