@@ -851,13 +851,15 @@ export function Practice() {
     return <div className="card-examples">{list.map((x: string, i: number) => <p key={i}>{x}</p>)}</div>;
   };
 
-  const verdictMeta: Record<string, { tone: string; label: string }> = {
-    // Kein Haken, kein Kreuz -- das Wort selbst trägt die Farbe, und darüber
-    // steht in Worten, was Sache ist. "Nicht ganz" statt "falsch": der Ton
-    // gehört einem 13-jährigen Benutzer, nicht einem Prüfungsprotokoll.
-    correct: { tone: "ok", label: "RICHTIG" },
-    almost: { tone: "warn", label: "FAST RICHTIG" },
-    wrong: { tone: "bad", label: "NICHT GANZ" },   // durch txt() beim Rendern
+  /* Das Urteil steht UEBER der Karte, nicht darauf: auf einer Karteikarte
+   * steht das Wort, nicht die Bewertung. Und es steht deutlich da -- Farbe
+   * UND Zeichen, denn Farbe allein liest niemand, der sie nicht
+   * unterscheiden kann. "Nicht ganz" statt "falsch": der Ton gehoert einem
+   * 13-jaehrigen Benutzer, nicht einem Pruefungsprotokoll. */
+  const verdictMeta: Record<string, { tone: string; label: string; icon: string }> = {
+    correct: { tone: "ok", label: "RICHTIG", icon: "check" },
+    almost: { tone: "warn", label: "FAST RICHTIG", icon: "check" },
+    wrong: { tone: "bad", label: "NICHT GANZ", icon: "x" },   // durch txt() beim Rendern
   };
 
   /* Zwei getrennte Anzeigen, beide NEBEN der Karte, nicht darauf:
@@ -934,6 +936,12 @@ export function Practice() {
       <div className="practice-stage">
       <div className="card-scene p-card">
         {roundProgressEl}
+        {result && (
+          <div className="urteil" style={{ ["--u" as any]: TONE_VAR[verdictMeta[result.verdict].tone] }}>
+            <Icon name={verdictMeta[result.verdict].icon as any} size={15} />
+            {txt(verdictMeta[result.verdict].label)}
+          </div>
+        )}
         <div className="card-frame">
           {!focus && (
             <button className="card-expand" title={txt("Karte gross zeigen")} onClick={() => setFocus(true)}>
@@ -972,10 +980,7 @@ export function Practice() {
                 <div className="card-center" ref={centerRef}>
                   {result ? (
                     <>
-                      <div className="verdict" style={{ color: TONE_VAR[verdictMeta[result.verdict].tone] }}>
-                        {txt(verdictMeta[result.verdict].label)}
-                      </div>
-                      <div className="prompt-word" style={{ color: TONE_VAR[verdictMeta[result.verdict].tone] }}>
+                      <div className="prompt-word">
                         {result.targetDiff.map((c, i) => <span key={i} className={"ch " + c.status}>{c.ch}</span>)}
                       </div>
                       {tgtKey !== NATIVE && phoneticEl}
@@ -1006,6 +1011,15 @@ export function Practice() {
             )}
           </div>
         </div>
+        {/* Das Urteil unter der Karte: so bleibt die Karte an ihrem Platz,
+            wenn es erscheint. Darueber haette es sie beim Antworten nach
+            unten geschoben -- genau in dem Moment, in dem man sie liest. */}
+        {result && (
+          <div className="urteil" style={{ ["--u" as any]: TONE_VAR[verdictMeta[result.verdict].tone] }}>
+            <Icon name={verdictMeta[result.verdict].icon as any} size={15} />
+            {txt(verdictMeta[result.verdict].label)}
+          </div>
+        )}
         {masteryBar}
       </div>
 

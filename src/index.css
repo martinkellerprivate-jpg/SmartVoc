@@ -1552,3 +1552,30 @@ button.li .m, button.wz .wz-d { color: var(--ink-soft); }
 .fz-feld::placeholder { color: var(--ink-faint); }
 .fz-edit:focus-within { background: var(--bg-2); }
 select.fz-feld { text-align: right; }
+
+/* Das Urteil über der Karte, nicht darauf. Farbe UND Zeichen: Farbe allein
+   liest niemand, der Grün und Rot nicht unterscheiden kann. */
+.urteil { display: flex; align-items: center; justify-content: center; gap: 7px;
+          margin: 2px 0 8px; padding: 7px 14px; border-radius: 999px;
+          background: color-mix(in srgb, var(--u) 13%, var(--card));
+          color: var(--u); font-size: 12.5px; font-weight: 700;
+          letter-spacing: .06em; align-self: center; }
+
+/* ==================================================================
+ * Fokus: sichtbar für die Tastatur, unsichtbar für den Finger.
+ *
+ * Ein angetippter Knopf behielt den Fokusring des Systems. Auf einem
+ * Berührungsbildschirm sieht das aus wie „ausgewählt" und bleibt stehen,
+ * bis man irgendwo anders tippt — beim Zahnrad in der Kopfzeile war der
+ * Ring nicht von der Regel für den aktiven Bereich zu unterscheiden.
+ *
+ * `:focus-visible` löst genau das: der Browser zeigt den Ring nur, wenn
+ * er von Tastatur oder Hilfstechnik kommt. Den Ring ganz zu entfernen
+ * wäre die bequeme und falsche Antwort — ohne ihn ist die App per
+ * Tastatur nicht bedienbar.
+ * ================================================================== */
+button:focus, a:focus, [role="button"]:focus, select:focus, summary:focus { outline: none; }
+button:focus-visible, a:focus-visible, [role="button"]:focus-visible,
+select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--ink); outline-offset: 2px;
+}
