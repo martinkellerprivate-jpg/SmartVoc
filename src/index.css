@@ -318,16 +318,6 @@ input, button, textarea, select { font-family: inherit; }
 .chips-help:hover { color: var(--ink); border-color: var(--ink-soft); }
 /* FR3-6/7: lesson edit ways + two-column word picker */
 .lesson-ways { display: flex; flex-direction: column; gap: 8px; }
-.picker-cols { display: flex; gap: 12px; flex: 1; min-height: 0; overflow: hidden; }
-.picker-col { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 12px; padding: 10px; overflow-y: auto; background: var(--card-2); }
-.picker-target { background: var(--amber-bg); }
-.picker-col-head { font-weight: 700; font-size: 13.5px; margin-bottom: 8px; position: sticky; top: 0; }
-.picker-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.picker-chip { cursor: pointer; border: 1px solid var(--line); }
-.picker-chip.in { background: var(--green-bg); color: var(--ink); border-color: var(--green); }
-.picker-acc { margin-bottom: 6px; }
-.picker-acc-head { display: flex; align-items: center; gap: 6px; width: 100%; background: none; border: none; cursor: pointer; font: inherit; font-weight: 600; font-size: 13px; padding: 4px 2px; color: var(--ink); }
-@media (max-width: 620px) { .picker-cols { flex-direction: column; } .picker-col { max-height: 40vh; } }
 /* FR3-8: Anleitung — chapter boxes (vertically centred) + scrollable chapter popup */
 .help-chapters { display: flex; flex-direction: column; gap: 8px; max-height: 62vh; overflow-y: auto; }
 .help-chapter-box { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; padding: 10px 15px; border: 1px solid var(--line); border-radius: 12px; background: var(--card-2); cursor: pointer; font: inherit; font-weight: 600; text-align: left; color: var(--ink); }
@@ -634,9 +624,14 @@ table.vt tr:hover .row-actions { opacity: 1; }
 .modal-title { font-family: var(--serif); font-size: 21px; font-weight: 600; }
 .modal-foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
 .picker-list { display: flex; flex-direction: column; gap: 8px; max-height: 46vh; overflow-y: auto; }
-.picker-row { display: flex; align-items: center; gap: 11px; border: 1.5px solid var(--line); border-radius: 11px; padding: 12px 14px; cursor: pointer; font-weight: 600; transition: all .12s ease; }
-.picker-row.on { border-color: var(--amber); background: var(--amber-bg); }
-.picker-row input[type=radio] { accent-color: var(--amber-deep); width: 17px; height: 17px; }
+/* Die Listenauswahl trug Radioknoepfe auf rostrotem Grund -- die vierte
+   Bauart fuer dieselbe Handlung, und Rostrot bedeutet in dieser App
+   „Handlung", nicht „gewaehlt". Jetzt dieselbe Zeile wie ueberall. */
+.picker-row { display: flex; align-items: center; gap: 11px; border: 1.5px solid var(--line);
+              border-radius: 11px; padding: 12px 14px; cursor: pointer; font-weight: 600;
+              background: var(--card); color: var(--ink); }
+.picker-row:hover { border-color: var(--ink-soft); }
+.picker-row.on { border-color: var(--ink); background: var(--bg-2); }
 
 /* ---------- scan ---------- */
 .scan-drop { width: 100%; border: 2px dashed var(--line); border-radius: 16px; background: var(--card-2); padding: 34px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: all .15s ease; }
@@ -1269,7 +1264,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .planrow-acts .btn { justify-content: center; white-space: nowrap; }
 /* Gewählte Zeile trägt einen Tintenrahmen, keine Farbfläche -- Farbe gehört
    dem Zustand, nicht der Auswahl. */
-.planrow.picked { border-color: var(--ink); background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--ink); }
+.planrow.picked { border-color: var(--ink); border-width: 1.5px; background: var(--bg-2); }
 /* Das Sprachkuerzel trug denselben Grund wie die hervorgehobene Zeile und
    verschwand darin. Auf gewaehlten Zeilen steht es auf Papier. */
 .planrow.picked .planrow-lang { background: var(--card); }
@@ -1307,14 +1302,19 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .pill-on:hover { border-color: var(--ink); }
 .lchip.on, .ltab.on {
   background: var(--card); color: var(--ink);
-  border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink);
+  border-color: var(--ink); border-width: 1.5px;
 }
 /* Eine Auswahl sieht ueberall gleich aus: dunklerer Grund und ein Rahmen
    in Schriftfarbe. Vorher trugen die Sprachen Kontrollkaestchen und die
    Wortlisten eine Hervorhebung -- dieselbe Handlung in zwei Sprachen. Die
    Hervorhebung gilt, und sie muss man sehen: der Grund wird eine Stufe
    dunkler, nicht nur der Rahmen eine Spur kraeftiger. */
-.li.sel { border-color: var(--ink); background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--ink); }
+/* EINE Auswahl-Bauart, EINE Linie: dunklerer Grund und ein Rahmen in
+   Schriftfarbe. Der zusaetzliche Innenring machte aus dem Rahmen eine
+   Doppellinie; kam bei der zuletzt angetippten Zeile der Fokusring dazu,
+   standen drei Linien uebereinander -- und dieselbe Auswahl sah an zwei
+   Zeilen verschieden aus. */
+.li.sel { border-color: var(--ink); border-width: 1.5px; background: var(--bg-2); }
 .li:hover, .wort:hover, .planrow:hover { border-color: var(--ink-soft); }
 /* Kalender: „heute" und „gewählt" stehen weiter oben — als Ringe, damit
    sie die Ampelfarbe des Tages nicht überdecken. */
@@ -1612,8 +1612,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .wz::before { content: ""; position: absolute; left: -11px; top: 1px; bottom: 1px; width: 4px;
               border-radius: 2px; background: var(--stufe, var(--line)); }
 .wz:hover { border-color: var(--ink-soft); }
-.wz.sel { box-shadow: inset 0 0 0 1px var(--ink); border-color: var(--ink);
-          background: var(--bg-2); }
+.wz.sel { border-color: var(--ink); border-width: 1.5px; background: var(--bg-2); }
 .wz-f { font-family: var(--serif); font-size: 15.5px; color: var(--ink); }
 .wz-d { font-size: 13px; color: var(--ink-soft); }
 

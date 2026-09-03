@@ -51,8 +51,10 @@ export function ListPicker({ open, title, subtitle, onPick, onClose, pair }) {
         </div>
         <div className="picker-list">
           {pairLists.map((l) => (
-            <label key={l.id} className={"picker-row" + (choice === l.id ? " on" : "")}>
-              <input type="radio" name="lp" checked={choice === l.id} onChange={() => setChoice(l.id)} />
+            /* Kein Radioknopf mehr: die Auswahl zeigt sich am dunkleren Grund
+               wie in jeder anderen Liste dieser App. */
+            <label key={l.id} className={"picker-row" + (choice === l.id ? " on" : "")}
+              onClick={() => setChoice(l.id)}>
               <span className="grow">{l.name}
                 {(() => { const st = stand(l); return st.total > 0 ? (
                   <div className="muted" style={{ fontSize: 12, fontWeight: 400 }}>
@@ -63,8 +65,8 @@ export function ListPicker({ open, title, subtitle, onPick, onClose, pair }) {
                 <span className="ltab-dot" style={{ background: st.farbe, marginRight: 0 }} />) : null; })()}
             </label>
           ))}
-          <label className={"picker-row" + (choice === "__new" ? " on" : "")}>
-            <input type="radio" name="lp" checked={choice === "__new"} onChange={() => setChoice("__new")} />
+          <label className={"picker-row" + (choice === "__new" ? " on" : "")}
+            onClick={() => setChoice("__new")}>
             <Icon name="plus" size={15} />
             <input className="field" style={{ padding: "8px 11px" }} placeholder={txt("Name der Wortliste …")}
               value={newName} onFocus={() => setChoice("__new")}
