@@ -1230,3 +1230,121 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .li.sel .ckbox { background: var(--ink); border-color: var(--ink); color: var(--card); }
 .li:disabled { opacity: .45; cursor: not-allowed; }
 .li:disabled:hover { border-color: var(--line); }
+
+/* ==================================================================
+ * Statistik — vier Teile: Umfang, Fortschritt, Kennzahlen, Nachschauen.
+ * Die Rollen der Farben bleiben, wie sie überall in der App gelten:
+ * Anzeige hell ohne Linie, Wahl mit Karte und Linie, Handlung gefüllt.
+ * ================================================================== */
+
+/* Ein eigener Bildschirm innerhalb des Reiters — Zurück und Titel. */
+.head-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.screen-title { font-family: var(--serif); font-size: 19px; font-weight: 600; }
+
+/* Eine Sprache je Zeile, nur unter der grossen Leiste. Nur an dieser einen
+   Stelle aufgeschlüsselt, sonst verdoppelt sich die ganze Seite. */
+.langrows { margin-top: 8px; display: grid; gap: 7px; }
+.langrow { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.langrow .lg { width: 26px; flex: none; font-weight: 700; font-size: 10.5px; letter-spacing: .05em; color: var(--ink-soft); }
+.langrow .band { flex: 1; display: flex; height: 7px; border-radius: 999px; overflow: hidden; background: var(--bg-2); }
+.langrow .band i { display: block; }
+.langrow .pc { width: 38px; text-align: right; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+/* Die beschreibenden Zahlen. Vier im Viereck, darunter der Tagesstreifen
+   über die volle Breite — der braucht sie ohnehin. */
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.fact { background: var(--card); border: 1px solid var(--line); border-radius: 13px; padding: 11px 12px 10px; }
+.fact .ic { width: 25px; height: 25px; border-radius: 999px; display: grid; place-items: center;
+            background: var(--bg-2); color: var(--ink-soft); margin-bottom: 7px; }
+.fact.grow .ic { background: color-mix(in srgb, var(--ok) 18%, var(--card)); color: var(--ok); }
+.fact b { display: block; font-family: var(--serif); font-size: 23px; font-weight: 600;
+          font-variant-numeric: tabular-nums; line-height: 1.1; }
+.fact b .klein { font-size: 13px; color: var(--ink-faint); font-weight: 600; }
+.fact > span { display: block; font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; }
+.fact.wide { grid-column: 1 / -1; }
+
+/* Ein Punkt je Tag, gefüllt heisst geübt. Eine Serie wäre die schlechtere
+   Zahl — ein verpasster Tag macht sie zunichte, die Lücke hier nicht. */
+.days { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 8px; }
+.days i { width: 6px; height: 6px; border-radius: 999px; background: var(--bg-2); }
+.days i.on { background: var(--ok); }
+
+.cheer { display: flex; align-items: center; gap: 8px; margin-top: 9px; padding: 9px 12px;
+         background: color-mix(in srgb, var(--ok) 14%, var(--card)); border-radius: 13px;
+         font-size: 12px; color: var(--ok); }
+
+/* Eine Kennzahl: gross die Zahl mit ihrer Einheit, klein die Bedingung. */
+.kpi { margin: 2px 0 10px; }
+.kpi b { display: block; font-family: var(--serif); font-size: 30px; font-weight: 600;
+         line-height: 1; font-variant-numeric: tabular-nums; }
+.kpi b u { font-size: 17px; text-decoration: none; margin-left: 3px; }
+.kpi > span { display: block; font-size: 12px; color: var(--ink-soft); line-height: 1.4; margin-top: 5px; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-top: 8px; }
+.card h4 { margin: 0 0 8px; font-size: 12px; font-weight: 700; color: var(--ink-soft);
+           display: flex; align-items: center; gap: 6px; }
+.said { font-size: 12.5px; color: var(--ink-soft); line-height: 1.45; margin: 8px 0 0; }
+.said.faint { color: var(--ink-faint); }
+
+.donut { display: flex; align-items: center; gap: 16px; }
+.donut-n { font-family: var(--serif); font-size: 21px; font-weight: 600; fill: var(--ink); }
+.donut-l { font-size: 9px; fill: var(--ink-faint); }
+.dlist { font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+.dlist span { display: flex; align-items: center; gap: 7px; }
+.dlist u { width: 8px; height: 8px; border-radius: 999px; text-decoration: none; flex: none; }
+.dlist b { font-variant-numeric: tabular-nums; }
+.dlist .faint { color: var(--ink-faint); font-size: 11px; display: block; margin-top: 2px; }
+
+/* Liegende Balken — die Klassenbezeichnung muss mitgelesen werden. */
+.hbars { display: grid; gap: 6px; }
+.hb { display: flex; align-items: center; gap: 9px; font-size: 11px; color: var(--ink-faint); }
+.hb .hl { width: 36px; flex: none; }
+.hb .ht { flex: 1; height: 9px; border-radius: 999px; background: var(--bg-2); overflow: hidden; }
+.hb .ht i { display: block; height: 100%; border-radius: 999px; background: var(--amber); opacity: .5; }
+.hb.med { color: var(--ink); font-weight: 600; }
+.hb.med .ht i { opacity: 1; }
+.hb .hn { width: 28px; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Stehende Säulen für alles, was eine Zeitachse oder eine Skala hat. */
+.bars { display: flex; align-items: flex-end; gap: 4px; height: 48px; margin-top: 6px; }
+.bars i { flex: 1; background: var(--amber); border-radius: 3px 3px 0 0; opacity: .8; }
+.barlab { display: flex; gap: 4px; font-size: 9.5px; color: var(--ink-faint); margin-top: 4px; }
+.barlab span { flex: 1; text-align: center; }
+.bars.mins { position: relative; gap: 2px; height: 42px; }
+.bars.mins i { opacity: .55; }
+.avgline { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--ink-faint); }
+.avgline b { position: absolute; right: 0; top: -14px; font-size: 9px; font-weight: 600;
+             color: var(--ink-faint); background: var(--card); padding: 0 4px; }
+
+/* Stolpersteine: die Zahl gross links, dann der Balken. Nichts anzutippen. */
+.stumble { display: grid; gap: 11px; margin-top: 4px; }
+.st { display: flex; align-items: center; gap: 12px; }
+.st > b { font-family: var(--serif); font-size: 25px; font-weight: 600; line-height: 1;
+          font-variant-numeric: tabular-nums; width: 38px; text-align: right; flex: none; }
+.st .sg { flex: 1; min-width: 0; }
+.st .sl { display: block; font-size: 12px; margin-bottom: 5px; }
+.st .sl em { font-style: normal; color: var(--ink-faint); }
+.st .sbar { display: block; height: 8px; border-radius: 999px; background: var(--bg-2); overflow: hidden; }
+.st .sbar i { display: block; height: 100%; border-radius: 999px; }
+.quiet.links { text-align: left; padding: 0 2px 8px; }
+
+/* Hartnäckige fortlaufend als Linsen, nicht eine je Zeile. */
+.lenses { display: flex; flex-wrap: wrap; gap: 6px; }
+.lens { border: 1px solid var(--line); background: var(--card-2, var(--card)); border-radius: 999px;
+        padding: 4px 11px; font-size: 12.5px; font-family: var(--serif); }
+.lens.hot { border-color: var(--bad); color: var(--bad); }
+
+/* Die volle Wortliste auf eigenem Bildschirm. */
+.wtable { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+.wtable th { text-align: left; font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase;
+             color: var(--ink-faint); font-weight: 700; padding: 7px 5px;
+             border-bottom: 1px solid var(--line); cursor: pointer; }
+.wtable td { padding: 8px 5px; border-bottom: 1px solid var(--line-soft, var(--line));
+             font-variant-numeric: tabular-nums; }
+.wtable tr { cursor: pointer; }
+.wtable td.w { font-family: var(--serif); font-size: 13.5px; }
+.wtable .w-de { font-family: inherit; font-size: 10.5px; color: var(--ink-faint); }
+.wtable .dot { display: inline-block; width: 7px; height: 7px; border-radius: 999px; margin-right: 5px; }
+
+.legendline { font-size: 10.5px; color: var(--ink-faint); line-height: 1.55; padding: 9px 2px 0; }
+.legendline b { color: var(--ink-soft); font-weight: 600; }

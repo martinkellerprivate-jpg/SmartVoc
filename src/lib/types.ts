@@ -140,6 +140,7 @@ export interface Settings {
   pair: PairId;
   selectedLists: string[];
   statLists: string[];
+  statPair?: string | null;   // null = alle Sprachen (Standard der Statistik)
   practiceSel: string;     // "lesson:<id>" | "smart:due" | "smart:tricky" | ""
   // F-SETTINGS-ADVANCED: per-user CFG overrides (read by fsrs.configure). All optional;
   // undefined falls back to the named DEFAULTS in fsrs.ts.

@@ -85,6 +85,7 @@ export function SettingsTab() {
 
   // Konto & Daten (Phase 7)
   const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
   const [imprintOpen, setImprintOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
@@ -428,12 +429,35 @@ export function SettingsTab() {
         <Field title={txt("Impressum")} desc={txt("Wer diese App herausgibt.")}>
           <button className="btn btn-sm btn-ghost" onClick={() => setImprintOpen(true)}>{txt("Impressum ansehen")}</button>
         </Field>
+        <Field title={txt("Fortschritt zurücksetzen")} desc={txt("Löscht Punkte und Verlauf. Deine Wörter und Wortlisten bleiben.")}>
+          <button className="btn btn-sm btn-ghost" onClick={() => setResetOpen(true)}><Icon name="refresh" size={15} /> {txt("Zurücksetzen")}</button>
+        </Field>
         <Field title={txt("Account löschen")} desc={cloudActive ? "Löscht deine Daten endgültig – lokal und in der Cloud. Das kann nicht rückgängig gemacht werden." : "Löscht alle Daten auf diesem Gerät. Das kann nicht rückgängig gemacht werden."}>
           <button className="btn btn-sm" style={{ borderColor: "var(--red)", color: "var(--red)" }} onClick={() => { setConfirmText(""); setDelErr(""); setDelOpen(true); }}>
             <Icon name="trash" size={15} /> Löschen
           </button>
         </Field>
       </div>
+
+      {resetOpen && (
+        <div className="modal-backdrop" onClick={() => setResetOpen(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+            <div className="modal-head">
+              <div className="modal-title">{txt("Fortschritt zurücksetzen")}</div>
+              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setResetOpen(false)}><Icon name="x" size={16} /></button>
+            </div>
+            <div className="muted" style={{ fontSize: 13.5, marginBottom: 14 }}>
+              {txt("Das löscht Punkte, Verlauf und die Tagesserie — in allen Sprachen. Deine Wörter und Wortlisten bleiben. Rückgängig machen lässt es sich nicht.")}
+            </div>
+            <div className="modal-foot">
+              <button className="btn btn-ghost" onClick={() => setResetOpen(false)}>{txt("Abbrechen")}</button>
+              <button className="btn btn-primary" onClick={() => { store.resetStats(); setResetOpen(false); toast(txt("Lernstand zurückgesetzt"), "refresh"); }}>
+                {txt("Zurücksetzen")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {privacyOpen && (
         <div className="modal-backdrop" onClick={() => setPrivacyOpen(false)}>

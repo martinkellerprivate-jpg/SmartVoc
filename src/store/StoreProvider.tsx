@@ -54,7 +54,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = React.useState(() => {
     // Addendum §2: default direction is German → foreign (n2f).
     const loaded = load(LS.settings, {});
-    const s = { direction: "n2f", pair: "en-de", selectedLists: [], statLists: [], practiceSel: "", ...RECOMMENDED, ...loaded };
+    const s = { direction: "n2f", pair: "en-de", selectedLists: [], statLists: [], statPair: null, practiceSel: "", ...RECOMMENDED, ...loaded };
     if (s.direction === "en2de") s.direction = "f2n";
     if (s.direction === "de2en") s.direction = "n2f";
     if (s.articleMode == null) s.articleMode = s.requireArticle ? "required-full" : "required-partial";
@@ -242,8 +242,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setMeta: (patch: any) => setMeta((p: any) => ({ ...p, ...patch })),
     recordAttempt,
     gradeWord,
-    addWord: (w: any) => setVocabState((v: any) => [{ id: newId(), review: false, source: "manual", pair: "en-de", lists: [], ...w }, ...v]),
-    addWords: (arr: any[]) => setVocabState((v: any) => [...arr.map((w) => ({ id: newId(), review: false, source: "import", pair: "en-de", lists: [], ...w })), ...v]),
+    addWord: (w: any) => setVocabState((v: any) => [{ id: newId(), review: false, source: "manual", pair: "en-de", lists: [], createdAt: Date.now(), ...w }, ...v]),
+    addWords: (arr: any[]) => setVocabState((v: any) => { const t = Date.now(); return [...arr.map((w) => ({ id: newId(), review: false, source: "import", pair: "en-de", lists: [], createdAt: t, ...w })), ...v]; }),
     updateWord: (id: string, patch: any) => setVocabState((v: any) => v.map((w: any) => (w.id === id ? { ...w, ...patch } : w))),
     deleteWord: (id: string) => setVocabState((v: any) => v.filter((w: any) => w.id !== id)),
     replaceVocab: (list: any[]) => setVocabState(list.map((w) => ({ id: w.id || newId(), review: false, source: "import", pair: "en-de", lists: [], ...w }))),
