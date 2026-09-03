@@ -46,7 +46,7 @@ export const ANLEITUNG_EN: Kapitel[] = [
           <li><b>Practise</b> — where the learning happens.</li>
           <li><b>Practice plan</b> — a calendar: which word list is due when, and how far along you are.</li>
           <li><b>Word lists</b> — your words: create, paste, organise.</li>
-          <li><b>Statistics</b> — how well your words are sitting and where practice pays off right now.</li>
+          <li><b>Statistics</b> — how well your words are sitting, what you got done in the chosen period, and where it comes unstuck.</li>
         </ul>
         <p>The gear icon at the top right opens the settings, the question mark next to it opens this help.</p>
       </>
@@ -122,7 +122,7 @@ export const ANLEITUNG_EN: Kapitel[] = [
           <li><b>new</b> — freshly learnt, still young.</li>
           <li><b>unpractised</b> — never asked yet.</li>
         </ul>
-        <p>The coloured bar shows how your words spread across those five. In the statistics you can tap a level and see only those words.</p>
+        <p>The coloured bar shows how your words spread across those five. In the statistics, tapping an entry in the key opens the full word list, filtered to that level.</p>
       </>
     ),
   },
@@ -132,7 +132,7 @@ export const ANLEITUNG_EN: Kapitel[] = [
       <>
         <p>Typed a word incorrectly? Tap it under <b>Word lists</b> and change it.</p>
         <p>Do not need a list after all? Delete it — the words stay in your collection and only leave that one list.</p>
-        <p>Want to start over? Under <b>Statistics</b>, in “Adjust”, you can reset your progress, either for the selected word lists or for everything. Your words stay either way.</p>
+        <p>Want to start over? In <b>Settings</b>, under “Account &amp; data”, you can reset your progress — points, history and your daily run, in every language. Your words and word lists stay. It cannot be undone.</p>
       </>
     ),
   },

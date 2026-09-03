@@ -136,7 +136,7 @@ export function PlanTab() {
     window.dispatchEvent(new CustomEvent("vt-tab", { detail: "practice" }));
   };
   const showStats = (l: any) => {
-    store.setSettings({ pair: l.pair, statLists: [l.id] });
+    store.setSettings({ statPair: l.pair, statLists: [l.id] });
     window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
   };
   /* Zwei Verben je Zeile, dieselben zwei fuer die Mehrfachauswahl -- sonst
@@ -144,7 +144,7 @@ export function PlanTab() {
    * anschauen. */
   const showStatsMany = (ids: string[]) => {
     const erste = (lists || []).find((l: any) => l.id === ids[0]);
-    store.setSettings({ pair: erste ? erste.pair : settings.pair, statLists: ids });
+    store.setSettings({ statPair: erste ? erste.pair : settings.pair, statLists: ids });
     window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
   };
 

@@ -48,7 +48,7 @@ export const ANLEITUNG_DE: Kapitel[] = [
           <li><b>Üben</b> — hier passiert das Lernen.</li>
           <li><b>Übungsplan</b> — ein Kalender: welche Wortliste wann dran ist und wie weit du bist.</li>
           <li><b>Wortlisten</b> — deine Wörter: anlegen, einfügen, ordnen.</li>
-          <li><b>Statistik</b> — wie deine Wörter sitzen und woran sich Üben gerade lohnt.</li>
+          <li><b>Statistik</b> — wie deine Wörter sitzen, was du im gewählten Zeitraum geschafft hast und woran es scheitert.</li>
         </ul>
         <p>Das Zahnrad oben rechts öffnet die Einstellungen, das Fragezeichen daneben diese Hilfe.</p>
       </>
@@ -124,7 +124,7 @@ export const ANLEITUNG_DE: Kapitel[] = [
           <li><b>neu</b> — frisch gelernt, noch jung.</li>
           <li><b>ungeübt</b> — noch nie abgefragt.</li>
         </ul>
-        <p>Die farbige Leiste zeigt, wie sich deine Wörter auf diese fünf verteilen. In der Statistik kannst du eine Stufe antippen und siehst nur noch diese Wörter.</p>
+        <p>Die farbige Leiste zeigt, wie sich deine Wörter auf diese fünf verteilen. In der Statistik öffnet ein Tippen auf einen Eintrag der Legende die volle Wortliste, gefiltert auf diese Stufe.</p>
       </>
     ),
   },
@@ -134,7 +134,7 @@ export const ANLEITUNG_DE: Kapitel[] = [
       <>
         <p>Ein Wort falsch eingetippt? Unter <b>Wortlisten</b> antippen und ändern.</p>
         <p>Eine Wortliste doch nicht gebraucht? Löschen — die Wörter bleiben erhalten und verlassen nur diese Liste.</p>
-        <p>Von vorne anfangen? In der <b>Statistik</b> unter „Einstellen“ lässt sich der Lernstand zurücksetzen, entweder für die gewählten Wortlisten oder für alles. Deine Wörter bleiben dabei.</p>
+        <p>Von vorne anfangen? In den <b>Einstellungen</b> unter „Konto &amp; Daten“ lässt sich der Fortschritt zurücksetzen — Punkte, Verlauf und Tagesserie, in allen Sprachen. Deine Wörter und Wortlisten bleiben dabei. Rückgängig machen lässt es sich nicht.</p>
       </>
     ),
   },
