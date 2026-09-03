@@ -43,7 +43,7 @@ in allen drei hellen Schemata zusammen und rissen AA.
 | ✅ | **CR-22** Hilfe und Einstellungen in die Kopfzeile | |
 | ✅ | **CR-23** Übungsplan als eigener Bereich mit Kalender | ersetzt `PlanModal` |
 | ✅ | **CR-24** Übungsplan sprachübergreifend | |
-| ✅ | **CR-25** Beherrschungsstand an jeder Liste | eine Quelle: `readyPercent` |
+| ✅ | **CR-25** Beherrschungsstand an jeder Liste | eine Quelle: `listReadiness` · war fälschlich abgehakt, erst am 3.9. umgesetzt |
 
 ## Stufe 4 — Die Karte
 
@@ -125,3 +125,37 @@ einschalten, bevor die App öffentlich wird.
 ### Letzte CR-Runde
 Du liest die englischen Texte gegen. Sie stehen in `src/lib/i18n.en.ts`
 (Oberfläche) und `src/components/help.en.tsx` (Anleitung, Tipps, Lerntheorie).
+Am 3.9. sind rund 110 Einträge dazugekommen — vor allem die sechzehn
+erweiterten Regler samt Erklärungen und die neue Statistik.
+
+### Zwei Entscheide von dir
+* **`reviews`-Ablage ausräumen?** `src/lib/reviewlog.ts`, die `reviews`-Ablage
+  im Store und der siebte synchronisierte Datensatz sind seit dem 3.9. ohne
+  Oberfläche und ohne Schreiber — sie sammeln nichts. Ganz entfernen berührt
+  einen synchronisierten Schlüssel, deshalb liegt es bei dir.
+* **Rostrot in der Werkzeugleiste der Wortlisten.** „Neue Liste" trägt jetzt
+  Tinte, „Einfügen" hat sein Rostrot abgegeben — Rostrot ist für Dringendes
+  reserviert. Andersherum ist es ein Einzeiler.
+
+---
+
+## Stufe 9 — Bereiche durchoptimiert (3. September)
+
+| | CR | |
+|---|---|---|
+| ✅ | **CR-57** Statistik neu: Umfang · Fortschritt · Kennzahlen · Nachschauen | `src/lib/statistik.ts` trennt Rechnung von Darstellung |
+| ✅ | **CR-58** „fast" als Antwortklasse abgeschafft | Akzent daneben zählt als richtig; die Stolpersteine erklären, was danebenlag |
+| ✅ | **CR-59** Statistik löst keine Handlungen mehr aus | Übungsknopf, Lupe und Zurücksetzen entfernt bzw. verschoben |
+| ✅ | **CR-60** „Hartnäckig" ist EINE Menge mit EINER Zahl | zäh ab 7 und mindestens dreimal wieder vergessen |
+| ✅ | **CR-61** Zwei doppelte Rechnungen entfernt | `listProfile.tone` (eigene Schwellen) und `WL_STUFE` (Rostrot für eine Stufe) |
+| ✅ | **CR-62** Wortlisten: „Alle Wörter" ans Ende, „Neue Liste" neben die Suche, Lernstand an jeder Liste | |
+| ✅ | **CR-63** Tabellen-Import und Vorlage zurück — nur Web und angemeldet | iOS: 224 Byte statt 429 kB, per `resolve.alias` |
+| ✅ | **CR-64** „Auto-Anpassung" aus den Einstellungen | versprach eine Datensammlung, die weder stattfand noch stattfinden soll |
+| ✅ | **CR-65** Anlagedatum am Wort (V17) | Altbestand auf den 1. August |
+
+**Mit fiktiven Daten geprüft** (412 geübte Wörter, 1641 Antworten über 100
+Tage): vier Fehler kamen erst dabei zum Vorschein — eine falsche Behauptung
+über die hartnäckigen Wörter, zwei Grammatikfehler und eine „beste Lernzeit",
+die bei 30 und 90 Tagen Verschiedenes sagte. Zwei weitere fielen erst im Bild
+auf: unlesbare Wortzahl im gewählten Reiter, und eine Erklärnotiz hinter 649
+Tabellenzeilen.
