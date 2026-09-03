@@ -782,7 +782,7 @@ export function Practice() {
           {sitIds.length > 0 && (
             <div className="round-group">
               <div className="round-group-head" style={{ color: "var(--ok)" }}>
-                <Icon name="thumb-up" size={17} /> {sitIds.length === 1 ? txt("Das sitzt") : txt("{n} sitzen", { n: sitIds.length })}
+                <Icon name="check" size={17} /> {sitIds.length === 1 ? txt("Richtig") : txt("{n} richtig", { n: sitIds.length })}
               </div>
               {chips(sitIds, "var(--ok)")}
             </div>
@@ -791,7 +791,7 @@ export function Practice() {
           {failedIds.length > 0 && (
             <div className="round-group">
               <div className="round-group-head" style={{ color: "var(--warn)" }}>
-                <Icon name="flame" size={17} /> {failedIds.length === 1 ? txt("Das sitzt noch nicht so gut") : txt("{n} sitzen noch nicht so gut", { n: failedIds.length })}
+                <Icon name="x" size={17} /> {failedIds.length === 1 ? txt("Falsch") : txt("{n} falsch", { n: failedIds.length })}
               </div>
               {chips(failedIds, "var(--warn)")}
             </div>
@@ -953,7 +953,6 @@ export function Practice() {
                     <div className="card-sub">{latinContext(current)}</div>
                   )}
                   {examplesFor(srcKey)}
-                  {cardIsFlippable && <div className="prompt-hint">{txt("Tippe auf die Karte")}</div>}
                 </div>
                 {/* Der Tipp sitzt als Gluehbirne IN der Karte, unten rechts --
                     ohne das Wort "Tipp". Unter der Karte war er ein Knopf
@@ -990,9 +989,15 @@ export function Practice() {
                     </>
                   ) : (
                     <>
+                      {/* Nur die Loesung. Die Frage stand hier darunter -- damit
+                          trug eine Seite beide Sprachen, und die Karte war
+                          keine Karteikarte mehr. Wer die Frage nochmal sehen
+                          will, dreht zurueck. */}
                       <div className="prompt-word">{revealText(current, tgtKey)}</div>
                       {tgtKey !== NATIVE && phoneticEl}
-                      <div className="card-sub">{sideText(current, srcKey)}</div>
+                      {isLat && tgtKey !== NATIVE && latinContext(current) && (
+                        <div className="card-sub">{current.lernform}</div>
+                      )}
                       {examplesFor(tgtKey)}
                     </>
                   )}
@@ -1075,10 +1080,10 @@ export function Practice() {
                 ein Symbol allein ist eine Vermutung, kein Satz. */}
             <div className="answer-row">
               <button className="btn btn-h grade-got grow-btn" onClick={() => grade(true)}>
-                <Icon name="thumb-up" size={17} /> Das sitzt
+                <Icon name="check" size={17} /> {txt("Richtig")}
               </button>
               <button className="btn btn-h grade-miss grow-btn" onClick={() => grade(false)}>
-                <Icon name="flame" size={17} /> Das sitzt noch nicht so gut
+                <Icon name="x" size={17} /> {txt("Falsch")}
               </button>
             </div>
             <div className="toolbelt"><span className="faint">{txt("Sei ehrlich — davon hängt ab, wann das Wort wiederkommt")}</span></div>

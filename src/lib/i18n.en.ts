@@ -692,4 +692,6 @@ export const EN: Record<string, string> = {
   "Du hast alle Karten dieser Auswahl angesehen. Durchblättern zählt für nichts — kein Lernstand, keine Statistik.": "You have looked at every card in this selection. Browsing counts for nothing — no progress, no statistics.",
   "Wortart": "Part of speech",
   "In der Liste": "In the list",
+  "{n} richtig": "{n} right",
+  "{n} falsch": "{n} wrong",
 };

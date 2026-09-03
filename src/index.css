@@ -397,10 +397,13 @@ table.vt tr.row-click:hover td { background: var(--bg-2); }
 
 .toolbelt { display: flex; gap: 9px; justify-content: center; flex-wrap: wrap; }
 .seg-modes { flex-wrap: wrap; justify-content: center; }
-.grade-got { background: var(--green); border-color: var(--green); color: #fff; }
-.grade-got:hover { background: oklch(0.54 0.10 150); }
-.grade-miss { background: var(--card); border-color: var(--red); color: var(--red); }
-.grade-miss:hover { background: var(--red-bg); }
+/* Richtig und Falsch: gefuellt, weisse Schrift, hoher Kontrast. Zwei
+   Regelsaetze fuer dieselben Knoepfe hatten sich hier gegenseitig
+   aufgehoben -- der zweite setzte die Schrift auf Dunkelgruen und liess den
+   gruenen Grund stehen. */
+.grade-got  { background: var(--ok);  border-color: var(--ok);  color: #fff; }
+.grade-miss { background: var(--bad); border-color: var(--bad); color: #fff; }
+.grade-got:hover, .grade-miss:hover { filter: brightness(1.08); }
 
 /* result back */
 .result-head { display: flex; align-items: center; gap: 11px; font-family: var(--serif); font-size: 24px; font-weight: 600; }
@@ -866,8 +869,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .answer-row .field { font-size: 17px; padding: 0 16px; }
 .toolbelt .faint { font-size: 12.5px; align-self: center; text-align: center; }
 
-.grade-got { border-color: var(--ok); color: var(--ok); }
-.grade-miss { border-color: var(--warn); color: var(--warn); }
+
 
 .round-progress-off {
   text-align: center; font-size: 12px; font-weight: 600; letter-spacing: .03em;
