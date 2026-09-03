@@ -145,6 +145,12 @@ const TEMPI = [
 ];
 const TEMPO_NAME = (n: number) => (TEMPI.find((t) => t.n === n) || { name: String(n) }).name;
 
+const ARTIKEL: Record<string,string> = {
+  "required-full": "Nötig · voller Abzug",
+  "required-partial": "Nötig · kleiner Abzug",
+  "optional": "Freiwillig · wird nicht geprüft",
+};
+
 const MODUS: Record<string,string> = { type: "Eintippen", choice: "Auswählen", recall: "Selbstkontrolle", memorize: "Nur durchblättern" };
 
 export function SettingsTab() {
@@ -343,30 +349,32 @@ export function SettingsTab() {
         </div>
       </Blatt>
 
-      {/* Answer checking */}
+      {/* Antwortprüfung — dieselbe Zeilenform wie „Üben". Zwei Layouts auf
+          einem Bildschirm waeren schlimmer als das alte allein. */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="check" size={16} /> {txt("Antwortprüfung")}</div>
-        <Field title={txt("Gross- und Kleinschreibung egal")} recLabel={txt("An")} atRec={atR("lenientCase")}
-          desc={txt("„Hund“ und „hund“ gelten als dieselbe Antwort.")}>
-          <Toggle value={settings.lenientCase} onChange={(v) => set("lenientCase", v)} />
-        </Field>
-        <Field title={txt("Umlaute und Akzente streng")} recLabel={txt("Aus")} atRec={atR("strictAccents")}
-          desc={txt("When off, “grun” for “grün” is a small mistake (partial credit) instead of fully wrong.")}>
-          <Toggle value={settings.strictAccents} onChange={(v) => set("strictAccents", v)} />
-        </Field>
-        <Field title={txt("Artikel (der/die/das)")} recLabel={txt("Nötig, kleiner Abzug")} atRec={atR("articleMode")}
-          desc={txt("Wie ein fehlender oder falscher Artikel bewertet wird. Nötig heisst: er muss stehen. Freiwillig heisst: er wird gar nicht angeschaut.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.articleMode} onChange={(e) => set("articleMode", e.target.value)}>
-            <option value="required-full">{txt("Nötig · voller Abzug")}</option>
-            <option value="required-partial">{txt("Nötig · kleiner Abzug")}</option>
-            <option value="optional">{txt("Optional")}</option>
-          </select>
-        </Field>
-        <Field title={txt("Fast richtig zulassen")} recLabel={txt("An")} atRec={atR("acceptPartial")}
-          desc={txt("Ein einzelner Tippfehler zählt als fast richtig und wird in der Lösung hervorgehoben. Aus heisst: knapp daneben ist falsch.")}>
-          <Toggle value={settings.acceptPartial} onChange={(v) => set("acceptPartial", v)} />
-        </Field>
+        <ZeileSchalter titel={txt("Gross- und Kleinschreibung egal")} sub={txt("„Hund“ und „hund“ zählen gleich")}
+          value={settings.lenientCase} onChange={(v: boolean) => set("lenientCase", v)} />
+        <ZeileSchalter titel={txt("Fast richtig zulassen")} sub={txt("ein Tippfehler zählt noch als fast richtig")}
+          value={settings.acceptPartial} onChange={(v: boolean) => set("acceptPartial", v)} />
+        <ZeileSchalter titel={txt("Umlaute und Akzente streng")} sub={txt("„grun“ statt „grün“ gilt dann als falsch")}
+          value={settings.strictAccents} onChange={(v: boolean) => set("strictAccents", v)} />
+        <ZeileWert titel={txt("Artikel (der/die/das)")} atRec={atR("articleMode")}
+          wert={txt(ARTIKEL[settings.articleMode] || settings.articleMode)} onClick={() => setBlatt("artikel")} />
       </div>
+
+      <Blatt offen={blatt === "artikel"} titel={txt("Artikel (der/die/das)")} onClose={() => setBlatt(null)}
+        desc={txt("Wie ein fehlender oder falscher Artikel bewertet wird. Nötig heisst: er muss stehen. Freiwillig heisst: er wird gar nicht angeschaut.")}
+        rec={txt(ARTIKEL[R.articleMode])} atRec={atR("articleMode")} onZuruecksetzen={() => set("articleMode", R.articleMode)}>
+        <div className="list">
+          {Object.keys(ARTIKEL).map((v) => (
+            <button key={v} className={"li" + (settings.articleMode === v ? " sel" : "")} onClick={() => set("articleMode", v)}>
+              <span className="ckbox">{settings.articleMode === v && <Icon name="check" size={12} />}</span>
+              <span className="g">{txt(ARTIKEL[v])}</span>
+            </button>
+          ))}
+        </div>
+      </Blatt>
 
       {/* Latein */}
       <div className="set-section">
@@ -391,31 +399,25 @@ export function SettingsTab() {
 
       <div className="set-section">
         <div className="set-section-h"><Icon name="list" size={16} /> {txt("Latein")}</div>
-        <Field title={txt("Abfrage-Form")} recLabel={txt("L2 (Grundform)")} atRec={atR("latinMode")}
-          desc={txt("Gilt nur für das Paar Latein ⇄ Deutsch. L2: die Karte zeigt die volle Lernform, abgefragt wird nur die Grundform. L3: du gibst die vollständigen Stammformen ein (Reihenfolge egal).")}>
-          <select className="field" style={{ width: "100%" }} value={settings.latinMode} onChange={(e) => set("latinMode", e.target.value)}>
-            <option value="L2">{txt("L2 · Grundform abfragen")}</option>
-            <option value="L3">{txt("L3 · volle Lernform abfragen")}</option>
-          </select>
-        </Field>
-        <Field title={txt("Längenstriche nicht nötig")} recLabel={txt("Aus (Längenstriche zählen)")} atRec={!settings.latinMacronsOptional}
-          desc={txt("Längenstriche (ā ē ī ō ū) sind auf Handy und Mac mühsam zu tippen. Aus: fehlt ein Strich, gibt es Punktabzug („fast“). Ein: die Antwort zählt als richtig — die Lösung markiert die Striche trotzdem rot, damit du sie siehst. Gilt nur für Latein.")}>
-          <Toggle value={!!settings.latinMacronsOptional} onChange={(v) => set("latinMacronsOptional", v)} />
-        </Field>
+        <ZeileWert titel={txt("Abfrage-Form")} atRec={atR("latinMode")}
+          wert={txt(settings.latinMode === "L3" ? "L3 · volle Lernform" : "L2 · Grundform")}
+          onClick={() => setBlatt("latein")} />
+        <ZeileSchalter titel={txt("Längenstriche nicht nötig")} sub={txt("ā ē ī ō ū dürfen fehlen")}
+          value={!!settings.latinMacronsOptional} onChange={(v: boolean) => set("latinMacronsOptional", v)} />
       </div>
 
-      {/* Lernhilfen */}
-      <div className="set-section">
-        <div className="set-section-h"><Icon name="hint" size={16} /> {txt("Lernhilfen")}</div>
-        <Field title={txt("Lerntipp-Einblendungen")} recLabel={txt("Gelegentlich")} atRec={atR("tipsFrequency")}
-          desc={txt("Kurze Lerntipps tauchen an natürlichen Pausen auf (nie mitten in der Antwort) und lassen sich wegklicken.")}>
-          <select className="field" style={{ width: "100%" }} value={settings.tipsFrequency} onChange={(e) => set("tipsFrequency", e.target.value)}>
-            <option value="off">{txt("Aus")}</option>
-            <option value="occasional">{txt("Gelegentlich")}</option>
-            <option value="frequent">{txt("Häufig")}</option>
-          </select>
-        </Field>
-      </div>
+      <Blatt offen={blatt === "latein"} titel={txt("Abfrage-Form")} onClose={() => setBlatt(null)}
+        desc={txt("Gilt nur für das Paar Latein ⇄ Deutsch. L2: die Karte zeigt die volle Lernform, abgefragt wird nur die Grundform. L3: du gibst die vollständigen Stammformen ein (Reihenfolge egal).")}
+        rec={txt("L2 · Grundform")} atRec={atR("latinMode")} onZuruecksetzen={() => set("latinMode", R.latinMode)}>
+        <div className="list">
+          {[["L2", "L2 · Grundform"], ["L3", "L3 · volle Lernform"]].map(([v, l]) => (
+            <button key={v} className={"li" + (settings.latinMode === v ? " sel" : "")} onClick={() => set("latinMode", v)}>
+              <span className="ckbox">{settings.latinMode === v && <Icon name="check" size={12} />}</span>
+              <span className="g">{txt(l)}</span>
+            </button>
+          ))}
+        </div>
+      </Blatt>
 
       {/* Oberflächensprache */}
       <div className="set-section">
@@ -431,30 +433,6 @@ export function SettingsTab() {
           ))}
         </div>
         <div className="quiet links">{txt("Die Sprache der Bedienung. Deine Wörter und Wortlisten bleiben davon unberührt — die Übersetzungen sind immer Deutsch.")}</div>
-      </div>
-
-      {/* Übungsplan — die Schwellen der Ampel */}
-      <div className="set-section">
-        <div className="set-section-h"><Icon name="calendar" size={16} /> {txt("Übungsplan")}</div>
-        <Field title={txt("Bereit ab")} recLabel={txt("95 %")} atRec={atR("readyGreen")}
-          desc={txt("Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender.")}>
-          <SliderControl value={settings.readyGreen ?? 95} min={80} max={100} step={1}
-            onChange={(v) => set("readyGreen", Math.max(v, (settings.readyAmber ?? 70) + 1))}
-            fmt={(v) => v + " %"} />
-        </Field>
-        <Field title={txt("Fast bereit ab")} recLabel={txt("70 %")} atRec={atR("readyAmber")}
-          desc={txt("Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.")}>
-          <SliderControl value={settings.readyAmber ?? 70} min={40} max={94} step={1}
-            onChange={(v) => set("readyAmber", Math.min(v, (settings.readyGreen ?? 95) - 1))}
-            fmt={(v) => v + " %"} />
-        </Field>
-        <div className="set-legend-preview">
-          {toneLegend(settings).map((t) => (
-            <span key={t.tone} className="set-legend-item">
-              <span className="set-legend-dot" style={{ background: TONE_VAR[t.tone] }} />{t.label}
-            </span>
-          ))}
-        </div>
       </div>
 
       {/* Aussehen — vier Umschalter, nach Reichweite sortiert: erst was das

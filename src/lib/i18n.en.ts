@@ -727,4 +727,9 @@ export const EN: Record<string, string> = {
   "„{liste}“ ist heute dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.": "“{liste}” is due today — all {n} words are in play, the daily cap is suspended.",
   "„{liste}“ ist morgen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.": "“{liste}” is due tomorrow — all {n} words are in play, the daily cap is suspended.",
   "„{liste}“ ist in {t} Tagen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.": "“{liste}” is due in {t} days — all {n} words are in play, the daily cap is suspended.",
+  "„Hund“ und „hund“ zählen gleich": "“Hund” and “hund” count the same",
+  "ein Tippfehler zählt noch als fast richtig": "one typo still counts as nearly right",
+  "„grun“ statt „grün“ gilt dann als falsch": "“grun” instead of “grün” then counts as wrong",
+  "L2 · Grundform": "L2 · head form",
+  "ā ē ī ō ū dürfen fehlen": "ā ē ī ō ū may be left out",
 };

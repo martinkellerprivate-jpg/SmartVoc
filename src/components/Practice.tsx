@@ -736,6 +736,21 @@ export function Practice() {
     </div>
   );
 
+  /* Im Endspurt hebt die App die Tagesgrenze fuer die Pruefungsliste auf.
+   * Das ist richtig, aber es erklaert sich nicht von selbst: die Zahl
+   * springt ploetzlich von 30 auf 60. Also sagen, warum. */
+  const endspurtListe = useMemo(() => {
+    const fenster = getCfg().examWindowDays;
+    for (const l of (store.lists || [])) {
+      if (l.pair !== pair || !l.dueDate) continue;
+      const tage = Math.ceil((l.dueDate - Date.now()) / 86400000);
+      if (tage < 0 || tage > fenster) continue;
+      const n = vocab.filter((w: any) => (w.lists || []).includes(l.id)).length;
+      if (n) return { name: l.name, tage, n };
+    }
+    return null;
+  }, [store.lists, pair, vocab]);
+
   if (!pool.length) {
     return (
       <div className="practice-wrap">
@@ -747,6 +762,7 @@ export function Practice() {
       </div>
     );
   }
+
   if (!current) {
     // B3: three distinct reasons there's no current card.
     const st = runRef.current;
@@ -907,20 +923,6 @@ export function Practice() {
    * Karten im Bild. Bei der letzten Karte liegt nichts mehr dahinter. */
   const schichten = Math.max(0, Math.min(4, (runRef.current ? remaining(runRef.current) : 1) - 1));
 
-  /* Im Endspurt hebt die App die Tagesgrenze fuer die Pruefungsliste auf.
-   * Das ist richtig, aber es erklaert sich nicht von selbst: die Zahl
-   * springt ploetzlich von 30 auf 60. Also sagen, warum. */
-  const endspurtListe = useMemo(() => {
-    const fenster = getCfg().examWindowDays;
-    for (const l of (store.lists || [])) {
-      if (l.pair !== pair || !l.dueDate) continue;
-      const tage = Math.ceil((l.dueDate - Date.now()) / 86400000);
-      if (tage < 0 || tage > fenster) continue;
-      const n = vocab.filter((w: any) => (w.lists || []).includes(l.id)).length;
-      if (n) return { name: l.name, tage, n };
-    }
-    return null;
-  }, [store.lists, pair, vocab]);
 
   const roundProgressEl = mode === "memorize" ? (
     /* Durchblättern zählt nicht -- dann darf dort auch kein Fortschritt
