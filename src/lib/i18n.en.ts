@@ -359,9 +359,6 @@ export const EN: Record<string, string> = {
   "Alle Wörter mit Lernstand": "All words with their progress",
   "Fortschritt zurücksetzen": "Reset progress",
   "Auswahl": "Selection",
-  "bereit ab {p} %": "ready from {p} %",
-  "auf Kurs ab {p} %": "on track from {p} %",
-  "darunter": "below that",
   "Alle Sprachen": "All languages",
   "Sprache": "Language",
   "Ansicht": "View",
@@ -756,4 +753,9 @@ export const EN: Record<string, string> = {
   "„hund“ statt „Hund“ ist ein Fehler": "“hund” instead of “Hund” is a mistake",
   "Tinte": "Ink",
   "Graphit": "Graphite",
+
+  /* Kalenderampel (T-22). */
+  "Auf Kurs": "On track",
+  "Im Rückstand": "Behind",
+  "Die Farbe eines Tages sagt, wie weit die Wörter sitzen, die bis dahin dran sind. Liegen mehrere Listen auf demselben Tag, zählt die schwächste — die Zahl in der Ecke sagt, wie viele es sind.": "A day's colour says how well the words due by then have stuck. If several lists fall on the same day, the weakest one counts — the number in the corner says how many there are.",
 };

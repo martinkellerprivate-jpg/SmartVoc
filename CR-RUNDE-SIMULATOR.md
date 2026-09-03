@@ -141,3 +141,12 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | T-19 | Der Einleitungstext der erweiterten Einstellungen hat dieselbe Polsterung wie die Zeilen darunter (18 px). |
 | T-20 | Der Balken ist ein eigenes Stück links **neben** der Karte: 4 px breit, gerade, mit 7 px Luft. Der Spaltenkopf ist um dieselbe Strecke eingerückt. |
 | T-21 | Der obere Bereich belegt höchstens 38 % der Höhe und rollt darüber hinaus selbst — ohne Rollbalken. Was die Spalten benennt („Alle auswählen“ und der Tabellenkopf), steht in einem eigenen Streifen darunter und rollt nie mit. |
+| T-22 | Übungsplan · Kalender | Die Farben sind unsauber — es sollen **grün, gelb, rot** sein. Und die **Färbelogik aus den Entwürfen** übernehmen: der **ganze Tag** wird eingefärbt; liegen mehrere Listen auf einem Tag, bestimmt die **schlechteste** die Farbe, und dass es mehrere sind, muss **angezeigt** werden. Die Legende („bereit ab 95 %“) **versteht niemand**, der die App nicht selbst gebaut hat: verständliche Begriffe (**Bereit · Auf Kurs · Ungenügend** oder ein besseres Tripel) und darunter ein kurzer Erklärsatz. |
+| T-23 | Übungsplan · Terminzeilen | **Schon wieder eine eigene Auswahl-Bauart** (Kontrollkästchen). Gleiche oder ähnliche Funktion heisst: **gleiches Bedienelement** — die Hervorhebung aus T-16 gilt auch hier. |
+
+### Umgesetzt am 3. September 2026 (dritter Durchgang)
+
+| Nr | Wie gelöst |
+|---|---|
+| T-22 | Die Ampel färbt den **ganzen Tag**, wie im Entwurf: Grund aus der Ampelfarbe gemischt (22 %), Rand in der vollen Farbe. Vorher sass sie in einem Punkt von 16 px, in dem drei Farben gleich aussahen. Liegen mehrere Listen auf einem Tag, steht ihre **Zahl in der Ecke** und die Farbe zeigt die schwächste. „Heute“ und „gewählt“ sind jetzt Ringe statt Flächen, damit sie die Ampel nicht überdecken. Die Legende heisst **Bereit · Auf Kurs · Im Rückstand**, ihr Zeichen sieht aus wie ein Kalendertag, und darunter steht die Regel in zwei Sätzen. Die Prozentzahlen stehen dort, wo man sie verstellen kann: in den Einstellungen. |
+| T-23 | Die Terminzeile hat kein Kontrollkästchen mehr — die Zeile selbst ist der Knopf, die Auswahl zeigt sich am dunkleren Grund wie überall sonst. Dabei aufgefallen und mitbehoben: das Sprachkürzel und der Fortschrittsbalken verschwanden auf einer hervorgehobenen Zeile; das Kürzel steht dort jetzt auf Papier, der Balken bekommt app-weit einen feinen Rand. |

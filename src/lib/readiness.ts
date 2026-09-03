@@ -44,14 +44,26 @@ export const TONE_VAR: Record<Tone, string> = {
   ok: "var(--ok)", warn: "var(--warn)", bad: "var(--bad)",
 };
 
-/** Beschriftung der Legende — leitet sich aus denselben Schwellen ab, damit
- *  die Legende nie etwas anderes behauptet als die Farbe zeigt. */
-export function toneLegend(settings: Partial<Settings> = {}): { tone: Tone; label: string }[] {
-  const green = settings.readyGreen ?? 95;
-  const amber = settings.readyAmber ?? 70;
+/** Der Klassenname je Ton — für Flächen, die sich ganz einfärben (der
+ *  Kalendertag). `TONE_VAR` bleibt für Punkte und Striche. */
+export const TONE_KLASSE: Record<Tone, string> = { ok: "gr", warn: "am", bad: "rd" };
+
+/* Die Legende hiess „bereit ab 95 %", „auf Kurs ab 70 %", „darunter". Das
+ * sind die Schwellen, nicht die Bedeutung: wer die App nicht selbst gebaut
+ * hat, liest drei Zahlen ohne Aussage — und „darunter" bezieht sich auf
+ * eine Zahl, die zwei Zeilen weiter oben stand. Jetzt steht da, was die
+ * Farbe über den Tag sagt; die Zahlen stehen in den Einstellungen, wo man
+ * sie verstellen kann. */
+export function toneLegend(_settings: Partial<Settings> = {}): { tone: Tone; label: string }[] {
   return [
-    { tone: "ok", label: txt("bereit ab {p} %", { p: green }) },
-    { tone: "warn", label: txt("auf Kurs ab {p} %", { p: amber }) },
-    { tone: "bad", label: txt("darunter") },
+    { tone: "ok", label: txt("Bereit") },
+    { tone: "warn", label: txt("Auf Kurs") },
+    { tone: "bad", label: txt("Im Rückstand") },
   ];
 }
+
+/** Ein Satz unter der Legende — die Regel, nach der ein Tag seine Farbe
+ *  bekommt. Ohne ihn bleibt offen, was passiert, wenn an einem Tag zwei
+ *  Listen fällig sind. */
+export const AMPEL_SATZ =
+  "Die Farbe eines Tages sagt, wie weit die Wörter sitzen, die bis dahin dran sind. Liegen mehrere Listen auf demselben Tag, zählt die schwächste — die Zahl in der Ecke sagt, wie viele es sind.";

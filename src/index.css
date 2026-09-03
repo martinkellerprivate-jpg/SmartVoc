@@ -336,7 +336,11 @@ input, button, textarea, select { font-family: inherit; }
 /* FR3-2: shared MasteryBar (card + Stats) */
 .mbar-total { font-size: 13px; font-weight: 700; color: var(--ink-soft); text-align: center; margin-bottom: 7px; }
 .mbar-body { position: relative; }
-.mbar-band { display: flex; height: 16px; border-radius: 999px; overflow: hidden; gap: 2px; }
+/* Ein feiner Rand: der Balken einer noch ungeuebten Liste ist fast so
+   hell wie das Papier und verschwand auf einer hervorgehobenen Zeile
+   ganz. Der Rand zeigt, wie weit er reicht -- auf jedem Grund. */
+.mbar-band { display: flex; height: 16px; border-radius: 999px; overflow: hidden; gap: 2px;
+             box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent); }
 .mbar-band > i { display: block; min-width: 3px; }
 .mbar-band > i.clickable { cursor: pointer; }
 .mbar-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; justify-content: center; margin-top: 11px; font-size: 12.5px; }
@@ -816,33 +820,55 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   cursor: default;
 }
 .cal-day.has { cursor: pointer; background: var(--bg-2); border-color: var(--line-soft); }
-.cal-day.has:hover { border-color: var(--line); }
+.cal-day.has:hover { border-color: var(--ink-soft); }
 .cal-day.out { color: var(--ink-faint); opacity: .55; }
-.cal-day.today { border-color: var(--amber); font-weight: 700; }
-.cal-day.open { background: var(--amber-bg, var(--bg-2)); border-color: var(--amber); }
 .cal-num { line-height: 1; }
-/* Der Punkt traegt die Ampel; bei mehreren Listen steht ihre Zahl darin. */
-.cal-mark {
-  min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px;
-  display: grid; place-items: center;
-  font-size: 10.5px; font-weight: 700; color: var(--card); line-height: 1;
-}
+
+/* Die Ampel faerbt den GANZEN Tag, wie im Entwurf. Vorher sass sie in
+   einem Punkt von sechzehn Pixeln: drei Farben, die man nebeneinander
+   nicht auseinanderhalten konnte, auf einem Feld, das leer aussah. */
+/* Der Grund wird aus der Ampelfarbe selbst gemischt, nicht aus den
+   -bg-Tönen: die sind für Abzeichen gedacht und liegen so nah am Papier,
+   dass ein ganzer Tag darin nicht als grün, gelb oder rot zu erkennen war. */
+.cal-day.gr { background: color-mix(in srgb, var(--ok)   22%, var(--card)); border-color: var(--ok);   color: var(--ink); font-weight: 700; }
+.cal-day.am { background: color-mix(in srgb, var(--warn) 22%, var(--card)); border-color: var(--warn); color: var(--ink); font-weight: 700; }
+.cal-day.rd { background: color-mix(in srgb, var(--bad)  22%, var(--card)); border-color: var(--bad);  color: var(--ink); font-weight: 700; }
+.cal-day.gr, .cal-day.am, .cal-day.rd { border-width: 1.5px; }
+/* Heute und gewaehlt sind Zustaende, keine Bewertung -- sie duerfen die
+   Ampel nicht ueberfaerben, also Ringe statt Flaechen. */
+.cal-day.today { box-shadow: inset 0 0 0 1.5px var(--ink); font-weight: 700; }
+.cal-day.open { box-shadow: 0 0 0 2px var(--ink); }
+.cal-day.today.open { box-shadow: inset 0 0 0 1.5px var(--ink), 0 0 0 2px var(--ink); }
+/* Liegen mehrere Listen auf dem Tag, steht ihre Zahl in der Ecke -- die
+   Farbe zeigt dann die schwaechste von ihnen. */
+.cal-cnt { position: absolute; top: 3px; right: 5px; line-height: 1;
+           font-size: 9.5px; font-weight: 700; color: var(--ink-soft); }
+
 .cal-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-soft); font-size: 12.5px; color: var(--ink-soft); }
-.cal-leg { display: inline-flex; align-items: center; gap: 6px; }
-.cal-leg-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.cal-leg { display: inline-flex; align-items: center; gap: 7px; }
+/* Das Zeichen der Legende sieht aus wie ein Tag im Kalender, nicht wie ein
+   Punkt -- sonst muss man erst uebersetzen, wofuer es steht. */
+.cal-leg-feld { width: 15px; height: 15px; border-radius: 5px; border: 1px solid; flex: none; }
+.cal-leg-feld.gr { background: color-mix(in srgb, var(--ok)   22%, var(--card)); border-color: var(--ok); }
+.cal-leg-feld.am { background: color-mix(in srgb, var(--warn) 22%, var(--card)); border-color: var(--warn); }
+.cal-leg-feld.rd { background: color-mix(in srgb, var(--bad)  22%, var(--card)); border-color: var(--bad); }
+.cal-legend-satz { margin-top: 7px; font-size: 11.5px; line-height: 1.45; color: var(--ink-faint); }
 
 .plan-day-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+/* Der Knopf bricht nicht um -- „Alle Termine" ueber zwei Zeilen sah aus
+   wie zwei Knoepfe. Der Titel gibt nach, er darf umbrechen. */
+.plan-day-head > .grp { flex: 1; min-width: 0; }
+.plan-day-head > .btn { flex: none; white-space: nowrap; }
 
 .planrow {
   display: flex; align-items: flex-start; gap: 12px;
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: 12px 14px; box-shadow: var(--shadow-sm);
 }
-.planrow.picked { border-color: var(--amber); }
-.planrow-pick { background: none; border: none; padding: 2px 0 0; cursor: pointer; }
-.planrow-box { width: 20px; height: 20px; border: 1.5px solid var(--line); border-radius: 6px; display: grid; place-items: center; color: var(--card); background: var(--card-2); }
-.planrow.picked .planrow-box { background: var(--amber); border-color: var(--amber); }
-.planrow-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+/* Die Zeile selbst ist der Knopf -- kein Kaestchen daneben. */
+.planrow-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;
+                background: none; border: none; padding: 0; margin: 0; text-align: left;
+                font: inherit; color: var(--ink); -webkit-appearance: none; cursor: pointer; }
 .planrow-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .planrow-name { font-weight: 600; }
 /* Sprache als Kuerzel, nicht als Farbe und nicht als Flagge: eine Sprache ist
@@ -1232,8 +1258,10 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .planrow-acts .btn { justify-content: center; white-space: nowrap; }
 /* Gewählte Zeile trägt einen Tintenrahmen, keine Farbfläche -- Farbe gehört
    dem Zustand, nicht der Auswahl. */
-.planrow.picked { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-.planrow.picked .planrow-box { background: var(--ink); border-color: var(--ink); }
+.planrow.picked { border-color: var(--ink); background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--ink); }
+/* Das Sprachkuerzel trug denselben Grund wie die hervorgehobene Zeile und
+   verschwand darin. Auf gewaehlten Zeilen steht es auf Papier. */
+.planrow.picked .planrow-lang { background: var(--card); }
 .grp .hint { text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 11px; opacity: .85; }
 
 /* Die Richtungs-Pille zeigt geschlossen nur Kürzel — sie teilt sich die
@@ -1277,11 +1305,8 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    dunkler, nicht nur der Rahmen eine Spur kraeftiger. */
 .li.sel { border-color: var(--ink); background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--ink); }
 .li:hover, .wort:hover, .planrow:hover { border-color: var(--ink-soft); }
-.cal-day.open { background: var(--bg-2); border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-/* „Heute" ist ein Zustand, keine Auswahl: neutraler Grund statt Farbe,
-   sonst sähen heute und gewählt gleich aus. */
-.cal-day.today { border-color: transparent; background: var(--bg-2); font-weight: 700; }
-.cal-day.today.open { border-color: var(--ink); }
+/* Kalender: „heute" und „gewählt" stehen weiter oben — als Ringe, damit
+   sie die Ampelfarbe des Tages nicht überdecken. */
 
 /* 4 — Handlung: unverändert, aber ab hier die einzige Verwendung von Rost. */
 
@@ -1609,7 +1634,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    eine Listenzeile ein Knopf ist, muss sie beides ausdrücklich setzen —
    sonst erscheinen einzelne Zeilen blau wie Verweise. Einmal hier statt an
    jeder neuen Stelle. */
-button.li, button.wz, button.wort-body, button.planrow-pick, button.wl-loeschen {
+button.li, button.wz, button.wort-body, button.planrow-main, button.wl-loeschen {
   font: inherit; color: var(--ink); -webkit-appearance: none; appearance: none;
 }
 button.li .m, button.wz .wz-d { color: var(--ink-soft); }

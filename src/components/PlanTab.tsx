@@ -24,7 +24,7 @@ import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, activePairs } from "../lib/pairs";
 
 import { retentionFor } from "../lib/fsrs";
-import { toneLegend, listReadiness, TONE_VAR } from "../lib/readiness";
+import { toneLegend, listReadiness, TONE_KLASSE, AMPEL_SATZ } from "../lib/readiness";
 import { getUiLang } from "../lib/i18n";
 
 const DAY = 86400000;
@@ -118,7 +118,7 @@ export function PlanTab() {
 
   const openList = openDay != null ? (byDay.get(openDay) || []) : termine.filter((t) => t.daysLeft >= 0);
   const openTitle = openDay != null
-    ? new Date(openDay).toLocaleDateString(LOCALE(), { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+    ? new Date(openDay).toLocaleDateString(LOCALE(), { weekday: "long", day: "numeric", month: "long" })
     : txt("Alle kommenden Termine");
 
   /* Die Auswahl darf Sprachen mischen. Seit die Karte ihre Sprache und
@@ -162,11 +162,12 @@ export function PlanTab() {
     const gewaehlt = picked.includes(t.list.id);
     return (
       <div key={t.list.id} className={"planrow" + (gewaehlt ? " picked" : "")}>
-        <button className="planrow-pick" onClick={() => toggle(t.list.id)}
-          aria-pressed={gewaehlt} aria-label={txt("{name} auswählen", { name: t.list.name })}>
-          <span className="planrow-box">{gewaehlt && <Icon name="check" size={12} />}</span>
-        </button>
-        <div className="planrow-main">
+        {/* Hier stand ein Kontrollkaestchen -- die dritte Bauart fuer
+            dieselbe Handlung, nach den Kaestchen in den Sprachen und der
+            Hervorhebung in den Wortlisten. Es gilt eine: die Zeile
+            antippen, die Auswahl zeigt sich am dunkleren Grund. */}
+        <button className="planrow-main" onClick={() => toggle(t.list.id)} aria-pressed={gewaehlt}
+          aria-label={txt("{name} auswählen", { name: t.list.name })}>
           <div className="planrow-top">
             <span className="planrow-name">{t.list.name}</span>
             <span className="planrow-lang">{Pp.short}</span>
@@ -174,7 +175,7 @@ export function PlanTab() {
           <div className="planrow-sub">{zeilenText(t)}</div>
           {/* Miniansicht: Balken ohne Legende — die Legende steht im Kalender. */}
           <MasteryBar dist={t.prof.dist} total={t.prof.total} showLegend={false} />
-        </div>
+        </button>
         {/* Beschriftet, nicht nur bezeichnet. Zwei Knoepfe, die nebeneinander
             die Zeile fuellen, muessen sagen was sie tun -- ein Zeichen allein
             in einem handbreiten Klotz ist ein Raetsel. */}
@@ -239,12 +240,17 @@ export function PlanTab() {
             const n = (byDay.get(day) || []).length;
             return (
               <button key={day}
-                className={"cal-day" + (inMonth ? "" : " out") + (day === today ? " today" : "") + (day === openDay ? " open" : "") + (n ? " has" : "")}
+                className={"cal-day" + (inMonth ? "" : " out") + (day === today ? " today" : "") + (day === openDay ? " open" : "") + (n ? " has" : "") + (tone ? " " + TONE_KLASSE[tone] : "")}
                 onClick={() => { setOpenDay(day === openDay ? null : day); setPicked([]); }}
                 disabled={!n && day !== today}
                 aria-label={`${d.getDate()}. ${MONTH_NAME(d.getMonth())}${n ? " · " + txt(n === 1 ? "{n} Wortliste" : "{n} Wortlisten", { n }) : ""}`}>
                 <span className="cal-num">{d.getDate()}</span>
-                {tone && <span className="cal-mark" style={{ background: TONE_VAR[tone] }}>{n > 1 ? n : ""}</span>}
+                {/* Nicht ein Punkt im Tag, sondern der ganze Tag: der Punkt
+                    war so klein, dass drei Farben nebeneinander gleich
+                    aussahen. Die Zahl in der Ecke erscheint nur, wenn an
+                    dem Tag mehr als eine Liste faellig ist -- dann sagt die
+                    Farbe die schwaechste von ihnen. */}
+                {n > 1 && <span className="cal-cnt">{n}</span>}
               </button>
             );
           })}
@@ -253,10 +259,11 @@ export function PlanTab() {
         <div className="cal-legend">
           {toneLegend(settings).map((t) => (
             <span key={t.tone} className="cal-leg">
-              <span className="cal-leg-dot" style={{ background: TONE_VAR[t.tone] }} />{t.label}
+              <span className={"cal-leg-feld " + TONE_KLASSE[t.tone]} />{txt(t.label)}
             </span>
           ))}
         </div>
+        <div className="cal-legend-satz">{txt(AMPEL_SATZ)}</div>
       </div>}
 
       <div className="plan-day">
@@ -264,7 +271,7 @@ export function PlanTab() {
           <>
             <div className="plan-day-head">
               <div className="grp">{openDay != null ? openTitle : txt("Anstehend")}
-                <span className="hint">— {openDay != null ? txt("Auswahl aufheben") : txt("alle Termine")}</span>
+                {openDay == null && <span className="hint">— {txt("alle Termine")}</span>}
               </div>
               {openDay != null && <button className="btn btn-ghost btn-sm" onClick={() => { setOpenDay(null); setPicked([]); }}>{txt("Alle Termine")}</button>}
             </div>
