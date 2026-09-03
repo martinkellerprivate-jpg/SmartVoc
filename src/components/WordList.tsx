@@ -74,7 +74,6 @@ export function WordList() {
   const [mergeZiel, setMergeZiel] = useState<string | null>(null);
   const activeList = offen?.art === "liste" ? offen.ref : "__all";
   const [listMenu, setListMenu] = useState(false);
-  const [neuesWortOffen, setNeuesWortOffen] = useState(false);
   const [neueListe, setNeueListe] = useState(false);
   const [nlName, setNlName] = useState("");
   const [nlDatum, setNlDatum] = useState("");
@@ -253,6 +252,17 @@ export function WordList() {
     setAdding((a) => ({ ...a, fgn: "", de: "", ex1: "", ex1de: "", phon: "" }));
   }, [adding, store, toast, foreign, pair, isLat]);
 
+  /* „Einzelnes Wort eintippen" fuehrte ins Leere: `neuesWortOffen` wurde
+   * gesetzt, aber nirgends mehr gezeichnet -- der Eingabeblock war beim
+   * Umbau der Wortlisten entfallen. Es braucht ihn auch nicht zweimal: die
+   * Maske zum Bearbeiten ist genau die, die hier gefragt ist. Sie oeffnet
+   * jetzt auch leer, und dann legt "Speichern" ein Wort an. */
+  const NEU = "__neu";
+  const startNeu = (listId: string) => {
+    setDraft({ fgn: "", de: "", lists: listId && listId !== "__all" ? [listId] : [],
+      lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
+    setEditingId(NEU);
+  };
   const startEdit = (w) => { setEditingId(w.id); setDraft({ fgn: isLat ? (w.grundform || "") : (w[foreign] || ""), de: w.de, lists: w.lists || [], lernform: w.lernform || "", wortart: w.wortart || "Nomen", ex1: (w.examples || [])[0] || "", ex2: (w.examples || [])[1] || "", ex1de: (w.examplesDe || [])[0] || "", ex2de: (w.examplesDe || [])[1] || "", phon: w.phonetic || "" }); };
   const saveEdit = (id) => {
     /* Index-treu speichern: examples[i] und examplesDe[i] gehören zusammen.
@@ -264,7 +274,12 @@ export function WordList() {
     const patch = isLat
       ? { grundform: draft.fgn.trim(), lernform: draft.lernform.trim(), wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false }
       : { [foreign]: draft.fgn.trim(), de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false };
-    store.updateWord(id, patch); setEditingId(null);
+    if (id === NEU) {
+      if (!draft.fgn.trim() && !draft.de.trim() && !draft.lernform.trim()) { setEditingId(null); return; }
+      store.addWord({ ...patch, pair, source: "manual", createdAt: Date.now() });
+      toast(txt("Wort hinzugefügt"), "check");
+    } else store.updateWord(id, patch);
+    setEditingId(null);
   };
   const toggleDraftList = (lid) => setDraft((d) => ({ ...d, lists: d.lists.includes(lid) ? d.lists.filter((x) => x !== lid) : [...d.lists, lid] }));
 
@@ -419,7 +434,7 @@ export function WordList() {
                   <Icon name="arrowRight" size={14} />
                 </button>
               ) : (
-                <button className="li" onClick={() => { setQuellenBlatt(null); setAdding((a: any) => ({ ...a, listId: activeList })); setNeuesWortOffen(true); }}>
+                <button className="li" onClick={() => { setQuellenBlatt(null); startNeu(activeList); }}>
                   <Icon name="plus" size={15} />
                   <span className="g">{txt("Einzelnes Wort eintippen")}<div className="m">{txt("dieselbe Maske wie beim Bearbeiten")}</div></span>
                   <Icon name="arrowRight" size={14} />
@@ -514,20 +529,29 @@ export function WordList() {
         onClose={() => setReviewRows(null)}
         onConfirm={(rows: any) => { setReviewRows(null); setPendingImport(rows); }} />
       <ListPicker open={!!pendingImport} pair={pair} title={txt("In welche Liste?")}
-        subtitle={pendingImport ? txt("{n} Wörter bereit zum Import", { n: (pendingImport as any).length }) : ""}
+        subtitle={pendingImport ? txt((pendingImport as any).length === 1 ? "{n} Wort bereit zum Import" : "{n} Wörter bereit zum Import", { n: (pendingImport as any).length }) : ""}
         onClose={() => setPendingImport(null)}
         onPick={(id: string, name: string) => { const p = pendingImport; setPendingImport(null); commitImport(p, id, name); }} />
       <ShareModal open={!!shareToken} token={shareToken} listName={shareName} onClose={() => setShareToken(null)} />
 
+      {/* Das Dateifeld fuer "Tabelle einlesen". Es lag frueher in der Zeile
+          neben dem Knopf und ist beim Umbau der Wortlisten mit ihr
+          verschwunden -- der Knopf rief seither ins Leere. Jetzt steht es
+          bei den anderen Fenstern: die werden immer gezeichnet, egal auf
+          welcher Ebene man ist. */}
+      <input ref={dateiRef} type="file" accept=".xlsx,.xls,.csv" style={{ display: "none" }}
+        onChange={(e) => { const f = e.target.files?.[0]; if (f) leseTabelle(f); e.target.value = ""; }} />
+
       {/* Bearbeiten: dieselben Felder wie im Wort-Detail, nur beschreibbar. */}
       {editingId && (() => {
-        const w = vocab.find((x: any) => x.id === editingId);
+        const neu = editingId === NEU;
+        const w = neu ? { id: NEU } : vocab.find((x: any) => x.id === editingId);
         if (!w) return null;
         return (
           <div className="modal-backdrop" onClick={() => setEditingId(null)}>
             <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 520, maxHeight: "86vh", overflowY: "auto" } as any}>
               <div className="modal-head">
-                <div className="modal-title">{txt("Wort bearbeiten")}</div>
+                <div className="modal-title">{neu ? txt("Neues Wort") : txt("Wort bearbeiten")}</div>
                 <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setEditingId(null)}><Icon name="x" size={16} /></button>
               </div>
               {/* Dieselben Zeilen wie im Wort-Detail, nur beschreibbar: Feldname
@@ -559,12 +583,16 @@ export function WordList() {
                   mehrzeilig onChange={(v) => setDraft({ ...draft, ex2de: v })} />
               </div>
               {/* Der Lernstand -- derselbe Block wie in der Statistik. */}
-              {(() => { const w = vocab.find((x: any) => x.id === editingId); return w ? <LernstandBlock word={w} /> : null; })()}
+              {!neu && (() => { const wv = vocab.find((x: any) => x.id === editingId); return wv ? <LernstandBlock word={wv} /> : null; })()}
               {isLat && <LatinKeys hint={txt("Feld antippen, dann Zeichen wählen")} />}
               <div className="modal-foot">
-                <button className="btn btn-ghost" onClick={() => setWortLoeschen(editingId)}>
-                  <Icon name="trash" size={14} /> {txt("Wort löschen")}
-                </button>
+                {neu ? (
+                  <button className="btn btn-ghost" onClick={() => setEditingId(null)}>{txt("Abbrechen")}</button>
+                ) : (
+                  <button className="btn btn-ghost" onClick={() => setWortLoeschen(editingId)}>
+                    <Icon name="trash" size={14} /> {txt("Wort löschen")}
+                  </button>
+                )}
                 <button className="btn btn-primary" onClick={() => saveEdit(editingId)}>{txt("Speichern")}</button>
               </div>
             </div>

@@ -32,7 +32,11 @@ export function LernstandBlock({ word }: { word: any }) {
   return (
     <>
       <div className="grp">{txt("Lernstand")}</div>
-      <div className="fz-block">
+      {/* Fuenf Zeilen, wie im Entwurf. „Haelt im Moment" stand hier als
+          sechste, mit einer Unterzeile -- das ist ein Modellwert, und die
+          gehoeren nach „Erweitert" in der Statistik. Ohne sie tragen alle
+          Zeilen kurze Werte, und der Name passt in eine Zeile. */}
+      <div className="fz-block fz-stand">
         <FeldZeile feld={txt("Wie gut es sitzt")} wert={
           <span className="wstufe" style={{ color: STUFE_FARBE[stufe] }}>
             <i style={{ background: STUFE_FARBE[stufe] }} />{txt(STUFE_KURZ[stufe])}
@@ -40,8 +44,6 @@ export function LernstandBlock({ word }: { word: any }) {
         <FeldZeile feld={txt("Richtig beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: richtig }) : null} />
         <FeldZeile feld={txt("Falsch beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: stat.wrongCount || 0 }) : null} />
         <FeldZeile feld={txt("Nächste Übung")} wert={naechste} />
-        <FeldZeile feld={txt("Hält im Moment")} hinweis={txt("Tage, bis es wiederkommt")}
-          wert={prof.haeltTage ? txt("{n} Tage", { n: Math.round(prof.haeltTage) }) : null} />
         <FeldZeile feld={txt("In der Liste")} wert={inListen.join(" · ")} />
       </div>
     </>

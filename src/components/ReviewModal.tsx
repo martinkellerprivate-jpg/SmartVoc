@@ -99,7 +99,7 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
         <div className="modal-foot">
           <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
           <button className="btn btn-primary" disabled={!valid.length} onClick={() => onConfirm(valid)}>
-            <Icon name="check" size={15} /> {valid.length} Wörter verwenden
+            <Icon name="check" size={15} /> {txt(valid.length === 1 ? "{n} Wort verwenden" : "{n} Wörter verwenden", { n: valid.length })}
           </button>
         </div>
       </div>

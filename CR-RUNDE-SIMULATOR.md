@@ -174,3 +174,18 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | T-28 d | Drei Knöpfe derselben Form, die sich die Breite teilen: **Hinzufügen · Bearbeiten · Löschen**. „Zeile antippen zum Auswählen“ steht als eigene Zeile darunter. |
 | T-28 e | `.wl-fest` rollt nicht mehr — `flex: none`, kein `max-height`, kein `overflow`. Seit die Wörter eine eigene Ebene haben, steht dort ohnehin nur Suche, Werkzeugleiste und Spaltenkopf. |
 | — | Dabei gefunden: die Seite liess sich **seitwärts rollen**. `.app-body` ist seit T-17 eine Flex-Spalte, und ohne `min-width: 0` darf ein Kind nicht unter seine Inhaltsbreite schrumpfen. Behoben für alle Bereiche. |
+| T-29 | Wortlisten · Wege zum Füllen | Einige Wege **laufen ins Leere** — selber durchtesten. Ausserdem: für den Lernstand-Block war ein **anderes Design** abgemacht (Entwürfe von gestern). |
+
+### Umgesetzt am 3. September 2026 (sechster Durchgang) — alle Wege durchgetestet
+
+| Weg | Befund | Behoben |
+|---|---|---|
+| Leere Liste anlegen | in Ordnung | — |
+| Liste einfügen | Kette bis „In welche Liste?“ vollständig | — |
+| KI-Prompt zum Abschreiben | dasselbe Fenster, in Ordnung | — |
+| Geteilte Liste übernehmen | öffnet „Liste importieren“, in Ordnung | — |
+| **Tabelle einlesen** | **tot** — das unsichtbare Dateifeld war beim Umbau der Wortlisten (Commit `243af64`) mit der alten Zeile verschwunden; der Knopf rief ins Leere | Dateifeld steht jetzt bei den anderen Fenstern, die immer gezeichnet werden |
+| **Einzelnes Wort eintippen** | **tot** — `neuesWortOffen` wurde gesetzt, aber nirgends mehr gezeichnet | Öffnet jetzt **dieselbe Maske wie „Bearbeiten“**, nur leer; „Speichern“ legt an. Kein Lernstand-Block, statt „Löschen“ steht dort „Abbrechen“ |
+| **iOS-Zoomfalle** | nach dem Einfügen blieb die **ganze App vergrössert** — iOS zoomt in jedes Feld unter 16 px und zoomt nicht zurück | Alle Eingabefelder auf dem Handy 16 px. `maximum-scale` wäre die bequeme und falsche Antwort — ohne Zoom ist die App für schwache Augen unbrauchbar |
+| „1 Wörter“ | Mehrzahl an zwei Stellen auch bei einem Wort | Einzahl und Mehrzahl getrennt |
+| Lernstand-Block | wich vom Entwurf ab: eine sechste Zeile („Hält im Moment“, ein Modellwert) und Namen, die auf zwei Zeilen brachen | Fünf Zeilen wie im Entwurf; der Name nimmt die Breite, die er braucht |

@@ -774,7 +774,14 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   /* Die Zeile daroben braucht auf dem Handy keine eigene Zeile fuer sich. */
   .scope-line { padding: 0 0 2px; justify-content: flex-start; }
   .mbar-total { font-size: 12px; }
-  .answer-row .field { font-size: 16px; } /* ≥16px avoids iOS focus-zoom */
+  /* iOS zoomt beim Antippen in JEDES Eingabefeld, dessen Schrift kleiner
+     als 16 px ist -- und zoomt danach nicht zuverlaessig zurueck. Wer eine
+     Wortliste einfuegte, hatte anschliessend die ganze App vergroessert
+     und musste von Hand herauszoomen. Also gilt 16 px fuer alles, was man
+     antippen und beschreiben kann. Der Kniff ist, den Zoom zu vermeiden,
+     nicht ihn zu verbieten: `maximum-scale` waere die bequeme und falsche
+     Antwort -- ohne Zoom ist die App fuer schwache Augen unbrauchbar. */
+  input, textarea, select, .field, .mini-input, .fz-feld { font-size: 16px; }
 
   /* hide bottom nav while the keyboard is up (typing) */
   body.typing .tabs, body.kbd-open .tabs { display: none; }
@@ -1684,6 +1691,12 @@ button.li .m, button.wz .wz-d { color: var(--ink-soft); }
 .fz-name { flex: 0 0 40%; min-width: 0; font-size: 12.5px; color: var(--ink); }
 .fz-opt { display: block; font-size: 10.5px; color: var(--ink-faint); margin-top: 1px; }
 .fz-wert { flex: 1; min-width: 0; text-align: right; font-size: 12.5px; color: var(--ink-soft); }
+/* Der Lernstand traegt kurze Werte -- „7 ×", „in 4 Tagen". Dort darf der
+   Name die Breite nehmen, die er braucht: mit den festen 40 % brach
+   „Richtig beantwortet" auf zwei Zeilen, und die Zeile war doppelt so
+   hoch wie im Entwurf. */
+.fz-stand .fz-name { flex: 1 1 auto; }
+.fz-stand .fz-wert { flex: 0 0 auto; white-space: nowrap; }
 .fz-edit { cursor: text; }
 .fz-feld { flex: 1; min-width: 0; border: none; background: none; font: inherit;
            font-size: 13px; color: var(--ink); text-align: right; outline: none;

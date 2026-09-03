@@ -792,4 +792,9 @@ export const EN: Record<string, string> = {
   "die Wörter wandern hinüber, diese Liste verschwindet": "the words move over, this list disappears",
   "{n} Wörter übernommen": "{n} words taken over",
   "{n} Wörter übernommen · {d} Doppelte weggelassen": "{n} words taken over · {d} duplicates left out",
+  "{n} Wort verwenden": "Use {n} word",
+  "{n} Wörter verwenden": "Use {n} words",
+  "{n} Wort bereit zum Import": "{n} word ready to import",
+  "Neues Wort": "New word",
+  "Wort hinzugefügt": "Word added",
 };

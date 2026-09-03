@@ -177,7 +177,7 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHi
           {isLat ? " Latein: Grundform | Lernform | Wortart | Deutsch." : ` ${P.foreignLabel} | Deutsch.`}
         </div>
 
-        <textarea className="field" style={{ minHeight: 150, resize: "vertical", fontFamily: "var(--mono)", fontSize: 13.5 }}
+        <textarea className="field" style={{ minHeight: 150, resize: "vertical", fontFamily: "var(--mono)", fontSize: 16 }}
           placeholder={BEISPIEL}
           value={text} onChange={(e) => setText(e.target.value)} />
 
