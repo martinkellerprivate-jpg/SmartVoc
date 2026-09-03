@@ -775,4 +775,21 @@ export const EN: Record<string, string> = {
   "Zurück, dort stehen die Wege zum Füllen": "Go back — the ways to fill it are there",
   "suchen, ändern, löschen": "search, change, delete",
   "{n} Wörter werden endgültig gelöscht — mit ihrem Lernstand. Das lässt sich nicht rückgängig machen.": "{n} words will be deleted for good — along with their progress. This cannot be undone.",
+
+  /* Wege zum Fuellen, Listen zusammenfuehren (T-28). */
+  "Am Ende fragt die App, in welche Liste sie sollen.": "At the end the app asks which list they go into.",
+  "Die Wörter von „{a}“ wandern nach „{b}“, danach gibt es „{a}“ nicht mehr. Wörter, die es in „{b}“ schon gibt, werden nicht doppelt angelegt.": "The words from “{a}” move into “{b}”, and “{a}” is gone afterwards. Words already in “{b}” are not added twice.",
+  "Einzelnes Wort eintippen": "Type a single word",
+  "Es gibt in dieser Sprache keine zweite Liste.": "There is no second list in this language.",
+  "In welche Liste sollen die Wörter von „{name}“ wandern? Danach gibt es diese Liste nicht mehr.": "Which list should the words from “{name}” move into? This list is gone afterwards.",
+  "Leere Liste anlegen": "Create an empty list",
+  "Listen zusammenführen": "Merge lists",
+  "Mit einer anderen Liste zusammenführen": "Merge with another list",
+  "Name und Zieldatum, Wörter später": "Name and target date, words later",
+  "Woher kommen die Wörter?": "Where do the words come from?",
+  "Wörter hinzufügen": "Add words",
+  "Zusammenführen": "Merge",
+  "die Wörter wandern hinüber, diese Liste verschwindet": "the words move over, this list disappears",
+  "{n} Wörter übernommen": "{n} words taken over",
+  "{n} Wörter übernommen · {d} Doppelte weggelassen": "{n} words taken over · {d} duplicates left out",
 };

@@ -10,6 +10,7 @@ import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, pl
 import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER, S2 } from "../lib/fsrs";
 import type { SessionOutcome, SerializedCard } from "../lib/fsrs";
 import type { Word, ListT } from "../lib/types";
+import { fk, isLatinPair } from "../lib/pairs";
 
 function seedVocab(): Word[] {
   return DEFAULT_VOCAB.map((w) => ({ id: newId(), ...w, pair: "en-de", review: false, source: "seed" })) as Word[];
@@ -271,6 +272,34 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
      * ein natives Datumsfeld laesst sich auf iOS nicht zuverlaessig leeren. */
     updateList: (id: string, patch: any) =>
       setListsState((ls: any) => ls.map((l: any) => (l.id === id ? { ...l, ...patch, updatedAt: Date.now() } : l))),
+    /* Zwei Wortlisten zusammenfuehren. Die Woerter der einen wandern in die
+     * andere, dann verschwindet die leere Huelle.
+     *
+     * Ein Wort gehoert seit V18 in genau eine Liste, also kann es beim
+     * Zusammenfuehren nicht in beiden stehen -- wohl aber DASSELBE Wort
+     * zweimal, einmal je Liste, mit zwei getrennten Lernstaenden. Das waere
+     * nach dem Zusammenfuehren eine Liste mit "dog" auf Zeile 3 und "dog"
+     * auf Zeile 40. Solche Doppel bleiben deshalb zurueck und werden
+     * geloescht; behalten wird der Eintrag der Zielliste, weil der Rest der
+     * Liste an ihm haengt. Wie viele es waren, sagt der Rueckgabewert -- die
+     * Oberflaeche meldet es, damit es niemandem stillschweigend passiert. */
+    mergeLists: (vonId: string, nachId: string) => {
+      const von = lists.find((l: any) => l.id === vonId);
+      if (!von || von.system === "nolist" || vonId === nachId) return { verschoben: 0, doppelt: 0 };
+      const schluessel = (w: any) => {
+        const pr = w.pair || "en-de";
+        const f = isLatinPair(pr) ? (w.grundform || "") : (w[fk(pr)] || "");
+        return (f + "|" + (w.de || "")).toLowerCase().trim();
+      };
+      const schonDa = new Set(vocab.filter((w: any) => (w.lists || []).includes(nachId)).map(schluessel));
+      const quelle = vocab.filter((w: any) => (w.lists || []).includes(vonId));
+      const doppelt = new Set(quelle.filter((w: any) => schonDa.has(schluessel(w))).map((w: any) => w.id));
+      setVocabState((v: any) => v
+        .filter((w: any) => !doppelt.has(w.id))
+        .map((w: any) => ((w.lists || []).includes(vonId) ? { ...w, lists: [nachId] } : w)));
+      setListsState((ls: any) => ls.filter((l: any) => l.id !== vonId));
+      return { verschoben: quelle.length - doppelt.size, doppelt: doppelt.size };
+    },
     deleteList: (id: string) => {
       if (lists.find((l: any) => l.id === id)?.system === "nolist") return;   // PFLICHT 2: nolist not deletable
       setListsState((ls: any) => ls.filter((l: any) => l.id !== id));

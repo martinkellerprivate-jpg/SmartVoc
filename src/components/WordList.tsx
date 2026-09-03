@@ -67,6 +67,11 @@ export function WordList() {
   const [loeschFrage, setLoeschFrage] = useState(false);
   const [listeLoeschen, setListeLoeschen] = useState(false);
   const [wortLoeschen, setWortLoeschen] = useState<string | null>(null);
+  /* Woher die Woerter kommen -- dasselbe Blatt an zwei Stellen: beim
+   * Anlegen einer Liste und beim Ergaenzen einer bestehenden. */
+  const [quellenBlatt, setQuellenBlatt] = useState<"neu" | "dazu" | null>(null);
+  const [mergeWahl, setMergeWahl] = useState(false);
+  const [mergeZiel, setMergeZiel] = useState<string | null>(null);
   const activeList = offen?.art === "liste" ? offen.ref : "__all";
   const [listMenu, setListMenu] = useState(false);
   const [neuesWortOffen, setNeuesWortOffen] = useState(false);
@@ -358,8 +363,121 @@ export function WordList() {
   };
 
   /* Die Fenster gelten auf beiden Ebenen, also stehen sie einmal hier. */
+  /* Die Wege, auf denen Woerter in die App kommen. Sie standen in den
+   * Angaben einer einzelnen Liste -- dort gehoeren sie nicht hin: eine
+   * geteilte Liste zu uebernehmen legt eine NEUE Liste an, und eine Tabelle
+   * einzulesen fuellt irgendeine. Es sind Wege zum Anlegen und Ergaenzen,
+   * also stehen sie dort, wo man anlegt und ergaenzt. */
+  const quellenZeilen = (
+    <>
+      <button className="li" onClick={() => { setQuellenBlatt(null); setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
+        <Icon name="list" size={15} />
+        <span className="g">{txt("Liste einfügen")}<div className="m">{txt("aus dem Heft, einem Buch oder von einer KI")}</div></span>
+        <Icon name="arrowRight" size={14} />
+      </button>
+      <button className="li" onClick={() => { setQuellenBlatt(null); setPasteSeed(""); setPasteDraft(true); setPasteOpen(true); }}>
+        <Icon name="sparkle" size={15} />
+        <span className="g">{txt("KI-Prompt zum Abschreiben")}<div className="m">{txt("Foto der Heftseite an eine KI, Ergebnis hier einfügen")}</div></span>
+        <Icon name="arrowRight" size={14} />
+      </button>
+      {isConfigured && (
+        <button className="li" onClick={() => { setQuellenBlatt(null); openImport(); }}>
+          <Icon name="download" size={15} />
+          <span className="g">{txt("Geteilte Liste übernehmen")}<div className="m">{txt("jemand hat dir einen Link geschickt")}</div></span>
+          <Icon name="arrowRight" size={14} />
+        </button>
+      )}
+      {tabellen && (
+        <button className="li" onClick={() => { setQuellenBlatt(null); dateiRef.current?.click(); }}>
+          <Icon name="upload" size={15} />
+          <span className="g">{txt("Tabelle einlesen")}<div className="m">{txt("Excel oder CSV — nur in der Webversion")}</div></span>
+          <Icon name="arrowRight" size={14} />
+        </button>
+      )}
+    </>
+  );
+
   const modale = (
     <>
+      {/* Woher die Wörter kommen. Oben steht, was sich unterscheidet: beim
+          Anlegen eine leere Liste, beim Ergänzen ein einzelnes Wort. */}
+      {quellenBlatt && (
+        <div className="modal-backdrop" onClick={() => setQuellenBlatt(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+            <div className="modal-head">
+              <div className="modal-title">{quellenBlatt === "neu" ? txt("Neue Wortliste") : txt("Wörter hinzufügen")}</div>
+              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setQuellenBlatt(null)}><Icon name="x" size={16} /></button>
+            </div>
+            <p className="said" style={{ marginTop: 0 }}>
+              {quellenBlatt === "neu" ? txt("Woher kommen die Wörter?") : txt("Am Ende fragt die App, in welche Liste sie sollen.")}
+            </p>
+            <div className="list">
+              {quellenBlatt === "neu" ? (
+                <button className="li" onClick={() => { setQuellenBlatt(null); setNeueListe(true); }}>
+                  <Icon name="plus" size={15} />
+                  <span className="g">{txt("Leere Liste anlegen")}<div className="m">{txt("Name und Zieldatum, Wörter später")}</div></span>
+                  <Icon name="arrowRight" size={14} />
+                </button>
+              ) : (
+                <button className="li" onClick={() => { setQuellenBlatt(null); setAdding((a: any) => ({ ...a, listId: activeList })); setNeuesWortOffen(true); }}>
+                  <Icon name="plus" size={15} />
+                  <span className="g">{txt("Einzelnes Wort eintippen")}<div className="m">{txt("dieselbe Maske wie beim Bearbeiten")}</div></span>
+                  <Icon name="arrowRight" size={14} />
+                </button>
+              )}
+              {quellenZeilen}
+            </div>
+            <div className="modal-foot">
+              <button className="btn btn-ghost" onClick={() => setQuellenBlatt(null)}>{txt("Abbrechen")}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Zusammenführen: erst die Zielliste wählen, dann die Rückfrage. */}
+      {mergeWahl && (
+        <div className="modal-backdrop" onClick={() => setMergeWahl(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+            <div className="modal-head">
+              <div className="modal-title">{txt("Listen zusammenführen")}</div>
+              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setMergeWahl(false)}><Icon name="x" size={16} /></button>
+            </div>
+            <p className="said" style={{ marginTop: 0 }}>
+              {txt("In welche Liste sollen die Wörter von „{name}“ wandern? Danach gibt es diese Liste nicht mehr.",
+                { name: lists.find((x: any) => x.id === activeList)?.name || "" })}
+            </p>
+            <div className="list">
+              {lists.filter((l: any) => l.pair === pair && l.id !== activeList && l.system !== "nolist").map((l: any) => (
+                <button key={l.id} className="li" onClick={() => { setMergeWahl(false); setMergeZiel(l.id); }}>
+                  <span className="g">{l.name}
+                    <div className="m">{txt("{n} Wörter", { n: pairVocab.filter((w: any) => (w.lists || []).includes(l.id)).length })}</div></span>
+                  <Icon name="arrowRight" size={14} />
+                </button>
+              ))}
+              {!lists.some((l: any) => l.pair === pair && l.id !== activeList && l.system !== "nolist") && (
+                <div className="quiet links">{txt("Es gibt in dieser Sprache keine zweite Liste.")}</div>
+              )}
+            </div>
+            <div className="modal-foot">
+              <button className="btn btn-ghost" onClick={() => setMergeWahl(false)}>{txt("Abbrechen")}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <Bestaetigen offen={!!mergeZiel} titel={txt("Listen zusammenführen")}
+        text={txt("Die Wörter von „{a}“ wandern nach „{b}“, danach gibt es „{a}“ nicht mehr. Wörter, die es in „{b}“ schon gibt, werden nicht doppelt angelegt.",
+          { a: lists.find((x: any) => x.id === activeList)?.name || "", b: lists.find((x: any) => x.id === mergeZiel)?.name || "" })}
+        knopf={txt("Zusammenführen")} onClose={() => setMergeZiel(null)}
+        tun={() => {
+          const ziel = mergeZiel as string;
+          const r = store.mergeLists(activeList, ziel);
+          setMergeZiel(null); setOffen({ art: "liste", ref: ziel });
+          toast(r.doppelt
+            ? txt("{n} Wörter übernommen · {d} Doppelte weggelassen", { n: r.verschoben, d: r.doppelt })
+            : txt("{n} Wörter übernommen", { n: r.verschoben }), "check");
+        }} />
+
       {/* Die drei Rueckfragen vor dem Loeschen -- eine Bauart, an einer
           Stelle, damit keine davon vergessen wird. */}
       <Bestaetigen offen={listeLoeschen} titel={txt("Wortliste löschen")} gefahr
@@ -613,11 +731,6 @@ export function WordList() {
               getrennt davon, mit sichtbarem Balken. */}
           <div className="wl-fest">
             <div className="ruest wl-werkzeug">
-              {offen.art === "liste" && (
-                <button className="pill pill-on" onClick={() => { setAdding((a: any) => ({ ...a, listId: offen.ref })); setNeuesWortOffen(true); }}>
-                  <Icon name="plus" size={14} /> {txt("Wort")}
-                </button>
-              )}
               <div className="search">
                 <Icon name="search" size={16} />
                 <input className="field" placeholder={txt("In dieser Liste suchen …")}
@@ -630,8 +743,14 @@ export function WordList() {
                 {txt("Diese Liste stellt die App täglich neu zusammen — hier lässt sich nichts ändern.")}
               </div>
             ) : (
+              /* Drei Knoepfe derselben Form: was man mit der Liste tun kann.
+                 „Hinzufuegen" war vorher eine Pille neben der Suche und hiess
+                 „Wort" -- eine andere Form fuer dieselbe Art Handlung, und ein
+                 Name, der nur einen der fuenf Wege nannte. */
               <div className="ruest wl-auswahl">
-                <span className="wl-nsel">{gewaehlt.length ? txt("{n} gewählt", { n: gewaehlt.length }) : txt("Zeile antippen zum Auswählen")}</span>
+                <button className="btn btn-sm" onClick={() => setQuellenBlatt("dazu")}>
+                  <Icon name="plus" size={14} /> {txt("Hinzufügen")}
+                </button>
                 <button className="btn btn-sm" disabled={!nurEines}
                   onClick={() => { const w = vocab.find((x: any) => x.id === gewaehlt[0]); if (w) startEdit(w); }}>
                   <Icon name="edit" size={14} /> {txt("Bearbeiten")}
@@ -640,6 +759,9 @@ export function WordList() {
                   <Icon name="trash" size={14} /> {txt("Löschen")}
                 </button>
               </div>
+            )}
+            {bearbeitbar && (
+              <div className="wl-nsel">{gewaehlt.length ? txt("{n} gewählt", { n: gewaehlt.length }) : txt("Zeile antippen zum Auswählen")}</div>
             )}
 
             {bearbeitbar && sichtbar.length > 0 && (
@@ -725,41 +847,15 @@ export function WordList() {
           <Icon name="arrowRight" size={14} />
         </button>
 
-        {/* Die Wege zum Füllen. Vorher erschienen sie nur in einer leeren
-            Liste -- gebraucht werden sie auch danach, beim nächsten Kapitel. */}
-        {offen.art === "liste" && (
-          <div className="list" style={{ marginTop: 4 }}>
-            <div className="grp">{standImBlick.total ? txt("Mehr Wörter dazu") : txt("Wie füllst du diese Liste?")}</div>
-            {isConfigured && (
-              <button className="li" onClick={() => openImport()}>
-                <Icon name="download" size={15} />
-                <span className="g">{txt("Geteilte Liste übernehmen")}<div className="m">{txt("jemand hat dir einen Link geschickt")}</div></span>
-                <Icon name="arrowRight" size={14} />
-              </button>
-            )}
-            <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
-              <Icon name="list" size={15} />
-              <span className="g">{txt("Liste einfügen")}<div className="m">{txt("aus dem Heft, einem Buch oder von einer KI")}</div></span>
-              <Icon name="arrowRight" size={14} />
-            </button>
-            <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(true); setPasteOpen(true); }}>
-              <Icon name="sparkle" size={15} />
-              <span className="g">{txt("KI-Prompt zum Abschreiben")}<div className="m">{txt("Foto der Heftseite an eine KI, Ergebnis hier einfügen")}</div></span>
-              <Icon name="arrowRight" size={14} />
-            </button>
-            <button className="li" onClick={() => { setAdding((x: any) => ({ ...x, listId: offen.ref })); setNeuesWortOffen(true); }}>
-              <Icon name="plus" size={15} />
-              <span className="g">{txt("Wörter einzeln eintippen")}<div className="m">{txt("dieselbe Maske wie beim Bearbeiten")}</div></span>
-              <Icon name="arrowRight" size={14} />
-            </button>
-            {tabellen && (
-              <button className="li" onClick={() => dateiRef.current?.click()}>
-                <Icon name="upload" size={15} />
-                <span className="g">{txt("Tabelle einlesen")}<div className="m">{txt("Excel oder CSV — nur in der Webversion")}</div></span>
-                <Icon name="arrowRight" size={14} />
-              </button>
-            )}
-          </div>
+        {/* Zwei Wortlisten zu einer machen -- „Unité 3" und „Unité 3 Teil 2"
+            gehören meist ohnehin zusammen. */}
+        {l && !istSystemliste && (
+          <button className="li" onClick={() => setMergeWahl(true)}>
+            <Icon name="swap" size={15} />
+            <span className="g">{txt("Mit einer anderen Liste zusammenführen")}
+              <div className="m">{txt("die Wörter wandern hinüber, diese Liste verschwindet")}</div></span>
+            <Icon name="arrowRight" size={14} />
+          </button>
         )}
 
         {l && !istSystemliste && (
@@ -789,7 +885,7 @@ export function WordList() {
           <Icon name="search" size={17} />
           <input className="field" placeholder={txt("Wörter suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
-        <button className="pill pill-on" onClick={() => setNeueListe(true)}>
+        <button className="pill pill-on" onClick={() => setQuellenBlatt("neu")}>
           <Icon name="plus" size={14} /> {txt("Neue Liste")}
         </button>
       </div>

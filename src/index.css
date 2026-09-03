@@ -63,9 +63,13 @@ input, button, textarea, select { font-family: inherit; }
 /* Spalte statt Block: so darf ein Bereich (die geoeffnete Wortliste) die
    volle Hoehe fuellen und sein Rollen selbst fuehren, waehrend alle
    anderen sich normal in die Laenge ziehen. */
-.app-body { flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 40px;
-            display: flex; flex-direction: column; }
-.app-body > * { flex: 0 0 auto; }
+.app-body { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden;
+            padding-bottom: 40px; display: flex; flex-direction: column; }
+/* `min-width: 0` ist bei einer Spalte aus Flex-Elementen Pflicht: ohne sie
+   darf ein Kind nicht unter seine Inhaltsbreite schrumpfen, und ein
+   einziger zu breiter Kasten laesst die ganze Seite seitwaerts rollen. */
+.app-body > * { flex: 0 0 auto; min-width: 0; max-width: 100%; }
+.wl > *, .plantab > *, .settings > * { min-width: 0; max-width: 100%; }
 .app-body > .wl-liste { flex: 1 1 auto; min-height: 0; }
 .topbar {
   display: flex; align-items: center; gap: 10px;
@@ -1567,12 +1571,12 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 /* Der feste Teil rollt bei Bedarf mit -- aber leise: auf einem kurzen
    Bildschirm muss man an die Werkzeuge kommen, ohne dass zwei Rollbalken
    nebeneinander stehen. Sichtbar rollt nur die Wortliste. */
-/* Der obere Teil darf hoechstens die Haelfte der Hoehe belegen und rollt
-   darueber hinaus selbst -- ohne Balken, damit nicht zwei nebeneinander
-   stehen. Auf dem Handy nahm er sonst mehr Platz als die Liste. */
-.wl-fest { flex: 0 1 auto; min-height: 0; max-height: 38%;
-           overflow-y: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.wl-fest::-webkit-scrollbar { display: none; }
+/* Der obere Teil steht fest -- er rollt nicht. Ein zweiter, lautloser
+   Rollbereich darueber war nicht sauber zu treffen: eine Beruehrung auf der
+   Grenze wurde mal als Tippen, mal als Rollen gelesen, und das unsichtbare
+   Datumsfeld nahm gar nichts mehr an. Seit die Woerter eine eigene Ebene
+   haben, ist hier ohnehin nur noch Suche, Werkzeugleiste und Spaltenkopf. */
+.wl-fest { flex: none; }
 /* Die Woerter rollen sichtbar -- das ist die Liste, an der man arbeitet.
    Der Block darueber rollt lautlos, damit nicht zwei Balken nebeneinander
    stehen. */
@@ -1593,8 +1597,10 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 
 .wl-werkzeug { margin-top: 10px; }
 .wl-werkzeug .search { flex: 1 1 auto; min-width: 0; }
-.wl-auswahl { margin-top: 8px; align-items: center; }
-.wl-nsel { flex: 1; min-width: 0; font-size: 11.5px; color: var(--ink-faint); }
+/* Drei Knoepfe derselben Form, die sich die Breite teilen. */
+.wl-auswahl { margin-top: 8px; align-items: center; gap: 7px; flex-wrap: nowrap; }
+.wl-auswahl .btn { flex: 1; justify-content: center; white-space: nowrap; }
+.wl-nsel { font-size: 11.5px; color: var(--ink-faint); padding: 7px 2px 0; }
 .wl-auswahl .btn[disabled] { opacity: .38; pointer-events: none; }
 
 /* Die Tabellenüberschrift und die Zeilen teilen dasselbe Raster. */
