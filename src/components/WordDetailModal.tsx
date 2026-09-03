@@ -1,121 +1,95 @@
-/* V16 — word detail popup: full FSRS drilldown for a single word.
- * (A) readable, from deriveProfile (the one source); (B) raw stat.fsrs values,
- * with the derived due/interval clearly marked "berechnet". Read-only; the edit
- * path stays separate (own button). Never practised → no FSRS object (state New). */
+/* Ein Wort im Detail — alle Felder, auch die leeren.
+ *
+ * Hier stand vorher ein Blick in die Maschine: „es gibt noch kein
+ * FSRS-Objekt (state New)", Rohwerte mit dem Vermerk „berechnet", und eine
+ * Zeile „Lektionen" für einen Begriff, den es seit V16 nicht mehr gibt. Das
+ * war für mich beim Bauen nützlich und für alle anderen nutzlos.
+ *
+ * Jetzt zeigt der Bildschirm, was am Wort steht — und im Abschnitt
+ * „Lernstand", was die App darüber weiss, in Worten. Die leeren Felder
+ * bleiben sichtbar und als „optional" beschriftet: so sieht man, was man
+ * noch ergänzen könnte, statt es zu erraten.
+ */
 import { useStore } from "../store/StoreProvider";
 import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
-import { PAIRS, fk, isLatinPair, NATIVE } from "../lib/pairs";
+import { PAIRS, fk, isLatinPair, practiceable } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
-import { deriveProfile, retentionFor, effectiveRetentionFor, STUFE } from "../lib/fsrs";
+import { deriveProfile, effectiveRetentionFor } from "../lib/fsrs";
+import { STUFE_FARBE, STUFE_KURZ } from "../lib/stufen";
 
-const DAY = 86400000;
-const toneVar = (t: string) => t === "green" ? "var(--green)" : t === "amber" ? "var(--amber)" : t === "red" ? "var(--red)" : t === "blue" ? "var(--blue)" : "var(--ink-faint)";
-const STATE_NAME = ["New", "Learning", "Review", "Relearning"];
-const fmtDate = (ms?: number) => ms ? new Date(ms).toLocaleDateString() : "—";
+/* Eine Zeile: links das Feld, rechts sein Inhalt. Leer heisst „—", nicht
+ * verschwunden — eine Zeile, die je nach Inhalt da ist oder nicht, macht
+ * den Bildschirm bei jedem Wort anders hoch. */
+const Zeile = ({ feld, hinweis, wert }: any) => (
+  <div className="li">
+    <span className="g">{feld}{hinweis && <div className="m">{hinweis}</div>}</span>
+    <span className="wd-wert">{wert || <span className="faint">—</span>}</span>
+  </div>
+);
 
 export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean; word: any; onClose: () => void; onEdit?: (w: any) => void }) {
   const store = useStore();
   if (!open || !word) return null;
   const { stats, settings, lists, lessons } = store;
-  const pair = settings.pair;
+  const pair = word.pair || settings.pair;
+  const P = PAIRS[pair] || PAIRS["en-de"];
   const isLat = isLatinPair(pair);
   const stat = stats[word.id];
-  const card = stat?.fsrs;
-  const retention = effectiveRetentionFor(word, settings, lessons);
-  const now = Date.now();
-  const prof = deriveProfile(card, retention, now);
-  const fgn = isLat ? latinHeadword(word) : (word[fk(pair)] || word.en || word.fr || "");
+  const prof = deriveProfile(stat?.fsrs, effectiveRetentionFor(word, settings, lessons));
+  const stufe = !practiceable(word) ? "noch_nicht_geuebt" : prof.stufe;
+  const fgn = isLat ? latinHeadword(word) : (word[fk(pair)] || "");
+  const bsp = (i: number) => (word.examples || [])[i] || "";
+  const bspDe = (i: number) => (word.examplesDe || [])[i] || "";
+  const inListen = (lists || []).filter((l: any) => (word.lists || []).includes(l.id)).map((l: any) => l.name);
 
-  const memberLists = (lists || []).filter((l: any) => (word.lists || []).includes(l.id)).map((l: any) => l.name);
-  const memberLessons = (lessons || []).filter((l: any) => (l.members || []).includes(word.id)).map((l: any) => l.name);
-
-  const Row = ({ k, v, hint }: any) => (
-    <div className="row" style={{ justifyContent: "space-between", gap: 12, padding: "5px 0", borderBottom: "1px solid var(--line-soft)" }}>
-      <span className="faint" style={{ fontSize: 12.5 }}>{k}{hint && <span style={{ opacity: .7 }}> · {hint}</span>}</span>
-      <span style={{ fontWeight: 600, fontSize: 13, fontFamily: "var(--mono)" }}>{v}</span>
-    </div>
-  );
+  const richtig = (stat?.correctCount || 0) + (stat?.almostCount || 0);
+  const wieder = prof.due == null ? null : Math.round((prof.due - Date.now()) / 86400000);
+  const naechste = !stat?.seen ? txt("noch nie geübt")
+    : wieder == null ? txt("noch offen")
+    : wieder < 0 ? txt("jetzt") : wieder === 0 ? txt("heute")
+    : wieder === 1 ? txt("morgen") : txt("in {n} Tagen", { n: wieder });
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 520, maxHeight: "86vh", overflowY: "auto" } as any}>
         <div className="modal-head">
           <div>
-            <div className="modal-title">{fgn}</div>
-            <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>{word[NATIVE]}</div>
-            {word.phonetic && <div className="card-phonetic" style={{ textAlign: "left", marginTop: 3 }}>[{String(word.phonetic).replace(/^\[|\]$/g, "")}]</div>}
+            <div className="wd-wort">{fgn || word.de}</div>
+            <div className="muted" style={{ fontSize: 12.5, marginTop: 1 }}>
+              {P.foreignLabel}{isLat && word.wortart ? " · " + word.wortart : ""}
+            </div>
           </div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
 
-        {/* A — readable */}
-        <div className="panel" style={{ padding: "12px 14px", marginBottom: 12 }}>
-          <div className="row" style={{ gap: 9, alignItems: "center", marginBottom: 8 }}>
-            <span className="dot" style={{ width: 12, height: 12, borderRadius: "50%", background: toneVar(prof.tone) }} />
-            <span style={{ fontWeight: 700 }}>{STUFE[prof.stufe].label}</span>
-            {prof.istLeech && <span className="badge red" title={txt("Oft vergessen trotz Übung — eine Eselsbrücke hilft.")}><Icon name="flame" size={11} /> {txt("Hartnäckig")}</span>}
-            {prof.istFaellig && <span className="badge amber"><span className="dot" />{txt("fällig")}</span>}
-            {prof.baldFaellig && <span className="badge slate"><span className="dot" />{txt("bald fällig")}</span>}
-          </div>
-          {prof.istLeech && <div className="faint" style={{ fontSize: 12, marginBottom: 6 }}>{txt("Hartnäckig = oft vergessen trotz Übung. Eine Eselsbrücke (Bild, Reim, Beispielsatz) hilft mehr als reines Wiederholen.")}</div>}
-          {card ? (
-            <>
-              <Row k="hält etwa" v={`${Math.round(prof.haeltTage)} Tage`} />
-              <Row k="Erinnerung jetzt" v={`${Math.round((prof.R_now || 0) * 100)} %`} />
-              <Row k={prof.istFaellig ? "fällig seit" : "fällig in"} v={prof.due == null ? "—" : `${Math.abs(Math.ceil((prof.due - now) / DAY))} Tagen`} />
-              <Row k="Retention-Ziel" v={`${Math.round(retention * 100)} %`} hint={retention !== retentionFor(settings) ? "Lektions-Override" : "global"} />
-            </>
-          ) : (
-            <div className="muted" style={{ fontSize: 13 }}>{txt("Noch nicht geübt — es gibt noch kein FSRS-Objekt (state New).")}</div>
-          )}
+        <div className="list">
+          <Zeile feld={txt("Deutsch")} wert={word.de} />
+          {isLat && <Zeile feld={txt("Stammformen")} wert={word.lernform} />}
+          <Zeile feld={txt("Lautschrift")} hinweis={txt("optional")} wert={word.phonetic} />
+          <Zeile feld={txt("Beispielsatz 1")} hinweis={P.foreignLabel} wert={bsp(0)} />
+          <Zeile feld={txt("Beispielsatz 1")} hinweis={txt("Deutsch")} wert={bspDe(0)} />
+          <Zeile feld={txt("Beispielsatz 2")} hinweis={P.foreignLabel} wert={bsp(1)} />
+          <Zeile feld={txt("Beispielsatz 2")} hinweis={txt("Deutsch")} wert={bspDe(1)} />
         </div>
 
-        {/* B — raw FSRS values */}
-        {card && (
-          <div className="panel" style={{ padding: "12px 14px", marginBottom: 12 }}>
-            <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>{txt("Rohwerte (FSRS)")}</div>
-            <Row k="stability" v={card.stability.toFixed(2)} />
-            <Row k="difficulty" v={card.difficulty.toFixed(2)} />
-            <Row k="reps · lapses" v={`${card.reps} · ${card.lapses}`} />
-            <Row k="state" v={STATE_NAME[card.state] || card.state} />
-            <Row k="last_review" v={fmtDate(card.last_review)} />
-            <Row k="scheduled_days" v={card.scheduled_days} />
-            <Row k="due" hint="berechnet" v={prof.due == null ? "—" : fmtDate(prof.due)} />
-            <Row k="interval" hint="berechnet" v={prof.interval == null ? "—" : `${Math.round(prof.interval)} T`} />
-          </div>
-        )}
-
-        {/* example sentences (always shown here — this is the detail view) */}
-        {[...(word.examples || []), ...(word.examplesDe || [])].filter(Boolean).length > 0 && (
-          <div className="panel" style={{ padding: "12px 14px", marginBottom: 12 }}>
-            <div className="section-title" style={{ fontSize: 12.5, marginBottom: 6 }}>{txt("Beispielsätze")}</div>
-            <div className="card-examples" style={{ marginTop: 0, maxWidth: "none" }}>
-              {(word.examples || []).map((s: string, i: number) => {
-                const de = ((word.examplesDe || [])[i] || "").trim();
-                if (!String(s || "").trim() && !de) return null;
-                /* Satz und Übersetzung gehören zusammen — deshalb untereinander
-                 * im selben Block, die Übersetzung zurückgenommen. */
-                return (
-                  <p key={i}>
-                    {s}
-                    {de && <><br /><span className="faint">{de}</span></>}
-                  </p>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* membership */}
-        <div className="faint" style={{ fontSize: 12.5, lineHeight: 1.5 }}>
-          <div>Listen: {memberLists.length ? memberLists.join(", ") : "—"}</div>
-          <div>Lektionen: {memberLessons.length ? memberLessons.join(", ") : "—"}</div>
+        <div className="grp">{txt("Lernstand")}</div>
+        <div className="list">
+          <Zeile feld={txt("Wie gut es sitzt")} wert={
+            <span className="wstufe" style={{ color: STUFE_FARBE[stufe] }}>
+              <i style={{ background: STUFE_FARBE[stufe] }} />{txt(STUFE_KURZ[stufe])}
+            </span>} />
+          <Zeile feld={txt("Richtig beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: richtig }) : null} />
+          <Zeile feld={txt("Falsch beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: stat.wrongCount || 0 }) : null} />
+          <Zeile feld={txt("Nächste Übung")} wert={naechste} />
+          <Zeile feld={txt("Hält im Moment")} hinweis={txt("Tage, bis es wiederkommt")}
+            wert={prof.haeltTage ? txt("{n} Tage", { n: Math.round(prof.haeltTage) }) : null} />
+          <Zeile feld={txt("In Listen")} wert={inListen.join(" · ")} />
         </div>
 
-        <div className="modal-foot" style={{ marginTop: 14 }}>
+        <div className="modal-foot">
           <button className="btn btn-ghost" onClick={onClose}>{txt("Schliessen")}</button>
-          {onEdit && <button className="btn btn-primary" onClick={() => { onEdit(word); onClose(); }}><Icon name="edit" size={15} /> {txt("Bearbeiten")}</button>}
+          {onEdit && <button className="btn btn-primary" onClick={() => onEdit(word)}><Icon name="edit" size={14} /> {txt("Bearbeiten")}</button>}
         </div>
       </div>
     </div>

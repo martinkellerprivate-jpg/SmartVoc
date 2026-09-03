@@ -14,6 +14,7 @@ import { retrievabilityOf, isDueCard, retentionFor, initialCard, deriveProfile, 
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { listReadiness, TONE_VAR } from "../lib/readiness";
 import { PairPill } from "../ui/PairPill";
+import { SMART_ACCESS, SMART_REFS } from "../lib/smartlists";
 import { tapRichtig, tapFalsch } from "../lib/native";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
 import { TipPopup } from "./TipPopup";
@@ -90,20 +91,6 @@ export function Practice() {
   // V14: FSRS-based quick-access chips (one axis each). „Wackeln noch" = stufe
   // 'sitzt_schlecht' (S), replaces the old classifyWord-„Schwierige". Leeches (D)
   // live only in Stats, not here.
-  const SMART_ACCESS = [
-    // Beschriftung laeuft beim Rendern durch txt().
-    { ref: "heute", label: "Heute dran", icon: "calendar", tone: "green",
-      kurz: "Fälliges und Neues sinnvoll gemischt" },
-    { ref: "due", label: "Fällige Wörter", icon: "target", tone: "amber",
-      kurz: "Länger nicht geübt — jetzt auffrischen" },
-    { ref: "wackeln", label: "Wackeln noch", icon: "flame", tone: "red",
-      kurz: "Schon geübt, sitzt aber noch nicht sicher" },
-    { ref: "baldfaellig", label: "Bald fällig", icon: "clock", tone: "amber",
-      kurz: "Sitzt noch, wäre aber bald wieder dran" },
-  ];
-  // visible chips above; the Stats insight lists (leech/frischfragil/kurzvorsitzt) are
-  // also valid practice scopes (started via „üben") but have no chip here.
-  const SMART_REFS = ["heute", "due", "wackeln", "baldfaellig", "leech", "frischfragil", "kurzvorsitzt"];
   const pairLists = useMemo(() => (store.lists || []).filter((l: any) => l.pair === pair && !(l.system === "nolist" && !vocab.some((w: any) => w.pair === pair && (w.lists || []).includes(l.id)))), [store.lists, pair, vocab]);
   // F-NAV-2: multiselect is EPHEMERAL UI state — NOT persisted, NOT synced (FIX C:
   // practiceSel stays a single token; 2+ scopes drive a deduped union at runtime only).

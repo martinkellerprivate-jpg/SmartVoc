@@ -1373,3 +1373,49 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .card .lens { background: var(--bg-2); }
 .card .stumble { margin-top: 2px; }
 .card > .quiet.links { padding-top: 0; }
+
+/* ==================================================================
+ * Wortlisten — zwei Ebenen: die Übersicht der Listen, und eine Liste
+ * geöffnet. Vorher war beides eine Seite mit einer Reiterleiste, und
+ * genau darin verlor man sich.
+ * ================================================================== */
+.wl { display: flex; flex-direction: column; }
+
+/* Der Stand einer Liste in ihrer Zeile: Balken und Prozent auf einer
+   Linie, damit die Zeile nicht in die Höhe wächst. */
+.li .standline { display: flex; align-items: center; gap: 9px; margin-top: 7px; }
+.li .standline > div { flex: 1; }
+.li .standline b { font-size: 12px; font-variant-numeric: tabular-nums; flex: none; }
+
+/* Eine Wortkarte. Der Körper ist der Knopf zu den Einzelheiten, der Stift
+   daneben führt zum Bearbeiten — beide sichtbar, keiner versteckt. */
+.wort { display: flex; align-items: stretch; gap: 6px; background: var(--card);
+        border: 1px solid var(--line); border-radius: 13px; margin-bottom: 6px;
+        overflow: hidden; }
+.wort:hover { border-color: var(--ink-soft); }
+.wort-body { flex: 1; min-width: 0; text-align: left; background: none; border: none;
+             padding: 11px 4px 11px 13px; cursor: pointer; }
+.wort .wtop { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.wort .wf { font-family: var(--serif); font-size: 17px; font-weight: 600; }
+.wort .wstufe { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;
+                font-weight: 600; flex: none; }
+.wort .wstufe i { width: 7px; height: 7px; border-radius: 999px; display: inline-block; }
+.wort .wde { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+.wort .wmeta { font-size: 11px; color: var(--ink-faint); margin-top: 4px; }
+.wort-acts { display: flex; align-items: center; padding-right: 8px; }
+.wort-acts .icon-btn { width: 34px; height: 34px; }
+
+/* Zwei Knöpfe unten, der linke trägt die Handlung. */
+.duo { display: flex; gap: 9px; margin-top: 14px; }
+.duo .btn { flex: 1; justify-content: center; }
+.duo .btn-primary { flex: 1.4; }
+
+/* Das Zieldatum als Pille mit unsichtbarem Datumsfeld darüber — dieselbe
+   Bauart wie die Sprachpille im Üben. */
+.pill-sel { position: relative; }
+.pill-sel input[type="date"] { position: absolute; inset: 0; opacity: 0; cursor: pointer;
+                               width: 100%; height: 100%; }
+
+/* Wort im Detail: das Wort selbst gross im Kopf, die Werte rechtsbündig. */
+.wd-wort { font-family: var(--serif); font-size: 22px; font-weight: 600; line-height: 1.15; }
+.wd-wert { flex: none; max-width: 58%; text-align: right; font-size: 12.5px; color: var(--ink); }

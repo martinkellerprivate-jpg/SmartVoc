@@ -6,7 +6,7 @@ import { Icon } from "../ui/Icon";
 import { translateWord } from "../lib/translate";
 import { deriveProfile, retentionFor } from "../lib/fsrs";
 import { examPrognosis } from "../lib/engine";
-import { STUFE_BADGE, STUFE_LANG } from "../lib/stufen";
+import { STUFE_BADGE, STUFE_LANG, STUFE_FARBE, STUFE_KURZ } from "../lib/stufen";
 import { readyPercent, readyTone, listReadiness, TONE_VAR } from "../lib/readiness";
 import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
@@ -23,6 +23,8 @@ import { WordDetailModal } from "./WordDetailModal";
 import { LatinKeys } from "../ui/LatinKeys";
 import { useImport } from "./importContext";
 import { PairPill } from "../ui/PairPill";
+import { SMART_ACCESS } from "../lib/smartlists";
+import { resolveSmart, resolveToday } from "../lib/engine";
 
 const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Zahlwort", "Adverb"];
 
@@ -50,7 +52,19 @@ export function WordList() {
   // display string for the foreign column (Latin = grundform headword)
   const fgnOf = (w) => isLat ? latinHeadword(w) : (w[foreign] || "");
 
-  const [activeList, setActiveList] = useState("__all");   // '__all' | listId
+  /* Zwei Ebenen, wie im Entwurf: `offen === null` ist die Uebersicht,
+   * sonst die geoeffnete Liste. Eine Reiterleiste aller Listen gab es hier
+   * einmal -- sie vermischte die Wahl der Liste mit der Arbeit an den
+   * Woertern, und genau darin verlor man sich. */
+  const [offen, setOffen] = useState<{ art: "liste" | "smart" | "alle"; ref: string } | null>(null);
+  const activeList = offen?.art === "liste" ? offen.ref : "__all";
+  const [listMenu, setListMenu] = useState(false);
+  const [neuesWortOffen, setNeuesWortOffen] = useState(false);
+  const [neueListe, setNeueListe] = useState(false);
+  const [nlName, setNlName] = useState("");
+  const [nlDatum, setNlDatum] = useState("");
+  const [nlMitDatum, setNlMitDatum] = useState(false);
+  const [smartHilfe, setSmartHilfe] = useState(false);
   const [query, setQuery] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [draft, setDraft] = useState({ fgn: "", de: "", lists: [] as any[], lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
@@ -66,25 +80,6 @@ export function WordList() {
   const [pasteSeed, setPasteSeed] = useState("");   // V12: scan → paste seeded text
   const [pasteDraft, setPasteDraft] = useState(false);
   const [detailWord, setDetailWord] = useState(null);   // V16: word-detail popup
-  const [selectMode, setSelectMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [newListName, setNewListName] = useState("");
-  const [addToListId, setAddToListId] = useState("");
-  const toggleSel = (id) => setSelectedIds((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]);
-  const createListFromSel = () => {
-    if (!selectedIds.length) return;
-    const name = newListName.trim() || "Auswahl";
-    const id = store.addList(name, pair);
-    store.addWordsToList(id, [...selectedIds]);
-    toast(`Wortliste „${name}“ · ${selectedIds.length} Wörter`, "check");
-    setSelectedIds([]); setNewListName(""); setSelectMode(false); return id;
-  };
-  const addSelToList = () => {
-    if (!selectedIds.length || !addToListId) return;
-    store.addWordsToList(addToListId, selectedIds);
-    toast(`${selectedIds.length} Wörter hinzugefügt`, "check");
-    setSelectedIds([]); setAddToListId(""); setSelectMode(false);
-  };
   const canShare = isConfigured && !!auth.user;
   /* Tabellen nur im Web und nur angemeldet. `auth.ready` gehoert dazu:
    * sonst blitzt der Bereich beim Start auf oder weg, waehrend die Sitzung
@@ -177,11 +172,11 @@ export function WordList() {
   const activeIsNoList = lists.find((l) => l.id === activeList)?.system === "nolist";
   const pairVocab = useMemo(() => vocab.filter((w) => w.pair === pair), [vocab, pair]);
 
-  useEffect(() => { setActiveList("__all"); }, [pair]);
+  useEffect(() => { setOffen(null); }, [pair]);
   useEffect(() => {
     setAdding((a) => ({ ...a, listId: (activeList !== "__all" ? activeList : (pairLists[0] && pairLists[0].id)) || "" }));
   }, [activeList, pairLists]);
-  useEffect(() => { if (activeList !== "__all" && !lists.some((l) => l.id === activeList)) setActiveList("__all"); }, [lists, activeList]);
+  useEffect(() => { if (offen?.art === "liste" && !lists.some((l) => l.id === offen.ref)) setOffen(null); }, [lists, offen]);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
@@ -189,6 +184,15 @@ export function WordList() {
       (activeList === "__all" || (w.lists || []).includes(activeList)) &&
       (!q || fgnOf(w).toLowerCase().includes(q) || (w.lernform || "").toLowerCase().includes(q) || (w.de || "").toLowerCase().includes(q)));
   }, [pairVocab, query, activeList, foreign, isLat]);
+
+  /* Mit Termin zuerst und der naechste oben -- was bald dran ist, soll man
+   * nicht suchen muessen. Der Rest alphabetisch. */
+  const listsSortiert = useMemo(() => [...pairLists].sort((a: any, b: any) => {
+    if (a.dueDate && b.dueDate) return a.dueDate - b.dueDate;
+    if (a.dueDate) return -1;
+    if (b.dueDate) return 1;
+    return String(a.name).localeCompare(String(b.name), "de");
+  }), [pairLists]);
 
   const listNameOf = (id) => { const l = lists.find((x) => x.id === id); return l ? l.name : ""; };
 
@@ -242,11 +246,19 @@ export function WordList() {
   const toggleDraftList = (lid) => setDraft((d) => ({ ...d, lists: d.lists.includes(lid) ? d.lists.filter((x) => x !== lid) : [...d.lists, lid] }));
 
   /* ---- list management ---- */
-  const newList = () => { const name = "Wortliste " + (pairLists.length + 1); const id = store.addList(name, pair); setActiveList(id); setEditingListId(id); setListName(name); };
+  /* Anlegen laeuft ueber das Blatt "Neue Liste": Name und Zieldatum werden
+   * dort gesetzt, bevor die Liste entsteht. Vorher bekam sie einen
+   * Platzhalternamen und man benannte sie hinterher um. */
+  const legeListeAn = (name: string, dueDate?: number) => {
+    const id = store.addList(name.trim() || txt("Neue Wortliste"), pair);
+    if (dueDate) store.updateList(id, { dueDate });
+    setOffen({ art: "liste", ref: id });
+    return id;
+  };
   const commitRename = () => { if (editingListId) store.renameList(editingListId, listName.trim() || "Untitled"); setEditingListId(null); };
   const deleteActiveList = () => {
     const l = lists.find((x) => x.id === activeList); if (!l) return;
-    if (confirm(`Die Wortliste „${l.name}“ löschen? Die Wörter bleiben erhalten und verlassen nur diese Liste.`)) { store.deleteList(activeList); setActiveList("__all"); toast("Wortliste gelöscht", "trash"); }
+    if (confirm(txt("Die Wortliste „{name}“ löschen? Die Wörter bleiben erhalten und verlassen nur diese Liste.", { name: l.name }))) { store.deleteList(activeList); setOffen(null); toast(txt("Wortliste gelöscht"), "trash"); }
   };
 
   /* ---- share the active list (copy-on-import snapshot) ---- */
@@ -283,7 +295,7 @@ export function WordList() {
       const existing = new Set(pairVocab.map(key));
       const fresh = result.filter((w) => !existing.has(key(w)));
       store.addWords(fresh);
-      setActiveList(listId);
+      setOffen({ art: "liste", ref: listId });
       setBusy(false);
       toast(`Added ${fresh.length} word${fresh.length === 1 ? "" : "s"} to “${name}”`, "check");
       return;
@@ -300,7 +312,7 @@ export function WordList() {
     const existing = new Set(pairVocab.map((w) => ((w[foreign] || "") + "|" + w.de).toLowerCase()));
     const fresh = result.filter((w) => !existing.has(((w[foreign] || "") + "|" + w.de).toLowerCase()));
     store.addWords(fresh);
-    setActiveList(listId);
+    setOffen({ art: "liste", ref: listId });
     setBusy(false);
     toast(`Added ${fresh.length} word${fresh.length === 1 ? "" : "s"}${filled ? ` · ${filled} auto-filled` : ""} to “${name}”`, "check");
   }, [pairVocab, store, toast, foreign, pair, isLat]);
@@ -321,276 +333,421 @@ export function WordList() {
     return <span className={"badge " + STUFE_BADGE[stufe]}><span className="dot" />{txt(STUFE_LANG[stufe])}</span>;
   };
 
-  return (
-    <div>
-      {/* list bar */}
-      <div className="listbar">
-        {pairLists.map((l) => {
-          const st = listenStand[l.id];
-          return (
-            <button key={l.id} className={"ltab" + (activeList === l.id ? " on" : "")} onClick={() => setActiveList(l.id)}
-              title={st ? txt("{p} % bereit", { p: st.pct }) : undefined}>
-              {st && st.total > 0 && <span className="ltab-dot" style={{ background: st.farbe }} />}
-              {l.name} <span className="ltab-n">{pairVocab.filter((w) => (w.lists || []).includes(l.id)).length}</span>
-            </button>
-          );
-        })}
-        <button className={"ltab" + (activeList === "__all" ? " on" : "")} onClick={() => setActiveList("__all")}>
-          {txt("Alle Wörter")} <span className="ltab-n">{pairVocab.length}</span>
-        </button>
-      </div>
+  /* Die Fenster gelten auf beiden Ebenen, also stehen sie einmal hier. */
+  const modale = (
+    <>
+      <PasteModal open={pasteOpen} pair={pair} initialText={pasteSeed} draftHint={pasteDraft}
+        onClose={() => setPasteOpen(false)}
+        onParsed={(rows: any) => { setPasteOpen(false); setReviewRows(rows); }} />
+      <WordDetailModal open={!!detailWord} word={detailWord} onClose={() => setDetailWord(null)} onEdit={(w: any) => { setDetailWord(null); startEdit(w); }} />
+      <ReviewModal open={!!reviewRows} rows={reviewRows} pair={pair}
+        onClose={() => setReviewRows(null)}
+        onConfirm={(rows: any) => { setReviewRows(null); setPendingImport(rows); }} />
+      <ListPicker open={!!pendingImport} pair={pair} title={txt("In welche Liste?")}
+        subtitle={pendingImport ? txt("{n} Wörter bereit zum Import", { n: (pendingImport as any).length }) : ""}
+        onClose={() => setPendingImport(null)}
+        onPick={(id: string, name: string) => { const p = pendingImport; setPendingImport(null); commitImport(p, id, name); }} />
+      <ShareModal open={!!shareToken} token={shareToken} listName={shareName} onClose={() => setShareToken(null)} />
 
-      {/* active list header */}
-      {activeList !== "__all" && (
-        <div className="listhead">
-          {editingListId === activeList ? (
-            <input className="mini-input" style={{ maxWidth: 260, fontFamily: "var(--serif)", fontSize: 18 }} autoFocus
-              value={listName} onChange={(e) => setListName(e.target.value)} onBlur={commitRename}
-              onKeyDown={(e) => e.key === "Enter" && commitRename()} />
-          ) : (
-            <div className="section-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {listNameOf(activeList)}
-              {/* PFLICHT 2: "Wörter ohne Liste" is device-local — not renamable/shareable/deletable as a list */}
-              {!activeIsNoList && <button className="icon-btn" style={{ width: 30, height: 30 }} title={txt("Umbenennen")}
-                onClick={() => { setEditingListId(activeList); setListName(listNameOf(activeList)); }}><Icon name="edit" size={14} /></button>}
-            </div>
-          )}
-          <div className="grow" />
-          <button className="btn btn-sm btn-primary" onClick={() => practiseList(activeList)}><Icon name="cards" size={14} /> {txt("Üben")}</button>
-          {canShare && !activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>}
-          {!activeIsNoList && <button className="btn btn-ghost btn-sm" onClick={deleteActiveList}><Icon name="trash" size={14} /> {txt("Liste löschen")}</button>}
-        </div>
-      )}
-
-      {/* Die Liste als Einheit: wie weit sie ist und wann sie dran ist.
-          Dieselbe Kennzahl wie im Uebungsplan -- readyPercent, eine Quelle. */}
-      {activeList !== "__all" && activeListStand && (
-        <div className="listmeta">
-          <div className="listmeta-stand">
-            <span className="listmeta-dot" style={{ background: TONE_VAR[readyTone(activeListStand.pct, settings)] }} />
-            <b>{activeListStand.pct} %</b> bereit
-            <span className="faint"> · {activeListStand.prof.total} {activeListStand.prof.total === 1 ? "Wort" : "Wörter"}</span>
-          </div>
-          <MasteryBar dist={activeListStand.prof.dist} total={activeListStand.prof.total} showLegend={false} />
-          <label className="listmeta-due">
-            <Icon name="target" size={13} /> Zieldatum
-            <input type="date" className="field" style={{ width: "auto" }}
-              value={activeListObj?.dueDate ? new Date(activeListObj.dueDate).toISOString().slice(0, 10) : ""}
-              onChange={(e) => setListDue(activeList, e.target.value)} />
-            {/* Ein natives Datumsfeld laesst sich auf iOS nicht zuverlaessig leeren. */}
-            {activeListObj?.dueDate && (
-              <button className="icon-btn" style={{ width: 26, height: 26 }} title={txt("Zieldatum entfernen")}
-                onClick={() => setListDue(activeList, "")}><Icon name="x" size={12} /></button>
-            )}
-          </label>
-          {activeListStand.pg && (
-            <div className="exam-box">
-              <div className="exam-head">
-                <Icon name="target" size={13} /> {activeListStand.pg.daysLeft < 0 ? "Termin vorbei"
-                  : activeListStand.pg.daysLeft === 0 ? "heute dran"
-                  : `noch ${activeListStand.pg.daysLeft} ${activeListStand.pg.daysLeft === 1 ? "Tag" : "Tage"}`} · <b>{activeListStand.pg.buckets.sicher.length} von {activeListStand.pg.total} sitzen sicher</b> <span className="faint">{txt("· Schätzung")}</span>
+      {/* Bearbeiten: dieselben Felder wie im Wort-Detail, nur beschreibbar. */}
+      {editingId && (() => {
+        const w = vocab.find((x: any) => x.id === editingId);
+        if (!w) return null;
+        return (
+          <div className="modal-backdrop" onClick={() => setEditingId(null)}>
+            <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 520, maxHeight: "86vh", overflowY: "auto" } as any}>
+              <div className="modal-head">
+                <div className="modal-title">{txt("Wort bearbeiten")}</div>
+                <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setEditingId(null)}><Icon name="x" size={16} /></button>
               </div>
-              {activeListStand.pg.need > 0 && activeListStand.pg.daysLeft >= 0 && (
-                <div className="row" style={{ justifyContent: "space-between", marginTop: 7, gap: 8, flexWrap: "wrap" }}>
-                  <span className="faint" style={{ fontSize: 12 }}>
-                    {activeListStand.pg.need} {activeListStand.pg.need === 1 ? "Wort" : "Wörter"} brauchen noch Übung · etwa {activeListStand.pg.perDay} pro Tag
-                  </span>
-                  <button className="btn btn-sm btn-amber" onClick={() => practiseList(activeList)}>
-                    <Icon name="flame" size={13} /> Jetzt üben
-                  </button>
+              <div className="col" style={{ gap: 9 }}>
+                <input className="field" placeholder={isLat ? txt("Grundform") : P.foreignLabel}
+                  value={draft.fgn} onChange={(e) => setDraft({ ...draft, fgn: e.target.value })} />
+                {isLat && (
+                  <>
+                    <input className="field" placeholder={txt("Lernform (z. B. canis, canis, m.)")}
+                      value={draft.lernform} onChange={(e) => setDraft({ ...draft, lernform: e.target.value })} />
+                    <select className="field" value={draft.wortart} onChange={(e) => setDraft({ ...draft, wortart: e.target.value })}>
+                      {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
+                    </select>
+                  </>
+                )}
+                <input className="field" placeholder={txt("Deutsch (der/die/das)")}
+                  value={draft.de} onChange={(e) => setDraft({ ...draft, de: e.target.value })} />
+                <input className="field" placeholder={txt("Aussprache (optional)")}
+                  value={draft.phon} onChange={(e) => setDraft({ ...draft, phon: e.target.value })} />
+                <input className="field" placeholder={txt("Beispielsatz 1 (optional)")}
+                  value={draft.ex1} onChange={(e) => setDraft({ ...draft, ex1: e.target.value })} />
+                <input className="field" placeholder={txt("Beispielsatz 1 auf Deutsch (optional)")}
+                  value={draft.ex1de} onChange={(e) => setDraft({ ...draft, ex1de: e.target.value })} />
+                <input className="field" placeholder={txt("Beispielsatz 2 (optional)")}
+                  value={draft.ex2} onChange={(e) => setDraft({ ...draft, ex2: e.target.value })} />
+                <input className="field" placeholder={txt("Beispielsatz 2 auf Deutsch (optional)")}
+                  value={draft.ex2de} onChange={(e) => setDraft({ ...draft, ex2de: e.target.value })} />
+                <div className="grp">{txt("In welchen Listen")}</div>
+                <div className="list">
+                  {pairLists.map((l: any) => {
+                    const an = draft.lists.includes(l.id);
+                    return (
+                      <button key={l.id} className={"li" + (an ? " sel" : "")} onClick={() => toggleDraftList(l.id)}>
+                        <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
+                        <span className="g">{l.name}</span>
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
+                {isLat && <LatinKeys hint={txt("Feld antippen, dann Zeichen wählen")} />}
+              </div>
+              <div className="modal-foot">
+                <button className="btn btn-ghost" onClick={() => { store.deleteWord(editingId); setEditingId(null); }}>
+                  <Icon name="trash" size={14} /> {txt("Wort löschen")}
+                </button>
+                <button className="btn btn-primary" onClick={() => saveEdit(editingId)}>{txt("Speichern")}</button>
+              </div>
             </div>
-          )}
+          </div>
+        );
+      })()}
+
+      {/* Neue Liste: Name, dann das Zieldatum als bewusste Wahl. Vorher
+          entstand die Liste sofort mit Platzhalternamen. */}
+      {neueListe && (
+        <div className="modal-backdrop" onClick={() => setNeueListe(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
+            <div className="modal-head">
+              <div className="modal-title">{txt("Neue Liste")}</div>
+              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setNeueListe(false)}><Icon name="x" size={16} /></button>
+            </div>
+            <input className="field" style={{ width: "100%" }} autoFocus placeholder={txt("Name der Liste …")}
+              value={nlName} onChange={(e) => setNlName(e.target.value)} />
+            <div className="grp">{txt("Zieldatum")} <span className="hint">— {txt("optional")}</span></div>
+            <div className="list">
+              <button className={"li" + (!nlMitDatum ? " sel" : "")} onClick={() => setNlMitDatum(false)}>
+                <span className="ckbox">{!nlMitDatum && <Icon name="check" size={12} />}</span>
+                <span className="g">{txt("Kein Zieldatum")}<div className="m">{txt("läuft nebenher")}</div></span>
+              </button>
+              <button className={"li" + (nlMitDatum ? " sel" : "")} onClick={() => setNlMitDatum(true)}>
+                <span className="ckbox">{nlMitDatum && <Icon name="check" size={12} />}</span>
+                <Icon name="calendar" size={14} />
+                <span className="g">{txt("Datum wählen")}<div className="m">{txt("Prüfung oder selbstgesetztes Ziel")}</div></span>
+              </button>
+            </div>
+            {nlMitDatum && (
+              <input type="date" className="field" style={{ marginTop: 8 }}
+                value={nlDatum} onChange={(e) => setNlDatum(e.target.value)} />
+            )}
+            <div className="modal-foot">
+              <button className="btn btn-ghost" onClick={() => setNeueListe(false)}>{txt("Abbrechen")}</button>
+              <button className="btn btn-primary" onClick={() => {
+                legeListeAn(nlName, nlMitDatum && nlDatum ? new Date(nlDatum + "T08:00:00").getTime() : undefined);
+                setNeueListe(false); setNlName(""); setNlDatum(""); setNlMitDatum(false);
+              }}>{txt("Anlegen")}</button>
+            </div>
+          </div>
         </div>
       )}
 
-      {/* toolbar */}
-      <div className="bar">
+      {smartHilfe && (
+        <div className="modal-backdrop" onClick={() => setSmartHilfe(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
+            <div className="modal-head">
+              <div className="modal-title">{txt("Smart Lists")}</div>
+              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setSmartHilfe(false)}><Icon name="x" size={16} /></button>
+            </div>
+            <p className="said">{txt("Diese vier Listen stellt die App jeden Tag neu zusammen — quer über deine Wortlisten. Du kannst sie nicht ändern, nur ansehen und üben.")}</p>
+            <div className="list">
+              {SMART_ACCESS.map((sm) => (
+                <div className="li" key={sm.ref}>
+                  <Icon name={sm.icon as any} size={15} />
+                  <span className="g">{txt(sm.label)}<div className="m">{txt(sm.kurz)}</div></span>
+                </div>
+              ))}
+            </div>
+            <div className="modal-foot">
+              <button className="btn btn-primary" onClick={() => setSmartHilfe(false)}>{txt("Verstanden")}</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+  /* ---------------------------------------------------------- Wörter im Blick */
+  const woerterImBlick = useMemo(() => {
+    if (!offen) return [];
+    if (offen.art === "alle") return pairVocab;
+    if (offen.art === "liste") return pairVocab.filter((w: any) => (w.lists || []).includes(offen.ref));
+    const ret = retentionFor(settings);
+    return offen.ref === "heute"
+      ? resolveToday(pairVocab, stats, lists, ret, settings.dailyGoal, settings.newPerDay)
+      : resolveSmart(offen.ref, pairVocab, stats, settings.masteryCorrect, { retention: ret });
+  }, [offen, pairVocab, stats, lists, settings]);
+
+  const standImBlick = useMemo(() => {
+    const dist: Record<string, number> = { sitzt: 0, sitzt_fast: 0, sitzt_schlecht: 0, neu: 0, noch_nicht_geuebt: 0 };
+    const ret = retentionFor(settings);
+    for (const w of woerterImBlick) {
+      const stufe = !practiceable(w) ? "noch_nicht_geuebt" : deriveProfile(stats[w.id]?.fsrs, ret).stufe;
+      dist[stufe]++;
+    }
+    return { dist, total: woerterImBlick.length };
+  }, [woerterImBlick, stats, settings]);
+
+  const smartZahl = (ref: string) => {
+    const ret = retentionFor(settings);
+    return ref === "heute"
+      ? resolveToday(pairVocab, stats, lists, ret, settings.dailyGoal, settings.newPerDay).length
+      : resolveSmart(ref, pairVocab, stats, settings.masteryCorrect, { retention: ret }).filter(practiceable).length;
+  };
+
+  const titelImBlick = !offen ? ""
+    : offen.art === "alle" ? txt("Alle Wörter")
+    : offen.art === "smart" ? txt((SMART_ACCESS.find((s) => s.ref === offen.ref) || {}).label || "Auswahl")
+    : listNameOf(offen.ref);
+
+  /* Eine Wortkarte, wie im Entwurf: Wort gross, Zustand rechts in derselben
+   * Skala wie die Leiste, darunter die Übersetzung und in ganzen Worten, was
+   * war und was kommt. Die Karte selbst öffnet die Einzelheiten, der Stift
+   * öffnet das Bearbeiten — beides sichtbar, nichts versteckt. */
+  const wortKarte = (w: any) => {
+    const ret = retentionFor(settings);
+    const prof = deriveProfile(stats[w.id]?.fsrs, ret);
+    const stufe = !practiceable(w) ? "noch_nicht_geuebt" : prof.stufe;
+    const s = stats[w.id];
+    const teile: string[] = [];
+    if (s?.seen) {
+      teile.push(txt("{n}× richtig", { n: (s.correctCount || 0) + (s.almostCount || 0) }));
+      teile.push(txt("{n}× falsch", { n: s.wrongCount || 0 }));
+      const t = prof.due == null ? null : Math.round((prof.due - Date.now()) / 86400000);
+      if (t != null) teile.push(t < 0 ? txt("jetzt wieder dran") : t === 0 ? txt("heute dran")
+        : t === 1 ? txt("morgen wieder dran") : txt("in {n} Tagen wieder dran", { n: t }));
+    } else teile.push(txt("noch nie geübt"));
+    return (
+      <div className="wort" key={w.id}>
+        <button className="wort-body" onClick={() => setDetailWord(w)}>
+          <div className="wtop">
+            <span className="wf">{fgnOf(w) || <span className="faint">—</span>}</span>
+            <span className="wstufe" style={{ color: STUFE_FARBE[stufe] }}>
+              <i style={{ background: STUFE_FARBE[stufe] }} />{txt(STUFE_KURZ[stufe])}
+            </span>
+          </div>
+          <div className="wde">{w.de || <span className="faint">—</span>}</div>
+          <div className="wmeta">{teile.join(" · ")}</div>
+        </button>
+        <div className="wort-acts">
+          <button className="icon-btn" title={txt("Bearbeiten")} onClick={() => startEdit(w)}><Icon name="edit" size={15} /></button>
+        </div>
+      </div>
+    );
+  };
+
+  /* =============================================== Eine Liste geöffnet */
+  if (offen) {
+    const l = offen.art === "liste" ? lists.find((x: any) => x.id === offen.ref) : null;
+    const istSystemliste = l?.system === "nolist";
+    return (
+      <div className="wl">
+        <div className="head-row">
+          <button className="icon-btn" onClick={() => setOffen(null)} aria-label={txt("Zurück")}><Icon name="arrowLeft" size={16} /></button>
+          <div className="screen-title">{titelImBlick}</div>
+          {l && !istSystemliste && (
+            <button className="icon-btn" title={txt("Liste verwalten")} onClick={() => setListMenu((o: boolean) => !o)}>
+              <Icon name="gear" size={15} />
+            </button>
+          )}
+        </div>
+
+        {/* Zieldatum, Teilen, Einfügen — dort, wo sie gelten. Das Zieldatum
+            steht zuerst: es bestimmt, wie die App die Liste behandelt. */}
+        {l && (
+          <div className="ruest">
+            <label className="pill pill-sel">
+              <Icon name="calendar" size={14} />
+              <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
+              <input type="date" value={l.dueDate ? new Date(l.dueDate).toISOString().slice(0, 10) : ""}
+                onChange={(e) => setListDue(l.id, e.target.value)} aria-label={txt("Zieldatum")} />
+            </label>
+            {l.dueDate && (
+              <button className="icon-btn" title={txt("Zieldatum entfernen")} onClick={() => setListDue(l.id, "")}>
+                <Icon name="x" size={13} />
+              </button>
+            )}
+            {canShare && !istSystemliste && (
+              <button className="pill" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>
+            )}
+            <button className="pill" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
+              <Icon name="plus" size={14} /> {txt("Einfügen")}
+            </button>
+          </div>
+        )}
+
+        {listMenu && l && (
+          <div className="list" style={{ marginTop: 8 }}>
+            <button className="li" onClick={() => { setEditingListId(l.id); setListName(l.name); setListMenu(false); }}>
+              <Icon name="edit" size={14} /><span className="g">{txt("Umbenennen")}</span>
+            </button>
+            <button className="li" onClick={() => { setListMenu(false); deleteActiveList(); }}>
+              <Icon name="trash" size={14} /><span className="g">{txt("Liste löschen")}<div className="m">{txt("die Wörter bleiben erhalten")}</div></span>
+            </button>
+          </div>
+        )}
+        {editingListId === offen.ref && (
+          <input className="mini-input" style={{ marginTop: 8, fontFamily: "var(--serif)", fontSize: 17 }} autoFocus
+            value={listName} onChange={(e) => setListName(e.target.value)} onBlur={commitRename}
+            onKeyDown={(e) => e.key === "Enter" && commitRename()} />
+        )}
+
+        {standImBlick.total > 0 ? (
+          <div style={{ marginTop: 12 }}>
+            {/* Die Leiste bringt ihre Gesamtzahl selbst mit -- eine zweite
+                darueber sagte dasselbe zweimal. */}
+            <MasteryBar dist={standImBlick.dist} total={standImBlick.total} />
+          </div>
+        ) : (
+          <div className="empty" style={{ marginTop: 14 }}>
+            <div className="big">{txt("Noch keine Wörter")}</div>
+            <div>{txt("Über „Einfügen“ mehrere auf einmal, oder unten einzeln.")}</div>
+          </div>
+        )}
+
+        <div className="list" style={{ marginTop: 10 }}>{woerterImBlick.map(wortKarte)}</div>
+
+        {/* Ein Wort dazu, direkt am Ende der Liste — dort, wo man merkt,
+            dass eines fehlt. Der grosse Eingabeblock oben ist entfallen. */}
+        {offen.art === "liste" && (
+          neuesWortOffen ? (
+            <div className="card" style={{ marginTop: 8 }}>
+              <div className="row wrap" style={{ gap: 9 }}>
+                <input className="field grow" style={{ minWidth: 130 }} autoFocus placeholder={isLat ? txt("Grundform") : P.foreignLabel}
+                  value={adding.fgn} onChange={(e) => setAdding({ ...adding, fgn: e.target.value })}
+                  onKeyDown={(e) => e.key === "Enter" && addWord()} />
+                <input className="field grow" style={{ minWidth: 130 }} placeholder={txt("Deutsch (der/die/das)")}
+                  value={adding.de} onChange={(e) => setAdding({ ...adding, de: e.target.value })}
+                  onKeyDown={(e) => e.key === "Enter" && addWord()} />
+              </div>
+              {isLat && (
+                <input className="field" style={{ marginTop: 8, width: "100%" }} placeholder={txt("Lernform (z. B. canis, canis, m.)")}
+                  value={adding.lernform} onChange={(e) => setAdding({ ...adding, lernform: e.target.value })}
+                  onKeyDown={(e) => e.key === "Enter" && addWord()} />
+              )}
+              <div className="row" style={{ marginTop: 9, justifyContent: "flex-end", gap: 8 }}>
+                <button className="btn btn-ghost btn-sm" onClick={() => setNeuesWortOffen(false)}>{txt("Fertig")}</button>
+                <button className="btn btn-primary btn-sm" onClick={addWord}
+                  disabled={busy || (!adding.fgn.trim() && !adding.de.trim() && !adding.lernform.trim())}>
+                  {busy ? <Icon name="refresh" size={14} /> : <Icon name="plus" size={14} />} {txt("Hinzufügen")}
+                </button>
+              </div>
+              <div className="faint" style={{ fontSize: 11.5, marginTop: 7 }}>
+                {txt("Eine Seite genügt — die andere wird übersetzt und zum Nachschauen vorgemerkt.")}
+              </div>
+              {isLat && <LatinKeys hint={txt("Feld antippen, dann Zeichen wählen")} />}
+            </div>
+          ) : (
+            <button className="li" style={{ marginTop: 8, justifyContent: "center" }} onClick={() => setNeuesWortOffen(true)}>
+              <Icon name="plus" size={14} /><span style={{ fontWeight: 600 }}>{txt("Wort hinzufügen")}</span>
+            </button>
+          )
+        )}
+
+        {standImBlick.total > 0 && (
+          <div className="duo">
+            <button className="btn btn-primary" onClick={() => offen.art === "liste" ? practiseList(offen.ref)
+              : (store.setSettings({ practiceSel: offen.art === "smart" ? "smart:" + offen.ref : "smart:heute" }),
+                 window.dispatchEvent(new CustomEvent("vt-tab", { detail: "practice" })))}>
+              <Icon name="cards" size={15} /> {txt("Liste üben · {n} Karten", { n: standImBlick.total })}
+            </button>
+            <button className="btn" onClick={() => {
+              store.setSettings({ statPair: pair, statLists: offen.art === "liste" ? [offen.ref] : [] });
+              window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
+            }}><Icon name="chart" size={15} /> {txt("Statistik")}</button>
+          </div>
+        )}
+
+        {modale}
+      </div>
+    );
+  }
+
+  /* ==================================================== Die Übersicht */
+  const treffer = query.trim()
+    ? pairVocab.filter((w: any) => {
+        const q = query.toLowerCase().trim();
+        return fgnOf(w).toLowerCase().includes(q) || (w.lernform || "").toLowerCase().includes(q) || (w.de || "").toLowerCase().includes(q);
+      })
+    : null;
+
+  return (
+    <div className="wl">
+      <div className="ruest">
         <PairPill />
         <div className="search">
           <Icon name="search" size={17} />
-          <input className="field" placeholder={txt("Wörter suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
+          <input className="field" placeholder={txt("In allen Wörtern suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
-        <button className="btn btn-sm btn-primary" onClick={newList}><Icon name="plus" size={15} /> {txt("Neue Liste")}</button>
-        <button className="btn btn-sm" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}><Icon name="list" size={15} /> {txt("Einfügen")}</button>
-        {isConfigured && <button className="btn btn-sm" onClick={() => openImport()} title={txt("Eine Liste, die dir jemand geteilt hat, übernehmen")}><Icon name="download" size={15} /> {txt("Geteilte Liste importieren")}</button>}
-        {tabellen && (
-          <>
-            <button className="btn btn-sm" onClick={() => dateiRef.current?.click()} title={txt("Eine Excel- oder CSV-Datei einlesen")}>
-              <Icon name="upload" size={15} /> {txt("Tabelle einlesen")}
-            </button>
-            <button className="btn btn-sm btn-ghost" onClick={ladeVorlage} title={txt("Eine leere Tabelle zum Ausfüllen")}>
-              <Icon name="download" size={15} /> {txt("Vorlage")}
-            </button>
-            <input ref={dateiRef} type="file" accept=".xlsx,.xls,.csv" style={{ display: "none" }}
-              onChange={(e) => { const f = e.target.files?.[0]; leseTabelle(f); e.target.value = ""; }} />
-          </>
-        )}
-        <button className={"btn btn-sm" + (selectMode ? " btn-primary" : "")} onClick={() => { setSelectMode((m) => !m); setSelectedIds([]); }}><Icon name="check" size={15} /> {txt(selectMode ? "Auswahl beenden" : "Auswählen")}</button>
+        <button className="pill pill-on" onClick={() => setNeueListe(true)}>
+          <Icon name="plus" size={14} /> {txt("Neue Liste")}
+        </button>
       </div>
 
-      {/* add row */}
-      <div className="panel" style={{ padding: 14, marginBottom: 16 }}>
-        <div className="row wrap" style={{ gap: 10 }}>
-          {isLat ? (
-            <>
-              <input className="field" style={{ width: 130 }} placeholder={txt("Grundform")} value={adding.fgn}
-                onChange={(e) => setAdding({ ...adding, fgn: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-              <input className="field grow" style={{ minWidth: 180 }} placeholder={txt("Lernform (z. B. canis, canis, m.)")} value={adding.lernform}
-                onChange={(e) => setAdding({ ...adding, lernform: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-              <select className="field" style={{ width: "auto", minWidth: 110 }} value={adding.wortart} onChange={(e) => setAdding({ ...adding, wortart: e.target.value })}>
-                {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
-              </select>
-              <input className="field grow" style={{ minWidth: 130 }} placeholder={txt("Deutsch (der/die/das)")} value={adding.de}
-                onChange={(e) => setAdding({ ...adding, de: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-            </>
-          ) : (
-            <>
-              <input className="field grow" style={{ minWidth: 140 }} placeholder={P.foreignLabel} value={adding.fgn}
-                onChange={(e) => setAdding({ ...adding, fgn: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-              <Icon name="arrowRight" size={18} style={{ color: "var(--ink-faint)" }} />
-              <input className="field grow" style={{ minWidth: 140 }} placeholder={txt("Deutsch (der/die/das)")} value={adding.de}
-                onChange={(e) => setAdding({ ...adding, de: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-            </>
+      {treffer ? (
+        <>
+          <div className="grp">{txt("{n} Treffer", { n: treffer.length })}</div>
+          <div className="list">{treffer.map(wortKarte)}</div>
+          {!treffer.length && <div className="empty"><div className="big">{txt("Nichts gefunden")}</div><div>{txt("Anderer Suchbegriff, oder das Feld leeren")}</div></div>}
+        </>
+      ) : (
+        <div className="list">
+          <div className="grp">{txt("Deine Listen")}</div>
+          {pairLists.length ? listsSortiert.map((l: any) => {
+            const st = listenStand[l.id];
+            const tage = l.dueDate ? Math.ceil((l.dueDate - Date.now()) / 86400000) : null;
+            const sub = [txt("{n} Wörter", { n: st?.total ?? 0 })];
+            if (l.dueDate) sub.push(txt("Zieldatum {d}", { d: new Date(l.dueDate).toLocaleDateString("de-CH", { day: "numeric", month: "numeric" }) })
+              + (tage != null && tage >= 0 && tage <= 14 ? " · " + (tage === 0 ? txt("heute") : tage === 1 ? txt("morgen") : txt("in {n} Tagen", { n: tage })) : ""));
+            return (
+              <button key={l.id} className="li" onClick={() => setOffen({ art: "liste", ref: l.id })}>
+                <span className="g">{l.name}
+                  <div className="m">{sub.join(" · ")}</div>
+                  {st && st.total > 0 && (
+                    <span className="standline">
+                      <MasteryBar dist={st.prof.dist} total={st.total} showLegend={false} />
+                      <b>{st.pct} %</b>
+                    </span>
+                  )}
+                </span>
+                <Icon name="arrowRight" size={14} />
+              </button>
+            );
+          }) : (
+            <div className="quiet">{txt("Noch keine Wortliste — lege oben eine an.")}</div>
           )}
-          <select className="field" style={{ width: "auto", minWidth: 120 }} value={adding.listId} onChange={(e) => setAdding({ ...adding, listId: e.target.value })}>
-            {pairLists.length === 0 && <option value="">{txt("— beim Hinzufügen neue Liste —")}</option>}
-            {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
-          </select>
-          <button className="btn btn-primary" onClick={addWord} disabled={busy || (!adding.fgn.trim() && !adding.de.trim() && !adding.lernform.trim())}>
-            {busy ? <Icon name="refresh" size={15} /> : <Icon name="plus" size={15} />} {txt("Hinzufügen")}
-          </button>
-        </div>
-        {isLat && <LatinKeys hint="Feld antippen, dann Zeichen wählen" />}
-        <div className="row" style={{ marginTop: 10 }}>
-          <input className="field" style={{ width: 150 }} placeholder={txt("Aussprache (optional)")} value={adding.phon}
-            onChange={(e) => setAdding({ ...adding, phon: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-          <input className="field grow" placeholder={`Beispielsatz auf Deutsch (optional)`} value={adding.ex1de}
-            onChange={(e) => setAdding({ ...adding, ex1de: e.target.value })} />
-          <input className="field grow" placeholder={`Beispielsatz auf ${P.foreignLabel} (optional)`} value={adding.ex1}
-            onChange={(e) => setAdding({ ...adding, ex1: e.target.value })} onKeyDown={(e) => e.key === "Enter" && addWord()} />
-        </div>
-        <div className="faint" style={{ fontSize: 12, marginTop: 9, display: "flex", alignItems: "center", gap: 6 }}>
-          <Icon name="sparkle" size={13} /> {txt(isLat ? "Latein: Grundform, volle Lernform und Wortart eingeben." : "Es genügt eine Sprache — die andere wird übersetzt und zum Nachschauen vorgemerkt.")}
-        </div>
-      </div>
 
-      <div className="row" style={{ justifyContent: "space-between", marginBottom: 10 }}>
-        <span className="muted" style={{ fontSize: 13.5 }}>{txt(filtered.length === 1 ? "{n} Wort" : "{n} Wörter", { n: filtered.length })}{activeList !== "__all" ? txt(" in „{liste}“", { liste: listNameOf(activeList) }) : ""}</span>
-      </div>
-
-      {/* Mehrfachauswahl -> in eine Wortliste */}
-      {selectMode && (
-        <div className="panel" style={{ padding: 12, marginBottom: 12 }}>
-          <div className="row wrap" style={{ gap: 10, alignItems: "center" }}>
-            <span style={{ fontWeight: 600 }}>{selectedIds.length} ausgewählt</span>
-            <span className="grow" />
-            <input className="field" style={{ width: 160 }} placeholder={txt("Neue Wortliste …")} value={newListName} onChange={(e) => setNewListName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && createListFromSel()} />
-            <button className="btn btn-sm btn-primary" disabled={!selectedIds.length} onClick={createListFromSel}><Icon name="plus" size={14} /> {txt("Neue Wortliste")}</button>
-            {pairLists.length > 0 && (
-              <>
-                <select className="field" style={{ width: "auto", minWidth: 130 }} value={addToListId} onChange={(e) => setAddToListId(e.target.value)}>
-                  <option value="">{txt("Zu Wortliste …")}</option>
-                  {pairLists.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
-                </select>
-                <button className="btn btn-sm" disabled={!selectedIds.length || !addToListId} onClick={addSelToList}>{txt("Hinzufügen")}</button>
-              </>
-            )}
+          <div className="grp">{txt("Smart Lists")}
+            <button className="chips-help" title={txt("Was bedeuten diese?")} onClick={() => setSmartHilfe(true)}>?</button>
           </div>
+          {SMART_ACCESS.map((sm) => {
+            const n = smartZahl(sm.ref);
+            return (
+              <button key={sm.ref} className="li" disabled={!n} onClick={() => setOffen({ art: "smart", ref: sm.ref })}>
+                <Icon name={sm.icon as any} size={15} />
+                <span className="g">{txt(sm.label)}<div className="m">{txt(sm.kurz)}</div></span>
+                <span className="lchip-n">{n}</span>
+              </button>
+            );
+          })}
+
+          {/* „Alle Wörter“ ist der Rückfall, nicht der Einstieg — deshalb
+              zuletzt und abgesetzt. Als Reiter an erster Stelle stand es
+              vor den Listen, um die es eigentlich geht. */}
+          <button className="li sel" style={{ marginTop: 11 }} onClick={() => setOffen({ art: "alle", ref: "" })}>
+            <Icon name="list" size={15} />
+            <span className="g">{txt("Alle Wörter")}</span>
+            <span className="lchip-n">{pairVocab.length}</span>
+            <Icon name="arrowRight" size={14} />
+          </button>
         </div>
       )}
 
-      {/* table */}
-      <div className="table-wrap">
-        <table className="vt">
-          <thead>
-            <tr>
-              <th style={{ width: "28%" }}>{P.foreignLabel}</th>
-              <th style={{ width: "28%" }}>{txt("Deutsch")}</th>
-              <th style={{ width: "30%" }}>{txt("Listen")}</th>
-              <th style={{ width: "14%" }}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((w) => editingId === w.id ? (
-              <tr key={w.id}>
-                <td>
-                  <input className="mini-input" placeholder={isLat ? "Grundform" : undefined} value={draft.fgn} onChange={(e) => setDraft({ ...draft, fgn: e.target.value })} />
-                  {isLat && (
-                    <>
-                      <input className="mini-input" style={{ marginTop: 6 }} placeholder={txt("Lernform")} value={draft.lernform} onChange={(e) => setDraft({ ...draft, lernform: e.target.value })} />
-                      <select className="mini-input" style={{ marginTop: 6 }} value={draft.wortart} onChange={(e) => setDraft({ ...draft, wortart: e.target.value })}>
-                        {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
-                      </select>
-                    </>
-                  )}
-                </td>
-                <td><input className="mini-input" value={draft.de} onChange={(e) => setDraft({ ...draft, de: e.target.value })} /></td>
-                <td colSpan={2}>
-                  <div className="chk-wrap">
-                    {pairLists.map((l) => (
-                      <label key={l.id} className={"chk" + (draft.lists.includes(l.id) ? " on" : "")} onClick={() => toggleDraftList(l.id)}>
-                        {draft.lists.includes(l.id) && <Icon name="check" size={12} />}{l.name}
-                      </label>
-                    ))}
-                  </div>
-                  {isLat && <LatinKeys />}
-                  <input className="mini-input" style={{ marginTop: 6, maxWidth: 160 }} placeholder={txt("Aussprache")} value={draft.phon} onChange={(e) => setDraft({ ...draft, phon: e.target.value })} />
-                  <input className="mini-input" style={{ marginTop: 6 }} placeholder={`Beispielsatz (${P.foreignLabel})`} value={draft.ex1} onChange={(e) => setDraft({ ...draft, ex1: e.target.value })} />
-                  <input className="mini-input" style={{ marginTop: 6 }} placeholder={txt("Zweiter Beispielsatz (optional)")} value={draft.ex2} onChange={(e) => setDraft({ ...draft, ex2: e.target.value })} />
-                </td>
-                <td>
-                  <div className="row" style={{ gap: 6 }}>
-                    <button className="btn btn-primary btn-sm" onClick={() => saveEdit(w.id)}><Icon name="check" size={14} /></button>
-                    <button className="btn btn-ghost btn-sm" onClick={() => setEditingId(null)}>{txt("Abbrechen")}</button>
-                  </div>
-                </td>
-              </tr>
-            ) : (
-              <tr key={w.id} className={(selectMode && selectedIds.includes(w.id) ? "row-sel" : "") + " row-click"}
-                onClick={() => selectMode ? toggleSel(w.id) : setDetailWord(w)} style={{ cursor: "pointer" }}
-                title={!selectMode ? "FSRS-Details ansehen" : undefined}>
-                <td className="cell-en">
-                  {selectMode && <input type="checkbox" checked={selectedIds.includes(w.id)} readOnly style={{ marginRight: 8, accentColor: "var(--amber-deep)" }} />}
-                  {fgnOf(w) || <span className="faint">—</span>}
-                  {isLat && w.lernform && <div className="faint" style={{ fontSize: 12, fontStyle: "italic" }}>{w.lernform}</div>}
-                  {isLat && w.wortart && <div className="faint" style={{ fontSize: 11.5 }}>{w.wortart}</div>}
-                  {w.review && <span className="badge amber" style={{ marginTop: 4 }}><span className="dot" />{txt("Nachschauen")}</span>}
-                </td>
-                <td className="cell-de">{w.de || <span className="faint">—</span>}</td>
-                <td>
-                  <div className="list-chips">
-                    {(w.lists || []).length ? (w.lists || []).map((lid) => <span key={lid} className="mini-chip">{listNameOf(lid)}</span>) : <span className="faint">—</span>}
-                  </div>
-                </td>
-                <td>
-                  {!selectMode && (
-                  <div className="row-actions" onClick={(e) => e.stopPropagation()}>
-                    <button className="icon-btn" style={{ width: 32, height: 32 }} title={txt("Bearbeiten")} onClick={() => startEdit(w)}><Icon name="edit" size={15} /></button>
-                    <button className="icon-btn" style={{ width: 32, height: 32 }} title={txt("Löschen")} onClick={() => store.deleteWord(w.id)}><Icon name="trash" size={15} /></button>
-                  </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {!filtered.length && <div className="empty"><div className="big">{txt("Noch keine Wörter")}</div><div>{txt("Füge eines oben hinzu oder nutze „Einfügen“.")}</div></div>}
-      </div>
-
-      <PasteModal open={pasteOpen} pair={pair} initialText={pasteSeed} draftHint={pasteDraft}
-        onClose={() => setPasteOpen(false)}
-        onParsed={(rows) => { setPasteOpen(false); setReviewRows(rows); }} />
-      <WordDetailModal open={!!detailWord} word={detailWord} onClose={() => setDetailWord(null)} onEdit={(w) => startEdit(w)} />
-      <ReviewModal open={!!reviewRows} rows={reviewRows} pair={pair}
-        onClose={() => setReviewRows(null)}
-        onConfirm={(rows) => { setReviewRows(null); setPendingImport(rows); }} />
-      <ListPicker open={!!pendingImport} pair={pair} title={txt("In welche Liste?")}
-        subtitle={pendingImport ? `${pendingImport.length} Wort${pendingImport.length === 1 ? "" : "er"} bereit zum Import` : ""}
-        onClose={() => setPendingImport(null)}
-        onPick={(id, name) => { const p = pendingImport; setPendingImport(null); commitImport(p, id, name); }} />
-      <ShareModal open={!!shareToken} token={shareToken} listName={shareName} onClose={() => setShareToken(null)} />
+      {modale}
     </div>
   );
 }
