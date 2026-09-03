@@ -145,3 +145,23 @@ export function retokenSettings(settings: any, tokenMap: Record<string, string>)
     statLists: (settings.statLists || []).map(many),
   };
 }
+
+/* V17 — ein Anlagedatum für den Altbestand.
+ *
+ * Wörter trugen bisher keinen Zeitpunkt ihrer Anlage. Ohne ihn kann die
+ * Statistik nicht sagen, wie viele Wörter im gewählten Zeitraum dazukamen.
+ * Neue Wörter bekommen ihn ab jetzt beim Anlegen; was schon da ist, bekommt
+ * einen festen Stichtag. Der ist bewusst ein Datum und keine Schätzung: eine
+ * gerechnete Näherung sähe aus wie eine Messung und wäre keine.
+ */
+export const ALTBESTAND_STICHTAG = Date.parse("2026-08-01T00:00:00Z");
+
+export function datiereAltbestand(vocab: any[]): any[] {
+  let geaendert = false;
+  const next = vocab.map((w) => {
+    if (w.createdAt) return w;
+    geaendert = true;
+    return { ...w, createdAt: ALTBESTAND_STICHTAG };
+  });
+  return geaendert ? next : vocab;
+}

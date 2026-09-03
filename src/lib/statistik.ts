@@ -141,10 +141,20 @@ export function stundenprofil(antworten: Antwort[]) {
   const mit = b.map((x) => ({ ...x, anteil: x.n ? Math.round(x.richtig / x.n * 100) : 0 }));
   /* Ein Block mit drei Antworten ist kein Befund. Als „beste Zeit" gilt nur,
    * wer genug Antworten UND den höchsten Anteil hat. */
-  const belastbar = mit.filter((x) => x.n >= 20);
-  const beste = belastbar.length ? belastbar.reduce((a, b2) => (b2.anteil > a.anteil ? b2 : a)) : null;
-  const schwaechste = belastbar.length ? belastbar.reduce((a, b2) => (b2.anteil < a.anteil ? b2 : a)) : null;
-  return { bloecke: mit, beste, schwaechste, ausserhalb, belastbar: belastbar.length >= 2 };
+  const belastbar = mit.filter((x) => x.n >= 40).sort((a, b2) => b2.anteil - a.anteil);
+  const beste = belastbar[0] || null;
+  const zweiter = belastbar[1] || null;
+  const schwaechste = belastbar.length ? belastbar[belastbar.length - 1] : null;
+  /* Der Abstand muss zum ZWEITBESTEN gelten, nicht zum schwächsten Block.
+   * Sonst gewinnt der Vergleich mit einem Ausreisser ganz unten, während die
+   * beiden vorderen Blöcke praktisch gleichauf liegen -- und dann kippt die
+   * Aussage von einem Zeitraum zum nächsten, ohne dass sich etwas geändert
+   * hat. Fünf Prozentpunkte Vorsprung vor dem Nächstbesten sind die
+   * Schwelle, ab der „deine beste Lernzeit" mehr ist als eine Laune der
+   * Stichprobe. */
+  const vorsprung = beste && zweiter ? beste.anteil - zweiter.anteil : 0;
+  return { bloecke: mit, beste, schwaechste, ausserhalb,
+           belastbar: belastbar.length >= 2 && vorsprung >= 5 };
 }
 
 /* --------------------------------------------------------------- Neu erlernt
@@ -266,12 +276,45 @@ export function verteilungJeSprache(zeilen: { w: any; stufe: string }[]) {
 }
 
 /* --------------------------------------------------------- Tage, bis es sitzt
- * Bewusst nicht geschätzt. Dafür bräuchte es je Wort den Tag der Anlage und
- * den Tag, an dem es zum ersten Mal saß; beides steht nirgends. Aus dem
- * Verlauf ließe es sich nur für Wörter mit weniger als 30 Antworten ablesen
- * — also gerade nicht für die, um die es geht. Die Funktion meldet deshalb
- * ehrlich, dass sie nichts hat, und die Oberfläche zeigt die Kachel nicht.
- * Sobald `firstTs` und `sitztSeitTs` mitlaufen, wird hier gerechnet. */
-export function tageBisSitzt(_zeilen: unknown[], _stats: any) {
-  return { belegt: false as const, schnitt: 0, klassen: [] as { label: string; n: number; hoehe: number }[] };
+ * Die zweite Achse neben den Versuchen: nicht wie viel Arbeit ein Wort war,
+ * sondern wie viel Geduld. Vier Versuche an vier Tagen sind etwas anderes
+ * als vier Versuche über drei Wochen.
+ *
+ * Rechenbar erst, seit `firstTs` und `sitztSeitTs` am Wort mitlaufen. Aus
+ * dem Altbestand ist es nicht zu rekonstruieren -- der Verlauf hält je Wort
+ * nur die letzten 30 Antworten, und der Tag des ersten Erfolgs stand
+ * nirgends. Solange zu wenige Wörter beides tragen, meldet die Funktion
+ * `belegt: false` und die Oberfläche zeigt die Karte nicht. Eine geschätzte
+ * Zahl sähe aus wie eine Messung und wäre keine.
+ */
+export const TAGE_KLASSEN = [
+  { label: "1–3 T", max: 3 }, { label: "4–7 T", max: 7 },
+  { label: "1–2 Wo.", max: 14 }, { label: "2–4 Wo.", max: 28 },
+  { label: "länger", max: Infinity },
+];
+const MIN_BELEGT = 12;   // unter einem Dutzend Wörtern ist eine Verteilung Zierrat
+
+export function tageBisSitzt(zeilen: { w: any }[], stats: any) {
+  const werte: number[] = [];
+  for (const z of zeilen) {
+    const s = stats[z.w.id];
+    if (!s || !s.firstTs || !s.sitztSeitTs) continue;
+    const tage = (s.sitztSeitTs - s.firstTs) / TAG;
+    if (tage >= 0) werte.push(Math.max(1, tage));
+  }
+  if (werte.length < MIN_BELEGT) {
+    return { belegt: false as const, schnitt: 0, n: werte.length,
+             klassen: [] as { label: string; n: number; hoehe: number }[] };
+  }
+  let untere = 0;
+  const klassen = TAGE_KLASSEN.map((k) => {
+    const n = werte.filter((v) => v > untere && v <= k.max).length;
+    untere = k.max; return { ...k, n };
+  });
+  const max = Math.max(1, ...klassen.map((k) => k.n));
+  return {
+    belegt: true as const, n: werte.length,
+    schnitt: werte.reduce((a, b) => a + b, 0) / werte.length,
+    klassen: klassen.map((k) => ({ ...k, hoehe: Math.round(k.n / max * 100) })),
+  };
 }

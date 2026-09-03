@@ -528,4 +528,10 @@ export const EN: Record<string, string> = {
   "Lernstand zurückgesetzt": "Progress reset",
   "Was zählt als Treffer?": "What counts as a hit?",
   "Als Treffer zählt jede Antwort, die nicht ganz daneben war — ein fehlender Akzent oder ein Buchstabendreher also auch. Ein Wort, das noch nie abgefragt wurde, zeigt einen Strich.": "A hit is any answer that was not completely off — a missing accent or a swapped letter counts too. A word that has never been asked shows a dash.",
+  "Gezählt sind nur Wörter, die heute sitzen. Dazu kommt {n} Wort, das es trotz vieler Versuche nicht tut — unten unter „Hartnäckig“.": "Counted here are only words that are solid today. On top of that, {n} word still is not, despite many attempts — below under “Stubborn”.",
+  "Gezählt sind nur Wörter, die heute sitzen. Dazu kommen {n} Wörter, die es trotz vieler Versuche nicht tun — unten unter „Hartnäckig“.": "Counted here are only words that are solid today. On top of that, {n} words still are not, despite many attempts — below under “Stubborn”.",
+  "1 Wort mehr als im Zeitraum davor — es geht aufwärts.": "1 word more than in the period before — it is going up.",
+  "je Sitzung — {n} Sitzungen im Zeitraum": "per session — {n} sessions in this period",
+  "im Schnitt, vom ersten Mal bis „sitzt“": "on average, from first sight to solid",
+  "Gezählt wird vom ersten Mal, das du ein Wort gesehen hast, bis zu dem Tag, an dem es zum ersten Mal sass. Zwei Achsen für dieselbe Sache: die Versuche in der Übersicht sagen, wie viel Arbeit es war — die Tage hier, wie viel Geduld. Erst danach ist die Frage sinnvoll, wie lange ein Wort dann hält.": "Counted from the first time you saw a word to the day it was first solid. Two axes on the same thing: the attempts in the overview say how much work it took — the days here say how much patience. Only then does the question of how long a word holds make sense.",
 };

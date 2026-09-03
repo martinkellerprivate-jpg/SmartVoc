@@ -11,7 +11,7 @@ import { WordDetailModal } from "./WordDetailModal";
 import {
   ZEITRAEUME, type Zeitraum, sammleAntworten, antwortBilanz, fehlerarten,
   uebungstage, sitzungen, stundenprofil, neuErlernt, zuwachsVergleich,
-  versucheBisSitzt, haltedauer, verteilungJeSprache,
+  versucheBisSitzt, haltedauer, verteilungJeSprache, tageBisSitzt,
 } from "../lib/statistik";
 
 const STUFE_LABEL: Record<string, string> = {
@@ -64,7 +64,6 @@ export function Stats() {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [detail, setDetail] = useState<any>(null);
   const [sort, setSort] = useState({ key: "priority", dir: 1 });
-  const [suche, setSuche] = useState("");
 
   /* Der Umfang gilt für alles darunter und steht im Standard auf allen
    * Sprachen. Eine Sprache zu wählen heisst: alle ihre Listen. Einzelne
@@ -107,6 +106,7 @@ export function Stats() {
   const vergleich = useMemo(() => zuwachsVergleich(meta.trends, pairsImUmfang, zeitraum), [meta.trends, pairsImUmfang, zeitraum]);
   const versuche = useMemo(() => versucheBisSitzt(rows, stats), [rows, stats]);
   const halte    = useMemo(() => haltedauer(rows, stats), [rows, stats]);
+  const tageSitzt = useMemo(() => tageBisSitzt(rows, stats), [rows, stats]);
   const jeSprache = useMemo(() => verteilungJeSprache(rows), [rows]);
 
   const geuebteWoerter = useMemo(() => new Set(antworten.map((a) => a.id)).size, [antworten]);
@@ -135,14 +135,14 @@ export function Stats() {
   /* ================================================== Eigene Bildschirme */
   if (schirm === "woerter") {
     return <AlleWoerter rows={rows} stats={stats} fgnOf={fgnOf} filter={filter} setFilter={setFilter}
-      sort={sort} setSort={setSort} suche={suche} setSuche={setSuche} counts={counts}
+      sort={sort} setSort={setSort} counts={counts}
       onWort={setDetail} detail={detail} onZurueck={() => setSchirm(null)} />;
   }
   if (schirm === "hartnaeckig") {
     return <HartnaeckigListe rows={hartnaeckig} stats={stats} fgnOf={fgnOf} onZurueck={() => setSchirm(null)} />;
   }
   if (schirm === "erweitert") {
-    return <Erweitert settings={settings} versuche={versuche} halte={halte} onZurueck={() => setSchirm(null)} />;
+    return <Erweitert settings={settings} tageSitzt={tageSitzt} halte={halte} onZurueck={() => setSchirm(null)} />;
   }
 
   const mehrsprachig = jeSprache.length > 1;
@@ -266,7 +266,10 @@ export function Stats() {
           {vergleich.belegt && vergleich.jetzt > vergleich.davor && (
             <div className="cheer">
               <Icon name="target" size={15} />
-              <span>{txt("{n} Wörter mehr als im Zeitraum davor — es geht aufwärts.", { n: vergleich.jetzt - vergleich.davor })}</span>
+              <span>{txt((vergleich.jetzt - vergleich.davor) === 1
+                ? "1 Wort mehr als im Zeitraum davor — es geht aufwärts."
+                : "{n} Wörter mehr als im Zeitraum davor — es geht aufwärts.",
+                { n: vergleich.jetzt - vergleich.davor })}</span>
             </div>
           )}
 
@@ -294,7 +297,10 @@ export function Stats() {
                     satz={txt("oder weniger, bis die Hälfte deiner Wörter sitzt")} />
                   <LiegendeBalken klassen={versuche.klassen} />
                   {hartnaeckig.length > 0 && (
-                    <p className="said faint">{txt("{n} Wörter sitzen auch nach vielen Versuchen nicht — sie stehen unten unter „Hartnäckig“.", { n: hartnaeckig.length })}</p>
+                    <p className="said faint">{txt(hartnaeckig.length === 1
+                      ? "Gezählt sind nur Wörter, die heute sitzen. Dazu kommt {n} Wort, das es trotz vieler Versuche nicht tut — unten unter „Hartnäckig“."
+                      : "Gezählt sind nur Wörter, die heute sitzen. Dazu kommen {n} Wörter, die es trotz vieler Versuche nicht tun — unten unter „Hartnäckig“.",
+                      { n: hartnaeckig.length })}</p>
                   )}
                 </div>
               )}
@@ -303,7 +309,7 @@ export function Stats() {
                 <div className="card">
                   <h4><Icon name="clock" size={14} />{txt("Wie lange du übst")}</h4>
                   <Kennzahl zahl={Math.round(sitz.schnittMinuten)} einheit={txt("Minuten")}
-                    satz={txt("je Sitzung — {n} Sitzungen in {t}", { n: sitz.anzahl, t: txt(ZEITRAUM_NAME[zeitraum]) })} />
+                    satz={txt("je Sitzung — {n} Sitzungen im Zeitraum", { n: sitz.anzahl })} />
                   <div className="bars mins">
                     {sitz.sitzungen.map((x, i) => (
                       <i key={i} style={{ height: Math.max(4, Math.round(x.minuten / (sitz.maxMinuten || 1) * 100)) + "%" }} />
@@ -419,16 +425,14 @@ const Donut = ({ anteil }: { anteil: number }) => {
 };
 
 /* ==================================================== Alle Wörter (Bildschirm) */
-function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, suche, setSuche, counts, onWort, detail, onZurueck }: any) {
+function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, counts, onWort, detail, onZurueck }: any) {
   /* Die Erklaerzeile unter der Tabelle sagt, was die Spalten bedeuten. Das
    * Fragezeichen an "Treffer" sagt zusaetzlich, was gezaehlt wird -- die
    * Feinheit, dass ein fehlender Akzent als Treffer gilt, passt in keine
    * Legende und ueberrascht sonst genau die, die nachrechnen. */
   const [trefferInfo, setTrefferInfo] = useState(false);
   const view = useMemo(() => {
-    const q = suche.toLowerCase().trim();
-    let l = rows.filter((r: any) => (filter === "all" || r.stufe === filter)
-      && (!q || fgnOf(r.w).toLowerCase().includes(q) || (r.w[NATIVE] || "").toLowerCase().includes(q)));
+    let l = rows.filter((r: any) => filter === "all" || r.stufe === filter);
     l = [...l].sort((a: any, b: any) => {
       if (sort.key === "word") { const av = fgnOf(a.w).toLowerCase(), bv = fgnOf(b.w).toLowerCase(); return av < bv ? -sort.dir : av > bv ? sort.dir : 0; }
       if (sort.key === "haelt") return ((a.prof.haeltTage || 0) - (b.prof.haeltTage || 0)) * sort.dir;
@@ -436,7 +440,7 @@ function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, suc
       return (a.priority - b.priority) * sort.dir;
     });
     return l;
-  }, [rows, filter, suche, sort]);
+  }, [rows, filter, sort]);
 
   const sortiere = (key: string) => setSort((s: any) => s.key === key ? { key, dir: -s.dir } : { key, dir: key === "word" ? 1 : -1 });
 
@@ -456,8 +460,6 @@ function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, suc
           </button>
         ))}
       </div>
-      <input className="mini-input" style={{ marginTop: 10 }} value={suche} placeholder={txt("Wort suchen")}
-        onChange={(e) => setSuche(e.target.value)} />
 
       {trefferInfo && (
         <div className="infonote">{txt("Als Treffer zählt jede Antwort, die nicht ganz daneben war — ein fehlender Akzent oder ein Buchstabendreher also auch. Ein Wort, das noch nie abgefragt wurde, zeigt einen Strich.")}</div>
@@ -487,7 +489,7 @@ function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, suc
           ))}
         </tbody>
       </table>
-      {!view.length && <div className="empty"><div className="big">{txt("Nichts gefunden")}</div><div>{txt("Andere Stufe wählen oder die Suche leeren")}</div></div>}
+      {!view.length && <div className="empty"><div className="big">{txt("Nichts in dieser Stufe")}</div><div>{txt("Oben eine andere Stufe wählen")}</div></div>}
 
       <div className="legendline">
         <b>{txt("hält")}</b> — {txt("wie viele Tage das Wort im Moment sitzt, bevor es wiederkommt.")}{" "}
@@ -547,7 +549,7 @@ function HartnaeckigListe({ rows, stats, fgnOf, onZurueck }: any) {
 }
 
 /* ================================================ Erweitert (Bildschirm) */
-function Erweitert({ settings, versuche, halte, onZurueck }: any) {
+function Erweitert({ settings, tageSitzt, halte, onZurueck }: any) {
   const ziel = Math.round(retentionFor(settings) * 100);
   return (
     <div className="statstab">
@@ -562,14 +564,14 @@ function Erweitert({ settings, versuche, halte, onZurueck }: any) {
         <p className="said faint">{txt("Höher heisst: mehr Karten am Tag, dafür weniger Vergessen. Tiefer heisst: weniger Karten, dafür rutscht mehr weg. Einstellen kannst du es in den Einstellungen.")}</p>
       </div>
 
-      {versuche.n > 0 && (
+      {tageSitzt.belegt && (
         <>
           <div className="grp"><Icon name="target" size={14} />{txt("Bis ein Wort sitzt")}</div>
           <div className="card">
-            <Kennzahl zahl={versuche.median} einheit={txt("Versuche")}
-              satz={txt("bis die Hälfte deiner Wörter sitzt")} />
-            <LiegendeBalken klassen={versuche.klassen} />
-            <p className="said faint">{txt("Gezählt werden die Abfragen eines Wortes, bis es auf „sitzt“ steht. Erst danach ist die Frage sinnvoll, wie lange es dann hält.")}</p>
+            <Kennzahl zahl={Math.round(tageSitzt.schnitt)} einheit={txt("Tage")}
+              satz={txt("im Schnitt, vom ersten Mal bis „sitzt“")} />
+            <StehendeBalken klassen={tageSitzt.klassen} />
+            <p className="said faint">{txt("Gezählt wird vom ersten Mal, das du ein Wort gesehen hast, bis zu dem Tag, an dem es zum ersten Mal sass. Zwei Achsen für dieselbe Sache: die Versuche in der Übersicht sagen, wie viel Arbeit es war — die Tage hier, wie viel Geduld. Erst danach ist die Frage sinnvoll, wie lange ein Wort dann hält.")}</p>
           </div>
         </>
       )}

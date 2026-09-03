@@ -6,8 +6,8 @@ import { LS, load, save } from "../lib/storage";
 import { newId } from "../lib/ids";
 import { RECOMMENDED } from "../lib/defaults";
 import { DEFAULT_VOCAB } from "../data/seed";
-import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings } from "../lib/migrate";
-import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER } from "../lib/fsrs";
+import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand } from "../lib/migrate";
+import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER, S2 } from "../lib/fsrs";
 import type { SessionOutcome, SerializedCard } from "../lib/fsrs";
 import { appendReviews, type ReviewEntry } from "../lib/reviewlog";
 import type { Word, ListT } from "../lib/types";
@@ -122,6 +122,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       setSettings((prev: any) => ({ ...prev, ...retokenSettings(prev, plan.tokenMap) }));
       applied.wortlistenV16 = true;
     }
+    // V17 — Anlagedatum für Wörter, die noch keines haben.
+    if (!done.anlagedatumV17) { setVocabState((v: any) => datiereAltbestand(v)); applied.anlagedatumV17 = true; }
     if (Object.keys(applied).length) {
       setMeta((prev: any) => ({ ...prev, migrations: { ...(prev.migrations || {}), ...applied } }));
     }
@@ -170,9 +172,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const ema = s.seen === 0 ? score : s.ema * (1 - a) + score * a;
       const streak = verdict === "correct" ? (s.streak || 0) + 1 : 0;
       const history = [...s.history, { score, verdict, ts: Date.now(), errorType }].slice(-30);
+      const firstTs = s.firstTs || Date.now();   // erstes Mal gesehen
       return {
         ...prev,
         [wordId]: {
+          firstTs,
           seen,
           scoreSum: s.scoreSum + score,
           correctCount: s.correctCount + (verdict === "correct" ? 1 : 0),
@@ -224,7 +228,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       // session (FIX 1) — not from the live stat already mutated this session.
       base = baseCard || initialCard(s);
       const fsrsCard = gradeFromCard(base, rating as number, retentionFor(settings));
-      return { ...prev, [wordId]: { ...s, fsrs: fsrsCard } };
+      /* Der Tag, an dem ein Wort zum ersten Mal sass. Wird einmal gesetzt und
+       * nie wieder -- faellt das Wort spaeter zurueck, bleibt der erste
+       * Erfolg trotzdem der erste Erfolg. */
+      const sitztSeitTs = s.sitztSeitTs || (fsrsCard.stability >= S2 ? Date.now() : undefined);
+      return { ...prev, [wordId]: { ...s, fsrs: fsrsCard, ...(sitztSeitTs ? { sitztSeitTs } : {}) } };
     });
     // append-only log of the BEFORE-state (for a future fit); batched flush.
     if (base) {
