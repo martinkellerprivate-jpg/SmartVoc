@@ -165,3 +165,28 @@ export function datiereAltbestand(vocab: any[]): any[] {
   });
   return geaendert ? next : vocab;
 }
+
+/* V18 — ein Wort gehört in genau eine Wortliste.
+ *
+ * Bisher war `lists` ein Feld mit beliebig vielen Einträgen: „Lektion 4"
+ * und „Unregelmässige Verben" konnten beide wahr sein. Das klang gut und
+ * kostete an jeder Stelle etwas — beim Bearbeiten brauchte es einen Wähler
+ * mit Kästchen, beim Zählen musste man aufpassen, ein Wort nicht zweimal zu
+ * zählen, und beim Löschen einer Liste war nie klar, ob das Wort mitgeht.
+ *
+ * Jetzt gilt: genau eine Liste. Wörter, die in mehreren lagen, behalten die
+ * ERSTE — das ist die, in die sie hineingelegt wurden, denn das Feld wächst
+ * am Ende. Die anderen Zugehörigkeiten fallen weg; die Wörter selbst
+ * bleiben unangetastet.
+ */
+export function einListeJeWort(vocab: any[]): { vocab: any[]; geaendert: number } {
+  let geaendert = 0;
+  const next = vocab.map((w) => {
+    const l = w.lists || [];
+    if (l.length <= 1) return w;
+    geaendert++;
+    return { ...w, lists: [l[0]] };
+  });
+  return { vocab: geaendert ? next : vocab, geaendert };
+}
+

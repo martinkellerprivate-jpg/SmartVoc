@@ -8,6 +8,7 @@ import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { MasteryBar } from "../ui/MasteryBar";
 import { listReadiness } from "../lib/readiness";
+import { useAlsUnterkopf } from "../ui/ScreenHead";
 import { WordDetailModal } from "./WordDetailModal";
 import {
   ZEITRAEUME, type Zeitraum, sammleAntworten, antwortBilanz, fehlerarten,
@@ -425,6 +426,7 @@ const Donut = ({ anteil }: { anteil: number }) => {
 
 /* ==================================================== Alle Wörter (Bildschirm) */
 function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, counts, onWort, detail, onZurueck }: any) {
+  useAlsUnterkopf(txt("Alle Wörter"), onZurueck);
   /* Die Erklaerzeile unter der Tabelle sagt, was die Spalten bedeuten. Das
    * Fragezeichen an "Treffer" sagt zusaetzlich, was gezaehlt wird -- die
    * Feinheit, dass ein fehlender Akzent als Treffer gilt, passt in keine
@@ -445,10 +447,6 @@ function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, cou
 
   return (
     <div className="statstab">
-      <div className="head-row">
-        <button className="icon-btn" onClick={onZurueck} aria-label={txt("Zurück")}><Icon name="arrowLeft" size={16} /></button>
-        <div className="screen-title">{txt("Alle Wörter")}</div>
-      </div>
       <div className="ruest">
         <button className={"pill" + (filter === "all" ? " pill-on" : "")} onClick={() => setFilter("all")}>
           {txt("Alles")}<span className="pill-n">{rows.length}</span>
@@ -513,6 +511,7 @@ const dranAm = (p: any) => {
 
 /* =============================================== Hartnäckig (Bildschirm) */
 function HartnaeckigListe({ rows, stats, fgnOf, onZurueck }: any) {
+  useAlsUnterkopf(txt("Hartnäckig"), onZurueck);
   const gruppen = useMemo(() => {
     const g: Record<string, any[]> = {};
     for (const r of rows) { const p = r.w.pair || "en-de"; (g[p] = g[p] || []).push(r); }
@@ -524,10 +523,6 @@ function HartnaeckigListe({ rows, stats, fgnOf, onZurueck }: any) {
 
   return (
     <div className="statstab">
-      <div className="head-row">
-        <button className="icon-btn" onClick={onZurueck} aria-label={txt("Zurück")}><Icon name="arrowLeft" size={16} /></button>
-        <div className="screen-title">{txt("Hartnäckig")}</div>
-      </div>
       <p className="said">{txt("Diese Wörter konntest du schon und hast sie danach wieder vergessen. Mehr Wiederholung hilft hier weniger als eine Eselsbrücke.")}</p>
       {gruppen.map((g) => (
         <div key={g.pair}>
@@ -549,13 +544,10 @@ function HartnaeckigListe({ rows, stats, fgnOf, onZurueck }: any) {
 
 /* ================================================ Erweitert (Bildschirm) */
 function Erweitert({ settings, tageSitzt, halte, onZurueck }: any) {
+  useAlsUnterkopf(txt("Erweitert"), onZurueck);
   const ziel = Math.round(retentionFor(settings) * 100);
   return (
     <div className="statstab">
-      <div className="head-row">
-        <button className="icon-btn" onClick={onZurueck} aria-label={txt("Zurück")}><Icon name="arrowLeft" size={16} /></button>
-        <div className="screen-title">{txt("Erweitert")}</div>
-      </div>
 
       <div className="grp"><Icon name="target" size={14} />{txt("Dein Behaltensziel")}</div>
       <div className="card">

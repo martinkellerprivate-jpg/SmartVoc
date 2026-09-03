@@ -6,6 +6,7 @@ const ICONS: Record<string, string> = {
   x: "M18 6 6 18 M6 6l12 12",
   arrowRight: "M5 12h14 M13 6l6 6-6 6",
   arrowLeft: "M19 12H5 M11 6l-6 6 6 6",
+  chevronLeft: "M15 5l-7 7 7 7",
   "thumb-up": "M7 22H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3 M7 12l4-9a2.5 2.5 0 0 1 2.5 2.5V9h5a2 2 0 0 1 2 2.4l-1.4 7A2 2 0 0 1 17 20H7z",
   "chevron-left": "M15 18l-6-6 6-6",
   "chevron-right": "M9 18l6-6-6-6",

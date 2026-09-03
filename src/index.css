@@ -220,7 +220,7 @@ input, button, textarea, select { font-family: inherit; }
 .card-examples { margin-top: 6px; max-width: 36ch; text-align: left; border-left: 2px solid var(--line); padding-left: 12px; display: flex; flex-direction: column; gap: 5px; }
 .latin-keys { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0; }
 .latin-key { min-width: 38px; height: 38px; padding: 0 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 10px; font-family: var(--serif); font-size: 17px; line-height: 1; box-shadow: var(--shadow-sm); }
-.latin-key:hover { border-color: var(--amber); color: var(--amber-deep); }
+.latin-key:hover { border-color: var(--ink-soft); color: var(--ink); }
 .latin-key:active { transform: translateY(1px); }
 .latin-keys-hint { font-size: 11.5px; color: var(--ink-faint); margin-left: 2px; }
 .card-phonetic { font-family: var(--mono); font-size: 13px; color: var(--ink-faint); letter-spacing: .01em; text-align: center; margin-top: -2px; }
@@ -237,7 +237,7 @@ input, button, textarea, select { font-family: inherit; }
 .card-scene { display: flex; flex-direction: column; }
 .card-frame { position: relative; width: 100%; }
 .card-expand { position: absolute; top: 8px; right: 8px; z-index: 5; width: 32px; height: 32px; border-radius: 9px; border: 1px solid var(--line); background: var(--card); color: var(--ink-soft); display: grid; place-items: center; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .14s ease, color .14s ease, border-color .14s ease; }
-.card-expand:hover { color: var(--amber-deep); border-color: var(--amber); transform: scale(1.06); }
+.card-expand:hover { color: var(--ink); border-color: var(--ink-soft); transform: scale(1.06); }
 /* B2: audio button fixed at the card's top-left, identical across all modes/faces */
 .card-audio { position: absolute; top: 8px; left: 8px; z-index: 5; width: 34px; height: 34px; border-radius: 9px; box-shadow: var(--shadow-sm); }
 .practice-wrap.focus-on { position: fixed; inset: 0; z-index: 200; margin: 0; background: oklch(0.2 0.02 70 / 0.62); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 22px; overflow: auto; }
@@ -255,7 +255,7 @@ input, button, textarea, select { font-family: inherit; }
 .help-acc-item { border: 1px solid var(--line); border-radius: 12px; background: var(--card); overflow: hidden; }
 .help-acc-item.open { border-color: var(--amber); }
 .help-acc-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 15px; background: none; border: none; cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--ink); text-align: left; }
-.help-acc-head:hover { color: var(--amber-deep); }
+.help-acc-head:hover { color: var(--ink); }
 .help-acc-item.open .help-acc-head { color: var(--amber-deep); }
 .help-acc-body { padding: 2px 16px 15px; font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
 .help-acc-body p { margin: 0 0 10px; }
@@ -278,7 +278,7 @@ input, button, textarea, select { font-family: inherit; }
 .run-leave { color: var(--ink-faint); }
 /* FR3-5: smart-chip "?" explainer button */
 .chips-help { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--ink-soft); font-weight: 800; font-size: 14px; cursor: pointer; display: inline-grid; place-items: center; align-self: center; }
-.chips-help:hover { color: var(--amber-deep); border-color: var(--amber); }
+.chips-help:hover { color: var(--ink); border-color: var(--ink-soft); }
 /* FR3-6/7: lesson edit ways + two-column word picker */
 .lesson-ways { display: flex; flex-direction: column; gap: 8px; }
 .picker-cols { display: flex; gap: 12px; flex: 1; min-height: 0; overflow: hidden; }
@@ -294,7 +294,7 @@ input, button, textarea, select { font-family: inherit; }
 /* FR3-8: Anleitung — chapter boxes (vertically centred) + scrollable chapter popup */
 .help-chapters { display: flex; flex-direction: column; gap: 8px; max-height: 62vh; overflow-y: auto; }
 .help-chapter-box { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; padding: 10px 15px; border: 1px solid var(--line); border-radius: 12px; background: var(--card-2); cursor: pointer; font: inherit; font-weight: 600; text-align: left; color: var(--ink); }
-.help-chapter-box:hover { border-color: var(--amber); color: var(--amber-deep); }
+.help-chapter-box:hover { border-color: var(--ink-soft); color: var(--ink); }
 .help-chapter-body { overflow-y: auto; padding-right: 6px; line-height: 1.5; }
 /* FR3-2: shared MasteryBar (card + Stats) */
 .mbar-total { font-size: 13px; font-weight: 700; color: var(--ink-soft); text-align: center; margin-bottom: 7px; }
@@ -575,7 +575,7 @@ table.vt tr:hover .row-actions { opacity: 1; }
 
 /* ---------- scan ---------- */
 .scan-drop { width: 100%; border: 2px dashed var(--line); border-radius: 16px; background: var(--card-2); padding: 34px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: all .15s ease; }
-.scan-drop:hover { border-color: var(--amber); background: var(--amber-bg); }
+.scan-drop:hover { border-color: var(--ink-soft); background: var(--bg-2); }
 .scan-cam { width: 60px; height: 60px; border-radius: 16px; background: var(--ink); color: var(--card); display: grid; place-items: center; }
 .scan-review { display: flex; flex-direction: column; gap: 8px; max-height: 46vh; overflow: auto; padding: 2px; }
 .scan-row { display: grid; grid-template-columns: 1fr 1fr 32px; gap: 8px; align-items: center; }
@@ -856,7 +856,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   background-position: calc(100% - 17px) 17px, calc(100% - 12px) 17px;
   background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
 }
-.ctl-select:hover { border-color: var(--amber); }
+.ctl-select:hover { border-color: var(--ink-soft); }
 .btn-h { height: 44px; padding: 0 18px; }
 .field-h { height: 44px; padding: 0 16px; font-size: 17px; }
 .grow-btn { flex: 1; justify-content: center; }
@@ -978,7 +978,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px;
   font: inherit; color: var(--ink);
 }
-.wordrow:hover { border-color: var(--amber); }
+.wordrow:hover { border-color: var(--ink-soft); }
 .wordrow-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .wordrow-word { font-weight: 600; }
 .wordrow-de { font-size: 13px; color: var(--ink-soft); }
@@ -1013,7 +1013,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   padding: 13px 4px; font: inherit; color: var(--ink); cursor: pointer;
 }
 .help-chapter-box:last-child { border-bottom: none; }
-.help-chapter-box:hover { color: var(--amber-deep); }
+.help-chapter-box:hover { color: var(--ink); }
 .help-chapter-title { font-family: var(--serif); font-size: 21px; margin: 12px 0 8px; }
 .help-chapter-body { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); }
 .help-chapter-body p { margin: 0 0 10px; }
@@ -1058,7 +1058,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   border: none; background: none; color: var(--ink-faint);
   display: grid; place-items: center; cursor: pointer;
 }
-.card-bulb:hover { color: var(--amber-deep); }
+.card-bulb:hover { color: var(--ink); }
 .card-bulb.used, .card-bulb:disabled { color: var(--amber); cursor: default; }
 
 /* ====================================================================
@@ -1075,10 +1075,10 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   border: 1px solid var(--line); background: var(--card); color: var(--ink);
   font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap;
 }
-.pill:hover { border-color: var(--amber); }
+.pill:hover { border-color: var(--ink-soft); }
 .pill-sq { width: 38px; padding: 0; justify-content: center; }
 .pill-on { background: var(--amber-deep); border-color: var(--amber-deep); color: #fff; font-weight: 600; }
-.pill-on:hover { border-color: var(--amber-deep); }
+.pill-on:hover { border-color: var(--ink); }
 .pill-quiet { color: var(--ink-soft); font-weight: 400; }
 .pill-n { background: oklch(1 0 0 / .22); border-radius: 999px; padding: 1px 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .pill:not(.pill-on) .pill-n { background: var(--bg-2); color: var(--ink-soft); }
@@ -1117,7 +1117,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   padding: 11px 14px; margin-bottom: 6px; font: inherit; font-size: 13.5px;
   color: var(--ink); cursor: pointer;
 }
-.li:hover { border-color: var(--amber); }
+.li:hover { border-color: var(--ink-soft); }
 .li > svg { flex: none; margin-top: 2px; opacity: .75; }
 .li .g { flex: 1; }
 .li .m { color: var(--ink-faint); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 2px; }
@@ -1132,7 +1132,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: 10px 14px 11px; margin-bottom: 6px;
 }
-.wort:hover { border-color: var(--amber); }
+.wort:hover { border-color: var(--ink-soft); }
 .wtop { display: flex; align-items: baseline; gap: 8px; }
 .wf { flex: 1; font-family: var(--serif); font-size: 16px; }
 .wstufe { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; flex: none; }
@@ -1427,3 +1427,83 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .wl > .ruest .search { flex: 1 1 auto; min-width: 0; }
 .wl > .ruest .search .field { min-width: 0; }
 .wl > .ruest .pill { flex: none; }
+
+/* Die Kopfzeile eines Unterbildschirms: runder Zurück-Knopf und der Name.
+   Sonst nichts — kein Zeichen, kein Zahnrad. Wer eine Ebene tiefer
+   arbeitet, soll nicht aus Versehen in die Einstellungen springen. */
+.topbar-sub { gap: 11px; }
+.topbar-sub .hbtn { width: 34px; height: 34px; border-radius: 999px; flex: none;
+                    border: 1px solid var(--line); background: var(--card);
+                    color: var(--ink-soft); display: grid; place-items: center;
+                    box-shadow: var(--shadow-sm); }
+.topbar-sub .hbtn:hover { color: var(--ink); border-color: var(--ink-soft); }
+.topbar-sub .screen-title { font-family: var(--serif); font-size: 19px; font-weight: 600;
+                            letter-spacing: -.01em; min-width: 0; overflow: hidden;
+                            text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- Wortlisten: die geöffnete Liste ---- */
+/* Alles bis zur Tabellenüberschrift steht fest, gescrollt wird nur die
+   Liste. Sonst verliert man beim Blättern den Bezug: welche Liste, wie
+   weit, welche Spalte. */
+.wl-liste { height: 100%; min-height: 0; }
+.wl-fest { flex: none; }
+.wl-roll { flex: 1; min-height: 0; overflow-y: auto; padding-top: 2px; }
+
+.wl-stand { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.wl-stand > div { flex: 1; min-width: 0; }
+.wl-statlink { flex: none; display: inline-flex; align-items: center; gap: 5px;
+               background: none; border: none; color: var(--ink-faint);
+               font-size: 11.5px; font-weight: 600; cursor: pointer; padding: 2px 0; }
+.wl-statlink:hover { color: var(--ink-soft); }
+
+.wl-werkzeug { margin-top: 10px; }
+.wl-werkzeug .search { flex: 1 1 auto; min-width: 0; }
+.wl-auswahl { margin-top: 8px; align-items: center; }
+.wl-nsel { flex: 1; min-width: 0; font-size: 11.5px; color: var(--ink-faint); }
+.wl-auswahl .btn[disabled] { opacity: .38; pointer-events: none; }
+
+/* Die Tabellenüberschrift und die Zeilen teilen dasselbe Raster. */
+.wz-kopf, .wz { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: baseline; }
+.wz-kopf { padding: 10px 13px 5px; font-size: 9.5px; letter-spacing: .09em;
+           text-transform: uppercase; color: var(--ink-faint); font-weight: 700;
+           border-bottom: 1px solid var(--line); }
+
+/* Eine Zeile: zwei Wörter, und als einziges Zeichen des Lernstands ein
+   farbiger Streifen links — die Farbe der Leiste darüber. Die ganze Fläche
+   zu tönen machte die Liste bunt und arbeitete gegen „schlank". */
+/* Farbe ausdrücklich setzen: iOS gibt Text in einem <button> sonst die
+   Systemfarbe, und die Fremdwörter erschienen blau wie Verweise. */
+.wz { width: 100%; text-align: left; background: var(--card); color: var(--ink);
+      font: inherit; -webkit-appearance: none; appearance: none;
+      border: 1px solid var(--line); border-left: 4px solid var(--stufe, var(--line));
+      border-radius: 10px; padding: 10px 13px; margin-top: 5px; cursor: pointer; }
+.wz:hover { border-color: var(--ink-soft); border-left-color: var(--stufe, var(--line)); }
+.wz.sel { box-shadow: inset 0 0 0 1px var(--ink); border-color: var(--ink);
+          border-left-color: var(--stufe, var(--line)); }
+.wz-f { font-family: var(--serif); font-size: 15.5px; color: var(--ink); }
+.wz-d { font-size: 13px; color: var(--ink-soft); }
+
+.wl-loeschen { display: flex; align-items: center; justify-content: center; gap: 7px;
+               width: 100%; margin: 18px 0 6px; padding: 11px; background: none;
+               border: 1px solid var(--line); border-radius: 12px;
+               color: var(--bad); font-size: 12.5px; cursor: pointer; }
+.wl-loeschen:hover { border-color: var(--bad); }
+
+/* Die Farblegende erklärt alle Balken der Übersicht auf einmal — einmal
+   unter der letzten Liste, nicht an jeder Zeile eine Prozentzahl. */
+.wl-legende { display: flex; flex-wrap: wrap; gap: 5px 13px; padding: 9px 4px 0; font-size: 11px; color: var(--ink-faint); }
+.wl-legende span { display: inline-flex; align-items: center; gap: 5px; }
+.wl-legende i { width: 7px; height: 7px; border-radius: 999px; }
+/* Eine Zeile in einer Smart List ist nur zum Ansehen — kein Zeigefinger,
+   kein Rahmenwechsel, damit niemand vergeblich tippt. */
+.wz.ro { cursor: default; }
+.wz.ro:hover { border-color: var(--line); }
+
+/* Ein <button> bekommt auf iOS Systemschrift und Systemblau. Überall, wo
+   eine Listenzeile ein Knopf ist, muss sie beides ausdrücklich setzen —
+   sonst erscheinen einzelne Zeilen blau wie Verweise. Einmal hier statt an
+   jeder neuen Stelle. */
+button.li, button.wz, button.wort-body, button.planrow-pick, button.wl-loeschen {
+  font: inherit; color: var(--ink); -webkit-appearance: none; appearance: none;
+}
+button.li .m, button.wz .wz-d { color: var(--ink-soft); }

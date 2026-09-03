@@ -6,6 +6,7 @@ import { useStore } from "./store/StoreProvider";
 import { useAuth } from "./sync/auth";
 import { useSync } from "./sync/SyncBridge";
 import { Icon } from "./ui/Icon";
+import { useUnterkopf } from "./ui/ScreenHead";
 import { Ring } from "./ui/Ring";
 import { PAIRS, activePairs } from "./lib/pairs";
 import { setUiLang, detectUiLang, txt } from "./lib/i18n";
@@ -33,6 +34,21 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
   const pair = settings.pair;
   const p = PAIRS[pair] || PAIRS["en-de"];
   const nWords = vocab.filter((w: any) => w.pair === pair).length;
+  const unterkopf = useUnterkopf();
+  /* Ein Unterbildschirm ersetzt die Kopfzeile, er baut keine zweite darunter.
+   * Dort steht nur Zurueck und der Name -- kein Zeichen, kein Zahnrad: wer
+   * eine Ebene tiefer arbeitet, soll nicht aus Versehen in die
+   * Einstellungen springen. */
+  if (unterkopf) {
+    return (
+      <div className="topbar topbar-sub">
+        <button className="hbtn" onClick={unterkopf.zurueck} aria-label={txt("Zurück")}>
+          <Icon name="chevronLeft" size={17} />
+        </button>
+        <div className="screen-title">{unterkopf.titel}</div>
+      </div>
+    );
+  }
   return (
     <div className="topbar">
       <div className="brand">

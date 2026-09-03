@@ -14,6 +14,7 @@ import "./index.css";
 import "./schemes.css";
 import { ToastHost } from "./ui/Toast";
 import { StoreProvider } from "./store/StoreProvider";
+import { ScreenHeadProvider } from "./ui/ScreenHead";
 import { AuthProvider } from "./sync/auth";
 import { SyncBridge } from "./sync/SyncBridge";
 import { App } from "./App";
@@ -28,7 +29,9 @@ hydrateFromNative().then(entferneAltesProtokoll).finally(() => {
       <AuthProvider>
         <StoreProvider>
           <SyncBridge>
-            <App />
+            <ScreenHeadProvider>
+              <App />
+            </ScreenHeadProvider>
           </SyncBridge>
         </StoreProvider>
       </AuthProvider>

@@ -6,7 +6,7 @@ import { LS, load, save } from "../lib/storage";
 import { newId } from "../lib/ids";
 import { RECOMMENDED } from "../lib/defaults";
 import { DEFAULT_VOCAB } from "../data/seed";
-import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand } from "../lib/migrate";
+import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand, einListeJeWort } from "../lib/migrate";
 import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER, S2 } from "../lib/fsrs";
 import type { SessionOutcome, SerializedCard } from "../lib/fsrs";
 import type { Word, ListT } from "../lib/types";
@@ -119,6 +119,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       setSettings((prev: any) => ({ ...prev, ...retokenSettings(prev, plan.tokenMap) }));
       applied.wortlistenV16 = true;
     }
+    // V18 — ein Wort gehört in genau eine Wortliste.
+    if (!done.eineListeV18) { setVocabState((v: any) => einListeJeWort(v).vocab); applied.eineListeV18 = true; }
     // V17 — Anlagedatum für Wörter, die noch keines haben.
     if (!done.anlagedatumV17) { setVocabState((v: any) => datiereAltbestand(v)); applied.anlagedatumV17 = true; }
     if (Object.keys(applied).length) {

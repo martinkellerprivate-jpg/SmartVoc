@@ -669,4 +669,11 @@ export const EN: Record<string, string> = {
   "{n}× falsch": "{n}× wrong",
   "{n}× richtig": "{n}× right",
   "Über „Einfügen“ mehrere auf einmal, oder unten einzeln.": "Use “Paste” for several at once, or add them one by one below.",
+  "In dieser Liste suchen …": "Search in this list …",
+  "Mehrere": "Several",
+  "{n} gewählt": "{n} selected",
+  "Zeile antippen zum Auswählen": "Tap a row to select it",
+  "Diese Wortliste löschen": "Delete this word list",
+  "Oben „Wort“ für eines, „Mehrere“ für eine ganze Liste.": "Use “Word” above for one, “Several” for a whole list.",
+  "Diese Liste stellt die App täglich neu zusammen — hier lässt sich nichts ändern.": "The app puts this list together fresh every day — nothing can be changed here.",
 };

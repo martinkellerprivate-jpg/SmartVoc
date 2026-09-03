@@ -6,7 +6,7 @@ import { Icon } from "../ui/Icon";
 import { translateWord } from "../lib/translate";
 import { deriveProfile, retentionFor } from "../lib/fsrs";
 import { examPrognosis } from "../lib/engine";
-import { STUFE_BADGE, STUFE_LANG, STUFE_FARBE, STUFE_KURZ } from "../lib/stufen";
+import { STUFE_BADGE, STUFE_LANG, STUFE_FARBE, STUFE_KURZ, STUFE_ORDER } from "../lib/stufen";
 import { readyPercent, readyTone, listReadiness, TONE_VAR } from "../lib/readiness";
 import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
@@ -23,6 +23,7 @@ import { WordDetailModal } from "./WordDetailModal";
 import { LatinKeys } from "../ui/LatinKeys";
 import { useImport } from "./importContext";
 import { PairPill } from "../ui/PairPill";
+import { useAlsUnterkopf } from "../ui/ScreenHead";
 import { SMART_ACCESS } from "../lib/smartlists";
 import { resolveSmart, resolveToday } from "../lib/engine";
 
@@ -65,6 +66,14 @@ export function WordList() {
   const [nlDatum, setNlDatum] = useState("");
   const [nlMitDatum, setNlMitDatum] = useState(false);
   const [smartHilfe, setSmartHilfe] = useState(false);
+  /* Auswahl in der geoeffneten Liste. Hervorgehoben wird wie ueberall sonst
+   * in der App: Tintenrand, keine Farbflaeche. Loeschen und Bearbeiten
+   * stehen ausgegraut bereit und werden scharf, sobald etwas gewaehlt ist --
+   * Bearbeiten nur bei genau einem, denn zwei Woerter lassen sich nicht in
+   * einem Formular aendern. */
+  const [gewaehlt, setGewaehlt] = useState<string[]>([]);
+  const [listenSuche, setListenSuche] = useState("");
+  const toggleWort = (id: string) => setGewaehlt((g) => g.includes(id) ? g.filter((x) => x !== id) : [...g, id]);
   const [query, setQuery] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [draft, setDraft] = useState({ fgn: "", de: "", lists: [] as any[], lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
@@ -504,163 +513,155 @@ export function WordList() {
     : offen.art === "smart" ? txt((SMART_ACCESS.find((s) => s.ref === offen.ref) || {}).label || "Auswahl")
     : listNameOf(offen.ref);
 
-  /* Eine Wortkarte, wie im Entwurf: Wort gross, Zustand rechts in derselben
-   * Skala wie die Leiste, darunter die Übersetzung und in ganzen Worten, was
-   * war und was kommt. Die Karte selbst öffnet die Einzelheiten, der Stift
-   * öffnet das Bearbeiten — beides sichtbar, nichts versteckt. */
-  const wortKarte = (w: any) => {
+  /* Eine Zeile, nicht eine Karte. Hier werden Wortlisten gebaut, nicht
+   * Statistik gelesen: zwei Spalten, die zwei Woerter, und als einziges
+   * Zeichen des Lernstands die Farbe der Zeile -- dieselbe Farbe wie in der
+   * Leiste darueber. Die Zahlen pro Wort standen hier doppelt und anders als
+   * in der Statistik; sie stehen jetzt nur noch im Detail. */
+  const wortZeile = (w: any) => {
+    const nurLesen = offen?.art === "smart";
     const ret = retentionFor(settings);
-    const prof = deriveProfile(stats[w.id]?.fsrs, ret);
-    const stufe = !practiceable(w) ? "noch_nicht_geuebt" : prof.stufe;
-    const s = stats[w.id];
-    const teile: string[] = [];
-    if (s?.seen) {
-      teile.push(txt("{n}× richtig", { n: (s.correctCount || 0) + (s.almostCount || 0) }));
-      teile.push(txt("{n}× falsch", { n: s.wrongCount || 0 }));
-      const t = prof.due == null ? null : Math.round((prof.due - Date.now()) / 86400000);
-      if (t != null) teile.push(t < 0 ? txt("jetzt wieder dran") : t === 0 ? txt("heute dran")
-        : t === 1 ? txt("morgen wieder dran") : txt("in {n} Tagen wieder dran", { n: t }));
-    } else teile.push(txt("noch nie geübt"));
+    const stufe = !practiceable(w) ? "noch_nicht_geuebt" : deriveProfile(stats[w.id]?.fsrs, ret).stufe;
+    const an = gewaehlt.includes(w.id);
     return (
-      <div className="wort" key={w.id}>
-        <button className="wort-body" onClick={() => setDetailWord(w)}>
-          <div className="wtop">
-            <span className="wf">{fgnOf(w) || <span className="faint">—</span>}</span>
-            <span className="wstufe" style={{ color: STUFE_FARBE[stufe] }}>
-              <i style={{ background: STUFE_FARBE[stufe] }} />{txt(STUFE_KURZ[stufe])}
-            </span>
-          </div>
-          <div className="wde">{w.de || <span className="faint">—</span>}</div>
-          <div className="wmeta">{teile.join(" · ")}</div>
-        </button>
-        <div className="wort-acts">
-          <button className="icon-btn" title={txt("Bearbeiten")} onClick={() => startEdit(w)}><Icon name="edit" size={15} /></button>
-        </div>
-      </div>
+      <button key={w.id} className={"wz" + (an ? " sel" : "") + (nurLesen ? " ro" : "")}
+        onClick={() => { if (!nurLesen) toggleWort(w.id); }} disabled={nurLesen}
+        style={{ ["--stufe" as any]: STUFE_FARBE[stufe] }}
+        aria-pressed={an} title={txt(STUFE_LANG[stufe])}>
+        <span className="wz-f">{fgnOf(w) || <span className="faint">—</span>}</span>
+        <span className="wz-d">{w.de || <span className="faint">—</span>}</span>
+      </button>
     );
   };
+
+  /* Der Titel der geoeffneten Liste steht in der einen Kopfzeile der App. */
+  useAlsUnterkopf(offen ? titelImBlick : null, () => setOffen(null));
 
   /* =============================================== Eine Liste geöffnet */
   if (offen) {
     const l = offen.art === "liste" ? lists.find((x: any) => x.id === offen.ref) : null;
     const istSystemliste = l?.system === "nolist";
+    const q = listenSuche.toLowerCase().trim();
+    const sichtbar = q
+      ? woerterImBlick.filter((w: any) => fgnOf(w).toLowerCase().includes(q)
+          || (w.lernform || "").toLowerCase().includes(q) || (w.de || "").toLowerCase().includes(q))
+      : woerterImBlick;
+    const nurEines = gewaehlt.length === 1;
+    /* Eine Smart List ist ein Blick, keine Ablage: die App stellt sie jeden
+     * Tag neu zusammen. Wer darin ein Wort loeschte, loeschte es aus seiner
+     * echten Liste -- ohne zu sehen, aus welcher. Also nur ansehen.
+     * "Alle Woerter" ist dagegen ein echter Bestand und bleibt bearbeitbar. */
+    const bearbeitbar = offen.art === "liste" || offen.art === "alle";
     return (
-      <div className="wl">
-        <div className="head-row">
-          <button className="icon-btn" onClick={() => setOffen(null)} aria-label={txt("Zurück")}><Icon name="arrowLeft" size={16} /></button>
-          <div className="screen-title">{titelImBlick}</div>
-          {l && !istSystemliste && (
-            <button className="icon-btn" title={txt("Liste verwalten")} onClick={() => setListMenu((o: boolean) => !o)}>
-              <Icon name="gear" size={15} />
+      <div className="wl wl-liste">
+        {/* Alles bis zur Tabellenüberschrift steht fest; gescrollt wird nur
+            die Liste. Sonst verliert man beim Blättern den Bezug -- welche
+            Liste, wie weit, welche Spalte. */}
+        <div className="wl-fest">
+          {l && (
+            <div className="ruest">
+              <label className="pill pill-sel">
+                <Icon name="calendar" size={14} />
+                <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
+                <input type="date" value={l.dueDate ? new Date(l.dueDate).toISOString().slice(0, 10) : ""}
+                  onChange={(e) => setListDue(l.id, e.target.value)} aria-label={txt("Zieldatum")} />
+              </label>
+              {l.dueDate && (
+                <button className="icon-btn" title={txt("Zieldatum entfernen")} onClick={() => setListDue(l.id, "")}>
+                  <Icon name="trash" size={13} />
+                </button>
+              )}
+              {!istSystemliste && (
+                <button className="pill" onClick={() => { setEditingListId(l.id); setListName(l.name); }}>
+                  <Icon name="edit" size={14} /> {txt("Umbenennen")}
+                </button>
+              )}
+              {canShare && !istSystemliste && (
+                <button className="pill" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>
+              )}
+            </div>
+          )}
+          {editingListId === offen.ref && (
+            <input className="mini-input" style={{ marginTop: 8, fontFamily: "var(--serif)", fontSize: 17 }} autoFocus
+              value={listName} onChange={(e) => setListName(e.target.value)} onBlur={commitRename}
+              onKeyDown={(e) => e.key === "Enter" && commitRename()} />
+          )}
+
+          {standImBlick.total > 0 && (
+            <div className="wl-stand">
+              <MasteryBar dist={standImBlick.dist} total={standImBlick.total} />
+              {/* Klein und oben, damit er nicht stört: die Statistik ist hier
+                  nicht das Thema. */}
+              <button className="wl-statlink" onClick={() => {
+                store.setSettings({ statPair: pair, statLists: offen.art === "liste" ? [offen.ref] : [] });
+                window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
+              }}><Icon name="chart" size={12} /> {txt("Statistik")}</button>
+            </div>
+          )}
+
+          {/* Wörter dazu und suchen -- oben, wo man beides erwartet. */}
+          <div className="ruest wl-werkzeug">
+            {offen.art === "liste" && (
+              <>
+                <button className="pill pill-on" onClick={() => { setAdding((a: any) => ({ ...a, listId: offen.ref })); setNeuesWortOffen(true); }}>
+                  <Icon name="plus" size={14} /> {txt("Wort")}
+                </button>
+                <button className="pill" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
+                  <Icon name="list" size={14} /> {txt("Mehrere")}
+                </button>
+              </>
+            )}
+            <div className="search">
+              <Icon name="search" size={16} />
+              <input className="field" placeholder={txt("In dieser Liste suchen …")}
+                value={listenSuche} onChange={(e) => setListenSuche(e.target.value)} />
+            </div>
+          </div>
+
+          {/* Löschen und Bearbeiten stehen immer da, ausgegraut bis etwas
+              gewählt ist -- so lernt man sie kennen, ohne sie zu suchen. */}
+          {!bearbeitbar ? (
+            <div className="quiet links" style={{ paddingTop: 8 }}>
+              {txt("Diese Liste stellt die App täglich neu zusammen — hier lässt sich nichts ändern.")}
+            </div>
+          ) : (
+          <div className="ruest wl-auswahl">
+            <span className="wl-nsel">{gewaehlt.length ? txt("{n} gewählt", { n: gewaehlt.length }) : txt("Zeile antippen zum Auswählen")}</span>
+            <button className="btn btn-sm" disabled={!nurEines}
+              onClick={() => { const w = vocab.find((x: any) => x.id === gewaehlt[0]); if (w) startEdit(w); }}>
+              <Icon name="edit" size={14} /> {txt("Bearbeiten")}
             </button>
+            <button className="btn btn-sm" disabled={!gewaehlt.length}
+              onClick={() => {
+                if (!confirm(txt(gewaehlt.length === 1 ? "Dieses Wort endgültig löschen?" : "Diese {n} Wörter endgültig löschen?", { n: gewaehlt.length }))) return;
+                gewaehlt.forEach((id) => store.deleteWord(id));
+                toast(txt(gewaehlt.length === 1 ? "Wort gelöscht" : "{n} Wörter gelöscht", { n: gewaehlt.length }), "trash");
+                setGewaehlt([]);
+              }}><Icon name="trash" size={14} /> {txt("Löschen")}</button>
+          </div>
+          )}
+
+          {sichtbar.length > 0 && (
+            <div className="wz-kopf">
+              <span className="wz-f">{P.short}</span>
+              <span className="wz-d">DE</span>
+            </div>
           )}
         </div>
 
-        {/* Zieldatum, Teilen, Einfügen — dort, wo sie gelten. Das Zieldatum
-            steht zuerst: es bestimmt, wie die App die Liste behandelt. */}
-        {l && (
-          <div className="ruest">
-            <label className="pill pill-sel">
-              <Icon name="calendar" size={14} />
-              <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
-              <input type="date" value={l.dueDate ? new Date(l.dueDate).toISOString().slice(0, 10) : ""}
-                onChange={(e) => setListDue(l.id, e.target.value)} aria-label={txt("Zieldatum")} />
-            </label>
-            {l.dueDate && (
-              <button className="icon-btn" title={txt("Zieldatum entfernen")} onClick={() => setListDue(l.id, "")}>
-                <Icon name="x" size={13} />
-              </button>
-            )}
-            {canShare && !istSystemliste && (
-              <button className="pill" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>
-            )}
-            <button className="pill" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
-              <Icon name="plus" size={14} /> {txt("Einfügen")}
-            </button>
-          </div>
-        )}
-
-        {listMenu && l && (
-          <div className="list" style={{ marginTop: 8 }}>
-            <button className="li" onClick={() => { setEditingListId(l.id); setListName(l.name); setListMenu(false); }}>
-              <Icon name="edit" size={14} /><span className="g">{txt("Umbenennen")}</span>
-            </button>
-            <button className="li" onClick={() => { setListMenu(false); deleteActiveList(); }}>
-              <Icon name="trash" size={14} /><span className="g">{txt("Liste löschen")}<div className="m">{txt("die Wörter bleiben erhalten")}</div></span>
-            </button>
-          </div>
-        )}
-        {editingListId === offen.ref && (
-          <input className="mini-input" style={{ marginTop: 8, fontFamily: "var(--serif)", fontSize: 17 }} autoFocus
-            value={listName} onChange={(e) => setListName(e.target.value)} onBlur={commitRename}
-            onKeyDown={(e) => e.key === "Enter" && commitRename()} />
-        )}
-
-        {standImBlick.total > 0 ? (
-          <div style={{ marginTop: 12 }}>
-            {/* Die Leiste bringt ihre Gesamtzahl selbst mit -- eine zweite
-                darueber sagte dasselbe zweimal. */}
-            <MasteryBar dist={standImBlick.dist} total={standImBlick.total} />
-          </div>
-        ) : (
-          <div className="empty" style={{ marginTop: 14 }}>
-            <div className="big">{txt("Noch keine Wörter")}</div>
-            <div>{txt("Über „Einfügen“ mehrere auf einmal, oder unten einzeln.")}</div>
-          </div>
-        )}
-
-        <div className="list" style={{ marginTop: 10 }}>{woerterImBlick.map(wortKarte)}</div>
-
-        {/* Ein Wort dazu, direkt am Ende der Liste — dort, wo man merkt,
-            dass eines fehlt. Der grosse Eingabeblock oben ist entfallen. */}
-        {offen.art === "liste" && (
-          neuesWortOffen ? (
-            <div className="card" style={{ marginTop: 8 }}>
-              <div className="row wrap" style={{ gap: 9 }}>
-                <input className="field grow" style={{ minWidth: 130 }} autoFocus placeholder={isLat ? txt("Grundform") : P.foreignLabel}
-                  value={adding.fgn} onChange={(e) => setAdding({ ...adding, fgn: e.target.value })}
-                  onKeyDown={(e) => e.key === "Enter" && addWord()} />
-                <input className="field grow" style={{ minWidth: 130 }} placeholder={txt("Deutsch (der/die/das)")}
-                  value={adding.de} onChange={(e) => setAdding({ ...adding, de: e.target.value })}
-                  onKeyDown={(e) => e.key === "Enter" && addWord()} />
-              </div>
-              {isLat && (
-                <input className="field" style={{ marginTop: 8, width: "100%" }} placeholder={txt("Lernform (z. B. canis, canis, m.)")}
-                  value={adding.lernform} onChange={(e) => setAdding({ ...adding, lernform: e.target.value })}
-                  onKeyDown={(e) => e.key === "Enter" && addWord()} />
-              )}
-              <div className="row" style={{ marginTop: 9, justifyContent: "flex-end", gap: 8 }}>
-                <button className="btn btn-ghost btn-sm" onClick={() => setNeuesWortOffen(false)}>{txt("Fertig")}</button>
-                <button className="btn btn-primary btn-sm" onClick={addWord}
-                  disabled={busy || (!adding.fgn.trim() && !adding.de.trim() && !adding.lernform.trim())}>
-                  {busy ? <Icon name="refresh" size={14} /> : <Icon name="plus" size={14} />} {txt("Hinzufügen")}
-                </button>
-              </div>
-              <div className="faint" style={{ fontSize: 11.5, marginTop: 7 }}>
-                {txt("Eine Seite genügt — die andere wird übersetzt und zum Nachschauen vorgemerkt.")}
-              </div>
-              {isLat && <LatinKeys hint={txt("Feld antippen, dann Zeichen wählen")} />}
+        <div className="wl-roll">
+          {sichtbar.length ? sichtbar.map(wortZeile) : (
+            <div className="empty">
+              <div className="big">{q ? txt("Nichts gefunden") : txt("Noch keine Wörter")}</div>
+              <div>{q ? txt("Anderer Suchbegriff, oder das Feld leeren") : txt("Oben „Wort“ für eines, „Mehrere“ für eine ganze Liste.")}</div>
             </div>
-          ) : (
-            <button className="li" style={{ marginTop: 8, justifyContent: "center" }} onClick={() => setNeuesWortOffen(true)}>
-              <Icon name="plus" size={14} /><span style={{ fontWeight: 600 }}>{txt("Wort hinzufügen")}</span>
+          )}
+          {l && !istSystemliste && (
+            <button className="wl-loeschen" onClick={deleteActiveList}>
+              <Icon name="trash" size={13} /> {txt("Diese Wortliste löschen")}
             </button>
-          )
-        )}
-
-        {standImBlick.total > 0 && (
-          <div className="duo">
-            <button className="btn btn-primary" onClick={() => offen.art === "liste" ? practiseList(offen.ref)
-              : (store.setSettings({ practiceSel: offen.art === "smart" ? "smart:" + offen.ref : "smart:heute" }),
-                 window.dispatchEvent(new CustomEvent("vt-tab", { detail: "practice" })))}>
-              <Icon name="cards" size={15} /> {txt("Liste üben · {n} Karten", { n: standImBlick.total })}
-            </button>
-            <button className="btn" onClick={() => {
-              store.setSettings({ statPair: pair, statLists: offen.art === "liste" ? [offen.ref] : [] });
-              window.dispatchEvent(new CustomEvent("vt-tab", { detail: "stats" }));
-            }}><Icon name="chart" size={15} /> {txt("Statistik")}</button>
-          </div>
-        )}
+          )}
+        </div>
 
         {modale}
       </div>
@@ -691,7 +692,20 @@ export function WordList() {
       {treffer ? (
         <>
           <div className="grp">{txt("{n} Treffer", { n: treffer.length })}</div>
-          <div className="list">{treffer.map(wortKarte)}</div>
+          {/* In der Uebersicht fuehrt ein Treffer in die Liste, in der das
+              Wort liegt -- gesucht wird ja, um es dort zu finden. */}
+          <div className="wz-kopf"><span className="wz-f">{P.short}</span><span className="wz-d">DE</span></div>
+          <div className="list">{treffer.map((w: any) => {
+            const stufe = !practiceable(w) ? "noch_nicht_geuebt" : deriveProfile(stats[w.id]?.fsrs, retentionFor(settings)).stufe;
+            const lid = (w.lists || [])[0];
+            return (
+              <button key={w.id} className="wz" style={{ ["--stufe" as any]: STUFE_FARBE[stufe] }}
+                onClick={() => { setQuery(""); if (lid) setOffen({ art: "liste", ref: lid }); else setOffen({ art: "alle", ref: "" }); }}>
+                <span className="wz-f">{fgnOf(w) || <span className="faint">—</span>}</span>
+                <span className="wz-d">{w.de || <span className="faint">—</span>}</span>
+              </button>
+            );
+          })}</div>
           {!treffer.length && <div className="empty"><div className="big">{txt("Nichts gefunden")}</div><div>{txt("Anderer Suchbegriff, oder das Feld leeren")}</div></div>}
         </>
       ) : (
@@ -710,7 +724,6 @@ export function WordList() {
                   {st && st.total > 0 && (
                     <span className="standline">
                       <MasteryBar dist={st.prof.dist} total={st.total} showLegend={false} />
-                      <b>{st.pct} %</b>
                     </span>
                   )}
                 </span>
@@ -719,6 +732,14 @@ export function WordList() {
             );
           }) : (
             <div className="quiet">{txt("Noch keine Wortliste — lege oben eine an.")}</div>
+          )}
+
+          {pairLists.length > 0 && (
+            <div className="wl-legende">
+              {STUFE_ORDER.map((k) => (
+                <span key={k}><i style={{ background: STUFE_FARBE[k] }} />{txt(STUFE_KURZ[k])}</span>
+              ))}
+            </div>
           )}
 
           <div className="grp">{txt("Smart Lists")}
