@@ -109,7 +109,7 @@ const BEISPIELE: Record<string, string> = {
   "la-de": "canis | canis, canis, m. | Nomen | der Hund\nliber | liber, librī, m. | Nomen | das Buch",
 };
 
-export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHint }: { open: boolean; pair: string; onParsed: (rows: any[]) => void; onClose: () => void; initialText?: string; draftHint?: boolean }) {
+export function PasteModal({ open, pair, onParsed, onClose, initialText }: { open: boolean; pair: string; onParsed: (rows: any[]) => void; onClose: () => void; initialText?: string }) {
   const BEISPIEL = BEISPIELE[pair] || BEISPIELE["en-de"];
   const toast = useToast();
   const isLat = isLatinPair(pair);
@@ -166,15 +166,13 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHi
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
 
-        {draftHint && (
-          <div className="tips-intro" style={{ marginBottom: 10, background: "var(--amber-bg)", color: "var(--amber-deep)" }}>
-            <Icon name="camera" size={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />
-            {txt("Foto-Text erkannt — grober Entwurf, bitte korrigieren. Tipp: „KI-Prompt kopieren“, in dein KI-Chat geben, das Ergebnis hier wieder einfügen — dann „Weiter zum Prüfen“.")}
-          </div>
-        )}
+        {/* Der KI-Weg war eine eigene Zeile im Blatt davor und fuehrte in
+            genau dieses Fenster. Jetzt steht er hier, wo er gebraucht wird:
+            als Satz und als Knopf unter dem Textfeld. */}
         <div className="tips-intro" style={{ marginBottom: 12 }}>
           Füge eine Wortliste ein — eine Zeile pro Wort, Spalten getrennt durch Tab, „|", „–" oder „:".
           {isLat ? " Latein: Grundform | Lernform | Wortart | Deutsch." : ` ${P.foreignLabel} | Deutsch.`}
+          {" "}{txt("Nichts zum Kopieren? Der KI-Prompt unten holt dir die Liste aus einem Foto der Heftseite.")}
         </div>
 
         <textarea className="field" style={{ minHeight: 150, resize: "vertical", fontFamily: "var(--mono)", fontSize: 16 }}

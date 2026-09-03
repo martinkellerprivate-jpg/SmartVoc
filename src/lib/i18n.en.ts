@@ -797,4 +797,6 @@ export const EN: Record<string, string> = {
   "{n} Wort bereit zum Import": "{n} word ready to import",
   "Neues Wort": "New word",
   "Wort hinzugefügt": "Word added",
+  "Nichts zum Kopieren? Der KI-Prompt unten holt dir die Liste aus einem Foto der Heftseite.": "Nothing to copy? The AI prompt below fetches the list from a photo of the page.",
+  "abtippen, einfügen — oder von einer KI abschreiben lassen": "type it, paste it — or have an AI copy it out for you",
 };

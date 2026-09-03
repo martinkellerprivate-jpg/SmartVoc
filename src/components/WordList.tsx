@@ -99,7 +99,6 @@ export function WordList() {
   const [reviewRows, setReviewRows] = useState(null);   // P5: shared review screen
   const [pasteOpen, setPasteOpen] = useState(false);
   const [pasteSeed, setPasteSeed] = useState("");   // V12: scan → paste seeded text
-  const [pasteDraft, setPasteDraft] = useState(false);
   const [detailWord, setDetailWord] = useState(null);   // V16: word-detail popup
   const canShare = isConfigured && !!auth.user;
   /* Tabellen nur im Web und nur angemeldet. `auth.ready` gehoert dazu:
@@ -385,14 +384,12 @@ export function WordList() {
    * also stehen sie dort, wo man anlegt und ergaenzt. */
   const quellenZeilen = (
     <>
-      <button className="li" onClick={() => { setQuellenBlatt(null); setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
+      {/* Der KI-Prompt stand hier als eigene Zeile und fuehrte in genau
+          dasselbe Fenster -- zwei Wege, ein Ziel. Er gehoert dorthin, wo man
+          ihn braucht: in das Fenster selbst, als Knopf neben dem Textfeld. */}
+      <button className="li" onClick={() => { setQuellenBlatt(null); setPasteSeed(""); setPasteOpen(true); }}>
         <Icon name="list" size={15} />
-        <span className="g">{txt("Liste einfügen")}<div className="m">{txt("aus dem Heft, einem Buch oder von einer KI")}</div></span>
-        <Icon name="arrowRight" size={14} />
-      </button>
-      <button className="li" onClick={() => { setQuellenBlatt(null); setPasteSeed(""); setPasteDraft(true); setPasteOpen(true); }}>
-        <Icon name="sparkle" size={15} />
-        <span className="g">{txt("KI-Prompt zum Abschreiben")}<div className="m">{txt("Foto der Heftseite an eine KI, Ergebnis hier einfügen")}</div></span>
+        <span className="g">{txt("Liste einfügen")}<div className="m">{txt("abtippen, einfügen — oder von einer KI abschreiben lassen")}</div></span>
         <Icon name="arrowRight" size={14} />
       </button>
       {isConfigured && (
@@ -521,7 +518,7 @@ export function WordList() {
           toast(txt("Wort gelöscht"), "trash");
         }} />
 
-      <PasteModal open={pasteOpen} pair={pair} initialText={pasteSeed} draftHint={pasteDraft}
+      <PasteModal open={pasteOpen} pair={pair} initialText={pasteSeed}
         onClose={() => setPasteOpen(false)}
         onParsed={(rows: any) => { setPasteOpen(false); setReviewRows(rows); }} />
       <WordDetailModal open={!!detailWord} word={detailWord} onClose={() => setDetailWord(null)} onEdit={(w: any) => { setDetailWord(null); startEdit(w); }} />
