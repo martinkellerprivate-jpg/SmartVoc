@@ -9,6 +9,15 @@ import { txt } from "../lib/i18n";
 
 import { STUFE_FARBE as TONE, STUFE_KURZ as LEG } from "../lib/stufen";
 
+/* „Ungeübt" ist keine Leistung, sondern deren Abwesenheit -- in der Leiste
+ * traegt es deshalb die Farbe der leeren Bahn, nicht eine eigene Fuellung.
+ * Vorher fuellte es grau, und eine Liste mit 220 ungeuebten Woertern zeigte
+ * einen randvollen Balken: das liest sich als "fertig" und heisst das
+ * Gegenteil. Seit die Prozentzahl daneben weggefallen ist, widerspricht dem
+ * auch nichts mehr. Der Punkt in der Legende bleibt grau -- dort muss man
+ * die Stufe erkennen koennen. */
+const BALKEN = (k: string) => k === "noch_nicht_geuebt" ? "var(--bg-2)" : TONE[k];
+
 export function MasteryBar({ dist, total, onSegment, activeFilter, showLegend = true }:
   { dist: Record<string, number>; total: number; onSegment?: (k: string) => void; activeFilter?: string; showLegend?: boolean }) {
   if (!total) return null;
@@ -22,7 +31,7 @@ export function MasteryBar({ dist, total, onSegment, activeFilter, showLegend = 
       <div className="mbar-band">
         {present.map((k) => (
           <i key={k} className={onSegment ? "clickable" : ""} onClick={onSegment ? () => onSegment(k) : undefined}
-            style={{ flex: dist[k], background: TONE[k], opacity: activeFilter && activeFilter !== k ? 0.35 : 1 }}
+            style={{ flex: dist[k], background: BALKEN(k), opacity: activeFilter && activeFilter !== k ? 0.35 : 1 }}
             title={`${txt(LEG[k])}: ${dist[k]}`} />
         ))}
       </div>
@@ -55,7 +64,7 @@ export function MasteryTrend({ days }: { days: { d: string; c: number[] }[] }) {
             const tot = day.c.reduce((a, b) => a + b, 0) || 1;
             return (
               <div key={day.d} className="mtrend-col" title={day.d}>
-                {STUFE_ORDER.map((k, i) => day.c[i] ? <i key={k} style={{ height: (day.c[i] / tot) * 100 + "%", background: TONE[k] }} /> : null)}
+                {STUFE_ORDER.map((k, i) => day.c[i] ? <i key={k} style={{ height: (day.c[i] / tot) * 100 + "%", background: BALKEN(k) }} /> : null)}
               </div>
             );
           })}

@@ -712,7 +712,7 @@ export function WordList() {
         <PairPill />
         <div className="search">
           <Icon name="search" size={17} />
-          <input className="field" placeholder={txt("In allen Wörtern suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
+          <input className="field" placeholder={txt("Wörter suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
         <button className="pill pill-on" onClick={() => setNeueListe(true)}>
           <Icon name="plus" size={14} /> {txt("Neue Liste")}
@@ -789,7 +789,7 @@ export function WordList() {
           {/* „Alle Wörter“ ist der Rückfall, nicht der Einstieg — deshalb
               zuletzt und abgesetzt. Als Reiter an erster Stelle stand es
               vor den Listen, um die es eigentlich geht. */}
-          <button className="li sel" style={{ marginTop: 11 }} onClick={() => setOffen({ art: "alle", ref: "" })}>
+          <button className="li li-alle" onClick={() => setOffen({ art: "alle", ref: "" })}>
             <Icon name="list" size={15} />
             <span className="g">{txt("Alle Wörter")}</span>
             <span className="lchip-n">{pairVocab.length}</span>

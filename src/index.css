@@ -55,12 +55,22 @@ input, button, textarea, select { font-family: inherit; }
   padding: 0 calc(20px + env(safe-area-inset-right)) 80px calc(20px + env(safe-area-inset-left));
 }
 .topbar {
-  display: flex; align-items: center; gap: 18px;
+  display: flex; align-items: center; gap: 10px;
   /* Top inset: the page now runs under the status bar (viewport-fit=cover),
      and the brand line is the first thing that would end up beneath it. */
-  padding: calc(22px + env(safe-area-inset-top)) 4px 18px;
-  flex-wrap: wrap;
+  padding: calc(22px + env(safe-area-inset-top)) 0 18px;
+  /* Kein Umbruch: die Zeile war breiter als der Bildschirm -- Zeichen und
+     Name, Anmelden und zwei runde Knoepfe brauchten mehr Platz als da war,
+     und das Zahnrad am rechten Rand wurde abgeschnitten. Statt zu brechen
+     schrumpft jetzt das eine Element, das ohne Schaden kuerzer wird: der
+     Anmelde-Knopf. Die Knoepfe bleiben rund und vollstaendig. */
+  flex-wrap: nowrap; min-width: 0;
 }
+.topbar > * { flex: none; }
+.topbar .tipbtn { flex: 0 1 auto; min-width: 0; overflow: hidden;
+                  text-overflow: ellipsis; white-space: nowrap; }
+.topbar .brand { min-width: 0; }
+.topbar .brand-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .brand { display: flex; align-items: center; gap: 12px; }
 /* Das Markenzeichen aus dem Entwurf, nicht mehr der Buchstabe S. Gross genug,
    um es zu erkennen -- klein war die Beanstandung. */
@@ -1579,3 +1589,10 @@ button:focus-visible, a:focus-visible, [role="button"]:focus-visible,
 select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible {
   outline: 2px solid var(--ink); outline-offset: 2px;
 }
+
+/* „Alle Wörter" ist der Rückfall, nicht der Einstieg — abgesetzt durch eine
+   Trennlinie und etwas Luft, NICHT durch einen Tintenrand. Der bedeutet in
+   dieser App „ausgewählt", und ausgewählt ist die Zeile nicht. */
+.li-alle { margin-top: 14px; position: relative; }
+.li-alle::before { content: ""; position: absolute; left: 14px; right: 14px; top: -8px;
+                   border-top: 1px solid var(--line); }
