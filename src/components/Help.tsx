@@ -48,9 +48,7 @@ export function Help() {
 
   return (
     <>
-      <button className="icon-btn" onClick={() => setOpen(true)} title={txt("Hilfe")} aria-label={txt("Hilfe")}>
-        <Icon name="help" size={17} />
-      </button>
+      <button className="hbtn" onClick={() => setOpen(true)} title={txt("Hilfe")} aria-label={txt("Hilfe")}>?</button>
 
       {open && (
         <div className="modal-backdrop" onClick={() => setOpen(false)}>

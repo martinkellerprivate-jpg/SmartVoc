@@ -71,9 +71,9 @@ function Header({ tab, setTab }: { tab: string; setTab: (t: string) => void }) {
       <Help />
       {/* Einstellungen verlassen die Leiste: sie sind kein Bereich, in dem man
           arbeitet, sondern etwas, das man einmal einstellt. */}
-      <button className={"icon-btn" + (tab === "settings" ? " active" : "")} title={txt("Einstellungen")}
+      <button className={"hbtn" + (tab === "settings" ? " active" : "")} title={txt("Einstellungen")}
         aria-pressed={tab === "settings"} onClick={() => setTab(tab === "settings" ? "practice" : "settings")}>
-        <Icon name="gear" size={17} />
+        <Icon name="gear" size={16} />
       </button>
     </div>
   );

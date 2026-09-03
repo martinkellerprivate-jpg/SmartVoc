@@ -100,7 +100,17 @@ function rawLines(text: string, isLat: boolean) {
     .map((l) => isLat ? { grundform: l } : { fgn: l });
 }
 
+/* Das Beispiel im Textfeld muss in der eingestellten Sprache stehen. Es
+ * zeigte immer Englisch -- auch bei Franzoesisch oder Latein, und dann
+ * schreibt jemand englische Woerter in eine franzoesische Liste. */
+const BEISPIELE: Record<string, string> = {
+  "en-de": "dog | der Hund\ncat | die Katze",
+  "fr-de": "le chien | der Hund\nle chat | die Katze",
+  "la-de": "canis | canis, canis, m. | Nomen | der Hund\nliber | liber, librī, m. | Nomen | das Buch",
+};
+
 export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHint }: { open: boolean; pair: string; onParsed: (rows: any[]) => void; onClose: () => void; initialText?: string; draftHint?: boolean }) {
+  const BEISPIEL = BEISPIELE[pair] || BEISPIELE["en-de"];
   const toast = useToast();
   const isLat = isLatinPair(pair);
   const P = PAIRS[pair] || PAIRS["en-de"];
@@ -118,8 +128,8 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHi
    * Die Spaltenzahl ist fix und jede Spalte wird geschrieben, auch die leeren.
    * Der Parser erkennt das neue Format an genau dieser Anzahl. */
   const COLS = isLat
-    ? "Grundform | Lernform | Wortart | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Topic | Aussprache"
-    : `${P.foreignLabel} | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Topic | Aussprache`;
+    ? "Grundform | Lernform | Wortart | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Aussprache"
+    : `${P.foreignLabel} | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Aussprache`;
   const nCols = isLat ? 10 : 8;
   const latinRules = isLat
     ? "Lernform = Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: 4 Stammformen; Adjektiv: 3 Genus-Endungen). Wortart ∈ {Nomen, Verb, Adjektiv, Zahlwort, Adverb}.\n"
@@ -164,11 +174,11 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText, draftHi
         )}
         <div className="tips-intro" style={{ marginBottom: 12 }}>
           Füge eine Wortliste ein — eine Zeile pro Wort, Spalten getrennt durch Tab, „|", „–" oder „:".
-          {isLat ? " Latein: Grundform | Lernform | Wortart | Deutsch | Topic." : ` ${P.foreignLabel} | Deutsch | Topic.`}
+          {isLat ? " Latein: Grundform | Lernform | Wortart | Deutsch." : ` ${P.foreignLabel} | Deutsch.`}
         </div>
 
         <textarea className="field" style={{ minHeight: 150, resize: "vertical", fontFamily: "var(--mono)", fontSize: 13.5 }}
-          placeholder={isLat ? "canis | canis, canis, m. | Nomen | der Hund | Tiere" : "dog | der Hund | Animals\ncat | die Katze | Animals"}
+          placeholder={BEISPIEL}
           value={text} onChange={(e) => setText(e.target.value)} />
 
         <div className="toolbelt" style={{ justifyContent: "flex-start", marginTop: 10 }}>

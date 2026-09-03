@@ -17,16 +17,9 @@ import { PAIRS, fk, isLatinPair, practiceable } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { deriveProfile, effectiveRetentionFor } from "../lib/fsrs";
 import { STUFE_FARBE, STUFE_KURZ } from "../lib/stufen";
+import { FeldZeile as Zeile } from "../ui/FeldZeile";
+import { LernstandBlock } from "../ui/LernstandBlock";
 
-/* Eine Zeile: links das Feld, rechts sein Inhalt. Leer heisst „—", nicht
- * verschwunden — eine Zeile, die je nach Inhalt da ist oder nicht, macht
- * den Bildschirm bei jedem Wort anders hoch. */
-const Zeile = ({ feld, hinweis, wert }: any) => (
-  <div className="li">
-    <span className="g">{feld}{hinweis && <div className="m">{hinweis}</div>}</span>
-    <span className="wd-wert">{wert || <span className="faint">—</span>}</span>
-  </div>
-);
 
 export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean; word: any; onClose: () => void; onEdit?: (w: any) => void }) {
   const store = useStore();
@@ -73,19 +66,7 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
           <Zeile feld={txt("Beispielsatz 2")} hinweis={txt("Deutsch")} wert={bspDe(1)} />
         </div>
 
-        <div className="grp">{txt("Lernstand")}</div>
-        <div className="list">
-          <Zeile feld={txt("Wie gut es sitzt")} wert={
-            <span className="wstufe" style={{ color: STUFE_FARBE[stufe] }}>
-              <i style={{ background: STUFE_FARBE[stufe] }} />{txt(STUFE_KURZ[stufe])}
-            </span>} />
-          <Zeile feld={txt("Richtig beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: richtig }) : null} />
-          <Zeile feld={txt("Falsch beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: stat.wrongCount || 0 }) : null} />
-          <Zeile feld={txt("Nächste Übung")} wert={naechste} />
-          <Zeile feld={txt("Hält im Moment")} hinweis={txt("Tage, bis es wiederkommt")}
-            wert={prof.haeltTage ? txt("{n} Tage", { n: Math.round(prof.haeltTage) }) : null} />
-          <Zeile feld={txt("In Listen")} wert={inListen.join(" · ")} />
-        </div>
+        <LernstandBlock word={word} />
 
         <div className="modal-foot">
           <button className="btn btn-ghost" onClick={onClose}>{txt("Schliessen")}</button>

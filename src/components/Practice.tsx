@@ -27,10 +27,12 @@ import { lernTipps } from "./Help";
  * Waehler und Pille nicht auseinanderlaufen. "Multiple-Choice" heisst so,
  * weil es so heisst; "Auswählen" war meine Erfindung. */
 const MODE_NAME: Record<string, string> = {
-  type: "Eintippen", choice: "Multiple-Choice", recall: "Selbstkontrolle", memorize: "Durchblättern",
+  type: "Eintippen", choice: "Multiple-Choice", recall: "Selbstkontrolle", memorize: "Nur durchblättern",
 };
 const MODE_ICON: Record<string, string> = {
-  type: "edit", choice: "list", recall: "refresh", memorize: "cards",
+  /* Das Durchblaettern trug das Karten-Zeichen -- also dasselbe wie "Ueben"
+   * im Reiter darunter. Ein Auge sagt, was dort passiert: anschauen. */
+  type: "edit", choice: "list", recall: "refresh", memorize: "eye",
 };
 
 const toneVarP = (t) => t === "green" ? "var(--green)" : t === "amber" ? "var(--amber)" : t === "red" ? "var(--red)" : t === "blue" ? "var(--blue)" : "var(--ink-faint)";
@@ -741,7 +743,7 @@ export function Practice() {
           {scopeBar}
           <div className="empty round-done">
             <div className="big">{txt("Durchgeblättert")}</div>
-            <div className="round-tally">{txt("Du hast alle Karten dieser Auswahl angesehen. Durchblättern ändert deinen Lernstand nicht.")}</div>
+            <div className="round-tally">{txt("Du hast alle Karten dieser Auswahl angesehen. Durchblättern zählt für nichts — kein Lernstand, keine Statistik.")}</div>
             <div className="round-actions">
               <button className="btn btn-primary" onClick={leaveRun}>{txt("Fertig")}</button>
               <button className="btn btn-ghost btn-sm" onClick={() => beginRun(runWordsRef.current, true)}><Icon name="refresh" size={14} /> {txt("Nochmal durchblättern")}</button>
@@ -871,7 +873,7 @@ export function Practice() {
   const roundProgressEl = mode === "memorize" ? (
     /* Durchblättern zählt nicht -- dann darf dort auch kein Fortschritt
      * stehen, der etwas anderes behauptet. */
-    <div className="round-progress round-progress-off">{txt("Durchblättern — zählt nicht für deinen Lernstand")}</div>
+    <div className="round-progress round-progress-off"><Icon name="eye" size={13} /> {txt("Nur durchblättern — zählt für nichts")}</div>
   ) : (roundProg && roundProg.total > 0) ? (
     <div className="round-progress">
       <span className="round-progress-label">{txt("Übungsfortschritt")}</span>
@@ -880,7 +882,12 @@ export function Practice() {
     </div>
   ) : null;
 
-  const masteryBar = scopeTotal > 0 ? (
+  /* Beim Durchblaettern faellt der Farbbalken weg, wie der Fortschritt
+   * darueber. Er zeigt den Lernstand des Umfangs -- und der aendert sich
+   * beim Durchblaettern nicht. Eine Leiste, die sich nicht bewegt, waehrend
+   * man arbeitet, behauptet stillschweigend, es passiere nichts. Der Satz
+   * ueber der Karte sagt schon, warum. */
+  const masteryBar = (scopeTotal > 0 && mode !== "memorize") ? (
     <div className="mastery-strip"><MasteryBar dist={scopeDist} total={scopeTotal} /></div>
   ) : null;
 
@@ -1008,8 +1015,13 @@ export function Practice() {
                 <input ref={inputRef} className="field field-h" placeholder={txt("Auf {sprache} eintippen …", { sprache: labelOf(tgtKey) })}
                   value={input} onChange={(e) => setInput(e.target.value)} autoComplete="off"
                   autoCorrect="off" autoCapitalize="off" spellCheck="false" />
-                <button className="btn btn-primary btn-h" onClick={check} disabled={!input.trim()}>
-                  {txt("Prüfen")} <Icon name="arrowRight" size={16} />
+                {/* Im Vollbild nur der Pfeil: dort ist die Karte gross und alles
+                    andere soll klein sein. Ausserhalb steht das Wort dabei --
+                    wer die App zum ersten Mal oeffnet, soll nicht raten. */}
+                <button className={"btn btn-primary btn-h" + (focus ? " btn-rund" : "")}
+                  onClick={check} disabled={!input.trim()}
+                  aria-label={focus ? txt("Prüfen") : undefined} title={focus ? txt("Prüfen") : undefined}>
+                  {!focus && txt("Prüfen")} <Icon name="arrowRight" size={focus ? 18 : 16} />
                 </button>
               </div>
 
@@ -1078,7 +1090,7 @@ export function Practice() {
                 {txt("Nächste Karte")} <Icon name="arrowRight" size={16} />
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">{txt("Durchblättern ändert deinen Lernstand nicht")}</span></div>
+            <div className="toolbelt"><span className="faint">{txt("Nur durchblättern — kein Lernstand, keine Statistik")}</span></div>
           </>
         )}
       </div>
@@ -1096,7 +1108,7 @@ export function Practice() {
             <option value="type">{txt("Eintippen")}</option>
             <option value="choice">{txt("Multiple-Choice")}</option>
             <option value="recall">{txt("Selbstkontrolle")}</option>
-            <option value="memorize">{txt("Durchblättern")}</option>
+            <option value="memorize">{txt("Nur durchblättern")}</option>
           </select>
         </label>
         <div className="grow" />

@@ -24,6 +24,8 @@ import { LatinKeys } from "../ui/LatinKeys";
 import { useImport } from "./importContext";
 import { PairPill } from "../ui/PairPill";
 import { useAlsUnterkopf } from "../ui/ScreenHead";
+import { FeldEingabe, FeldAuswahl } from "../ui/FeldZeile";
+import { LernstandBlock } from "../ui/LernstandBlock";
 import { SMART_ACCESS } from "../lib/smartlists";
 import { resolveSmart, resolveToday } from "../lib/engine";
 
@@ -64,7 +66,6 @@ export function WordList() {
   const [neueListe, setNeueListe] = useState(false);
   const [nlName, setNlName] = useState("");
   const [nlDatum, setNlDatum] = useState("");
-  const [nlMitDatum, setNlMitDatum] = useState(false);
   const [smartHilfe, setSmartHilfe] = useState(false);
   /* Auswahl in der geoeffneten Liste. Hervorgehoben wird wie ueberall sonst
    * in der App: Tintenrand, keine Farbflaeche. Loeschen und Bearbeiten
@@ -369,44 +370,37 @@ export function WordList() {
                 <div className="modal-title">{txt("Wort bearbeiten")}</div>
                 <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setEditingId(null)}><Icon name="x" size={16} /></button>
               </div>
-              <div className="col" style={{ gap: 9 }}>
-                <input className="field" placeholder={isLat ? txt("Grundform") : P.foreignLabel}
-                  value={draft.fgn} onChange={(e) => setDraft({ ...draft, fgn: e.target.value })} />
+              {/* Dieselben Zeilen wie im Wort-Detail, nur beschreibbar: Feldname
+                  links, Inhalt rechts. Vorher war es ein Stapel leerer Felder,
+                  bei dem man am Platzhalter erkannte, was hineingehoert -- und
+                  sobald etwas drinstand, gar nicht mehr. */}
+              <div className="fz-block">
+                <FeldEingabe feld={isLat ? txt("Grundform") : P.foreignLabel}
+                  wert={draft.fgn} onChange={(v) => setDraft({ ...draft, fgn: v })} />
                 {isLat && (
                   <>
-                    <input className="field" placeholder={txt("Lernform (z. B. canis, canis, m.)")}
-                      value={draft.lernform} onChange={(e) => setDraft({ ...draft, lernform: e.target.value })} />
-                    <select className="field" value={draft.wortart} onChange={(e) => setDraft({ ...draft, wortart: e.target.value })}>
-                      {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
-                    </select>
+                    <FeldEingabe feld={txt("Stammformen")} wert={draft.lernform}
+                      onChange={(v) => setDraft({ ...draft, lernform: v })} />
+                    <FeldAuswahl feld={txt("Wortart")} wert={draft.wortart} werte={WORTARTEN}
+                      onChange={(v) => setDraft({ ...draft, wortart: v })} />
                   </>
                 )}
-                <input className="field" placeholder={txt("Deutsch (der/die/das)")}
-                  value={draft.de} onChange={(e) => setDraft({ ...draft, de: e.target.value })} />
-                <input className="field" placeholder={txt("Aussprache (optional)")}
-                  value={draft.phon} onChange={(e) => setDraft({ ...draft, phon: e.target.value })} />
-                <input className="field" placeholder={txt("Beispielsatz 1 (optional)")}
-                  value={draft.ex1} onChange={(e) => setDraft({ ...draft, ex1: e.target.value })} />
-                <input className="field" placeholder={txt("Beispielsatz 1 auf Deutsch (optional)")}
-                  value={draft.ex1de} onChange={(e) => setDraft({ ...draft, ex1de: e.target.value })} />
-                <input className="field" placeholder={txt("Beispielsatz 2 (optional)")}
-                  value={draft.ex2} onChange={(e) => setDraft({ ...draft, ex2: e.target.value })} />
-                <input className="field" placeholder={txt("Beispielsatz 2 auf Deutsch (optional)")}
-                  value={draft.ex2de} onChange={(e) => setDraft({ ...draft, ex2de: e.target.value })} />
-                <div className="grp">{txt("In welchen Listen")}</div>
-                <div className="list">
-                  {pairLists.map((l: any) => {
-                    const an = draft.lists.includes(l.id);
-                    return (
-                      <button key={l.id} className={"li" + (an ? " sel" : "")} onClick={() => toggleDraftList(l.id)}>
-                        <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
-                        <span className="g">{l.name}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                {isLat && <LatinKeys hint={txt("Feld antippen, dann Zeichen wählen")} />}
+                <FeldEingabe feld={txt("Deutsch")} wert={draft.de}
+                  onChange={(v) => setDraft({ ...draft, de: v })} />
+                <FeldEingabe feld={txt("Lautschrift")} hinweis={txt("optional")} wert={draft.phon}
+                  onChange={(v) => setDraft({ ...draft, phon: v })} />
+                <FeldEingabe feld={txt("Beispielsatz 1")} hinweis={P.foreignLabel} wert={draft.ex1}
+                  mehrzeilig onChange={(v) => setDraft({ ...draft, ex1: v })} />
+                <FeldEingabe feld={txt("Beispielsatz 1")} hinweis={txt("Deutsch")} wert={draft.ex1de}
+                  mehrzeilig onChange={(v) => setDraft({ ...draft, ex1de: v })} />
+                <FeldEingabe feld={txt("Beispielsatz 2")} hinweis={P.foreignLabel} wert={draft.ex2}
+                  mehrzeilig onChange={(v) => setDraft({ ...draft, ex2: v })} />
+                <FeldEingabe feld={txt("Beispielsatz 2")} hinweis={txt("Deutsch")} wert={draft.ex2de}
+                  mehrzeilig onChange={(v) => setDraft({ ...draft, ex2de: v })} />
               </div>
+              {/* Der Lernstand -- derselbe Block wie in der Statistik. */}
+              {(() => { const w = vocab.find((x: any) => x.id === editingId); return w ? <LernstandBlock word={w} /> : null; })()}
+              {isLat && <LatinKeys hint={txt("Feld antippen, dann Zeichen wählen")} />}
               <div className="modal-foot">
                 <button className="btn btn-ghost" onClick={() => { store.deleteWord(editingId); setEditingId(null); }}>
                   <Icon name="trash" size={14} /> {txt("Wort löschen")}
@@ -429,27 +423,27 @@ export function WordList() {
             </div>
             <input className="field" style={{ width: "100%" }} autoFocus placeholder={txt("Name der Liste …")}
               value={nlName} onChange={(e) => setNlName(e.target.value)} />
+            {/* Nur ein Datumsfeld. Zwei Wahlzeilen fuer "mit" und "ohne"
+                waren eine Frage, die das leere Feld schon beantwortet:
+                nichts eingetragen heisst kein Zieldatum. */}
             <div className="grp">{txt("Zieldatum")} <span className="hint">— {txt("optional")}</span></div>
-            <div className="list">
-              <button className={"li" + (!nlMitDatum ? " sel" : "")} onClick={() => setNlMitDatum(false)}>
-                <span className="ckbox">{!nlMitDatum && <Icon name="check" size={12} />}</span>
-                <span className="g">{txt("Kein Zieldatum")}<div className="m">{txt("läuft nebenher")}</div></span>
-              </button>
-              <button className={"li" + (nlMitDatum ? " sel" : "")} onClick={() => setNlMitDatum(true)}>
-                <span className="ckbox">{nlMitDatum && <Icon name="check" size={12} />}</span>
-                <Icon name="calendar" size={14} />
-                <span className="g">{txt("Datum wählen")}<div className="m">{txt("Prüfung oder selbstgesetztes Ziel")}</div></span>
-              </button>
+            <div className="row" style={{ gap: 8 }}>
+              <input type="date" className="field grow" value={nlDatum}
+                onChange={(e) => setNlDatum(e.target.value)} aria-label={txt("Zieldatum")} />
+              {nlDatum && (
+                <button className="icon-btn" title={txt("Zieldatum entfernen")} onClick={() => setNlDatum("")}>
+                  <Icon name="trash" size={14} />
+                </button>
+              )}
             </div>
-            {nlMitDatum && (
-              <input type="date" className="field" style={{ marginTop: 8 }}
-                value={nlDatum} onChange={(e) => setNlDatum(e.target.value)} />
-            )}
+            <div className="faint" style={{ fontSize: 11.5, marginTop: 6 }}>
+              {txt("Leer lassen heisst: die Liste läuft nebenher.")}
+            </div>
             <div className="modal-foot">
               <button className="btn btn-ghost" onClick={() => setNeueListe(false)}>{txt("Abbrechen")}</button>
               <button className="btn btn-primary" onClick={() => {
-                legeListeAn(nlName, nlMitDatum && nlDatum ? new Date(nlDatum + "T08:00:00").getTime() : undefined);
-                setNeueListe(false); setNlName(""); setNlDatum(""); setNlMitDatum(false);
+                legeListeAn(nlName, nlDatum ? new Date(nlDatum + "T08:00:00").getTime() : undefined);
+                setNeueListe(false); setNlName(""); setNlDatum("");
               }}>{txt("Anlegen")}</button>
             </div>
           </div>
@@ -650,10 +644,46 @@ export function WordList() {
         </div>
 
         <div className="wl-roll">
-          {sichtbar.length ? sichtbar.map(wortZeile) : (
+          {sichtbar.length ? sichtbar.map(wortZeile) : q ? (
             <div className="empty">
-              <div className="big">{q ? txt("Nichts gefunden") : txt("Noch keine Wörter")}</div>
-              <div>{q ? txt("Anderer Suchbegriff, oder das Feld leeren") : txt("Oben „Wort“ für eines, „Mehrere“ für eine ganze Liste.")}</div>
+              <div className="big">{txt("Nichts gefunden")}</div>
+              <div>{txt("Anderer Suchbegriff, oder das Feld leeren")}</div>
+            </div>
+          ) : (
+            /* Eine leere Liste ist der Moment, in dem man die Wege braucht --
+               nicht ein Satz, der auf Knöpfe weiter oben zeigt. Vier Wege,
+               nach Aufwand geordnet: der bequemste zuerst. */
+            <div className="list" style={{ marginTop: 4 }}>
+              <div className="grp">{txt("Wie füllst du diese Liste?")}</div>
+              {isConfigured && (
+                <button className="li" onClick={() => openImport()}>
+                  <Icon name="download" size={15} />
+                  <span className="g">{txt("Geteilte Liste übernehmen")}<div className="m">{txt("jemand hat dir einen Link geschickt")}</div></span>
+                  <Icon name="arrowRight" size={14} />
+                </button>
+              )}
+              <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(false); setPasteOpen(true); }}>
+                <Icon name="list" size={15} />
+                <span className="g">{txt("Liste einfügen")}<div className="m">{txt("aus dem Heft, einem Buch oder von einer KI")}</div></span>
+                <Icon name="arrowRight" size={14} />
+              </button>
+              <button className="li" onClick={() => { setPasteSeed(""); setPasteDraft(true); setPasteOpen(true); }}>
+                <Icon name="sparkle" size={15} />
+                <span className="g">{txt("KI-Prompt zum Abschreiben")}<div className="m">{txt("Foto der Heftseite an eine KI, Ergebnis hier einfügen")}</div></span>
+                <Icon name="arrowRight" size={14} />
+              </button>
+              <button className="li" onClick={() => { setAdding((x: any) => ({ ...x, listId: offen.ref })); setNeuesWortOffen(true); }}>
+                <Icon name="plus" size={15} />
+                <span className="g">{txt("Wörter einzeln eintippen")}<div className="m">{txt("dieselbe Maske wie beim Bearbeiten")}</div></span>
+                <Icon name="arrowRight" size={14} />
+              </button>
+              {tabellen && (
+                <button className="li" onClick={() => dateiRef.current?.click()}>
+                  <Icon name="upload" size={15} />
+                  <span className="g">{txt("Tabelle einlesen")}<div className="m">{txt("Excel oder CSV — nur in der Webversion")}</div></span>
+                  <Icon name="arrowRight" size={14} />
+                </button>
+              )}
             </div>
           )}
           {l && !istSystemliste && (

@@ -175,12 +175,15 @@ export function PlanTab() {
           {/* Miniansicht: Balken ohne Legende — die Legende steht im Kalender. */}
           <MasteryBar dist={t.prof.dist} total={t.prof.total} showLegend={false} />
         </div>
+        {/* Beschriftet, nicht nur bezeichnet. Zwei Knoepfe, die nebeneinander
+            die Zeile fuellen, muessen sagen was sie tun -- ein Zeichen allein
+            in einem handbreiten Klotz ist ein Raetsel. */}
         <div className="planrow-acts">
-          <button className="btn btn-sm btn-primary" title={txt("Üben")} onClick={() => practise([t.list.id])}>
-            <Icon name="cards" size={14} />
+          <button className="btn btn-sm btn-primary" onClick={() => practise([t.list.id])}>
+            <Icon name="cards" size={14} /> {txt("Üben")}
           </button>
-          <button className="btn btn-sm btn-ghost" title={txt("Statistik")} onClick={() => showStats(t.list)}>
-            <Icon name="chart" size={14} />
+          <button className="btn btn-sm" onClick={() => showStats(t.list)}>
+            <Icon name="chart" size={14} /> {txt("Statistik")}
           </button>
         </div>
       </div>
