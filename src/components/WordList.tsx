@@ -635,10 +635,22 @@ export function WordList() {
           </div>
           )}
 
+          {/* Alles oder nichts — als zwei Wörter über der Liste. Ohne das
+              blieb nur, dreissig Zeilen einzeln anzutippen. „Auswahl
+              aufheben" ist blass, solange nichts gewählt ist: der Weg
+              zurück muss sichtbar sein, aber nicht anklickbar wirken. */}
+          {bearbeitbar && sichtbar.length > 0 && (
+            <div className="wl-alle">
+              <button onClick={() => setGewaehlt(sichtbar.map((w: any) => w.id))}
+                disabled={gewaehlt.length === sichtbar.length}>{txt("Alle auswählen")}</button>
+              <button onClick={() => setGewaehlt([])} disabled={!gewaehlt.length}>{txt("Auswahl aufheben")}</button>
+            </div>
+          )}
+
           {sichtbar.length > 0 && (
             <div className="wz-kopf">
-              <span className="wz-f">{P.short}</span>
-              <span className="wz-d">DE</span>
+              <span className="wz-f">{P.foreignLabel}</span>
+              <span className="wz-d">{P.nativeLabel}</span>
             </div>
           )}
         </div>
@@ -724,7 +736,7 @@ export function WordList() {
           <div className="grp">{txt("{n} Treffer", { n: treffer.length })}</div>
           {/* In der Uebersicht fuehrt ein Treffer in die Liste, in der das
               Wort liegt -- gesucht wird ja, um es dort zu finden. */}
-          <div className="wz-kopf"><span className="wz-f">{P.short}</span><span className="wz-d">DE</span></div>
+          <div className="wz-kopf"><span className="wz-f">{P.foreignLabel}</span><span className="wz-d">{P.nativeLabel}</span></div>
           <div className="list">{treffer.map((w: any) => {
             const stufe = !practiceable(w) ? "noch_nicht_geuebt" : deriveProfile(stats[w.id]?.fsrs, retentionFor(settings)).stufe;
             const lid = (w.lists || [])[0];

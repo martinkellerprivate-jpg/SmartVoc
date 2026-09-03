@@ -32,7 +32,9 @@ const ICONS: Record<string, string> = {
   calendar: "M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z M4 9h16 M8 3v4 M16 3v4",
   refresh: "M3 12a9 9 0 0 1 15-6.7L21 8 M21 3v5h-5 M21 12a9 9 0 0 1-15 6.7L3 16 M3 21v-5h5",
   filter: "M3 5h18 M6 12h12 M10 19h4",
-  swatch: "M2 12h20 M12 2v20",
+  /* Zwei uebereinandergelegte Farbkarten. Vorher stand hier ein Kreuz --
+     das Zeichen war nie gezeichnet worden und erschien als Plus. */
+  swatch: "M4 6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z M10 10h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2v-8",
   gear: "M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.7 1.7 0 0 0 .34 1.88l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05a1.7 1.7 0 0 0-2.88 1.2V21a2 2 0 1 1-4 0v-.08a1.7 1.7 0 0 0-2.88-1.2l-.05.05a2 2 0 1 1-2.83-2.83l.05-.05A1.7 1.7 0 0 0 4.6 15H4.5a2 2 0 1 1 0-4h.08a1.7 1.7 0 0 0 1.2-2.88l-.05-.05a2 2 0 1 1 2.83-2.83l.05.05A1.7 1.7 0 0 0 11 4.6V4.5a2 2 0 1 1 4 0v.08a1.7 1.7 0 0 0 2.88 1.2l.05-.05a2 2 0 1 1 2.83 2.83l-.05.05A1.7 1.7 0 0 0 19.4 9v.1a1.7 1.7 0 0 0 1.5 1.4h.1a2 2 0 1 1 0 4h-.08a1.7 1.7 0 0 0-1.62 1z",
 };
 

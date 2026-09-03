@@ -137,7 +137,12 @@ export function App() {
    * ein Wechsel von hell auf dunkel das gewählte Schema nicht. */
   useEffect(() => {
     const r = document.documentElement.dataset;
-    r.scheme = settings.scheme || "kladde";
+    /* Die alten Beige-Schemata heissen jetzt anders. Wer „leinen" oder
+     * „altpapier" gespeichert hat, bekommt das nachfolgende Schema statt
+     * eines Bildschirms ohne Farben. */
+    const ALT: Record<string, string> = { leinen: "tinte", altpapier: "graphit" };
+    const gewaehlt = settings.scheme || "kladde";
+    r.scheme = ALT[gewaehlt] || gewaehlt;
     r.appearance = settings.appearance || "auto";
     r.cardStyle = settings.cardStyle || "ruled";
     r.cardFont = settings.cardFont || "serif";
@@ -182,11 +187,19 @@ export function App() {
           </button>
         ))}
       </div>
-      {tab === "practice" && <Practice />}
-      {tab === "plan" && <PlanTab />}
-      {tab === "lists" && <WordList />}
-      {tab === "stats" && <Stats />}
-      {tab === "settings" && <SettingsTab />}
+      {/* Ein eigener Rollbereich fuer den Inhalt. Vorher rollte das ganze
+          Dokument, und damit half kein `height: 100%` weiter: die Wortliste
+          konnte ihren Kopf nicht ueber den rollenden Zeilen festhalten,
+          weil es keine begrenzte Hoehe gab, an der sie sich haette
+          festmachen koennen. Jetzt begrenzt die Huelle die Hoehe, und ein
+          Bereich darf seinen eigenen Rollbalken fuehren. */}
+      <div className="app-body">
+        {tab === "practice" && <Practice />}
+        {tab === "plan" && <PlanTab />}
+        {tab === "lists" && <WordList />}
+        {tab === "stats" && <Stats />}
+        {tab === "settings" && <SettingsTab />}
+      </div>
       <ImportShareModal open={importOpen} initialToken={importToken} onClose={() => setImportOpen(false)} />
     </div>
     </ImportContext.Provider>

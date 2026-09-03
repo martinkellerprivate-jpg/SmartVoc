@@ -645,7 +645,6 @@ export function Practice() {
                   const days = l.dueDate ? Math.ceil((l.dueDate - Date.now()) / 86400000) : null;
                   return (
                     <button key={l.id} className={"li" + (an ? " sel" : "")} onClick={() => toggleListe(l.id)}>
-                      <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
                       <span className="g">{l.name}
                         <div className="m">
                           {txt("{n} Wörter", { n: listCountOf(l.id) })} · {txt("{p} % bereit", { p: pct })}

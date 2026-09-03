@@ -81,3 +81,47 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | S-50 | Einstellungen | Antwortprüfung und Latein auf dieselbe Zeilenform gebracht — zwei Layouts auf einem Bildschirm wären schlimmer als das alte allein. |
 | S-51 | Einstellungen | *(mein Fehler)* Beim Verschieben von „Lerntipp-Einblendungen“ und den Bereitschafts-Schwellen in die Üben-Zeilen hatte ich die **alten Abschnitte stehen lassen** — beide Einstellungen erschienen doppelt. Entfernt. |
 | S-52 | Üben | *(mein Fehler)* Ein `useMemo` hinter einer frühen Rückgabe liess die App im **Produktionsbündel abstürzen** (React-Fehler 310, weisser Bildschirm). Im Entwicklungsserver fiel es nicht auf, weil dort Daten vorhanden waren und der andere Zweig lief. Haken jetzt vor der ersten Rückgabe. |
+
+## Zweite Runde am Simulator
+
+| Nr | Bereich | CR |
+|---|---|---|
+| T-01 | Einstellungen · Kopf | Der Knopf „Auf die Voreinstellungen zurücksetzen“ **sieht schlecht aus**: dreizeiliger Klotz oben rechts, der über dem Einleitungstext klebt. |
+| T-02 | Einstellungen · Zeilen | Die Kästen brauchen **Abstand zum Rand** — sie kleben links am Bildschirmrand. Und insgesamt schöner machen. |
+| T-03 | Einstellungen · Zeilen | **Die Punkte sind unklar.** (Es ist die Marke „steht auf der Empfehlung“ — offensichtlich nicht selbsterklärend.) |
+| T-04 | Einstellungen · Kopf | Vor dem Zurücksetzen aller Voreinstellungen braucht es einen **Warn- und Bestätigungsdialog**. |
+| T-05 | Einstellungen | „Wann eine Liste als bereit gilt · grün ab 95 %, gelb ab 70 %“ — **versteht so niemand**. Und es gehört nicht unter „Üben“, sondern in einen **eigenen Abschnitt** (es betrifft den Übungsplan). |
+| T-06 | Einstellungen · Antwortprüfung | **Voreinstellung für Gross- und Kleinschreibung ändern:** nicht mehr „egal“, sondern zählt. (Betrifft `lenientCase` in `defaults.ts`; bestehende Nutzer behalten ihre eigene Einstellung.) |
+| T-07 | Einstellungen · Sprachen | Den Erklärtext unter den Sprachpaaren (**„Beim Zuschalten kommt der Grundwortschatz …“**) **weglassen** — braucht es nicht. |
+| T-08 | Einstellungen · Latein | Latein gehört **in den oberen Block (Üben) als eine Zeile „Latein“**; ein Klick führt auf die Optionen, zurück über Zurück-Knopf oder Blatt. Dazu eine **Konsistenzprüfung**, welche der beiden Bauarten für diesen Fall gilt — die App kennt heute beide: Blatt (Einstellungen) und eigener Bildschirm mit Zurück (Wortlisten, Statistik). |
+| T-09 | Einstellungen · Sprache der App | Den Erklärtext darunter **weglassen**. |
+| T-10 | Einstellungen · Aufbau | Einen Abschnitt **„Bedienung“** einführen, der **Aussehen** und **Sprache** enthält. Die Sprache dort als **Wahlzeile** (Kasten mit Pfeil, führt auf die Optionen) — wie die übrigen Zeilen. |
+| T-11 | Einstellungen · Grundwortschatz | Den ganzen Abschnitt **entfernen**. Der Grundwortschatz wird schlicht **immer mitgeladen, sobald eine Sprache zugeschaltet wird** — keine eigene Schaltfläche, kein Zustand „aktiviert“. |
+| T-12 | Einstellungen · Konto | **Fortschritt zurücksetzen** und **Account löschen** brauchen beide zwingend einen **Warn-/Bestätigungsdialog** vor der Ausführung. (Deckt sich mit T-04 für „Alles zurücksetzen“ — dieselbe Bauart für alle drei.) |
+| T-13 | Einstellungen (app-weit) | **Überall die Abstände zum Kastenrand prüfen.** Im Aussehen-Bereich laufen die Segment-Schalter rechts über den Kasten hinaus; generell soll kein Bedienelement den Rand berühren oder überschreiten. Gilt als Durchgang über alle Bereiche, nicht nur hier. |
+| T-14 | Einstellungen · Aussehen · Karte | Die Kartenmuster **„Recycled“ und „Linen“ sehen seltsam aus** — Muster überarbeiten, damit sie wie Papier bzw. Gewebe wirken und nicht wie ein Raster. |
+| T-15 | Einstellungen · Aussehen · Farbschema | Die Schemata sind **langweilig** — untereinander zu ähnlich (alle drei sind warme Beigetöne). **Kladde behalten**, die beiden anderen (Leinen, Altpapier) durch **deutlich verschiedene** Paletten ersetzen. Vorlage: der Prototyp bzw. `assets/brand/farben-entwurf.css`. Betrifft `src/schemes.css` (je Schema hell + dunkel) und die Beschriftungen in `SettingsTab.tsx:455`. |
+| T-16 | app-weit · Auswahl | **Auswahl ist inkonsistent:** Sprachen benutzen Kontrollkästchen, Wortlisten benutzen Hervorhebung. **Die Hervorhebung gilt** — Kontrollkästchen überall entfernen. Und die Hervorhebung muss deutlich sein: ausgewählte Zeilen bekommen eine **dunklere Tönung** plus Rahmen (heute kaum sichtbar). Vorbild: der farbige Streifen links am Zeilenrand aus dem Entwurf. |
+| T-17 | Wortlisten · geöffnete Liste | Drei Dinge: (a) der **farbige Streifen links** an der Wortzeile sieht hässlich aus, wo er der Rundung folgt — als **gerade Linie** führen; (b) **alles bis und mit Tabellenkopf gehört fixiert**, nur die Wortzeilen rollen — zwei getrennte Rollbereiche, Rollbalken nur in der Wortliste; (c) im Tabellenkopf die Sprachen **ausschreiben** statt „EN“ / „DE“. |
+| T-18 | Wortlisten · geöffnete Liste | Oben braucht es **„Alle auswählen“ / „Auswahl aufheben“ als Text**. „Auswahl aufheben“ ist nur anklickbar, wenn mindestens eine Zeile gewählt ist. |
+
+### Umgesetzt am 3. September 2026
+
+| Nr | Wie gelöst |
+|---|---|
+| T-01 | Der Knopf ist aus dem Kopf verschwunden und steht als Zeile **„Einstellungen zurücksetzen“** unter *Konto & Daten* — bei den anderen Handlungen, die man nicht zurücknehmen kann. |
+| T-02 | Jeder Abschnitt hat einen Rumpf (`.set-body`) mit 14 px Polsterung; die Zeilen kleben nicht mehr am Rand. |
+| T-03 | Der Punkt ist weg. Markiert wird jetzt die **Abweichung** („geändert“), nicht die Übereinstimmung — die Liste ist ruhig, und man sieht auf einen Blick, was man selbst verstellt hat. |
+| T-04 · T-12 | Ein Bauteil `Bestaetigen` für alle drei: Einstellungen zurücksetzen, Fortschritt zurücksetzen, Account löschen. Beim Konto bleibt die Eingabe von „LÖSCHEN“ als zweite Sperre. |
+| T-05 | Eigener Abschnitt **Übungsplan**, Zeile heisst **„Ampel der Wortlisten“**, Wert „grün ab 95 %“. Das Blatt erklärt die Ampel in einem Satz; die Regler heissen „Grün ab“ und „Gelb ab“. |
+| T-06 | `lenientCase` steht ab Werk auf `false`. Der Schalter heisst umgedreht **„Gross- und Kleinschreibung zählt“** und ist ab Werk an. Wer die App schon benutzt, behält seine eigene Wahl. |
+| T-07 · T-09 | Beide Erklärtexte entfernt. |
+| T-08 | Latein ist eine Zeile unter *Üben* — und nur sichtbar, wenn Latein zugeschaltet ist. **Konsistenzregel:** in den Einstellungen öffnet alles als **Blatt**, auch eine Gruppe von Einstellungen; ein **eigener Bildschirm mit Zurück** bleibt den Inhaltsbereichen vorbehalten (Wortlisten, Statistik, Hilfe). |
+| T-10 | Neuer Abschnitt **Bedienung** mit der Sprache als Wahlzeile und darunter Erscheinungsbild, Farbschema, Karte, Kartenschrift samt Vorschau. |
+| T-11 | Abschnitt entfernt. Der Grundwortschatz kam ohnehin schon von selbst (`App.tsx`), sobald eine Sprache zugeschaltet ist. |
+| T-13 | `.seg-voll` rechnet die Polsterung ein (`box-sizing`) und die Knöpfe dürfen schrumpfen — nichts läuft mehr aus dem Kasten. |
+| T-14 | Altpapier: sieben blasse Einschlüsse in teilerfremden Kachelgrössen statt drei harter Punkte auf sichtbarem Raster. Leinen: zwei versetzte Faserlagen im 3-px-Takt, kein Innenrahmen mehr. |
+| T-15 | Aus drei Beigetönen werden drei Familien: **Kladde** (warm, Rostrot), **Tinte** (kühl, Indigo), **Graphit** (neutral, Petrol). Erzeugt aus `scratchpad/gen_schemes.py`, alle Kontraste nachgerechnet. Alte Werte `leinen`/`altpapier` bilden auf die Nachfolger ab. |
+| T-16 | Kontrollkästchen app-weit entfernt. Auswahl heisst überall: **dunklerer Grund (`--bg-2`) plus Rahmen in Schriftfarbe**. |
+| T-17 | (a) Der Farbstreifen ist ein eigenes Element und läuft gerade. (b) Die Hülle hat jetzt eine begrenzte Höhe (`100dvh`), der Inhalt rollt in `.app-body` — dadurch kann der Listenkopf über den Zeilen stehen bleiben; der feste Teil rollt bei Bedarf lautlos mit. (c) Der Tabellenkopf schreibt die Sprachen aus. |
+| T-18 | „Alle auswählen“ / „Auswahl aufheben“ als Textzeile über dem Tabellenkopf; die zweite ist blass, solange nichts gewählt ist. |

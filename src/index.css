@@ -50,10 +50,23 @@ input, button, textarea, select { font-family: inherit; }
 /* ---------- layout ---------- */
 /* Side insets matter in landscape on a notched device; on desktop every
    env() here is 0, so the layout is unchanged. */
+/* Die Huelle hat eine begrenzte Hoehe, damit ein Bereich darin seinen
+   eigenen Rollbalken fuehren kann. Vorher rollte das ganze Dokument: der
+   Kopf der Wortliste liess sich nicht ueber den Zeilen festhalten, weil es
+   keine Hoehe gab, an der er haette haften koennen. Kopfzeile und
+   Reiterleiste stehen jetzt fest, gerollt wird nur der Inhalt. */
 .app {
   max-width: 1080px; margin: 0 auto;
-  padding: 0 calc(20px + env(safe-area-inset-right)) 80px calc(20px + env(safe-area-inset-left));
+  height: 100dvh; display: flex; flex-direction: column; overflow: hidden;
+  padding: 0 calc(20px + env(safe-area-inset-right)) 0 calc(20px + env(safe-area-inset-left));
 }
+/* Spalte statt Block: so darf ein Bereich (die geoeffnete Wortliste) die
+   volle Hoehe fuellen und sein Rollen selbst fuehren, waehrend alle
+   anderen sich normal in die Laenge ziehen. */
+.app-body { flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 40px;
+            display: flex; flex-direction: column; }
+.app-body > * { flex: 0 0 auto; }
+.app-body > .wl-liste { flex: 1 1 auto; min-height: 0; }
 .topbar {
   display: flex; align-items: center; gap: 10px;
   /* Top inset: the page now runs under the status bar (viewport-fit=cover),
@@ -541,6 +554,14 @@ table.vt tr:hover .row-actions { opacity: 1; }
 .set-section-h { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); padding: 13px 18px; background: var(--card-2); border-bottom: 1px solid var(--line); }
 .set-row { display: flex; align-items: center; gap: 20px; padding: 15px 18px; border-bottom: 1px solid var(--line-soft); }
 .set-row:last-child { border-bottom: none; }
+/* Der Rumpf einer Box. Die Zeilen klebten am Rand, weil die Box selbst
+   keine Polsterung hatte und die Zeilen ueber die volle Breite liefen.
+   Kopfzeile und Field-Zeilen bleiben randlos -- die tragen ihre eigene. */
+.set-section-hint { font-weight: 400; letter-spacing: 0; text-transform: none;
+                    font-size: 11px; color: var(--ink-faint); }
+.set-body { padding: 12px 14px 14px; display: flex; flex-direction: column; }
+.set-body > .setz:last-child, .set-body > .li:last-child { margin-bottom: 0; }
+.set-body > .grp:first-child { padding-top: 2px; }
 .set-info { flex: 1; min-width: 0; }
 .set-title { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .set-desc { font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; line-height: 1.42; }
@@ -640,22 +661,40 @@ table.vt tr:hover .row-actions { opacity: 1; }
 /* ---- card style ---- */
 [data-card-style="plain"] .card-face { background-image: none; }
 [data-card-style="plain"] .ruled-margin { display: none; }
-/* Altpapier: feine Einschlüsse, keine Linien. */
+/* Altpapier: feine Einschluesse, keine Linien.
+   Vorher waren es drei harte Punkte auf einem Raster von 70 bis 130 px --
+   man sah nicht Papier, sondern die Kachel. Jetzt sieben Einschluesse in
+   teilerfremden Kachelgroessen (29, 37, 43, 53, 61, 71, 89): das Muster
+   wiederholt sich rechnerisch erst nach Metern, und die Flecken sind so
+   blass, dass sie unter der Schrift verschwinden. */
 [data-card-style="recycled"] .card-face {
   background-image:
-    radial-gradient(circle at 22% 34%, var(--line) 0 1px, transparent 1.4px),
-    radial-gradient(circle at 68% 71%, var(--line) 0 1px, transparent 1.4px),
-    radial-gradient(circle at 84% 22%, var(--line-soft) 0 1.4px, transparent 2px);
-  background-size: 90px 90px, 130px 130px, 70px 70px;
+    radial-gradient(circle at 17% 41%, color-mix(in srgb, var(--ink) 13%, transparent) 0 .8px, transparent 1.3px),
+    radial-gradient(circle at 63% 12%, color-mix(in srgb, var(--ink) 10%, transparent) 0 .7px, transparent 1.2px),
+    radial-gradient(circle at 82% 68%, color-mix(in srgb, var(--ink) 11%, transparent) 0 .9px, transparent 1.5px),
+    radial-gradient(circle at 34% 79%, color-mix(in srgb, var(--ink)  8%, transparent) 0 .6px, transparent 1.1px),
+    radial-gradient(circle at 91% 27%, color-mix(in srgb, var(--ink)  9%, transparent) 0 .7px, transparent 1.2px),
+    radial-gradient(circle at 48% 55%, color-mix(in srgb, var(--ink)  7%, transparent) 0 1.1px, transparent 1.8px),
+    radial-gradient(circle at  8% 88%, color-mix(in srgb, var(--ink) 10%, transparent) 0 .6px, transparent 1.1px);
+  background-size: 29px 37px, 43px 29px, 53px 61px, 37px 71px, 61px 43px, 89px 53px, 71px 89px;
 }
 [data-card-style="recycled"] .ruled-margin { display: none; }
 
-/* Leinen: gewebter Grund und ein Innenrahmen. */
+/* Leinen: ein Gewebe, kein Millimeterpapier.
+   Vorher: 1-px-Linien alle 4 px in beide Richtungen, dazu ein Innenrahmen
+   in 10 px Abstand -- das las sich als Raster mit Passepartout. Ein Gewebe
+   entsteht aus zwei versetzten Faserlagen mit weichen Kanten; die
+   senkrechte liegt etwas heller als die waagerechte, wie bei Kette und
+   Schuss. Kein Rahmen. */
 [data-card-style="linen"] .card-face {
   background-image:
-    repeating-linear-gradient(90deg, var(--line-soft) 0 1px, transparent 1px 4px),
-    repeating-linear-gradient(0deg, var(--line-soft) 0 1px, transparent 1px 4px);
-  box-shadow: inset 0 0 0 1px var(--line), inset 0 0 0 9px transparent, inset 0 0 0 10px var(--line-soft);
+    repeating-linear-gradient(90deg,
+      color-mix(in srgb, var(--ink) 5%, transparent) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg,
+      color-mix(in srgb, var(--ink) 3.5%, transparent) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg,
+      color-mix(in srgb, var(--ink) 2%, transparent) 0 1px, transparent 1px 11px);
+  background-position: 0 0, 1px 0, 4px 0;
 }
 [data-card-style="linen"] .ruled-margin { display: none; }
 [data-card-style="indexcard"] .card-face::after {
@@ -687,7 +726,9 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    V1 — iPhone reflow + fixed bottom navigation (desktop unchanged)
    ==================================================================== */
 @media (max-width: 640px) {
-  .app { padding: 0 calc(12px + env(safe-area-inset-right)) calc(78px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left)); }
+  .app { padding: 0 calc(12px + env(safe-area-inset-right)) 0 calc(12px + env(safe-area-inset-left)); }
+  /* Platz fuer die feste Leiste unten -- sie liegt ueber dem Inhalt. */
+  .app-body { padding-bottom: calc(78px + env(safe-area-inset-bottom)); }
   .topbar { gap: 8px; padding: calc(14px + env(safe-area-inset-top)) 2px 8px; flex-wrap: nowrap; }
   /* Der Kopf ist eine Zeile. Das Zeichen gibt nach, bevor etwas umbricht. */
   .brand-mark { width: 42px; height: 42px; }
@@ -728,7 +769,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 
   /* hide bottom nav while the keyboard is up (typing) */
   body.typing .tabs, body.kbd-open .tabs { display: none; }
-  body.typing .app, body.kbd-open .app { padding-bottom: 16px; }
+  body.typing .app-body, body.kbd-open .app-body { padding-bottom: 16px; }
 
   /* comfortable tap targets */
   .btn, .icon-btn, .lchip, .seg button, .pairseg button { min-height: 40px; }
@@ -1153,7 +1194,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .li > svg { flex: none; margin-top: 2px; opacity: .75; }
 .li .g { flex: 1; }
 .li .m { color: var(--ink-faint); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 2px; }
-.li.sel { border-color: var(--amber); background: var(--amber-bg); }
+.li.sel { border-color: var(--ink); background: var(--bg-2); }
 .quiet { padding: 8px 13px 4px; font-size: 12px; color: var(--ink-faint); text-align: center; }
 
 /* Eine Wortkarte: Wort und Stufe in einer Zeile, darunter die Übersetzung
@@ -1229,7 +1270,12 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
   background: var(--card); color: var(--ink);
   border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink);
 }
-.li.sel { border-color: var(--ink); background: var(--card); box-shadow: inset 0 0 0 1px var(--ink); }
+/* Eine Auswahl sieht ueberall gleich aus: dunklerer Grund und ein Rahmen
+   in Schriftfarbe. Vorher trugen die Sprachen Kontrollkaestchen und die
+   Wortlisten eine Hervorhebung -- dieselbe Handlung in zwei Sprachen. Die
+   Hervorhebung gilt, und sie muss man sehen: der Grund wird eine Stufe
+   dunkler, nicht nur der Rahmen eine Spur kraeftiger. */
+.li.sel { border-color: var(--ink); background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--ink); }
 .li:hover, .wort:hover, .planrow:hover { border-color: var(--ink-soft); }
 .cal-day.open { background: var(--bg-2); border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
 /* „Heute" ist ein Zustand, keine Auswahl: neutraler Grund statt Farbe,
@@ -1245,14 +1291,8 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .scope-sheet { max-width: 520px; max-height: 82vh; display: flex; flex-direction: column; }
 .scope-sheet-body { overflow-y: auto; padding-right: 4px; }
 .scope-sheet .grp { display: flex; align-items: center; gap: 6px; }
-/* Kästchen für die Mehrfachwahl — die Wortlisten sind mehrfach wählbar,
-   und das muss man sehen, bevor man es ausprobiert. */
-.ckbox {
-  width: 19px; height: 19px; flex: none; margin-top: 1px;
-  border: 1.5px solid var(--line); border-radius: 6px;
-  display: grid; place-items: center; color: var(--card); background: var(--card-2);
-}
-.li.sel .ckbox { background: var(--ink); border-color: var(--ink); color: var(--card); }
+/* Die Kontrollkaestchen sind entfallen: die Auswahl zeigt sich am Grund,
+   und zwei Zeichen fuer dieselbe Aussage sind eines zu viel. */
 .li:disabled { opacity: .45; cursor: not-allowed; }
 .li:disabled:hover { border-color: var(--line); }
 
@@ -1487,8 +1527,12 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 /* Alles bis zur Tabellenüberschrift steht fest, gescrollt wird nur die
    Liste. Sonst verliert man beim Blättern den Bezug: welche Liste, wie
    weit, welche Spalte. */
-.wl-liste { height: 100%; min-height: 0; }
-.wl-fest { flex: none; }
+.wl-liste { min-height: 0; }
+/* Der feste Teil rollt bei Bedarf mit -- aber leise: auf einem kurzen
+   Bildschirm muss man an die Werkzeuge kommen, ohne dass zwei Rollbalken
+   nebeneinander stehen. Sichtbar rollt nur die Wortliste. */
+.wl-fest { flex: 0 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+.wl-fest::-webkit-scrollbar { display: none; }
 .wl-roll { flex: 1; min-height: 0; overflow-y: auto; padding-top: 2px; }
 
 .wl-stand { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
@@ -1515,13 +1559,18 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    zu tönen machte die Liste bunt und arbeitete gegen „schlank". */
 /* Farbe ausdrücklich setzen: iOS gibt Text in einem <button> sonst die
    Systemfarbe, und die Fremdwörter erschienen blau wie Verweise. */
-.wz { width: 100%; text-align: left; background: var(--card); color: var(--ink);
+/* Der Streifen links ist eine gerade Linie, kein mitgebogener Rand: als
+   Rahmenkante folgte er der Rundung und lief oben und unten spitz aus. */
+.wz { position: relative; width: 100%; text-align: left; background: var(--card); color: var(--ink);
       font: inherit; -webkit-appearance: none; appearance: none;
-      border: 1px solid var(--line); border-left: 4px solid var(--stufe, var(--line));
-      border-radius: 10px; padding: 10px 13px; margin-top: 5px; cursor: pointer; }
-.wz:hover { border-color: var(--ink-soft); border-left-color: var(--stufe, var(--line)); }
+      border: 1px solid var(--line);
+      border-radius: 10px; padding: 10px 13px 10px 17px; margin-top: 5px; cursor: pointer;
+      overflow: hidden; }
+.wz::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+              background: var(--stufe, var(--line)); }
+.wz:hover { border-color: var(--ink-soft); }
 .wz.sel { box-shadow: inset 0 0 0 1px var(--ink); border-color: var(--ink);
-          border-left-color: var(--stufe, var(--line)); }
+          background: var(--bg-2); }
 .wz-f { font-family: var(--serif); font-size: 15.5px; color: var(--ink); }
 .wz-d { font-size: 13px; color: var(--ink-soft); }
 
@@ -1540,6 +1589,14 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
    kein Rahmenwechsel, damit niemand vergeblich tippt. */
 .wz.ro { cursor: default; }
 .wz.ro:hover { border-color: var(--line); }
+/* Alle auswaehlen / Auswahl aufheben: zwei Woerter, kein Knopf -- sie
+   gehoeren zur Liste, nicht zur Werkzeugleiste. */
+.wl-alle { display: flex; align-items: center; gap: 14px; padding: 8px 2px 0; font-size: 11.5px; }
+.wl-alle button { background: none; border: none; padding: 0; font: inherit; font-weight: 600;
+                  color: var(--ink-soft); cursor: pointer; text-decoration: underline;
+                  text-underline-offset: 3px; }
+.wl-alle button:hover { color: var(--ink); }
+.wl-alle button:disabled { color: var(--ink-faint); opacity: .45; cursor: default; text-decoration: none; }
 
 /* Ein <button> bekommt auf iOS Systemschrift und Systemblau. Überall, wo
    eine Listenzeile ein Knopf ist, muss sie beides ausdrücklich setzen —
@@ -1643,8 +1700,12 @@ select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 /* Ein Umschalter über die volle Breite — für die vier Regler im Aussehen.
    Die Knöpfe teilen sich den Platz gleichmässig, damit die Reihe ruhig
    wirkt und nicht nach Wortlänge springt. */
-.seg-voll { display: flex; width: 100%; }
-.seg-voll button { flex: 1; padding: 9px 6px; font-size: 13px; justify-content: center; }
+/* Volle Breite heisst hier: die Breite des Kastens, nicht mehr. Vorher
+   addierte sich die Polsterung des Streifens zu den 100 % und der letzte
+   Knopf lief rechts aus dem Kasten heraus. */
+.seg-voll { display: flex; width: 100%; box-sizing: border-box; max-width: 100%; }
+.seg-voll button { flex: 1 1 0; min-width: 0; padding: 9px 4px; font-size: 13px;
+                   justify-content: center; overflow: hidden; text-overflow: ellipsis; }
 
 /* Eine Einstellung als Zeile: Name links, Wert rechts, Pfeil. Die Erklärung
    steht im Blatt, das sich beim Antippen öffnet — nicht darunter. Zwanzig
@@ -1661,8 +1722,15 @@ select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus
 .setz-schalter { cursor: pointer; }
 /* Ein Punkt statt der Marke „✓ Empfohlen": in einer Zeile ist für sie kein
    Platz, und der Punkt sagt dasselbe, wenn man ihn einmal gelernt hat. */
-.rec-punkt { display: inline-block; width: 5px; height: 5px; border-radius: 999px;
-             background: var(--ok); margin-left: 7px; vertical-align: 2px; }
+/* Statt eines Punktes an jeder Zeile, die auf der Empfehlung steht, ein
+   Wort an den wenigen, die es nicht tun. Der Punkt hiess „steht auf der
+   Empfehlung" und sagte das niemandem; ausserdem trug ihn fast jede Zeile,
+   sodass die Marke nichts mehr auszeichnete. Jetzt ist die Liste ruhig, und
+   was man selbst verstellt hat, sieht man auf einen Blick. */
+.setz-abw { margin-left: 8px; font-size: 10px; font-weight: 700; letter-spacing: .04em;
+            text-transform: uppercase; color: var(--amber-deep);
+            background: var(--amber-bg); border-radius: 999px; padding: 2px 7px;
+            vertical-align: 1px; }
 .setz-rec { display: flex; align-items: center; justify-content: space-between; gap: 10px;
             margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-soft);
             font-size: 12.5px; color: var(--ink-soft); }

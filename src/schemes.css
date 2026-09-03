@@ -1,24 +1,25 @@
 /* SmartVoc — Farbschemata.
  *
- * Zwei Achsen: [data-scheme] wählt die Palette (kladde, leinen, altpapier),
+ * Zwei Achsen: [data-scheme] wählt die Palette (kladde, tinte, graphit),
  * [data-appearance] wählt hell, dunkel oder „folgt dem Gerät". Jedes Schema
  * trägt beide Sätze, damit ein Wechsel der Tageszeit das Schema nicht verliert.
  *
- * Aus dem Entwurf erzeugt (assets/brand/farben-entwurf.css), mit zwei
- * nachgerechneten Korrekturen:
+ * Die drei Paletten waren einmal drei Beigetöne — nebeneinander kaum zu
+ * unterscheiden, und die Wahl damit sinnlos. Jetzt steht je eine Familie:
  *
- *  1. --ink-soft und --ink-faint fielen in den hellen Schemata praktisch
- *     zusammen (4.39 gegen 4.42) und rissen AA. Jetzt liegt soft bei rund 6.0,
- *     faint bei rund 4.6 zum Grund — beide über 4.5, mit sichtbarem Abstand.
- *     Farbton und Sättigung unverändert, nur die Helligkeit.
+ *   kladde    warmes Kraftpapier, Rostrot als Handlung
+ *   tinte     kühles Papier, tiefes Indigo — Petrol für „neu"
+ *   graphit   neutrales Grau, Petrol als Handlung
  *
- *  2. --ok / --warn / --bad sind neu: die Ampel für den Beherrschungsstand.
- *     --amber ist ein Rostton, liest sich neben Rot nicht als Gelb und
- *     bezeichnet zugleich die Hauptaktion. Zwei Bedeutungen in einem Ton wären
- *     eine zu viel; die Mittelstufe hat jetzt ein eigenes Gelb.
+ * --amber ist in jedem Schema die Farbe der HANDLUNG, nicht ein Gelbton;
+ * der Name stammt aus der ersten Fassung und bleibt, damit nicht jede
+ * Verwendung in der App umbenannt werden muss.
  *
- * Nicht von Hand nachziehen — neu erzeugen aus dem Entwurf.
+ * Erzeugt aus scratchpad/gen_schemes.py — nicht von Hand nachziehen. Der
+ * dunkle Satz steht zweimal (dark und auto), damit „automatisch" dem Gerät
+ * folgt; beide Ausgaben stammen aus derselben Quelle.
  */
+
 
 [data-scheme="kladde"] {
   --bg: #eae0cc;
@@ -82,132 +83,132 @@
   --bad-bg: #45372e;
 }
 
-[data-scheme="leinen"] {
-  --bg: #e5dbc9;
-  --bg-2: #dcd1bb;
-  --card: #fffdf9;
-  --card-2: #f7f3ea;
-  --ink: #252a30;
-  --ink-soft: #494f58;
-  --ink-faint: #58616b;
-  --line: #e0d8c9;
-  --line-soft: #ece5d8;
-  --amber: #33547f;
-  --amber-deep: #264264;
-  --amber-bg: #dee5ee;
-  --green: #3f6b4c;
-  --green-bg: #dbe6dd;
-  --red: #95402f;
-  --red-bg: #f0ddd7;
-  --blue: #33547f;
-  --blue-bg: #dee5ee;
-  --slate: #64707c;
-  --card-rule: #ece5d8;
-  --card-margin: rgba(51,84,127,.22);
-  --stack: #f7f3ea;
-  --ok: #3f6b4c;
-  --ok-bg: #e0e6dd;
-  --warn: #765f17;
-  --warn-bg: #e9e4d5;
-  --bad: #95402f;
-  --bad-bg: #eedfd9;
+[data-scheme="tinte"] {
+  --bg: #dde3ed;
+  --bg-2: #d0d8e6;
+  --card: #f8fafd;
+  --card-2: #eaeff7;
+  --ink: #1a2130;
+  --ink-soft: #4b5468;
+  --ink-faint: #57617a;
+  --line: #d3dae6;
+  --line-soft: #e5eaf2;
+  --amber: #2f4b8f;
+  --amber-deep: #23386c;
+  --amber-bg: #dde3f2;
+  --green: #2f6b4f;
+  --green-bg: #dbeae1;
+  --red: #a33a34;
+  --red-bg: #f4dedc;
+  --blue: #1f6e7a;
+  --blue-bg: #d9edf0;
+  --slate: #667287;
+  --card-rule: #e5eaf2;
+  --card-margin: rgba(47,75,143,.24);
+  --stack: #eaeff7;
+  --ok: #2f6b4f;
+  --ok-bg: #dbeae1;
+  --warn: #8a6a12;
+  --warn-bg: #f0e6cd;
+  --bad: #a33a34;
+  --bad-bg: #f4dedc;
 }
 
-[data-scheme="leinen"][data-appearance="dark"] {
-  --bg: #1d2126;
-  --bg-2: #282e35;
-  --card: #262b31;
-  --card-2: #2e343b;
-  --ink: #e8ebef;
-  --ink-soft: #a3adb8;
-  --ink-faint: #939da8;
-  --line: #39414a;
-  --line-soft: #333b43;
-  --amber: #6e9ccb;
-  --amber-deep: #96b9dd;
-  --amber-bg: #263341;
-  --green: #86b394;
-  --green-bg: #24322a;
-  --red: #d08a76;
-  --red-bg: #3a2723;
-  --blue: #6e9ccb;
-  --blue-bg: #263341;
-  --slate: #8b96a2;
-  --card-rule: #333b43;
-  --card-margin: rgba(110,156,203,.26);
-  --stack: #2e343b;
-  --ok: #86b394;
-  --ok-bg: #354141;
-  --warn: #c9a227;
-  --warn-bg: #403e2f;
-  --bad: #d08a76;
-  --bad-bg: #413a3c;
+[data-scheme="tinte"][data-appearance="dark"] {
+  --bg: #12161d;
+  --bg-2: #1e2532;
+  --card: #191f28;
+  --card-2: #222936;
+  --ink: #e6ebf3;
+  --ink-soft: #9fabbd;
+  --ink-faint: #8d9aad;
+  --line: #2e3846;
+  --line-soft: #27303c;
+  --amber: #7d9ce4;
+  --amber-deep: #9fb7ee;
+  --amber-bg: #202a40;
+  --green: #7cb894;
+  --green-bg: #22322a;
+  --red: #e08a80;
+  --red-bg: #35262a;
+  --blue: #5fb3c2;
+  --blue-bg: #1a2f34;
+  --slate: #8a97aa;
+  --card-rule: #27303c;
+  --card-margin: rgba(125,156,228,.28);
+  --stack: #222936;
+  --ok: #7cb894;
+  --ok-bg: #22322a;
+  --warn: #d4b04a;
+  --warn-bg: #3a3220;
+  --bad: #e08a80;
+  --bad-bg: #35262a;
 }
 
-[data-scheme="altpapier"] {
-  --bg: #d5cfbe;
-  --bg-2: #c9c2ae;
-  --card: #e7e1cf;
-  --card-2: #ded7c3;
-  --ink: #2c2a24;
-  --ink-soft: #4a4640;
-  --ink-faint: #5b574f;
-  --line: #c6bfab;
-  --line-soft: #d3ccb9;
-  --amber: #8f3a2b;
-  --amber-deep: #71291d;
-  --amber-bg: #e0cfc6;
-  --green: #4a6640;
-  --green-bg: #d5dbc9;
-  --red: #8f3a2b;
-  --red-bg: #e3cdc5;
-  --blue: #3c5878;
-  --blue-bg: #d2d8e2;
-  --slate: #6a655b;
-  --card-rule: #d3ccb9;
-  --card-margin: rgba(143,58,43,.26);
-  --stack: #ded7c3;
-  --ok: #46603c;
-  --ok-bg: #cdccb8;
-  --warn: #6c5715;
-  --warn-bg: #d3cbb1;
-  --bad: #8f3a2b;
-  --bad-bg: #d9c6b5;
+[data-scheme="graphit"] {
+  --bg: #dcdfde;
+  --bg-2: #ccd1d0;
+  --card: #f7f8f8;
+  --card-2: #eaeded;
+  --ink: #1d2221;
+  --ink-soft: #4d5453;
+  --ink-faint: #5a6261;
+  --line: #d2d6d5;
+  --line-soft: #e4e7e6;
+  --amber: #0f6a5f;
+  --amber-deep: #0a4f47;
+  --amber-bg: #d7ebe7;
+  --green: #4a7a2f;
+  --green-bg: #e0ecd6;
+  --red: #a33a34;
+  --red-bg: #f3ddda;
+  --blue: #35618f;
+  --blue-bg: #dde5ef;
+  --slate: #6a7271;
+  --card-rule: #e4e7e6;
+  --card-margin: rgba(15,106,95,.26);
+  --stack: #eaeded;
+  --ok: #4a7a2f;
+  --ok-bg: #e0ecd6;
+  --warn: #8a6a12;
+  --warn-bg: #efe6cd;
+  --bad: #a33a34;
+  --bad-bg: #f3ddda;
 }
 
-[data-scheme="altpapier"][data-appearance="dark"] {
-  --bg: #222118;
-  --bg-2: #2c2b22;
-  --card: #2b2a22;
-  --card-2: #33322a;
-  --ink: #e6e2d6;
-  --ink-soft: #aaa598;
-  --ink-faint: #a09b8e;
-  --line: #403e34;
-  --line-soft: #363429;
-  --amber: #cf7a63;
-  --amber-deep: #e29a85;
-  --amber-bg: #3a2b25;
-  --green: #93b184;
-  --green-bg: #2b3527;
-  --red: #d0846c;
-  --red-bg: #3a2822;
-  --blue: #8ba8c8;
-  --blue-bg: #262f3a;
-  --slate: #979183;
-  --card-rule: #363429;
-  --card-margin: rgba(207,122,99,.28);
-  --stack: #33322a;
-  --ok: #93b184;
-  --ok-bg: #3c4032;
-  --warn: #c9a227;
-  --warn-bg: #443d23;
-  --bad: #d0846c;
-  --bad-bg: #45382e;
+[data-scheme="graphit"][data-appearance="dark"] {
+  --bg: #141817;
+  --bg-2: #212827;
+  --card: #1b201f;
+  --card-2: #242a29;
+  --ink: #e8ecea;
+  --ink-soft: #a3adab;
+  --ink-faint: #929c9a;
+  --line: #333b39;
+  --line-soft: #2b3231;
+  --amber: #4fc0ae;
+  --amber-deep: #78d3c4;
+  --amber-bg: #17342f;
+  --green: #97c073;
+  --green-bg: #2a3524;
+  --red: #e08a80;
+  --red-bg: #362725;
+  --blue: #7ea8d8;
+  --blue-bg: #202d3a;
+  --slate: #8e9895;
+  --card-rule: #2b3231;
+  --card-margin: rgba(79,192,174,.28);
+  --stack: #242a29;
+  --ok: #97c073;
+  --ok-bg: #2a3524;
+  --warn: #d4b04a;
+  --warn-bg: #3a3220;
+  --bad: #e08a80;
+  --bad-bg: #362725;
 }
 
-/* „Automatisch" heisst: dem Gerät folgen. Deshalb stehen diese drei
-   Blöcke in der Abfrage — ohne sie wäre „automatisch" immer dunkel. */
+/* „Automatisch" heisst: dem Gerät folgen. Ohne diese Blöcke wäre
+   „automatisch" immer hell. */
 @media (prefers-color-scheme: dark) {
   [data-scheme="kladde"][data-appearance="auto"] {
     --bg: #221f1a;
@@ -239,66 +240,64 @@
     --bad: #d08a74;
     --bad-bg: #45372e;
   }
-
-  [data-scheme="leinen"][data-appearance="auto"] {
-    --bg: #1d2126;
-    --bg-2: #282e35;
-    --card: #262b31;
-    --card-2: #2e343b;
-    --ink: #e8ebef;
-    --ink-soft: #a3adb8;
-    --ink-faint: #939da8;
-    --line: #39414a;
-    --line-soft: #333b43;
-    --amber: #6e9ccb;
-    --amber-deep: #96b9dd;
-    --amber-bg: #263341;
-    --green: #86b394;
-    --green-bg: #24322a;
-    --red: #d08a76;
-    --red-bg: #3a2723;
-    --blue: #6e9ccb;
-    --blue-bg: #263341;
-    --slate: #8b96a2;
-    --card-rule: #333b43;
-    --card-margin: rgba(110,156,203,.26);
-    --stack: #2e343b;
-    --ok: #86b394;
-    --ok-bg: #354141;
-    --warn: #c9a227;
-    --warn-bg: #403e2f;
-    --bad: #d08a76;
-    --bad-bg: #413a3c;
+  [data-scheme="tinte"][data-appearance="auto"] {
+    --bg: #12161d;
+    --bg-2: #1e2532;
+    --card: #191f28;
+    --card-2: #222936;
+    --ink: #e6ebf3;
+    --ink-soft: #9fabbd;
+    --ink-faint: #8d9aad;
+    --line: #2e3846;
+    --line-soft: #27303c;
+    --amber: #7d9ce4;
+    --amber-deep: #9fb7ee;
+    --amber-bg: #202a40;
+    --green: #7cb894;
+    --green-bg: #22322a;
+    --red: #e08a80;
+    --red-bg: #35262a;
+    --blue: #5fb3c2;
+    --blue-bg: #1a2f34;
+    --slate: #8a97aa;
+    --card-rule: #27303c;
+    --card-margin: rgba(125,156,228,.28);
+    --stack: #222936;
+    --ok: #7cb894;
+    --ok-bg: #22322a;
+    --warn: #d4b04a;
+    --warn-bg: #3a3220;
+    --bad: #e08a80;
+    --bad-bg: #35262a;
   }
-
-  [data-scheme="altpapier"][data-appearance="auto"] {
-    --bg: #222118;
-    --bg-2: #2c2b22;
-    --card: #2b2a22;
-    --card-2: #33322a;
-    --ink: #e6e2d6;
-    --ink-soft: #aaa598;
-    --ink-faint: #a09b8e;
-    --line: #403e34;
-    --line-soft: #363429;
-    --amber: #cf7a63;
-    --amber-deep: #e29a85;
-    --amber-bg: #3a2b25;
-    --green: #93b184;
-    --green-bg: #2b3527;
-    --red: #d0846c;
-    --red-bg: #3a2822;
-    --blue: #8ba8c8;
-    --blue-bg: #262f3a;
-    --slate: #979183;
-    --card-rule: #363429;
-    --card-margin: rgba(207,122,99,.28);
-    --stack: #33322a;
-    --ok: #93b184;
-    --ok-bg: #3c4032;
-    --warn: #c9a227;
-    --warn-bg: #443d23;
-    --bad: #d0846c;
-    --bad-bg: #45382e;
+  [data-scheme="graphit"][data-appearance="auto"] {
+    --bg: #141817;
+    --bg-2: #212827;
+    --card: #1b201f;
+    --card-2: #242a29;
+    --ink: #e8ecea;
+    --ink-soft: #a3adab;
+    --ink-faint: #929c9a;
+    --line: #333b39;
+    --line-soft: #2b3231;
+    --amber: #4fc0ae;
+    --amber-deep: #78d3c4;
+    --amber-bg: #17342f;
+    --green: #97c073;
+    --green-bg: #2a3524;
+    --red: #e08a80;
+    --red-bg: #362725;
+    --blue: #7ea8d8;
+    --blue-bg: #202d3a;
+    --slate: #8e9895;
+    --card-rule: #2b3231;
+    --card-margin: rgba(79,192,174,.28);
+    --stack: #242a29;
+    --ok: #97c073;
+    --ok-bg: #2a3524;
+    --warn: #d4b04a;
+    --warn-bg: #3a3220;
+    --bad: #e08a80;
+    --bad-bg: #362725;
   }
 }

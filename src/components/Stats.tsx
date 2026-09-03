@@ -179,7 +179,6 @@ export function Stats() {
                       return (
                         <button key={l.id} className={"li" + (an ? " sel" : "")}
                           onClick={() => setzeUmfang(statPair, an ? settings.statLists.filter((x: string) => x !== l.id) : [...settings.statLists, l.id])}>
-                          <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
                           <span className="g">{l.name}
                             {st.total > 0 && <div className="m">{txt("{n} Wörter", { n: st.total })} · {txt("{p} % bereit", { p: st.pct })}</div>}
                           </span>

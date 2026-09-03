@@ -7,8 +7,7 @@ import { RECOMMENDED } from "../lib/defaults";
 import { useAuth } from "../sync/auth";
 import { exportAllData, deleteLocalData } from "../lib/accountData";
 import { deleteCloudAccount } from "../sync/share";
-import { STARTERS, activateStarter, isStarterActivated } from "../data/starter";
-import { PAIRS } from "../lib/pairs";
+import { PAIRS, isLatinPair } from "../lib/pairs";
 import { DEFAULTS, previewStabilityGood, retentionFor } from "../lib/fsrs";
 import { FsrsValuesModal } from "./FsrsValuesModal";
 import { toneLegend, TONE_VAR } from "../lib/readiness";
@@ -73,7 +72,7 @@ function CardPreview() {
 function ZeileWert({ titel, wert, atRec, onClick }: any) {
   return (
     <button className="setz" onClick={onClick}>
-      <span className="setz-t">{titel}{atRec && <span className="rec-punkt" title={txt("Empfohlen")} />}</span>
+      <span className="setz-t">{titel}{atRec === false && <span className="setz-abw">{txt("geändert")}</span>}</span>
       <span className="setz-w">{wert}</span>
       <Icon name="arrowRight" size={14} />
     </button>
@@ -122,6 +121,32 @@ function Blatt({ offen, titel, desc, rec, atRec, onZuruecksetzen, onClose, child
   );
 }
 
+/* Ein Schritt, der sich nicht rueckgaengig machen laesst, fragt vorher --
+ * und zwar alle drei gleich: Einstellungen zuruecksetzen, Fortschritt
+ * zuruecksetzen, Konto loeschen. Vorher fragten zwei davon und der dritte
+ * tat es sofort; und die beiden, die fragten, sahen verschieden aus. */
+function Bestaetigen({ offen, titel, text, knopf, gefahr, aus, tun, onClose, children }: any) {
+  if (!offen) return null;
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
+        <div className="modal-head">
+          <div className="modal-title">{titel}</div>
+          <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
+        </div>
+        <div className="muted" style={{ fontSize: 13.5, lineHeight: 1.45 }}>{text}</div>
+        {children}
+        <div className="modal-foot">
+          <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
+          <button className={"btn " + (gefahr ? "" : "btn-primary")}
+            style={gefahr ? { borderColor: "var(--bad)", color: "var(--bad)" } : undefined}
+            disabled={!!aus} onClick={tun}>{knopf}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Field({ title, desc, recLabel, atRec, children }: any) {
   return (
     <div className="set-row">
@@ -164,6 +189,7 @@ export function SettingsTab() {
   // Konto & Daten (Phase 7)
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [resetOpen, setResetOpen] = useState(false);
+  const [voreinstOpen, setVoreinstOpen] = useState(false);
   const [blatt, setBlatt] = useState<string | null>(null);
   const [imprintOpen, setImprintOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);
@@ -172,7 +198,6 @@ export function SettingsTab() {
   const [delErr, setDelErr] = useState("");
   const cloudActive = auth.configured && !!auth.user;
   const doExport = () => { exportAllData(new Date().toISOString()); toast("Daten exportiert", "download"); };
-  const addStarter = (pair: string, stufe: number) => { const r = activateStarter(store, pair, stufe); toast(`„${r.label}" aktiviert · ${r.added} Wört${r.added === 1 ? "" : "er"}`, "check"); };
   const doDelete = async () => {
     if (confirmText.trim().toUpperCase() !== "LÖSCHEN") return;
     setDelBusy(true); setDelErr("");
@@ -194,6 +219,13 @@ export function SettingsTab() {
     if (!next.length) { toast("Mindestens eine Sprache muss aktiv bleiben", "x"); return; }
     setSettings({ activePairs: next });
   };
+
+  /* Latein zeigt seine Zeile nur, wenn es zugeschaltet ist. */
+  const lateinAktiv = activeIds.some((id) => isLatinPair(id));
+  /* Die beiden alten Beige-Schemata heissen jetzt anders; wer sie
+     gespeichert hat, sieht den Nachfolger ausgewaehlt statt gar nichts. */
+  const SCHEMA_ALT: Record<string, string> = { leinen: "tinte", altpapier: "graphit" };
+  const schemaJetzt = SCHEMA_ALT[settings.scheme] || settings.scheme || "kladde";
 
   const atR = (k) => settings[k] === R[k];
   const onOff = (b) => (b ? "On" : "Off");
@@ -222,16 +254,17 @@ export function SettingsTab() {
 
   return (
     <div className="settings">
+      {/* Der Knopf „Auf die Voreinstellungen zurücksetzen" stand hier oben
+          rechts als dreizeiliger Klotz neben dem Einleitungstext. Er gehört
+          zu den Handlungen, die man nicht rückgängig machen kann — also
+          nach unten zu den anderen, und mit einer Rückfrage davor. */}
       <div className="set-head">
         <div>
           <div className="section-title">{txt("Einstellungen")}</div>
           <div className="muted" style={{ fontSize: 13.5, marginTop: 4, maxWidth: 540 }}>
-            {txt("Die Voreinstellungen folgen der Lernpsychologie: verteiltes Üben, aktives Abrufen und wenige neue Wörter pro Tag. Du darfst alles ändern — die Marke „✓ Empfohlen“ zeigt, wo ein Wert auf dem belegten Normalwert steht.")}
+            {txt("Die Voreinstellungen folgen der Lernpsychologie: verteiltes Üben, aktives Abrufen und wenige neue Wörter pro Tag. Du darfst alles ändern — was du verstellt hast, ist markiert.")}
           </div>
         </div>
-        <button className="btn btn-sm" onClick={() => { resetSettings(); toast("Restored recommended settings", "refresh"); }}>
-          <Icon name="refresh" size={14} /> {txt("Auf die Voreinstellungen zurücksetzen")}
-        </button>
       </div>
 
       {/* Practice */}
@@ -240,6 +273,7 @@ export function SettingsTab() {
           denn an oder aus ist die ganze Auskunft. */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="cards" size={16} /> {txt("Üben")}</div>
+        <div className="set-body">
 
         <ZeileWert titel={txt("Antwortart")} atRec={atR("mode")}
           wert={txt(MODUS[settings.mode] || settings.mode)} onClick={() => setBlatt("mode")} />
@@ -260,9 +294,16 @@ export function SettingsTab() {
         <ZeileWert titel={txt("Lerntipp-Einblendungen")} atRec={atR("tipsFrequency")}
           wert={txt({ off: "Aus", occasional: "Gelegentlich", frequent: "Häufig" }[settings.tipsFrequency] || "Gelegentlich")}
           onClick={() => setBlatt("tips")} />
-        <ZeileWert titel={txt("Wann eine Liste als bereit gilt")} atRec={atR("readyGreen") && atR("readyAmber")}
-          wert={txt("grün ab {g} %, gelb ab {a} %", { g: settings.readyGreen ?? 95, a: settings.readyAmber ?? 70 })}
-          onClick={() => setBlatt("ready")} />
+        {/* Latein hatte eine eigene Box für zwei Einstellungen. Zwei Zeilen
+            rechtfertigen keinen Abschnitt — und wer kein Latein lernt, sah
+            eine Box für etwas, das ihn nichts angeht. Jetzt eine Zeile
+            unter „Üben", und nur, wenn Latein zugeschaltet ist. */}
+        {lateinAktiv && (
+          <ZeileWert titel={txt("Latein")}
+            wert={txt(settings.latinMode === "L3" ? "L3 · volle Lernform" : "L2 · Grundform")}
+            onClick={() => setBlatt("latein")} />
+        )}
+        </div>
       </div>
 
       <Blatt offen={blatt === "mode"} titel={txt("Antwortart")} onClose={() => setBlatt(null)}
@@ -271,7 +312,6 @@ export function SettingsTab() {
         <div className="list">
           {Object.keys(MODUS).map((v) => (
             <button key={v} className={"li" + (settings.mode === v ? " sel" : "")} onClick={() => set("mode", v)}>
-              <span className="ckbox">{settings.mode === v && <Icon name="check" size={12} />}</span>
               <span className="g">{txt(MODUS[v])}</span>
             </button>
           ))}
@@ -294,7 +334,6 @@ export function SettingsTab() {
         <div className="list">
           {TEMPI.map((t) => (
             <button key={t.n} className={"li" + (settings.newPerDay === t.n ? " sel" : "")} onClick={() => set("newPerDay", t.n)}>
-              <span className="ckbox">{settings.newPerDay === t.n && <Icon name="check" size={12} />}</span>
               <span className="g">{txt(t.name)}<div className="m">{txt(t.sub)}</div></span>
               <span className="lchip-n">{t.n}</span>
             </button>
@@ -323,26 +362,25 @@ export function SettingsTab() {
         <div className="list">
           {[["off", "Aus"], ["occasional", "Gelegentlich"], ["frequent", "Häufig"]].map(([v, l]) => (
             <button key={v} className={"li" + (settings.tipsFrequency === v ? " sel" : "")} onClick={() => set("tipsFrequency", v)}>
-              <span className="ckbox">{settings.tipsFrequency === v && <Icon name="check" size={12} />}</span>
               <span className="g">{txt(l)}</span>
             </button>
           ))}
         </div>
       </Blatt>
 
-      <Blatt offen={blatt === "ready"} titel={txt("Wann eine Liste als bereit gilt")} onClose={() => setBlatt(null)}
-        desc={txt("Ab diesem Anteil sitzender Wörter gilt eine Liste als bereit — grün im Kalender. Darunter zeigt der Kalender Rot. Die Legende übernimmt beide Zahlen.")}
+      <Blatt offen={blatt === "ready"} titel={txt("Ampel der Wortlisten")} onClose={() => setBlatt(null)}
+        desc={txt("Jede Wortliste trägt einen farbigen Punkt: grün heisst bereit, gelb heisst fast so weit, rot heisst da fehlt noch viel. Hier legst du fest, wie viele Wörter einer Liste dafür sitzen müssen.")}
         rec={txt("grün ab {g} %, gelb ab {a} %", { g: 95, a: 70 })}
         atRec={atR("readyGreen") && atR("readyAmber")}
         onZuruecksetzen={() => setSettings({ readyGreen: 95, readyAmber: 70 })}>
         <div className="col" style={{ gap: 14 }}>
           <div>
-            <div className="setz-t" style={{ marginBottom: 6 }}>{txt("Bereit ab")}</div>
+            <div className="setz-t" style={{ marginBottom: 6 }}>{txt("Grün ab")}</div>
             <SliderControl value={settings.readyGreen ?? 95} min={80} max={100} step={1}
               onChange={(v: number) => set("readyGreen", Math.max(v, (settings.readyAmber ?? 70) + 1))} fmt={(v: number) => v + " %"} />
           </div>
           <div>
-            <div className="setz-t" style={{ marginBottom: 6 }}>{txt("Fast bereit ab")}</div>
+            <div className="setz-t" style={{ marginBottom: 6 }}>{txt("Gelb ab")}</div>
             <SliderControl value={settings.readyAmber ?? 70} min={40} max={94} step={1}
               onChange={(v: number) => set("readyAmber", Math.min(v, (settings.readyGreen ?? 95) - 1))} fmt={(v: number) => v + " %"} />
           </div>
@@ -353,14 +391,32 @@ export function SettingsTab() {
           einem Bildschirm waeren schlimmer als das alte allein. */}
       <div className="set-section">
         <div className="set-section-h"><Icon name="check" size={16} /> {txt("Antwortprüfung")}</div>
-        <ZeileSchalter titel={txt("Gross- und Kleinschreibung egal")} sub={txt("„Hund“ und „hund“ zählen gleich")}
-          value={settings.lenientCase} onChange={(v: boolean) => set("lenientCase", v)} />
+        <div className="set-body">
+        {/* Umgedreht gefragt: der Schalter heisst jetzt, was er tut, wenn er
+            an ist — und an ist er ab Werk. Gross- und Kleinschreibung ist im
+            Deutschen bedeutungstragend („das Essen" gegen „das essen"), und
+            eine Rechtschreibung, die man nicht übt, lernt man nicht. */}
+        <ZeileSchalter titel={txt("Gross- und Kleinschreibung zählt")} sub={txt("„hund“ statt „Hund“ ist ein Fehler")}
+          value={!settings.lenientCase} onChange={(v: boolean) => set("lenientCase", !v)} />
         <ZeileSchalter titel={txt("Fast richtig zulassen")} sub={txt("ein Tippfehler zählt noch als fast richtig")}
           value={settings.acceptPartial} onChange={(v: boolean) => set("acceptPartial", v)} />
         <ZeileSchalter titel={txt("Umlaute und Akzente streng")} sub={txt("„grun“ statt „grün“ gilt dann als falsch")}
           value={settings.strictAccents} onChange={(v: boolean) => set("strictAccents", v)} />
         <ZeileWert titel={txt("Artikel (der/die/das)")} atRec={atR("articleMode")}
           wert={txt(ARTIKEL[settings.articleMode] || settings.articleMode)} onClick={() => setBlatt("artikel")} />
+        </div>
+      </div>
+
+      {/* Übungsplan — die Ampel der Wortlisten gehört nicht unter „Üben":
+          sie regelt nichts am Abfragen, sondern was der Übungsplan als
+          bereit anzeigt. Eigener Abschnitt, eigener Name. */}
+      <div className="set-section">
+        <div className="set-section-h"><Icon name="calendar" size={16} /> {txt("Übungsplan")}</div>
+        <div className="set-body">
+        <ZeileWert titel={txt("Ampel der Wortlisten")} atRec={atR("readyGreen") && atR("readyAmber")}
+          wert={txt("grün ab {g} %", { g: settings.readyGreen ?? 95 })}
+          onClick={() => setBlatt("ready")} />
+        </div>
       </div>
 
       <Blatt offen={blatt === "artikel"} titel={txt("Artikel (der/die/das)")} onClose={() => setBlatt(null)}
@@ -369,79 +425,62 @@ export function SettingsTab() {
         <div className="list">
           {Object.keys(ARTIKEL).map((v) => (
             <button key={v} className={"li" + (settings.articleMode === v ? " sel" : "")} onClick={() => set("articleMode", v)}>
-              <span className="ckbox">{settings.articleMode === v && <Icon name="check" size={12} />}</span>
               <span className="g">{txt(ARTIKEL[v])}</span>
             </button>
           ))}
         </div>
       </Blatt>
 
-      {/* Latein */}
+      {/* Sprachen — die Kontrollkästchen sind entfallen. Eine Auswahl sieht
+          in dieser App überall gleich aus: dunklerer Grund und ein Rahmen in
+          Schriftfarbe. Hier standen Kästchen, in den Wortlisten eine
+          Hervorhebung — dieselbe Handlung in zwei Sprachen. */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprachen")}</div>
-        <div className="grp">{txt("Sprachen")} <span className="hint">— {txt("zu- und abschaltbar")}</span></div>
-        <div className="list">
-          {Object.values(PAIRS).map((p: any) => {
-            const an = activeIds.includes(p.id);
-            const n = store.vocab.filter((w: any) => w.pair === p.id).length;
-            return (
-              <button key={p.id} className={"li" + (an ? " sel" : "")} onClick={() => togglePair(p.id)} aria-pressed={an}>
-                <span className="ckbox">{an && <Icon name="check" size={12} />}</span>
-                <span className="g">{p.foreignLabel} ⇄ {p.nativeLabel}
-                  <div className="m">{n ? txt("{n} Wörter", { n }) : txt("noch keine Wörter")}</div>
-                </span>
-              </button>
-            );
-          })}
+        <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprachen")} <span className="set-section-hint">{txt("zu- und abschaltbar")}</span></div>
+        <div className="set-body">
+        {Object.values(PAIRS).map((pp: any) => {
+          const an = activeIds.includes(pp.id);
+          const n = store.vocab.filter((w: any) => w.pair === pp.id).length;
+          return (
+            <button key={pp.id} className={"li" + (an ? " sel" : "")} onClick={() => togglePair(pp.id)} aria-pressed={an}>
+              <span className="g">{pp.foreignLabel} ⇄ {pp.nativeLabel}
+                <div className="m">{n ? txt("{n} Wörter", { n }) : txt("noch keine Wörter")}</div>
+              </span>
+            </button>
+          );
+        })}
         </div>
-        <div className="quiet links">{txt("Beim Zuschalten kommt der Grundwortschatz automatisch als eigene Liste dazu. Eine abgeschaltete Sprache wird nur ausgeblendet — ihre Wörter, Listen und Lernstände bleiben erhalten.")}</div>
       </div>
 
-      <div className="set-section">
-        <div className="set-section-h"><Icon name="list" size={16} /> {txt("Latein")}</div>
-        <ZeileWert titel={txt("Abfrage-Form")} atRec={atR("latinMode")}
-          wert={txt(settings.latinMode === "L3" ? "L3 · volle Lernform" : "L2 · Grundform")}
-          onClick={() => setBlatt("latein")} />
-        <ZeileSchalter titel={txt("Längenstriche nicht nötig")} sub={txt("ā ē ī ō ū dürfen fehlen")}
-          value={!!settings.latinMacronsOptional} onChange={(v: boolean) => set("latinMacronsOptional", v)} />
-      </div>
-
-      <Blatt offen={blatt === "latein"} titel={txt("Abfrage-Form")} onClose={() => setBlatt(null)}
+      {/* Das Blatt zu Latein trägt beide Einstellungen: eine eigene Box für
+          zwei Zeilen war zu viel Gehäuse für zu wenig Inhalt. */}
+      <Blatt offen={blatt === "latein"} titel={txt("Latein")} onClose={() => setBlatt(null)}
         desc={txt("Gilt nur für das Paar Latein ⇄ Deutsch. L2: die Karte zeigt die volle Lernform, abgefragt wird nur die Grundform. L3: du gibst die vollständigen Stammformen ein (Reihenfolge egal).")}
         rec={txt("L2 · Grundform")} atRec={atR("latinMode")} onZuruecksetzen={() => set("latinMode", R.latinMode)}>
-        <div className="list">
-          {[["L2", "L2 · Grundform"], ["L3", "L3 · volle Lernform"]].map(([v, l]) => (
-            <button key={v} className={"li" + (settings.latinMode === v ? " sel" : "")} onClick={() => set("latinMode", v)}>
-              <span className="ckbox">{settings.latinMode === v && <Icon name="check" size={12} />}</span>
-              <span className="g">{txt(l)}</span>
-            </button>
-          ))}
+        <div className="grp" style={{ paddingTop: 0 }}>{txt("Abfrage-Form")}</div>
+        {[["L2", "L2 · Grundform"], ["L3", "L3 · volle Lernform"]].map(([v, l]) => (
+          <button key={v} className={"li" + (settings.latinMode === v ? " sel" : "")} onClick={() => set("latinMode", v)}>
+            <span className="g">{txt(l)}</span>
+          </button>
+        ))}
+        <div style={{ marginTop: 10 }}>
+          <ZeileSchalter titel={txt("Längenstriche nicht nötig")} sub={txt("ā ē ī ō ū dürfen fehlen")}
+            value={!!settings.latinMacronsOptional} onChange={(v: boolean) => set("latinMacronsOptional", v)} />
         </div>
       </Blatt>
 
-      {/* Oberflächensprache */}
+      {/* Bedienung — was die App als Ganzes betrifft: ihre Sprache und ihr
+          Aussehen. Vorher zwei Abschnitte nebeneinander, beide über die
+          Oberfläche, keiner über das Lernen. Die Sprache ist eine Zeile wie
+          jede andere; das Aussehen bleibt offen, weil man dort sehen will,
+          was man wählt, und die Vorschau darunter hängt. */}
       <div className="set-section">
-        <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprache der App")}</div>
-        <div className="grp">{txt("Oberflächensprache")}</div>
-        <div className="list">
-          {[["de", "Deutsch", ""], ["en", "English", ""], ["", "Gerätesprache", "folgt der Einstellung des Telefons"]].map(([v, l, sub]) => (
-            <button key={v || "auto"} className={"li" + ((settings.uiLang || "") === v ? " sel" : "")}
-              onClick={() => set("uiLang", v || undefined)} aria-pressed={(settings.uiLang || "") === v}>
-              <span className="ckbox">{(settings.uiLang || "") === v && <Icon name="check" size={12} />}</span>
-              <span className="g">{l === "Gerätesprache" ? txt(l) : l}{sub && <div className="m">{txt(sub)}</div>}</span>
-            </button>
-          ))}
-        </div>
-        <div className="quiet links">{txt("Die Sprache der Bedienung. Deine Wörter und Wortlisten bleiben davon unberührt — die Übersetzungen sind immer Deutsch.")}</div>
-      </div>
+        <div className="set-section-h"><Icon name="swatch" size={16} /> {txt("Bedienung")}</div>
+        <div className="set-body">
 
-      {/* Aussehen — vier Umschalter, nach Reichweite sortiert: erst was das
-          ganze Gerät betrifft, zuletzt was nur die Karte betrifft. Darunter
-          die Karte selbst als Vorschau, damit man sieht statt zu raten.
-          Vorher waren es vier Auswahlfelder mit Erklaertexten -- korrekt,
-          aber man musste jedes oeffnen, um zu sehen, was drinsteht. */}
-      <div className="set-section">
-        <div className="set-section-h"><Icon name="swatch" size={16} /> {txt("Aussehen")}</div>
+        <ZeileWert titel={txt("Sprache der App")}
+          wert={settings.uiLang === "de" ? "Deutsch" : settings.uiLang === "en" ? "English" : txt("Gerätesprache")}
+          onClick={() => setBlatt("uiLang")} />
 
         <div className="grp">{txt("Erscheinungsbild")} <span className="hint">— {txt("folgt dem Gerät")}</span></div>
         <div className="seg seg-voll">
@@ -452,8 +491,8 @@ export function SettingsTab() {
 
         <div className="grp">{txt("Farbschema")} <span className="hint">— {txt("gilt für die ganze App")}</span></div>
         <div className="seg seg-voll">
-          {[["kladde", "Kladde"], ["leinen", "Leinen"], ["altpapier", "Altpapier"]].map(([v, l]) => (
-            <button key={v} aria-pressed={settings.scheme === v} onClick={() => set("scheme", v)}>{txt(l)}</button>
+          {[["kladde", "Kladde"], ["tinte", "Tinte"], ["graphit", "Graphit"]].map(([v, l]) => (
+            <button key={v} aria-pressed={schemaJetzt === v} onClick={() => set("scheme", v)}>{txt(l)}</button>
           ))}
         </div>
 
@@ -473,28 +512,29 @@ export function SettingsTab() {
 
         <CardPreview />
 
-        {!(atR("appearance") && atR("scheme") && atR("cardStyle") && atR("cardFont")) && (
-          <button className="btn btn-ghost btn-sm" style={{ alignSelf: "center", marginTop: 10 }}
+        {!(atR("appearance") && schemaJetzt === "kladde" && atR("cardStyle") && atR("cardFont")) && (
+          <button className="btn btn-ghost btn-sm" style={{ alignSelf: "center" }}
             onClick={() => { set("appearance", "auto"); set("scheme", "kladde"); set("cardStyle", "ruled"); set("cardFont", "serif"); }}>
-            <Icon name="refresh" size={13} /> {txt("Zurücksetzen auf Automatisch · Kladde · Liniert · Serif")}
+            <Icon name="refresh" size={13} /> {txt("Zurück zum Standard-Aussehen")}
           </button>
         )}
+        </div>
       </div>
 
-      {/* Grundwortschatz (Starter-Listen) */}
-      <div className="set-section">
-        <div className="set-section-h"><Icon name="sparkle" size={16} /> {txt("Grundwortschatz")}</div>
-        {STARTERS.map((s) => {
-          const done = isStarterActivated(settings, s.pair, s.stufe);
-          return (
-            <Field key={s.key} title={s.label} desc={txt("{n} häufige Wörter. Wird als eigene Wortliste hinzugefügt; bereits vorhandene Wörter werden übersprungen.", { n: s.count })}>
-              {done
-                ? <span className="badge green"><span className="dot" />{txt("Aktiviert")}</span>
-                : <button className="btn btn-sm" onClick={() => addStarter(s.pair, s.stufe)}><Icon name="plus" size={15} /> {txt("Hinzufügen")}</button>}
-            </Field>
-          );
-        })}
-      </div>
+      <Blatt offen={blatt === "uiLang"} titel={txt("Sprache der App")} onClose={() => setBlatt(null)}
+        desc={txt("Die Sprache der Bedienung. Deine Wörter und Wortlisten bleiben davon unberührt.")}>
+        {[["de", "Deutsch", ""], ["en", "English", ""], ["", "Gerätesprache", "folgt der Einstellung des Telefons"]].map(([v, l, sub]) => (
+          <button key={v || "auto"} className={"li" + ((settings.uiLang || "") === v ? " sel" : "")}
+            onClick={() => set("uiLang", v || undefined)} aria-pressed={(settings.uiLang || "") === v}>
+            <span className="g">{l === "Gerätesprache" ? txt(l) : l}{sub && <div className="m">{txt(sub)}</div>}</span>
+          </button>
+        ))}
+      </Blatt>
+
+      {/* Der Grundwortschatz hatte hier eine Box mit drei Zeilen „Aktiviert".
+          Er kommt ohnehin von selbst, sobald eine Sprache zugeschaltet ist
+          (siehe App.tsx) — die Box zeigte also nur an, dass etwas bereits
+          geschehen war, und bot einen Knopf, den niemand mehr drücken kann. */}
 
       {/* F-SETTINGS-ADVANCED: collapsible expert section */}
       <div className="set-section">
@@ -564,6 +604,9 @@ export function SettingsTab() {
         <Field title={txt("Impressum")} desc={txt("Wer diese App herausgibt.")}>
           <button className="btn btn-sm btn-ghost" onClick={() => setImprintOpen(true)}>{txt("Impressum ansehen")}</button>
         </Field>
+        <Field title={txt("Einstellungen zurücksetzen")} desc={txt("Setzt alle Einstellungen auf die Voreinstellungen zurück. Deine Wörter, Listen und Lernstände bleiben.")}>
+          <button className="btn btn-sm btn-ghost" onClick={() => setVoreinstOpen(true)}><Icon name="refresh" size={15} /> {txt("Zurücksetzen")}</button>
+        </Field>
         <Field title={txt("Fortschritt zurücksetzen")} desc={txt("Löscht Punkte und Verlauf. Deine Wörter und Wortlisten bleiben.")}>
           <button className="btn btn-sm btn-ghost" onClick={() => setResetOpen(true)}><Icon name="refresh" size={15} /> {txt("Zurücksetzen")}</button>
         </Field>
@@ -574,25 +617,15 @@ export function SettingsTab() {
         </Field>
       </div>
 
-      {resetOpen && (
-        <div className="modal-backdrop" onClick={() => setResetOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
-            <div className="modal-head">
-              <div className="modal-title">{txt("Fortschritt zurücksetzen")}</div>
-              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setResetOpen(false)}><Icon name="x" size={16} /></button>
-            </div>
-            <div className="muted" style={{ fontSize: 13.5, marginBottom: 14 }}>
-              {txt("Das löscht Punkte, Verlauf und die Tagesserie — in allen Sprachen. Deine Wörter und Wortlisten bleiben. Rückgängig machen lässt es sich nicht.")}
-            </div>
-            <div className="modal-foot">
-              <button className="btn btn-ghost" onClick={() => setResetOpen(false)}>{txt("Abbrechen")}</button>
-              <button className="btn btn-primary" onClick={() => { store.resetStats(); setResetOpen(false); toast(txt("Lernstand zurückgesetzt"), "refresh"); }}>
-                {txt("Zurücksetzen")}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Bestaetigen offen={voreinstOpen} titel={txt("Einstellungen zurücksetzen")}
+        text={txt("Alle Einstellungen gehen auf die Voreinstellungen zurück — auch das Aussehen und die erweiterten Werte. Deine Wörter, Listen und Lernstände bleiben unberührt.")}
+        knopf={txt("Zurücksetzen")} onClose={() => setVoreinstOpen(false)}
+        tun={() => { resetSettings(); setVoreinstOpen(false); toast(txt("Auf die Voreinstellungen zurückgesetzt"), "refresh"); }} />
+
+      <Bestaetigen offen={resetOpen} titel={txt("Fortschritt zurücksetzen")}
+        text={txt("Das löscht Punkte, Verlauf und die Tagesserie — in allen Sprachen. Deine Wörter und Wortlisten bleiben. Rückgängig machen lässt es sich nicht.")}
+        knopf={txt("Zurücksetzen")} gefahr onClose={() => setResetOpen(false)}
+        tun={() => { store.resetStats(); setResetOpen(false); toast(txt("Lernstand zurückgesetzt"), "refresh"); }} />
 
       {privacyOpen && (
         <div className="modal-backdrop" onClick={() => setPrivacyOpen(false)}>
@@ -655,30 +688,19 @@ export function SettingsTab() {
         </div>
       )}
 
-      {delOpen && (
-        <div className="modal-backdrop" onClick={() => !delBusy && setDelOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
-            <div className="modal-head">
-              <div className="modal-title">{txt("Account löschen")}</div>
-              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => !delBusy && setDelOpen(false)}><Icon name="x" size={16} /></button>
-            </div>
-            <div className="muted" style={{ fontSize: 13.5, lineHeight: 1.45, marginBottom: 12 }}>
-              {cloudActive
-                ? "Das löscht deine Daten endgültig – auf diesem Gerät und in der Cloud. Danach wirst du abgemeldet."
-                : "Das löscht alle Vokabeln, Listen und Fortschritte auf diesem Gerät."}
-              {" "}Tippe zum Bestätigen <b style={{ color: "var(--ink)" }}>{txt("LÖSCHEN")}</b>.
-            </div>
-            <input className="field" placeholder={txt("LÖSCHEN")} value={confirmText} onChange={(e) => setConfirmText(e.target.value)} autoFocus />
-            {delErr && <div className="badge red" style={{ marginTop: 10 }}><span className="dot" />{delErr}</div>}
-            <div className="modal-foot">
-              <button className="btn btn-ghost" disabled={delBusy} onClick={() => setDelOpen(false)}>{txt("Abbrechen")}</button>
-              <button className="btn" style={{ borderColor: "var(--red)", color: "var(--red)" }} disabled={delBusy || confirmText.trim().toUpperCase() !== "LÖSCHEN"} onClick={doDelete}>
-                {delBusy ? <Icon name="refresh" size={15} /> : <Icon name="trash" size={15} />} Endgültig löschen
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Bestaetigen offen={delOpen} titel={txt("Account löschen")} gefahr
+        text={<>
+          {cloudActive
+            ? txt("Das löscht deine Daten endgültig — auf diesem Gerät und in der Cloud. Danach wirst du abgemeldet.")
+            : txt("Das löscht alle Vokabeln, Listen und Fortschritte auf diesem Gerät.")}
+          {" "}{txt("Tippe zum Bestätigen")} <b style={{ color: "var(--ink)" }}>{txt("LÖSCHEN")}</b>.
+        </>}
+        knopf={txt("Endgültig löschen")} aus={delBusy || confirmText.trim().toUpperCase() !== "LÖSCHEN"}
+        onClose={() => !delBusy && setDelOpen(false)} tun={doDelete}>
+        <input className="field" style={{ marginTop: 12 }} placeholder={txt("LÖSCHEN")} value={confirmText}
+          onChange={(e) => setConfirmText(e.target.value)} autoFocus />
+        {delErr && <div className="badge red" style={{ marginTop: 10 }}><span className="dot" />{delErr}</div>}
+      </Bestaetigen>
 
       <div className="muted" style={{ fontSize: 11.5, textAlign: "center", padding: "4px 0 10px" }}>
         Settings are saved on this device and apply to both language tracks.

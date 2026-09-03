@@ -12,7 +12,7 @@ export const RECOMMENDED: Partial<Settings> = {
   targetRetention: 0.9,    // V13: THE retention source (Lernintensität-Preset schreibt hierein)
   lernIntensity: "normal", // V8/V13: UI-Label-Hülle für targetRetention
   masteryCorrect: 3,      // internal default for classifyWord display (sliders removed in V8)
-  lenientCase: true,      // ignore upper/lower case
+  lenientCase: false,     // Gross-/Kleinschreibung zaehlt: im Deutschen bedeutungstragend
   strictAccents: false,   // umlaut/accent slips = small mistake, not wrong
   articleMode: "required-partial", // missing der/die/das = small deduction
   acceptPartial: true,    // award partial credit for near-misses
