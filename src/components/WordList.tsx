@@ -5,15 +5,16 @@ import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
 import { translateWord } from "../lib/translate";
 import { deriveProfile, retentionFor } from "../lib/fsrs";
-import { listProfile, examPrognosis } from "../lib/engine";
-import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
+import { examPrognosis } from "../lib/engine";
+import { STUFE_BADGE, STUFE_LANG } from "../lib/stufen";
+import { readyPercent, readyTone, listReadiness, TONE_VAR } from "../lib/readiness";
 import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { isConfigured } from "../lib/supabase";
 import { useAuth } from "../sync/auth";
 import { publishList } from "../sync/share";
-import { ListPicker } from "./ListSelector";
+import { ListPicker } from "./ListPicker";
 import { ShareModal } from "./ShareModal";
 import { ReviewModal } from "./ReviewModal";
 import { PasteModal } from "./PasteModal";
@@ -91,8 +92,8 @@ export function WordList() {
    * Woerter zu mitteln waere eine andere Aussage als "diese Liste sitzt". */
   const activeListStand = useMemo(() => {
     if (activeList === "__all" || !activeListObj) return null;
-    const prof = listProfile(activeListObj, vocab, stats, retentionFor(settings));
-    return { prof, pct: readyPercent(prof.dist), pg: examPrognosis(activeListObj, vocab, stats) };
+    const st = listReadiness(activeListObj, vocab, stats, retentionFor(settings), settings);
+    return { ...st, pg: examPrognosis(activeListObj, vocab, stats) };
   }, [activeList, activeListObj, vocab, stats, settings]);
   const setListDue = (id: string, val: string) =>
     store.updateList(id, { dueDate: val ? new Date(val + "T08:00:00").getTime() : undefined });
@@ -241,11 +242,10 @@ export function WordList() {
     ? [["le chien", "der Hund", "ʃjɛ̃", "Le chien court dans le jardin.", "", "Animaux"], ["rouge", "", "ʁuʒ", "La rose est rouge.", "", "Couleurs"], ["", "das Buch", "", "", "", "École"]]
     : [["dog", "der Hund", "dɒɡ", "The dog runs in the garden.", "My dog is very old.", "Animals"], ["red", "", "rɛd", "The rose is red.", "", "Colours"], ["", "das Buch", "", "", "", "School"]];
 
-  const WL_STUFE: any = { sitzt: ["green", "Sitzt"], sitzt_fast: ["amber", "Sitzt fast"], sitzt_schlecht: ["red", "Wackelt noch"], neu: ["blue", "Neu"], noch_nicht_geuebt: ["slate", "Noch nicht geübt"] };
-  const catBadge = (w) => {
+  const catBadge = (w: any) => {
     if (!practiceable(w)) return <span className="badge red"><span className="dot" />{txt("Übersetzung fehlt")}</span>;
-    const [tone, label] = WL_STUFE[deriveProfile(stats[w.id]?.fsrs, retentionFor(settings)).stufe];   // V14: one source
-    return <span className={"badge " + tone}><span className="dot" />{label}</span>;
+    const stufe = deriveProfile(stats[w.id]?.fsrs, retentionFor(settings)).stufe;
+    return <span className={"badge " + STUFE_BADGE[stufe]}><span className="dot" />{txt(STUFE_LANG[stufe])}</span>;
   };
 
   return (

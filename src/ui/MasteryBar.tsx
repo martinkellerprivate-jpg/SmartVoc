@@ -7,17 +7,7 @@
 import { STUFE_ORDER } from "../lib/fsrs";
 import { txt } from "../lib/i18n";
 
-const TONE: Record<string, string> = {
-  // „sitzt fast" trägt jetzt --warn: --amber ist ein Rostton und bezeichnet
-  // zugleich die Hauptaktion. Eine Farbe, eine Bedeutung.
-  sitzt: "var(--ok)", sitzt_fast: "var(--warn)", sitzt_schlecht: "var(--bad)",
-  neu: "var(--blue)", noch_nicht_geuebt: "var(--ink-faint)",
-};
-const LEG: Record<string, string> = {
-  // Kurz halten — die Legende steht unter jeder Leiste und darf nicht umbrechen.
-  sitzt: "sitzt", sitzt_fast: "fast", sitzt_schlecht: "wackelt",
-  neu: "neu", noch_nicht_geuebt: "ungeübt",
-};
+import { STUFE_FARBE as TONE, STUFE_KURZ as LEG } from "../lib/stufen";
 
 export function MasteryBar({ dist, total, onSegment, activeFilter, showLegend = true }:
   { dist: Record<string, number>; total: number; onSegment?: (k: string) => void; activeFilter?: string; showLegend?: boolean }) {

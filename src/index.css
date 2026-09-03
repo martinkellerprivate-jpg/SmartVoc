@@ -163,6 +163,8 @@ input, button, textarea, select { font-family: inherit; }
 .badge.amber .dot { background: var(--amber); }
 .badge.red { background: var(--red-bg); color: var(--red); }
 .badge.red .dot { background: var(--red); }
+.badge.warn { background: color-mix(in srgb, var(--warn) 15%, var(--card)); color: var(--warn); }
+.badge.blue { background: color-mix(in srgb, var(--blue) 15%, var(--card)); color: var(--blue); }
 .badge.slate { background: var(--bg-2); color: var(--ink-soft); }
 .badge.slate .dot { background: var(--ink-faint); }
 
@@ -539,22 +541,12 @@ table.vt tr:hover .row-actions { opacity: 1; }
 .lchips-wrap .lchips { margin-bottom: 0; }
 .lchips-topics { padding-top: 9px; border-top: 1px dashed var(--line); }
 .lchips-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); display: inline-flex; align-items: center; gap: 5px; align-self: center; margin-right: 2px; }
-.lchip-topic.on, .lchips-topics .lchip-topic.on { background: var(--amber); color: #fff; border-color: var(--amber-deep); }
-.lchips-topics .lchip-topic.on .lchip-n { background: rgba(255,255,255,.24); color: #fff; }
 .lchips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; justify-content: center; }
 .lchip { border: 1px solid var(--line); background: var(--card); color: var(--ink-soft); border-radius: 999px; padding: 7px 14px; font-size: 13.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 7px; box-shadow: var(--shadow-sm); transition: all .14s ease; }
 .lchip:hover { color: var(--ink); transform: translateY(-1px); }
 .lchip.on { background: var(--ink); color: var(--card); border-color: var(--ink); }
 .lchip-n { font-size: 11.5px; font-weight: 700; background: var(--bg-2); color: var(--ink-soft); border-radius: 999px; padding: 1px 7px; }
 .lchip.on .lchip-n { background: rgba(255,255,255,.22); color: #fff; }
-.lchip.tricky { border-color: var(--red); color: var(--red); }
-.lchip.tricky.on { background: var(--red); color: #fff; border-color: var(--red); }
-.lchip.tricky.on .lchip-n { background: rgba(255,255,255,.24); color: #fff; }
-.lchip-smart.on.tone-red { background: var(--red); border-color: var(--red); color: #fff; }
-.lchip-smart.on.tone-green { background: var(--green); border-color: var(--green); color: #fff; }
-.lchip-smart.on.tone-amber { background: var(--amber); border-color: var(--amber-deep); color: #fff; }
-.lchip-smart.on.tone-slate { background: var(--ink); border-color: var(--ink); color: #fff; }
-.lchip-smart.on .lchip-n { background: rgba(255,255,255,.24); color: #fff; }
 
 .listbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
 .ltab { border: 1px solid var(--line); background: var(--card); color: var(--ink-soft); border-radius: 11px; padding: 9px 14px; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm); transition: all .14s ease; }

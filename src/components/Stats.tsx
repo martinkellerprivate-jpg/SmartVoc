@@ -14,17 +14,7 @@ import {
   versucheBisSitzt, haltedauer, verteilungJeSprache, tageBisSitzt,
 } from "../lib/statistik";
 
-const STUFE_LABEL: Record<string, string> = {
-  sitzt: "sitzt", sitzt_fast: "sitzt fast", sitzt_schlecht: "wackelt noch",
-  neu: "neu", noch_nicht_geuebt: "ungeübt",
-};
-/* Die Farben der fünf Stufen kommen aus derselben Quelle wie die Leiste und
- * die Karte — eine eigene Tabelle hier wäre die nächste Stelle, an der die
- * Farben auseinanderlaufen. */
-const STUFE_TONE: Record<string, string> = {
-  sitzt: "var(--ok)", sitzt_fast: "var(--warn)", sitzt_schlecht: "var(--bad)",
-  neu: "var(--blue)", noch_nicht_geuebt: "var(--ink-faint)",
-};
+import { STUFE_FARBE as STUFE_TONE, STUFE_LANG as STUFE_LABEL } from "../lib/stufen";
 const ZEITRAUM_NAME: Record<number, string> = { 7: "7 Tage", 30: "30 Tage", 90: "3 Monate" };
 
 /* Eine Kennzahl: gross die Zahl mit ihrer Einheit, klein die Bedingung

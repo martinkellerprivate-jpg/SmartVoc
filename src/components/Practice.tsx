@@ -6,13 +6,13 @@ import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
 import { toneColor } from "../ui/Ring";
 import { scoreAnswer } from "../lib/scoring";
-import { resolveList, resolveSmart, listProfile, resolveToday } from "../lib/engine";
+import { resolveList, resolveSmart, resolveToday } from "../lib/engine";
 import { buildQueue, pick, record, outcomeOf, pendingGrades, progress, remaining } from "../lib/runqueue";
 import { MasteryBar } from "../ui/MasteryBar";
 import { LatinKeys } from "../ui/LatinKeys";
 import { retrievabilityOf, isDueCard, retentionFor, initialCard, deriveProfile, STUFE, STUFE_ORDER, deriveRating, gradeFromCard, getCfg } from "../lib/fsrs";
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
-import { readyPercent, readyTone, TONE_VAR } from "../lib/readiness";
+import { listReadiness, TONE_VAR } from "../lib/readiness";
 import { PairPill } from "../ui/PairPill";
 import { tapRichtig, tapFalsch } from "../lib/native";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
@@ -621,8 +621,7 @@ export function Practice() {
               <div className="grp">{txt("Wortlisten")} <span className="hint">— {txt("mehrere möglich")}</span></div>
               <div className="list">
                 {listsSorted.map((l: any) => {
-                  const prof = listProfile(l, vocab, stats, listRetentionW);
-                  const pct = readyPercent(prof.dist);
+                  const { pct, farbe } = listReadiness(l, vocab, stats, listRetentionW, settings);
                   const an = isActiveTok("list:" + l.id);
                   const days = l.dueDate ? Math.ceil((l.dueDate - Date.now()) / 86400000) : null;
                   return (
@@ -634,7 +633,7 @@ export function Practice() {
                           {days != null && " · " + (days < 0 ? txt("überfällig") : days === 0 ? txt("heute") : txt("in {n} Tagen", { n: days }))}
                         </div>
                       </span>
-                      <span className="dot" style={{ width: 9, height: 9, borderRadius: "50%", background: TONE_VAR[readyTone(pct, settings)], flex: "none", alignSelf: "center" }} />
+                      <span className="dot" style={{ width: 9, height: 9, borderRadius: "50%", background: farbe, flex: "none", alignSelf: "center" }} />
                     </button>
                   );
                 })}

@@ -8,6 +8,7 @@
  * denn eine Liste mit 200 ungeübten Wörtern ist nicht bereit. */
 import type { Settings } from "./types";
 import { txt } from "./i18n";
+import { listProfile } from "./engine";
 
 export type Tone = "ok" | "warn" | "bad";
 
@@ -25,6 +26,18 @@ export function readyTone(percent: number, settings: Partial<Settings> = {}): To
   if (percent >= green) return "ok";
   if (percent >= amber) return "warn";
   return "bad";
+}
+
+/** Der ganze Handgriff an einer Stelle: Verteilung, Prozent, Ton, Farbe.
+ *  Wer den Stand einer Wortliste zeigen will, ruft genau das hier auf. */
+export function listReadiness(
+  list: any, vocab: any[], stats: Record<string, any>,
+  effRetention: number, settings: Partial<Settings> = {}, now: number = Date.now(),
+) {
+  const prof = listProfile(list, vocab, stats, effRetention, now);
+  const pct = readyPercent(prof.dist);
+  const tone = readyTone(pct, settings);
+  return { prof, pct, tone, farbe: TONE_VAR[tone], total: prof.total };
 }
 
 export const TONE_VAR: Record<Tone, string> = {

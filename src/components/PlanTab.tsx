@@ -22,9 +22,9 @@ import { useStore } from "../store/StoreProvider";
 import { Icon } from "../ui/Icon";
 import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, activePairs } from "../lib/pairs";
-import { listProfile } from "../lib/engine";
+
 import { retentionFor } from "../lib/fsrs";
-import { readyPercent, readyTone, toneLegend, TONE_VAR } from "../lib/readiness";
+import { toneLegend, listReadiness, TONE_VAR } from "../lib/readiness";
 import { getUiLang } from "../lib/i18n";
 
 const DAY = 86400000;
@@ -67,11 +67,9 @@ export function PlanTab() {
   const termine = useMemo(() => (lists || [])
     .filter((l: any) => l.dueDate && shownPairs.has(l.pair))
     .map((l: any) => {
-      const prof = listProfile(l, vocab, stats, retention);
-      const pct = readyPercent(prof.dist);
+      const st = listReadiness(l, vocab, stats, retention, settings);
       return {
-        list: l, day: startOfDay(l.dueDate), prof, pct,
-        tone: readyTone(pct, settings),
+        list: l, day: startOfDay(l.dueDate), ...st,
         daysLeft: Math.round((startOfDay(l.dueDate) - today) / DAY),
       };
     })
@@ -81,9 +79,7 @@ export function PlanTab() {
   const ohneTermin = useMemo(() => (lists || [])
     .filter((l: any) => !l.dueDate && shownPairs.has(l.pair))
     .map((l: any) => {
-      const prof = listProfile(l, vocab, stats, retention);
-      const pct = readyPercent(prof.dist);
-      return { list: l, prof, pct, tone: readyTone(pct, settings), daysLeft: null as any };
+      return { list: l, ...listReadiness(l, vocab, stats, retention, settings), daysLeft: null as any };
     })
     .filter((t) => t.prof.total > 0),
     [lists, vocab, stats, retention, settings, shownPairs]);

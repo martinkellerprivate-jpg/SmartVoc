@@ -192,8 +192,9 @@ export function listProfile(list: any, vocab: Word[], stats: Record<string, any>
   }
   const total = words.length;
   const pctSitzt = total ? dist.sitzt / total : 0;
-  const tone = total === 0 || dist.noch_nicht_geuebt === total ? "slate" : pctSitzt > 0.8 ? "green" : pctSitzt < 0.33 ? "red" : "amber";
-  return { total, dist, pctSitzt, tone, lastReview };
+  /* Kein eigener Farbton mehr: der kommt aus readiness.ts, damit Kalender,
+   * Listenzeile und Statistik nicht drei Meinungen haben. */
+  return { total, dist, pctSitzt, lastReview };
 }
 
 /* Resolve a built-in smart quick-access ("due" | "tricky") for one pair.
