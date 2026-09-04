@@ -8,6 +8,7 @@ import { useSync } from "./sync/SyncBridge";
 import { Icon } from "./ui/Icon";
 import { useUnterkopf } from "./ui/ScreenHead";
 import { Ring } from "./ui/Ring";
+import { Startbild } from "./ui/Startbild";
 import { PAIRS, activePairs } from "./lib/pairs";
 import { setUiLang, detectUiLang, txt } from "./lib/i18n";
 import markUrl from "./assets/mark.svg";
@@ -176,6 +177,7 @@ export function App() {
 
   return (
     <ImportContext.Provider value={{ openImport }}>
+    <Startbild />
     <div className="app">
       <Header tab={tab} setTab={setTab} />
       <div className="tabs" role="tablist">

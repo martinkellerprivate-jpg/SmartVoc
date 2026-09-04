@@ -47,6 +47,20 @@ body {
 button { font-family: inherit; cursor: pointer; }
 input, button, textarea, select { font-family: inherit; }
 
+/* Das Bild beim Start. Es folgt keinem Farbschema -- es ist eine
+   gezeichnete Illustration mit eigenen Farben, kein Bedienelement. Der
+   Grund ist auf das Papier des Bildes gesetzt, damit die Streifen oben und
+   unten nahtlos anschliessen: das Bild ist schmaler als ein hohes Telefon,
+   und `contain` laesst sonst zwei sichtbare Raender stehen. */
+.startbild {
+  position: fixed; inset: 0; z-index: 200; background: #ede3d8;
+  display: grid; place-items: center; cursor: pointer;
+  opacity: 1; transition: opacity .45s ease;
+}
+.startbild.weg { opacity: 0; }
+.startbild img { width: 100%; height: 100%; object-fit: contain; display: block; }
+@media (prefers-reduced-motion: reduce) { .startbild { transition: none; } }
+
 /* ---------- layout ---------- */
 /* Side insets matter in landscape on a notched device; on desktop every
    env() here is 0, so the layout is unchanged. */

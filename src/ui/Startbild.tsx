@@ -27,8 +27,8 @@ export function Startbild() {
   React.useEffect(() => {
     if (!da) return;
     schonGezeigt = true;
-    const a = setTimeout(() => setGeht(true), 2300);
-    const b = setTimeout(() => setDa(false), 2750);
+    const a = setTimeout(() => setGeht(true), 2600);
+    const b = setTimeout(() => setDa(false), 3050);
     return () => { clearTimeout(a); clearTimeout(b); };
   }, [da]);
 
