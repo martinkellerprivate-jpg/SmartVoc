@@ -65,21 +65,34 @@ input, button, textarea, select { font-family: inherit; }
    Das Bild steht randlos ganz oben -- der einzige Ort in der App, an dem
    man es sich in Ruhe ansehen kann. Der Kopf liegt darueber und traegt
    deshalb selbst keinen Grund. */
-.ueber-modal { max-width: 620px; max-height: 90vh; display: flex; flex-direction: column;
+.modal.ueber-modal { max-width: 620px; max-height: 90vh; display: flex; flex-direction: column;
                padding: 0; overflow: hidden; }
-.ueber-kopf { padding: 16px 18px 12px; margin: 0; flex: none; }
-.ueber-rumpf { flex: 1; min-height: 0; overflow-y: auto; padding: 0 18px 8px; }
-/* `max-width: none` ist noetig: die App deckelt jedes Bild auf die Breite
-   seines Behaelters, und das haette den Randausbruch stillschweigend
-   zurueckgenommen. */
-.ueber-bild { display: block; width: calc(100% + 36px); max-width: none;
-              margin: 0 -18px 16px; background: #ede3d8; }
+.ueber-modal .ueber-kopf { padding: 18px 20px 12px; margin: 0; flex: none; }
+.ueber-modal .ueber-rumpf { flex: 1; min-height: 0; overflow-y: auto; padding: 0 20px 8px; }
+/* Das Bild fuellte den ganzen Rollbereich -- man sah nichts davon, dass
+   darunter Text kommt, und der harte untere Rand schnitt die Zeichnung ab
+   wie eine Schere. Also: auf gut ein Drittel der Hoehe beschnitten, damit
+   der erste Satz noch ins Bild ragt, und nach unten in das Papier
+   aufgeloest statt abgeschnitten.
+
+   `max-width: none` ist noetig, weil die App jedes Bild auf die Breite
+   seines Behaelters deckelt -- das haette den Randausbruch stillschweigend
+   zurueckgenommen. Der Ausschnitt sitzt so, dass Schriftzug, Gesichter und
+   Karten im Bild bleiben; weg faellt das Gras unten. */
+.ueber-modal .ueber-bild { display: block; width: calc(100% + 40px); max-width: none;
+              height: 38vh; object-fit: cover; object-position: center 32%;
+              margin: 0 -20px 6px; background: #ede3d8;
+              -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+              mask-image: linear-gradient(to bottom, #000 62%, transparent 100%); }
 .ueber-lead { font-family: var(--serif); font-size: 16.5px; line-height: 1.5;
               color: var(--ink); margin: 0 0 22px; }
 .ueber-h { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ink);
            margin: 26px 0 8px; padding-top: 18px; border-top: 1px solid var(--line); }
 .ueber-h:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
 .li-ueber { margin-top: 4px; }
+/* Der Fuss sitzt ausserhalb des Rollbereichs und braucht deshalb die
+   Polsterung, die dem Fenster genommen wurde. */
+.ueber-modal .modal-foot { padding: 0 20px 18px; margin-top: 12px; flex: none; }
 
 /* ---------- layout ---------- */
 /* Side insets matter in landscape on a notched device; on desktop every
