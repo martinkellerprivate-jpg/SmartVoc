@@ -38,9 +38,22 @@ export function activateStarter(store: any, pair: string, stufe: number) {
   const isLat = isLatinPair(pair);
   const foreign = fk(pair);
 
+  /* Die mitgelieferten Listen tragen inzwischen alles, was ein Wort tragen
+   * kann: zwei Beispielsaetze mit Uebersetzung und die Aussprache. Frueher
+   * wurden hier nur Wort und Uebersetzung uebernommen -- der Rest lag in der
+   * Datei und kam nie an. */
+  const zusatz = (w: any) => {
+    const bsp = (w.examples || []).map((x: any) => String(x || "").trim());
+    const bspDe = (w.examplesDe || []).map((x: any) => String(x || "").trim());
+    const o: any = {};
+    if (bsp.some(Boolean)) o.examples = bsp;
+    if (bspDe.some(Boolean)) o.examplesDe = bspDe;
+    if (w.phonetic) o.phonetic = String(w.phonetic).trim();
+    return o;
+  };
   const mapped = entry.words.map((w: any) => isLat
-    ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.german || "", pair }
-    : { [foreign]: w.foreign || "", de: w.german || "", pair });
+    ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.german || "", pair, ...zusatz(w) }
+    : { [foreign]: w.foreign || "", de: w.german || "", pair, ...zusatz(w) });
 
   const keyOf = (w: any) => (isLat ? ((w.grundform || "") + "|" + (w.de || "")) : ((w[foreign] || "") + "|" + (w.de || ""))).toLowerCase();
   const existing = new Set(store.vocab.filter((w: any) => w.pair === pair).map(keyOf));
