@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "recht": "node scripts/gen-datenschutz.mjs",
+    "build": "npm run recht && tsc --noEmit && vite build",
     "preview": "vite preview",
-    "build:ios": "CAP_PLATFORM=ios tsc --noEmit && CAP_PLATFORM=ios vite build",
+    "build:ios": "npm run recht && CAP_PLATFORM=ios tsc --noEmit && CAP_PLATFORM=ios vite build",
     "ios": "npm run build:ios && npx cap sync ios",
     "ios:open": "npx cap open ios",
     "icons": "node scripts/gen-icons.mjs"

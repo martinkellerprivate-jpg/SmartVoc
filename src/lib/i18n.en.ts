@@ -549,4 +549,6 @@ export const EN: Record<string, string> = {
   "gestern": "yesterday",
   "unbekannt": "unknown",
   "Meist der Tag der Prüfung. Je näher er rückt, desto häufiger kommen die Wörter dieser Liste. Ohne Datum läuft die Liste nebenher.": "Usually the day of the test. The closer it gets, the more often the words of this list come up. Without a date the list simply runs alongside.",
+  "Dieselbe Erklärung im Web:": "The same statement on the web:",
+  "Wir betreiben diese Datenbank selbst. Das heisst auch: als Herausgeber der App können wir die gespeicherten Daten grundsätzlich einsehen, so wie jeder, der einen eigenen Server betreibt. Wir tun das nur, wenn es zum Betrieb nötig ist, etwa um einen Fehler zu finden.": "We run this database ourselves. That also means we, as the publisher of the app, can in principle see the stored data, as anyone running their own server can. We only do so when it is necessary to keep the app working, for example to track down a fault.",
 };

@@ -12,6 +12,7 @@
 import { Icon } from "../ui/Icon";
 import { txt } from "../lib/i18n";
 import bild from "../assets/intro.jpg";
+import { DATENSCHUTZ, IMPRESSUM, DATENSCHUTZ_URL } from "../lib/recht";
 
 export function UeberModal({ offen, onClose }: { offen: boolean; onClose: () => void }) {
   if (!offen) return null;
@@ -30,48 +31,27 @@ export function UeberModal({ offen, onClose }: { offen: boolean; onClose: () => 
             {txt("Ein Vokabeltrainer, der ausrechnet, wann ein Wort wiederkommt, statt es zu raten. Gemacht für Schülerinnen und Schüler, die eine Prüfung vor sich haben.")}
           </p>
 
-          <h3 className="ueber-h">{txt("Datenschutz")}</h3>
-          <div className="muted legal-body">
-            <p>{txt("Kurz: Diese App sammelt nichts über dich. Sie speichert nur, was du selbst einträgst, und braucht dafür nicht mehr als eine E-Mail-Adresse, und die nur, wenn du dich anmeldest.")}</p>
+          {[[txt("Datenschutz"), DATENSCHUTZ], [txt("Impressum"), IMPRESSUM]].map(([titel, teile]: any) => (
+            <div key={titel}>
+              <h3 className="ueber-h">{titel}</h3>
+              <div className="muted legal-body">
+                {teile.map((a: any, k: number) => (
+                  <div key={k}>
+                    {a.h && <h4>{txt(a.h)}</h4>}
+                    {a.p.map((t: string, m: number) => <p key={m}>{txt(t)}</p>)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
 
-            <h4>{txt("Was gespeichert wird")}</h4>
-            <p>{txt("Deine Wörter, Wortlisten, Lernstände und Einstellungen. Meldest du dich an, zusätzlich deine E-Mail-Adresse und ein selbst gewählter Anzeigename.")}</p>
-
-            <h4>{txt("Wo es liegt")}</h4>
-            <p>{txt("Ohne Anmeldung bleibt alles ausschliesslich auf diesem Gerät. Mit Anmeldung wird es zusätzlich bei Supabase gespeichert, damit du auf mehreren Geräten denselben Stand hast. Die Übertragung ist verschlüsselt, und die Regeln der Datenbank lassen nur dich an deine eigenen Daten.")}</p>
-
-            <h4>{txt("Was NICHT passiert")}</h4>
-            <p>{txt("Keine Werbung, keine Zählpixel, keine Weitergabe an Dritte, kein Verkauf. Die App verfolgt dein Verhalten nicht und legt kein Profil über dich an. Was sie über deinen Lernstand weiss, dient nur dazu, dir die richtigen Wörter zur richtigen Zeit zu zeigen.")}</p>
-
-            <h4>{txt("Geteilte Wortlisten")}</h4>
-            <p>{txt("Teilst du eine Wortliste, wird ihr Inhalt unter einem zufälligen Code abgelegt. Wer den Code hat, kann eine Kopie übernehmen. Dein Name steht nicht dabei, und dein Lernstand wird nicht mitgeteilt.")}</p>
-
-            <h4>{txt("Deine Rechte")}</h4>
-            <p>{txt("Du kannst deine Daten jederzeit als Datei exportieren und dein Konto vollständig löschen. Beides findest du in den Einstellungen unter „Konto & Daten“. Beim Löschen verschwinden auch die Daten in der Cloud, und das lässt sich nicht rückgängig machen.")}</p>
-
-            <h4>{txt("Kinder")}</h4>
-            <p>{txt("Die App ist für Schülerinnen und Schüler gemacht. Sie erhebt keine Daten über das hinaus, was zum Lernen nötig ist, und sie enthält keine Werbung und keine Käufe.")}</p>
-
-            <h4>{txt("Verantwortlich")}</h4>
-            <p>{txt("Martin Keller, Schweiz. Fragen zum Datenschutz gehen an die im Impressum genannte Adresse.")}</p>
-
-          </div>
-
-          <h3 className="ueber-h">{txt("Impressum")}</h3>
-          <div className="muted legal-body">
-            <h4>{txt("Herausgeber")}</h4>
-            <p>Martin Keller<br />Schweiz</p>
-
-            <h4>{txt("Kontakt")}</h4>
-            <p>{txt("Fragen, Fehler und Rückmeldungen gehen an die im App Store hinterlegte Adresse.")}</p>
-
-            <h4>{txt("Inhalte")}</h4>
-            <p>{txt("Der mitgelieferte Grundwortschatz und alle Texte dieser App stammen vom Herausgeber. Die Wörter, die du selbst einträgst, gehören dir.")}</p>
-
-            <h4>{txt("Verwendete Arbeit anderer")}</h4>
-            <p>{txt("Die Wiederholungsabstände berechnet FSRS, ein frei verfügbares Gedächtnismodell. Die Schriften sind Source Serif 4, Hanken Grotesk und Patrick Hand, alle unter der SIL Open Font License.")}</p>
-
-          </div>
+          {/* Apple verlangt fuer den App Store eine frei erreichbare Adresse
+              mit derselben Erklaerung. Der Verweis steht hier, damit man sie
+              weitergeben kann, ohne die App zu oeffnen. */}
+          <p className="ueber-web">
+            {txt("Dieselbe Erklärung im Web:")}{" "}
+            <a href={DATENSCHUTZ_URL} target="_blank" rel="noreferrer">{DATENSCHUTZ_URL.replace(/^https:\/\//, "")}</a>
+          </p>
         </div>
 
         <div className="modal-foot">
