@@ -165,6 +165,8 @@ export function WordList() {
   };
 
   const pairLists = useMemo(() => lists.filter((l) => l.pair === pair), [lists, pair]);
+  /* Welche Sprachen zugeschaltet sind -- die Suche geht ueber alle. */
+  const aktivePaare: string[] = Array.isArray(settings.activePairs) ? settings.activePairs : Object.keys(PAIRS);
   const activeListObj = lists.find((l: any) => l.id === activeList);
   /* Der Stand JEDER Liste -- nicht nur der offenen. Wo kein Platz fuer
    * Balken und Prozent ist, steht der Ampelpunkt; das ist dieselbe Zahl in
@@ -895,21 +897,30 @@ export function WordList() {
   }
 
   /* ==================================================== Die Übersicht */
+  /* Die Suche geht ueber ALLE zugeschalteten Sprachen, nicht nur die
+   * aktuelle. Erst dadurch traegt die Zeile "Liste · Sprachpaar" eine
+   * Auskunft: stuende dort immer dasselbe Paar, waere sie ueberfluessig.
+   * Und wer sucht, weiss oft nicht mehr, in welcher Sprache das Wort lag --
+   * genau deshalb sucht er ja. */
   const treffer = query.trim()
-    ? pairVocab.filter((w: any) => {
+    ? vocab.filter((w: any) => {
         const q = query.toLowerCase().trim();
-        return fgnOf(w).toLowerCase().includes(q) || (w.lernform || "").toLowerCase().includes(q) || (w.de || "").toLowerCase().includes(q);
+        if (!aktivePaare.includes(w.pair || "en-de")) return false;
+        const pp = PAIRS[w.pair || "en-de"] || PAIRS["en-de"];
+        const fgn = isLatinPair(w.pair) ? (w.grundform || "") : (w[pp.foreign] || "");
+        return fgn.toLowerCase().includes(q) || (w.lernform || "").toLowerCase().includes(q) || (w.de || "").toLowerCase().includes(q);
       })
     : null;
 
   return (
     <div className="wl">
+      {/* Die Suche stand hier oben, zwischen Sprachwahl und "Neue Liste" --
+          an der prominentesten Stelle des Bildschirms. Sie versprach damit
+          eine zentrale Handlung, die sie nicht ist: gesucht wird, um ein Wort
+          zu berichtigen oder nachzusehen, ob es schon da ist. Beides ist
+          Wartung. Sie steht jetzt unten, nach den Listen. */}
       <div className="ruest">
         <PairPill />
-        <div className="search">
-          <Icon name="search" size={17} />
-          <input className="field" placeholder={txt("Wörter suchen …")} value={query} onChange={(e) => setQuery(e.target.value)} />
-        </div>
         <button className="pill pill-on" onClick={() => setQuellenBlatt("neu")}>
           <Icon name="plus" size={14} /> {txt("Neue Liste")}
         </button>
@@ -918,17 +929,33 @@ export function WordList() {
       {treffer ? (
         <>
           <div className="grp">{txt("{n} Treffer", { n: treffer.length })}</div>
-          {/* In der Uebersicht fuehrt ein Treffer in die Liste, in der das
-              Wort liegt -- gesucht wird ja, um es dort zu finden. */}
-          <div className="wz-kopf"><span className="wz-f">{P.foreignLabel}</span><span className="wz-d">{P.nativeLabel}</span></div>
+          {/* Ein Treffer sagt, WO das Wort liegt -- Liste und Sprachpaar --
+              und fuehrt beim Antippen genau dorthin: in die Woerter dieser
+              Liste, mit dem Suchbegriff im Feld, damit man es sofort sieht.
+              Vorher landete man auf der Liste und suchte von vorne. */}
           <div className="list">{treffer.map((w: any) => {
+            const wp = w.pair || "en-de";
             const stufe = !practiceable(w) ? "noch_nicht_geuebt" : deriveProfile(stats[w.id]?.fsrs, retentionFor(settings)).stufe;
             const lid = (w.lists || [])[0];
+            const pp = PAIRS[wp] || PAIRS["en-de"];
+            const fgn = isLatinPair(wp) ? (w.grundform || "") : (w[pp.foreign] || "");
+            /* Ein Wort kann auf eine Liste zeigen, die es nicht mehr gibt.
+             * Dann ist der Name leer, und " · Français ⇄ Deutsch" faengt
+             * mit einem Trennzeichen an, das nichts trennt. */
+            const listenname = (lid && listNameOf(lid)) || txt("Ohne Liste");
             return (
-              <button key={w.id} className="wz" style={{ ["--stufe" as any]: STUFE_FARBE[stufe] }}
-                onClick={() => { setQuery(""); if (lid) setOffen({ art: "liste", ref: lid }); else setOffen({ art: "alle", ref: "" }); }}>
-                <span className="wz-f">{fgnOf(w) || <span className="faint">—</span>}</span>
+              <button key={w.id} className="wz wz-fund" style={{ ["--stufe" as any]: STUFE_FARBE[stufe] }}
+                onClick={() => {
+                  const begriff = query;
+                  setQuery("");
+                  if (wp !== pair) store.setSettings({ pair: wp });
+                  setListenSuche(begriff); setGewaehlt([]);
+                  setOffen(lid ? { art: "liste", ref: lid } : { art: "alle", ref: "" });
+                  setWoerterOffen(true);
+                }}>
+                <span className="wz-f">{fgn || <span className="faint">—</span>}</span>
                 <span className="wz-d">{w.de || <span className="faint">—</span>}</span>
+                <span className="wz-her">{listenname} · {pp.foreignLabel} ⇄ {pp.nativeLabel}</span>
               </button>
             );
           })}</div>
@@ -993,6 +1020,21 @@ export function WordList() {
           </button>
         </div>
       )}
+
+      {/* Das Feld steht AUSSERHALB der Verzweigung. Stand es drin, verschwand
+          es beim ersten Tastendruck mit dem Zweig, in dem es lag -- und der
+          Rest des Suchbegriffs ging ins Leere. Es bleibt also stehen, unten,
+          und die Treffer erscheinen darueber. */}
+      <div className="search wl-suche">
+        <Icon name="search" size={17} />
+        <input className="field" placeholder={txt("Einzelnes Wort suchen — über alle Sprachen")}
+          value={query} onChange={(e) => setQuery(e.target.value)} />
+        {query && (
+          <button className="such-x" onClick={() => setQuery("")} aria-label={txt("Suche leeren")}>
+            <Icon name="x" size={14} />
+          </button>
+        )}
+      </div>
 
       {modale}
     </div>

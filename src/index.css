@@ -1696,6 +1696,26 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .wl-legende i { width: 7px; height: 7px; border-radius: 999px; }
 /* Eine Zeile in einer Smart List ist nur zum Ansehen — kein Zeigefinger,
    kein Rahmenwechsel, damit niemand vergeblich tippt. */
+/* Ein Suchtreffer traegt eine dritte Zeile: wo das Wort liegt. Sie steht
+   ueber beide Spalten, damit der Listenname nicht in eine halbe Breite
+   gequetscht wird. */
+.wz-fund { grid-template-columns: 1fr 1fr; }
+.wz-her { grid-column: 1 / -1; font-size: 11px; color: var(--ink-faint); margin-top: 3px; }
+
+/* Die Suche steht am Ende der Uebersicht, nach den Listen. Etwas Luft
+   davor, damit sie nicht wie ein weiterer Listeneintrag aussieht. */
+.wl-suche { margin-top: 20px; }
+/* Ein Kreuz zum Leeren -- ohne das muss man vier Mal die Ruecktaste
+   druecken, um von den Treffern zu den Listen zurueckzukommen. */
+.such-x { position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+          width: 28px; height: 28px; display: grid; place-items: center;
+          background: none; border: none; color: var(--ink-faint); cursor: pointer; }
+.such-x:hover { color: var(--ink); }
+/* `.search svg` schiebt jedes Zeichen an den linken Rand -- das gilt fuer
+   die Lupe, nicht fuer das Kreuz im Knopf daneben. */
+.such-x svg { position: static; transform: none; }
+.wl-suche .field { padding-right: 38px; }
+
 .wz.ro { cursor: default; }
 .wz.ro:hover { border-color: var(--line); }
 /* Alle auswaehlen / Auswahl aufheben: zwei Woerter, kein Knopf -- sie

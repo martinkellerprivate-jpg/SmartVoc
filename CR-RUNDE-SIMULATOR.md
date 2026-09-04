@@ -217,3 +217,10 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | T-35 | **Übungsplan** um die Kalendergrafik herum geschrieben, mit einer Frage als Aufhänger: „Bin ich rechtzeitig fertig?“ |
 | T-36 | Gedankenstriche raus, **Zeilenumbrüche** rein. „Auswählen“ heisst jetzt **Multiple-Choice** — auch in den Einstellungen, wo es der einzige Ort war, der noch anders hiess. Die Grafik setzt „Nur durchblättern“ hinter eine gestrichelte Linie. Der Selbstkontrolle-Tipp und die neue Beschreibung von „Nur durchblättern“ sind übernommen. |
 | T-37 | **„Dahinter“** hat jetzt einen Einleitungssatz und **neun aufklappbare Kapitel** statt einer langen Seite. Mit drei Bildern. |
+
+## Fünfte Runde
+
+| Nr | Bereich | CR |
+|---|---|---|
+| T-40 | Wortlisten · Übersicht | **Wörter suchen ist hier kein zentrales Bedürfnis** — das ist es erst in der Liste. Das Suchfeld gehört **nach unten, unter „Alle Wörter"**. Und ein Treffer muss **etwas Sinnvolles zeigen**: in welcher Liste das Wort liegt und zu welchem Sprachpaar es gehört. Ein Klick soll **direkt in diese Liste** führen. |
+| T-40 · umgesetzt | Suchfeld ans Ende, nach den Listen. Die Suche geht jetzt **über alle zugeschalteten Sprachen** — erst dadurch trägt die Angabe des Sprachpaars eine Auskunft, und wer sucht, weiss oft nicht mehr, in welcher Sprache das Wort lag. Ein Treffer zeigt **Liste · Sprachpaar** und führt beim Antippen in die **Wörter dieser Liste**, mit dem Suchbegriff im Feld, damit man das Wort sofort sieht; bei fremder Sprache wechselt die App das Paar mit. Dazu ein Kreuz zum Leeren. **Fehler dabei gefunden und behoben:** das Feld lag im Zweig, der beim ersten Tastendruck verschwindet — es hat sich selbst abgeschaltet, und nach dem ersten Buchstaben ging der Rest ins Leere. |

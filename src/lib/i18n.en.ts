@@ -799,4 +799,7 @@ export const EN: Record<string, string> = {
   "Nichts zum Kopieren? Der KI-Prompt unten holt dir die Liste aus einem Foto der Heftseite.": "Nothing to copy? The AI prompt below fetches the list from a photo of the page.",
   "abtippen, einfügen — oder von einer KI abschreiben lassen": "type it, paste it — or have an AI copy it out for you",
   "Thema": "Topic",
+  "Einzelnes Wort suchen — über alle Sprachen": "Find a single word — across all languages",
+  "Ohne Liste": "No list",
+  "Suche leeren": "Clear the search",
 };
