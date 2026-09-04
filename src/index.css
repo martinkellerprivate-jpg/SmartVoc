@@ -1120,6 +1120,43 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 /* ====================================================================
    HILFE (Stufe 6) — drei Teile hinter einem Fragezeichen.
    ==================================================================== */
+/* Aufklappen statt Fenster -- fuer alle drei Teile der Hilfe dieselbe
+   Bauart. Vorher oeffnete die Anleitung ein Fenster mit Zurueck-Knopf und
+   Blaettern, die Lerntipps klappten an Ort auf. Zwei Bauarten fuer
+   dasselbe, und die schlechtere war die aufwendigere. */
+.help-klapper { display: flex; flex-direction: column; gap: 7px; }
+.help-klapp { border: 1px solid var(--line); border-radius: 12px; background: var(--card); overflow: hidden; }
+.help-klapp.open { border-color: var(--ink); }
+.help-klapp-kopf { display: flex; align-items: center; gap: 11px; width: 100%;
+                   background: none; border: none; padding: 12px 14px; cursor: pointer;
+                   font: inherit; font-size: 14px; font-weight: 600; color: var(--ink);
+                   text-align: left; -webkit-appearance: none; }
+.help-klapp-kopf .grow { flex: 1; min-width: 0; }
+/* Ein Dreieck, das sich dreht. Ein Pfeil nach rechts verspricht einen
+   Ortswechsel, den es beim Aufklappen nicht gibt. */
+.help-dreieck { flex: none; color: var(--ink-faint); transform: rotate(-90deg);
+                transition: transform .18s cubic-bezier(.2,.7,.2,1); }
+.help-klapp.open .help-dreieck { transform: rotate(0deg); color: var(--ink); }
+.help-klapp-rumpf { padding: 0 15px 14px; font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+.help-klapp-rumpf p { margin: 0 0 11px; }
+.help-klapp-rumpf p:last-child { margin-bottom: 0; }
+.help-klapp-rumpf b { color: var(--ink); }
+.help-klapp-rumpf ul, .help-klapp-rumpf ol { margin: 0 0 11px; padding-left: 20px;
+                                             display: flex; flex-direction: column; gap: 6px; }
+.help-klapp-rumpf h4 { font-size: 13px; font-weight: 700; color: var(--ink);
+                       margin: 16px 0 6px; letter-spacing: .01em; }
+.help-klapp-rumpf .help-callout { background: var(--amber-bg); color: var(--ink);
+                                  border-radius: 10px; padding: 11px 13px; }
+.help-klapp-rumpf .help-code { font-family: var(--mono, ui-monospace, Menlo, monospace);
+                               font-size: 12.5px; line-height: 1.7; background: var(--bg-2);
+                               border-radius: 8px; padding: 9px 12px; color: var(--ink); }
+
+/* Eine Zeichnung in der Hilfe. Der Grund ist das Papier der App, damit die
+   Skizze nicht auf einer zweiten Flaeche schwimmt. */
+.kritzel { margin: 4px 0 13px; }
+.kritzel svg { display: block; width: 100%; height: auto; max-width: 420px; margin: 0 auto; }
+.kritzel figcaption { text-align: center; font-size: 11.5px; color: var(--ink-faint); margin-top: 5px; }
+
 .help-modal { max-width: 680px; max-height: 88vh; display: flex; flex-direction: column; }
 .help-seg { margin-bottom: 14px; }
 .help-body { overflow-y: auto; padding-right: 4px; }

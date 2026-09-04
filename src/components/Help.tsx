@@ -22,24 +22,48 @@
 import { useState } from "react";
 import { Icon } from "../ui/Icon";
 import { txt, getUiLang } from "../lib/i18n";
-import { TIPPS_DE, ANLEITUNG_DE, LerntheorieDE } from "./help.de";
-import { TIPPS_EN, ANLEITUNG_EN, LerntheorieEN } from "./help.en";
+import { TIPPS_DE, ANLEITUNG_DE, THEORIE_DE, THEORIE_LEAD_DE } from "./help.de";
+import { TIPPS_EN, ANLEITUNG_EN, THEORIE_EN, THEORIE_LEAD_EN } from "./help.en";
 
 /* Auch die Einblendung während des Übens greift hierauf zu. */
 export const lernTipps = () => (getUiLang() === "en" ? TIPPS_EN : TIPPS_DE);
+
+/* Eine Zeile, die sich aufklappt. Vorher gab es zwei Bauarten: die Anleitung
+ * oeffnete ein Fenster mit Zurueck-Knopf und Blaettern, die Lerntipps klappten
+ * an Ort auf. Das Aufklappen ist besser -- man behaelt die Uebersicht und
+ * springt zwischen Kapiteln, ohne den Weg zurueck zu suchen.
+ *
+ * Das Zeichen ist ein Dreieck, das sich dreht. Ein Pfeil nach rechts
+ * verspricht einen Ortswechsel, den es hier nicht gibt. */
+function Klapp({ nr, titel, offen, aufKlick, children }: any) {
+  return (
+    <div className={"help-klapp" + (offen ? " open" : "")}>
+      <button className="help-klapp-kopf" onClick={aufKlick} aria-expanded={offen}>
+        <span className="help-num">{nr}</span>
+        <span className="grow">{titel}</span>
+        <svg className="help-dreieck" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
+          <path d="M0 0h10L5 6z" fill="currentColor" />
+        </svg>
+      </button>
+      {offen && <div className="help-klapp-rumpf">{children}</div>}
+    </div>
+  );
+}
 
 export function Help() {
   const [open, setOpen] = useState(false);
   const [teil, setTeil] = useState("anleitung");
   const [kapitel, setKapitel] = useState<number | null>(null);
-  // Der erste Tipp steht offen da -- eine Liste aus lauter zugeklappten
+  // Der erste Eintrag steht offen da -- eine Liste aus lauter zugeklappten
   // Zeilen sieht aus wie eine Datenbankausgabe, nicht wie ein Ratgeber.
   const [tipp, setTipp] = useState<number | null>(0);
+  const [satz, setSatz] = useState<number | null>(0);
 
   const en = getUiLang() === "en";
   const ANLEITUNG = en ? ANLEITUNG_EN : ANLEITUNG_DE;
   const TIPPS = en ? TIPPS_EN : TIPPS_DE;
-  const Lerntheorie = en ? LerntheorieEN : LerntheorieDE;
+  const THEORIE = en ? THEORIE_EN : THEORIE_DE;
+  const THEORIE_LEAD = en ? THEORIE_LEAD_EN : THEORIE_LEAD_DE;
   const TEILE = [
     { id: "anleitung", label: txt("Anleitung") },
     { id: "tipps", label: txt("Lerntipps") },
@@ -66,52 +90,34 @@ export function Help() {
 
             <div className="help-body">
               {teil === "anleitung" && (
-                kapitel == null ? (
-                  <div className="help-chapters">
-                    {ANLEITUNG.map((k, i) => (
-                      <button className="help-chapter-box" key={i} onClick={() => setKapitel(i)}>
-                        <span className="help-num">{i + 1}</span>
-                        <span className="grow">{k.titel}</span>
-                        <Icon name="arrowRight" size={15} />
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <>
-                    <button className="btn btn-ghost btn-sm" onClick={() => setKapitel(null)}>
-                      <Icon name="chevron-left" size={14} /> {txt("Alle Kapitel")}
-                    </button>
-                    <h3 className="help-chapter-title">{ANLEITUNG[kapitel].titel}</h3>
-                    <div className="help-chapter-body">{ANLEITUNG[kapitel].text}</div>
-                    <div className="modal-foot">
-                      <button className="btn btn-ghost btn-sm" disabled={kapitel === 0} onClick={() => setKapitel((c) => (c || 0) - 1)}>{txt("Zurück")}</button>
-                      <button className="btn btn-ghost btn-sm" disabled={kapitel === ANLEITUNG.length - 1} onClick={() => setKapitel((c) => (c || 0) + 1)}>{txt("Weiter")}</button>
-                    </div>
-                  </>
-                )
+                <div className="help-klapper">
+                  {ANLEITUNG.map((k, i) => (
+                    <Klapp key={i} nr={i + 1} titel={k.titel} offen={kapitel === i}
+                      aufKlick={() => setKapitel(kapitel === i ? null : i)}>{k.text}</Klapp>
+                  ))}
+                </div>
               )}
 
               {teil === "tipps" && (
-                <div className="help-tips">
+                <div className="help-klapper">
                   {TIPPS.map((tp, i) => (
-                    <div key={i} className={"help-tip" + (tipp === i ? " open" : "")}>
-                      <button className="help-tip-head" onClick={() => setTipp(tipp === i ? null : i)}>
-                        <span className="help-num">{i + 1}</span>
-                        <span className="grow">{tp.h}</span>
-                        <Icon name={tipp === i ? "chevron-left" : "arrowRight"} size={14} />
-                      </button>
-                      {tipp === i && <p className="help-tip-body">{tp.b}</p>}
-                    </div>
+                    <Klapp key={i} nr={i + 1} titel={tp.h} offen={tipp === i}
+                      aufKlick={() => setTipp(tipp === i ? null : i)}><p>{tp.b}</p></Klapp>
                   ))}
                 </div>
               )}
 
               {teil === "theorie" && (
                 <>
-                  {/* Der Reiter muss kurz sein, der Titel darf es nicht:
-                      "Lerntheorie" allein sagt nichts über DIESE App. */}
-                  <h3 className="help-chapter-title">{txt("Die Theorie hinter SmartVoc")}</h3>
-                  <Lerntheorie />
+                  {/* Ein Satz voraus, dann Kapitel. Vorher war es ein einziger
+                      langer Text, durch den man scrollte. */}
+                  <p className="help-lead">{THEORIE_LEAD}</p>
+                  <div className="help-klapper">
+                    {THEORIE.map((k, i) => (
+                      <Klapp key={i} nr={i + 1} titel={k.titel} offen={satz === i}
+                        aufKlick={() => setSatz(satz === i ? null : i)}>{k.text}</Klapp>
+                    ))}
+                  </div>
                 </>
               )}
             </div>

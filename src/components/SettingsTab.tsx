@@ -151,7 +151,10 @@ const ARTIKEL: Record<string,string> = {
   "optional": "Freiwillig · wird nicht geprüft",
 };
 
-const MODUS: Record<string,string> = { type: "Eintippen", choice: "Auswählen", recall: "Selbstkontrolle", memorize: "Nur durchblättern" };
+/* Dieselben Namen wie in Practice (MODE_NAME). „Auswählen" stand nur hier
+ * und hiess im Übungsbildschirm längst Multiple-Choice -- und die
+ * Einstellung darunter fragt nach „Vorschlägen bei Multiple-Choice". */
+const MODUS: Record<string,string> = { type: "Eintippen", choice: "Multiple-Choice", recall: "Selbstkontrolle", memorize: "Nur durchblättern" };
 
 export function SettingsTab() {
   const store = useStore();

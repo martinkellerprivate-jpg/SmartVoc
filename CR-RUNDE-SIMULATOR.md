@@ -205,3 +205,15 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | T-37 | Hilfe · Dahinter | **Ausführlicher.** Nach dem Einleitungssatz in **Kapitel** gliedern und aufklappbar machen (wie T-31). Mit Bildern. |
 | T-38 | App-Start | Ein **kurzer Intro-Bildschirm** beim Starten, im Scribble-Stil: SmartVoc mit Logo, dazu Schülerin und Schüler, die mit Vokabelkarten lernen. |
 | T-39 | Grafiken · Produktion | Entscheid nötig: Grafiken **selbst im Code** oder ausgelagert an **Claude Design**? Die verschiedenen Schemata (Kladde, Tinte, Graphit; hell und dunkel) müssen berücksichtigt sein. Falls ausgelagert: **ein Prompt für alle nötigen Grafiken in einem Abwasch**. |
+
+### Umgesetzt am 4. September 2026 — die Hilfe
+
+| Nr | Wie gelöst |
+|---|---|
+| T-31 | **Alle drei Teile klappen auf.** Die Anleitung öffnete ein Fenster mit Zurück-Knopf und Blättern, die Lerntipps klappten an Ort auf — zwei Bauarten für dasselbe, und die schlechtere war die aufwendigere. Das Zeichen ist ein **Dreieck, das sich dreht**; ein Pfeil nach rechts verspricht einen Ortswechsel, den es nicht gibt. |
+| T-32 | **Acht handgezeichnete Bilder** in `ui/Kritzel.tsx`: Karteikarte, die vier Antwortarten, drei Kalendertage, die Stufenleiste, zwei Listenebenen, Vergessenskurve, das Fenster, Testeffekt. Alle Farben aus den Schema-Variablen, also folgen sie Hell/Dunkel und allen drei Schemata von selbst. Der Rauschfilter liegt nur auf den Strichen, nie auf der Schrift. |
+| T-33 | Die Anleitung ist **aus der Schülerperspektive** neu geschrieben. Erstes Kapitel: „Morgen ist Prüfung: was jetzt?“ mit dem kürzesten Weg in drei Schritten. Sätze über Offensichtliches sind raus. |
+| T-34 | **„Wörter in die App bringen“** nennt zuerst die vier Wege, dann jeden einzeln. Der **KI-Weg** steht als Ablauf in fünf Schritten, samt dem Hinweis, warum das Prüfen-Fenster wichtig ist. |
+| T-35 | **Übungsplan** um die Kalendergrafik herum geschrieben, mit einer Frage als Aufhänger: „Bin ich rechtzeitig fertig?“ |
+| T-36 | Gedankenstriche raus, **Zeilenumbrüche** rein. „Auswählen“ heisst jetzt **Multiple-Choice** — auch in den Einstellungen, wo es der einzige Ort war, der noch anders hiess. Die Grafik setzt „Nur durchblättern“ hinter eine gestrichelte Linie. Der Selbstkontrolle-Tipp und die neue Beschreibung von „Nur durchblättern“ sind übernommen. |
+| T-37 | **„Dahinter“** hat jetzt einen Einleitungssatz und **neun aufklappbare Kapitel** statt einer langen Seite. Mit drei Bildern. |
