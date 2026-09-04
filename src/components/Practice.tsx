@@ -13,7 +13,7 @@ import { MasteryBar } from "../ui/MasteryBar";
 import { LatinKeys } from "../ui/LatinKeys";
 import { retrievabilityOf, isDueCard, retentionFor, initialCard, deriveProfile, STUFE, STUFE_ORDER, deriveRating, gradeFromCard, getCfg } from "../lib/fsrs";
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
-import { listReadiness, TONE_VAR } from "../lib/readiness";
+import { listReadiness, TONE_VAR, toneLegend } from "../lib/readiness";
 import { PairPill } from "../ui/PairPill";
 import { SMART_ACCESS, SMART_REFS } from "../lib/smartlists";
 import { tapRichtig, tapFalsch } from "../lib/native";
@@ -700,18 +700,24 @@ export function Practice() {
               <div className="grp">{txt("Wortlisten")} <span className="hint">— {txt("mehrere möglich")}</span></div>
               <div className="list">
                 {listsSorted.map((l: any) => {
-                  const { pct, farbe } = listReadiness(l, vocab, stats, listRetentionW, settings);
+                  const { pct, farbe, tone } = listReadiness(l, vocab, stats, listRetentionW, settings);
+                  const stand = (toneLegend(settings).find((t) => t.tone === tone) || {}).label || "";
                   const an = isActiveTok("list:" + l.id);
                   const days = l.dueDate ? Math.ceil((l.dueDate - Date.now()) / 86400000) : null;
                   return (
+                    /* Gleiche Bauart wie die Smart Lists darunter: die Zahl
+                       steht rechts. Der Ampelpunkt wandert in die zweite
+                       Zeile und nimmt seine Beschriftung mit -- ein Punkt
+                       allein am rechten Rand sagt niemandem, was er meint. */
                     <button key={l.id} className={"li" + (an ? " sel" : "")} onClick={() => toggleListe(l.id)}>
                       <span className="g">{l.name}
                         <div className="m">
-                          {txt("{n} Wörter", { n: listCountOf(l.id) })} · {txt("{p} % bereit", { p: pct })}
+                          <span className="stand-punkt" style={{ background: farbe }} />{txt(stand)}
+                          {" · " + txt("{p} % bereit", { p: pct })}
                           {days != null && " · " + (days < 0 ? txt("überfällig") : days === 0 ? txt("heute") : txt("in {n} Tagen", { n: days }))}
                         </div>
                       </span>
-                      <span className="dot" style={{ width: 9, height: 9, borderRadius: "50%", background: farbe, flex: "none", alignSelf: "center" }} />
+                      <span className="lchip-n">{listCountOf(l.id)}</span>
                     </button>
                   );
                 })}

@@ -1752,6 +1752,12 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 
 /* Die Suche steht am Ende der Uebersicht, nach den Listen. Etwas Luft
    davor, damit sie nicht wie ein weiterer Listeneintrag aussieht. */
+/* Der Ampelpunkt in einer Textzeile: er sitzt auf der Schriftlinie und
+   nimmt die Beschriftung neben sich. Allein am rechten Rand sagte er
+   niemandem, was er meint. */
+.stand-punkt { display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+               margin-right: 6px; vertical-align: 1px; }
+
 .wl-suche { margin-top: 20px; }
 /* Ein Kreuz zum Leeren -- ohne das muss man vier Mal die Ruecktaste
    druecken, um von den Treffern zu den Listen zurueckzukommen. */
