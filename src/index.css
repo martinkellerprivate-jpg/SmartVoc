@@ -61,6 +61,26 @@ input, button, textarea, select { font-family: inherit; }
 .startbild img { width: 100%; height: 100%; object-fit: contain; display: block; }
 @media (prefers-reduced-motion: reduce) { .startbild { transition: none; } }
 
+/* „Über SmartVoc": ein langer Bildschirm, der mit dem Startbild beginnt.
+   Das Bild steht randlos ganz oben -- der einzige Ort in der App, an dem
+   man es sich in Ruhe ansehen kann. Der Kopf liegt darueber und traegt
+   deshalb selbst keinen Grund. */
+.ueber-modal { max-width: 620px; max-height: 90vh; display: flex; flex-direction: column;
+               padding: 0; overflow: hidden; }
+.ueber-kopf { padding: 16px 18px 12px; margin: 0; flex: none; }
+.ueber-rumpf { flex: 1; min-height: 0; overflow-y: auto; padding: 0 18px 8px; }
+/* `max-width: none` ist noetig: die App deckelt jedes Bild auf die Breite
+   seines Behaelters, und das haette den Randausbruch stillschweigend
+   zurueckgenommen. */
+.ueber-bild { display: block; width: calc(100% + 36px); max-width: none;
+              margin: 0 -18px 16px; background: #ede3d8; }
+.ueber-lead { font-family: var(--serif); font-size: 16.5px; line-height: 1.5;
+              color: var(--ink); margin: 0 0 22px; }
+.ueber-h { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ink);
+           margin: 26px 0 8px; padding-top: 18px; border-top: 1px solid var(--line); }
+.ueber-h:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+.li-ueber { margin-top: 4px; }
+
 /* ---------- layout ---------- */
 /* Side insets matter in landscape on a notched device; on desktop every
    env() here is 0, so the layout is unchanged. */

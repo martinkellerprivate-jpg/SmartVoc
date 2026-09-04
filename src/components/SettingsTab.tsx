@@ -4,6 +4,7 @@ import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
 import { Bestaetigen } from "../ui/Bestaetigen";
+import { UeberModal } from "./UeberModal";
 import { RECOMMENDED } from "../lib/defaults";
 import { useAuth } from "../sync/auth";
 import { exportAllData, deleteLocalData } from "../lib/accountData";
@@ -165,11 +166,10 @@ export function SettingsTab() {
   const set = (k, v) => setSettings({ [k]: v });
 
   // Konto & Daten (Phase 7)
-  const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [ueberOffen, setUeberOffen] = useState(false);
   const [resetOpen, setResetOpen] = useState(false);
   const [voreinstOpen, setVoreinstOpen] = useState(false);
   const [blatt, setBlatt] = useState<string | null>(null);
-  const [imprintOpen, setImprintOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
   const [delBusy, setDelBusy] = useState(false);
@@ -576,12 +576,6 @@ export function SettingsTab() {
         <Field title={txt("Daten exportieren")} desc={txt("Lädt alle deine Wörter, Listen, Fortschritte und Einstellungen als JSON-Datei herunter.")}>
           <button className="btn btn-sm" onClick={doExport}><Icon name="download" size={15} /> {txt("Exportieren")}</button>
         </Field>
-        <Field title={txt("Datenschutz")} desc={txt("Was gespeichert wird, wo es liegt und was nicht passiert.")}>
-          <button className="btn btn-sm btn-ghost" onClick={() => setPrivacyOpen(true)}>{txt("Datenschutz ansehen")}</button>
-        </Field>
-        <Field title={txt("Impressum")} desc={txt("Wer diese App herausgibt.")}>
-          <button className="btn btn-sm btn-ghost" onClick={() => setImprintOpen(true)}>{txt("Impressum ansehen")}</button>
-        </Field>
         <Field title={txt("Einstellungen zurücksetzen")} desc={txt("Setzt alle Einstellungen auf die Voreinstellungen zurück. Deine Wörter, Listen und Lernstände bleiben.")}>
           <button className="btn btn-sm btn-ghost" onClick={() => setVoreinstOpen(true)}><Icon name="refresh" size={15} /> {txt("Zurücksetzen")}</button>
         </Field>
@@ -605,67 +599,6 @@ export function SettingsTab() {
         knopf={txt("Zurücksetzen")} gefahr onClose={() => setResetOpen(false)}
         tun={() => { store.resetStats(); setResetOpen(false); toast(txt("Lernstand zurückgesetzt"), "refresh"); }} />
 
-      {privacyOpen && (
-        <div className="modal-backdrop" onClick={() => setPrivacyOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 480 }}>
-            <div className="modal-head">
-              <div className="modal-title">{txt("Datenschutz")}</div>
-              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setPrivacyOpen(false)}><Icon name="x" size={16} /></button>
-            </div>
-            <div className="muted legal-body">
-              <p>{txt("Kurz: Diese App sammelt nichts über dich. Sie speichert nur, was du selbst einträgst, und braucht dafür nicht mehr als eine E-Mail-Adresse — und die nur, wenn du dich anmeldest.")}</p>
-
-              <h4>{txt("Was gespeichert wird")}</h4>
-              <p>{txt("Deine Wörter, Wortlisten, Lernstände und Einstellungen. Meldest du dich an, zusätzlich deine E-Mail-Adresse und ein selbst gewählter Anzeigename.")}</p>
-
-              <h4>{txt("Wo es liegt")}</h4>
-              <p>{txt("Ohne Anmeldung bleibt alles ausschliesslich auf diesem Gerät. Mit Anmeldung wird es zusätzlich bei Supabase gespeichert, damit du auf mehreren Geräten denselben Stand hast. Die Übertragung ist verschlüsselt, und die Regeln der Datenbank lassen nur dich an deine eigenen Daten.")}</p>
-
-              <h4>{txt("Was NICHT passiert")}</h4>
-              <p>{txt("Keine Werbung, keine Zählpixel, keine Weitergabe an Dritte, kein Verkauf. Die App verfolgt dein Verhalten nicht und legt kein Profil über dich an. Was sie über deinen Lernstand weiss, dient nur dazu, dir die richtigen Wörter zur richtigen Zeit zu zeigen.")}</p>
-
-              <h4>{txt("Geteilte Wortlisten")}</h4>
-              <p>{txt("Teilst du eine Wortliste, wird ihr Inhalt unter einem zufälligen Code abgelegt. Wer den Code hat, kann eine Kopie übernehmen — dein Name steht nicht dabei, und dein Lernstand wird nicht mitgeteilt.")}</p>
-
-              <h4>{txt("Deine Rechte")}</h4>
-              <p>{txt("Du kannst deine Daten jederzeit als Datei exportieren und dein Konto vollständig löschen — beides oben unter „Konto & Daten“. Beim Löschen verschwinden auch die Daten in der Cloud; das lässt sich nicht rückgängig machen.")}</p>
-
-              <h4>{txt("Kinder")}</h4>
-              <p>{txt("Die App ist für Schülerinnen und Schüler gemacht. Sie erhebt keine Daten über das hinaus, was zum Lernen nötig ist, und sie enthält keine Werbung und keine Käufe.")}</p>
-
-              <h4>{txt("Verantwortlich")}</h4>
-              <p>{txt("Martin Keller, Schweiz. Fragen zum Datenschutz gehen an die im Impressum genannte Adresse.")}</p>
-            </div>
-            <div className="modal-foot"><button className="btn btn-primary" onClick={() => setPrivacyOpen(false)}>{txt("Verstanden")}</button></div>
-          </div>
-        </div>
-      )}
-
-      {imprintOpen && (
-        <div className="modal-backdrop" onClick={() => setImprintOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 480 }}>
-            <div className="modal-head">
-              <div className="modal-title">{txt("Impressum")}</div>
-              <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setImprintOpen(false)}><Icon name="x" size={16} /></button>
-            </div>
-            <div className="muted legal-body">
-              <h4>{txt("Herausgeber")}</h4>
-              <p>Martin Keller<br />Schweiz</p>
-
-              <h4>{txt("Kontakt")}</h4>
-              <p>{txt("Fragen, Fehler und Rückmeldungen gehen an die im App Store hinterlegte Adresse.")}</p>
-
-              <h4>{txt("Inhalte")}</h4>
-              <p>{txt("Der mitgelieferte Grundwortschatz und alle Texte dieser App stammen vom Herausgeber. Die Wörter, die du selbst einträgst, gehören dir.")}</p>
-
-              <h4>{txt("Verwendete Arbeit anderer")}</h4>
-              <p>{txt("Die Wiederholungsabstände berechnet FSRS, ein frei verfügbares Gedächtnismodell. Die Schriften sind Source Serif 4, Hanken Grotesk und Patrick Hand, alle unter der SIL Open Font License.")}</p>
-            </div>
-            <div className="modal-foot"><button className="btn btn-primary" onClick={() => setImprintOpen(false)}>{txt("Verstanden")}</button></div>
-          </div>
-        </div>
-      )}
-
       <Bestaetigen offen={delOpen} titel={txt("Account löschen")} gefahr
         text={<>
           {cloudActive
@@ -679,6 +612,18 @@ export function SettingsTab() {
           onChange={(e) => setConfirmText(e.target.value)} autoFocus />
         {delErr && <div className="badge red" style={{ marginTop: 10 }}><span className="dot" />{delErr}</div>}
       </Bestaetigen>
+
+      {/* Datenschutz und Impressum standen zwischen Datenexport und
+          Kontoloeschung, also zwischen Handlungen -- dabei sind es Texte,
+          die man einmal liest. Sie haben jetzt einen eigenen Ort. */}
+      <button className="li li-ueber" onClick={() => setUeberOffen(true)}>
+        <Icon name="book" size={15} />
+        <span className="g">{txt("Über SmartVoc")}
+          <div className="m">{txt("Datenschutz und Impressum")}</div></span>
+        <Icon name="arrowRight" size={14} />
+      </button>
+
+      <UeberModal offen={ueberOffen} onClose={() => setUeberOffen(false)} />
 
       <div className="muted" style={{ fontSize: 11.5, textAlign: "center", padding: "4px 0 10px" }}>
         Settings are saved on this device and apply to both language tracks.

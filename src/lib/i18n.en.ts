@@ -803,4 +803,7 @@ export const EN: Record<string, string> = {
   "Ohne Liste": "No list",
   "Suche leeren": "Clear the search",
   "nur zur Ansicht": "read only",
+  "Über SmartVoc": "About SmartVoc",
+  "Datenschutz und Impressum": "Privacy and legal notice",
+  "Ein Vokabeltrainer, der ausrechnet, wann ein Wort wiederkommt — statt es zu raten. Gemacht für Schülerinnen und Schüler, die eine Prüfung vor sich haben.": "A vocabulary trainer that works out when a word comes back, instead of guessing. Made for pupils with a test ahead of them.",
 };
