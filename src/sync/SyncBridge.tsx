@@ -13,7 +13,6 @@ import {
   loadSyncState, saveSyncState, patchDocSync,
   backupLocal, clearLocalDocs, pushDoc, pullAll,
 } from "./sync";
-import { DEFAULT_VOCAB } from "../data/seed";
 
 export type SyncStatus = "local" | "synced" | "syncing" | "offline" | "error";
 
@@ -26,16 +25,22 @@ const EAGER: DocKey[] = ["vocab", "lists", "settings"];
 const SYNC_UID_KEY = "vt_v1_sync_uid";
 const SWITCH_NOTICE_KEY = "vt_v1_switch_notice";
 
-/* Does this device hold anything the user made, beyond the shipped starter set?
- * initData() always seeds DEFAULT_VOCAB into exactly one list, so that alone is
- * not "own content" and must not trigger the adoption question. */
+/* Liegt auf diesem Geraet etwas, das der Benutzer selbst gemacht hat?
+ *
+ * Frueher schrieb der erste Start einen englischen Demo-Wortschatz in eine
+ * Liste, und der musste hier abgezogen werden. Den gibt es nicht mehr. Was
+ * jetzt noch mitgeliefert ankommt, ist der Grundwortschatz -- der erscheint
+ * ebenfalls von selbst und ist genauso wenig "eigener Inhalt". Gezaehlt
+ * wird deshalb, was NICHT aus einer mitgelieferten Liste stammt, plus
+ * jeder Lernstand: wer geuebt hat, hat etwas zu verlieren. */
 export function hasOwnContent(docs: Record<string, any>): boolean {
   const lists = docs.lists || [];
   const stats = docs.stats || {};
   const vocab = docs.vocab || [];
-  return lists.length > 1
-    || Object.keys(stats).length > 0
-    || vocab.length > DEFAULT_VOCAB.length;
+  if (Object.keys(stats).length > 0) return true;
+  const geliefert = new Set(lists.filter((l: any) => l?.herkunft === "grundwortschatz").map((l: any) => l.id));
+  if (lists.some((l: any) => l?.herkunft !== "grundwortschatz")) return true;
+  return vocab.some((w: any) => !(w.lists || []).some((id: string) => geliefert.has(id)));
 }
 
 export function SyncBridge({ children }: { children: React.ReactNode }) {

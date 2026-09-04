@@ -67,8 +67,8 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
         <div className="scan-review">
           <div className="scan-row-head scan-nur-breit" style={{ display: "grid", gridTemplateColumns: grid, gap: 8 }}>
             {isLat
-              ? <><span>{txt("Grundform")}</span><span>{txt("Lernform")}</span><span>{txt("Wortart")}</span><span>{txt("Deutsch")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf Deutsch")}</span><span /></>
-              : <><span>{P.foreignLabel}</span><span>{txt("Deutsch")}</span><span>{txt("Aussprache")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf Deutsch")}</span><span /></>}
+              ? <><span>{txt("Grundform")}</span><span>{txt("Lernform")}</span><span>{txt("Wortart")}</span><span>{P.nativeLabel}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf {sprache}", { sprache: P.nativeLabel })}</span><span /></>
+              : <><span>{P.foreignLabel}</span><span>{P.nativeLabel}</span><span>{txt("Aussprache")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf {sprache}", { sprache: P.nativeLabel })}</span><span /></>}
           </div>
           {list.map((r, i) => (
             <div key={i} className="scan-zeile" style={{ ["--spalten" as any]: grid }}>
@@ -79,7 +79,7 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
                   <select className="mini-input" value={r.wortart ?? "Nomen"} onChange={(e) => setCell(i, "wortart", e.target.value)}>
                     {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
                   </select>
-                  <input className="mini-input" value={r.de ?? ""} placeholder={txt("Deutsch")} onChange={(e) => setCell(i, "de", e.target.value)} />
+                  <input className="mini-input" value={r.de ?? ""} placeholder={P.nativeLabel} onChange={(e) => setCell(i, "de", e.target.value)} />
                   <input className="mini-input" value={r.ex ?? ""} placeholder={txt("Beispielsätze")} title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
                   <input className="mini-input" value={r.exde ?? ""} placeholder={txt("… auf Deutsch")} title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
                   <input className="mini-input" value={r.topic ?? ""} placeholder={txt("Thema")} onChange={(e) => setCell(i, "topic", e.target.value)} />
@@ -87,7 +87,7 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
               ) : (
                 <>
                   <input className="mini-input" value={r.fgn} placeholder={P.foreignLabel} onChange={(e) => setCell(i, "fgn", e.target.value)} />
-                  <input className="mini-input" value={r.de} placeholder={txt("Deutsch")} onChange={(e) => setCell(i, "de", e.target.value)} />
+                  <input className="mini-input" value={r.de} placeholder={P.nativeLabel} onChange={(e) => setCell(i, "de", e.target.value)} />
                   <input className="mini-input" value={r.phonetic ?? ""} placeholder={txt("Aussprache")} onChange={(e) => setCell(i, "phonetic", e.target.value)} />
                   <input className="mini-input" value={r.ex ?? ""} placeholder={txt("Beispielsätze")} title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
                   <input className="mini-input" value={r.exde ?? ""} placeholder={txt("… auf Deutsch")} title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />

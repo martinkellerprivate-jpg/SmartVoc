@@ -57,13 +57,13 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
         </div>
 
         <div className="list">
-          <Zeile feld={txt("Deutsch")} wert={word.de} />
+          <Zeile feld={P.nativeLabel} wert={word.de} />
           {isLat && <Zeile feld={txt("Stammformen")} wert={word.lernform} />}
           <Zeile feld={txt("Lautschrift")} hinweis={txt("optional")} wert={word.phonetic} />
           <Zeile feld={txt("Beispielsatz 1")} hinweis={P.foreignLabel} wert={bsp(0)} />
-          <Zeile feld={txt("Beispielsatz 1")} hinweis={txt("Deutsch")} wert={bspDe(0)} />
+          <Zeile feld={txt("Beispielsatz 1")} hinweis={P.nativeLabel} wert={bspDe(0)} />
           <Zeile feld={txt("Beispielsatz 2")} hinweis={P.foreignLabel} wert={bsp(1)} />
-          <Zeile feld={txt("Beispielsatz 2")} hinweis={txt("Deutsch")} wert={bspDe(1)} />
+          <Zeile feld={txt("Beispielsatz 2")} hinweis={P.nativeLabel} wert={bspDe(1)} />
         </div>
 
         <LernstandBlock word={word} />

@@ -3,912 +3,524 @@
  "stufe": 1,
  "words": [
   {
+   "foreign": "family",
+   "german": "die Familie",
+   "examples": [
+    "My family lives in Zurich.",
+    "Her family eats dinner together."
+   ],
+   "examplesDe": [
+    "Meine Familie lebt in Zürich.",
+    "Ihre Familie isst gemeinsam zu Abend."
+   ],
+   "phonetic": "ˈfæməli"
+  },
+  {
    "foreign": "mother",
-   "german": "die Mutter"
+   "german": "die Mutter",
+   "examples": [
+    "My mother works at home.",
+    "Her mother makes a cake."
+   ],
+   "examplesDe": [
+    "Meine Mutter arbeitet zu Hause.",
+    "Ihre Mutter backt einen Kuchen."
+   ],
+   "phonetic": "ˈmʌðə"
   },
   {
    "foreign": "father",
-   "german": "der Vater"
+   "german": "der Vater",
+   "examples": [
+    "His father drives to work.",
+    "My father likes old films."
+   ],
+   "examplesDe": [
+    "Sein Vater fährt zur Arbeit.",
+    "Mein Vater mag alte Filme."
+   ],
+   "phonetic": "ˈfɑːðə"
   },
   {
-   "foreign": "parents",
-   "german": "die Eltern"
-  },
-  {
-   "foreign": "child",
-   "german": "das Kind"
-  },
-  {
-   "foreign": "son",
-   "german": "der Sohn"
-  },
-  {
-   "foreign": "daughter",
-   "german": "die Tochter"
-  },
-  {
-   "foreign": "brother",
-   "german": "der Bruder"
+   "foreign": "parent",
+   "german": "der Elternteil",
+   "examples": [
+    "A parent waits outside school.",
+    "Every parent gets a letter."
+   ],
+   "examplesDe": [
+    "Ein Elternteil wartet vor der Schule.",
+    "Jeder Elternteil erhält einen Brief."
+   ],
+   "phonetic": "ˈpeərənt"
   },
   {
    "foreign": "sister",
-   "german": "die Schwester"
+   "german": "die Schwester",
+   "examples": [
+    "My sister plays the piano.",
+    "His sister is twelve years old."
+   ],
+   "examplesDe": [
+    "Meine Schwester spielt Klavier.",
+    "Seine Schwester ist zwölf Jahre alt."
+   ],
+   "phonetic": "ˈsɪstə"
+  },
+  {
+   "foreign": "brother",
+   "german": "der Bruder",
+   "examples": [
+    "Her brother walks to school.",
+    "My brother has a new bike."
+   ],
+   "examplesDe": [
+    "Ihr Bruder geht zu Fuss zur Schule.",
+    "Mein Bruder hat ein neues Fahrrad."
+   ],
+   "phonetic": "ˈbrʌðə"
   },
   {
    "foreign": "grandmother",
-   "german": "die Grossmutter"
+   "german": "die Grossmutter",
+   "examples": [
+    "My grandmother tells funny stories.",
+    "His grandmother lives near us."
+   ],
+   "examplesDe": [
+    "Meine Grossmutter erzählt lustige Geschichten.",
+    "Seine Grossmutter wohnt in unserer Nähe."
+   ],
+   "phonetic": "ˈɡrænˌmʌðə"
   },
   {
    "foreign": "grandfather",
-   "german": "der Grossvater"
+   "german": "der Grossvater",
+   "examples": [
+    "Her grandfather reads every morning.",
+    "My grandfather has a small garden."
+   ],
+   "examplesDe": [
+    "Ihr Grossvater liest jeden Morgen.",
+    "Mein Grossvater hat einen kleinen Garten."
+   ],
+   "phonetic": "ˈɡrænˌfɑːðə"
   },
   {
-   "foreign": "family",
-   "german": "die Familie"
+   "foreign": "daughter",
+   "german": "die Tochter",
+   "examples": [
+    "Their daughter loves music.",
+    "Our daughter walks to school."
+   ],
+   "examplesDe": [
+    "Ihre Tochter liebt Musik.",
+    "Unsere Tochter geht zu Fuss zur Schule."
+   ],
+   "phonetic": "ˈdɔːtə"
   },
   {
-   "foreign": "man",
-   "german": "der Mann"
+   "foreign": "son",
+   "german": "der Sohn",
+   "examples": [
+    "Their son plays football.",
+    "Our son is eight years old."
+   ],
+   "examplesDe": [
+    "Ihr Sohn spielt Fussball.",
+    "Unser Sohn ist acht Jahre alt."
+   ],
+   "phonetic": "sʌn"
   },
   {
-   "foreign": "woman",
-   "german": "die Frau"
-  },
-  {
-   "foreign": "boy",
-   "german": "der Junge"
-  },
-  {
-   "foreign": "girl",
-   "german": "das Mädchen"
+   "foreign": "child",
+   "german": "das Kind",
+   "examples": [
+    "The child opens the door.",
+    "Every child gets an apple."
+   ],
+   "examplesDe": [
+    "Das Kind öffnet die Tür.",
+    "Jedes Kind bekommt einen Apfel."
+   ],
+   "phonetic": "tʃaɪld"
   },
   {
    "foreign": "baby",
-   "german": "das Baby"
+   "german": "das Baby",
+   "examples": [
+    "The baby sleeps all morning.",
+    "Their baby has blue eyes."
+   ],
+   "examplesDe": [
+    "Das Baby schläft den ganzen Morgen.",
+    "Ihr Baby hat blaue Augen."
+   ],
+   "phonetic": "ˈbeɪbi"
+  },
+  {
+   "foreign": "aunt",
+   "german": "die Tante",
+   "examples": [
+    "My aunt lives in Bern.",
+    "His aunt visits us today."
+   ],
+   "examplesDe": [
+    "Meine Tante lebt in Bern.",
+    "Seine Tante besucht uns heute."
+   ],
+   "phonetic": "ɑːnt"
+  },
+  {
+   "foreign": "uncle",
+   "german": "der Onkel",
+   "examples": [
+    "Her uncle cooks very well.",
+    "My uncle owns a red car."
+   ],
+   "examplesDe": [
+    "Ihr Onkel kocht sehr gut.",
+    "Mein Onkel besitzt ein rotes Auto."
+   ],
+   "phonetic": "ˈʌŋkəl"
+  },
+  {
+   "foreign": "cousin",
+   "german": "der Cousin",
+   "examples": [
+    "My cousin plays tennis.",
+    "His cousin comes every Sunday."
+   ],
+   "examplesDe": [
+    "Mein Cousin spielt Tennis.",
+    "Sein Cousin kommt jeden Sonntag."
+   ],
+   "phonetic": "ˈkʌzən"
   },
   {
    "foreign": "friend",
-   "german": "der Freund"
-  },
-  {
-   "foreign": "name",
-   "german": "der Name"
-  },
-  {
-   "foreign": "people",
-   "german": "die Leute"
-  },
-  {
-   "foreign": "body",
-   "german": "der Körper"
-  },
-  {
-   "foreign": "head",
-   "german": "der Kopf"
-  },
-  {
-   "foreign": "hair",
-   "german": "die Haare"
-  },
-  {
-   "foreign": "face",
-   "german": "das Gesicht"
-  },
-  {
-   "foreign": "eye",
-   "german": "das Auge"
-  },
-  {
-   "foreign": "ear",
-   "german": "das Ohr"
-  },
-  {
-   "foreign": "nose",
-   "german": "die Nase"
-  },
-  {
-   "foreign": "mouth",
-   "german": "der Mund"
-  },
-  {
-   "foreign": "tooth",
-   "german": "der Zahn"
-  },
-  {
-   "foreign": "hand",
-   "german": "die Hand"
-  },
-  {
-   "foreign": "arm",
-   "german": "der Arm"
-  },
-  {
-   "foreign": "leg",
-   "german": "das Bein"
-  },
-  {
-   "foreign": "foot",
-   "german": "der Fuss"
-  },
-  {
-   "foreign": "finger",
-   "german": "der Finger"
-  },
-  {
-   "foreign": "heart",
-   "german": "das Herz"
-  },
-  {
-   "foreign": "animal",
-   "german": "das Tier"
-  },
-  {
-   "foreign": "dog",
-   "german": "der Hund"
-  },
-  {
-   "foreign": "cat",
-   "german": "die Katze"
-  },
-  {
-   "foreign": "horse",
-   "german": "das Pferd"
-  },
-  {
-   "foreign": "cow",
-   "german": "die Kuh"
-  },
-  {
-   "foreign": "pig",
-   "german": "das Schwein"
-  },
-  {
-   "foreign": "sheep",
-   "german": "das Schaf"
-  },
-  {
-   "foreign": "bird",
-   "german": "der Vogel"
-  },
-  {
-   "foreign": "fish",
-   "german": "der Fisch"
-  },
-  {
-   "foreign": "mouse",
-   "german": "die Maus"
-  },
-  {
-   "foreign": "rabbit",
-   "german": "das Kaninchen"
-  },
-  {
-   "foreign": "bear",
-   "german": "der Bär"
-  },
-  {
-   "foreign": "lion",
-   "german": "der Löwe"
-  },
-  {
-   "foreign": "elephant",
-   "german": "der Elefant"
-  },
-  {
-   "foreign": "food",
-   "german": "das Essen"
-  },
-  {
-   "foreign": "bread",
-   "german": "das Brot"
-  },
-  {
-   "foreign": "butter",
-   "german": "die Butter"
-  },
-  {
-   "foreign": "cheese",
-   "german": "der Käse"
-  },
-  {
-   "foreign": "egg",
-   "german": "das Ei"
-  },
-  {
-   "foreign": "milk",
-   "german": "die Milch"
-  },
-  {
-   "foreign": "water",
-   "german": "das Wasser"
-  },
-  {
-   "foreign": "juice",
-   "german": "der Saft"
-  },
-  {
-   "foreign": "apple",
-   "german": "der Apfel"
-  },
-  {
-   "foreign": "banana",
-   "german": "die Banane"
-  },
-  {
-   "foreign": "orange",
-   "german": "die Orange"
-  },
-  {
-   "foreign": "potato",
-   "german": "die Kartoffel"
-  },
-  {
-   "foreign": "meat",
-   "german": "das Fleisch"
-  },
-  {
-   "foreign": "fish (food)",
-   "german": "der Fisch"
-  },
-  {
-   "foreign": "soup",
-   "german": "die Suppe"
-  },
-  {
-   "foreign": "cake",
-   "german": "der Kuchen"
-  },
-  {
-   "foreign": "sugar",
-   "german": "der Zucker"
-  },
-  {
-   "foreign": "salt",
-   "german": "das Salz"
-  },
-  {
-   "foreign": "breakfast",
-   "german": "das Frühstück"
-  },
-  {
-   "foreign": "lunch",
-   "german": "das Mittagessen"
-  },
-  {
-   "foreign": "dinner",
-   "german": "das Abendessen"
-  },
-  {
-   "foreign": "house",
-   "german": "das Haus"
-  },
-  {
-   "foreign": "home",
-   "german": "das Zuhause"
-  },
-  {
-   "foreign": "room",
-   "german": "das Zimmer"
-  },
-  {
-   "foreign": "door",
-   "german": "die Tür"
-  },
-  {
-   "foreign": "window",
-   "german": "das Fenster"
-  },
-  {
-   "foreign": "wall",
-   "german": "die Wand"
-  },
-  {
-   "foreign": "floor",
-   "german": "der Boden"
-  },
-  {
-   "foreign": "table",
-   "german": "der Tisch"
-  },
-  {
-   "foreign": "chair",
-   "german": "der Stuhl"
-  },
-  {
-   "foreign": "bed",
-   "german": "das Bett"
-  },
-  {
-   "foreign": "kitchen",
-   "german": "die Küche"
-  },
-  {
-   "foreign": "bathroom",
-   "german": "das Badezimmer"
-  },
-  {
-   "foreign": "garden",
-   "german": "der Garten"
-  },
-  {
-   "foreign": "key",
-   "german": "der Schlüssel"
-  },
-  {
-   "foreign": "lamp",
-   "german": "die Lampe"
-  },
-  {
-   "foreign": "clothes",
-   "german": "die Kleidung"
-  },
-  {
-   "foreign": "shirt",
-   "german": "das Hemd"
-  },
-  {
-   "foreign": "trousers",
-   "german": "die Hose"
-  },
-  {
-   "foreign": "dress",
-   "german": "das Kleid"
-  },
-  {
-   "foreign": "jacket",
-   "german": "die Jacke"
-  },
-  {
-   "foreign": "coat",
-   "german": "der Mantel"
-  },
-  {
-   "foreign": "shoe",
-   "german": "der Schuh"
-  },
-  {
-   "foreign": "sock",
-   "german": "die Socke"
-  },
-  {
-   "foreign": "hat",
-   "german": "der Hut"
-  },
-  {
-   "foreign": "glove",
-   "german": "der Handschuh"
-  },
-  {
-   "foreign": "colour",
-   "german": "die Farbe"
-  },
-  {
-   "foreign": "red",
-   "german": "rot"
-  },
-  {
-   "foreign": "blue",
-   "german": "blau"
-  },
-  {
-   "foreign": "green",
-   "german": "grün"
-  },
-  {
-   "foreign": "yellow",
-   "german": "gelb"
-  },
-  {
-   "foreign": "black",
-   "german": "schwarz"
-  },
-  {
-   "foreign": "white",
-   "german": "weiss"
-  },
-  {
-   "foreign": "brown",
-   "german": "braun"
-  },
-  {
-   "foreign": "grey",
-   "german": "grau"
-  },
-  {
-   "foreign": "orange (colour)",
-   "german": "orange"
-  },
-  {
-   "foreign": "pink",
-   "german": "rosa"
-  },
-  {
-   "foreign": "one",
-   "german": "eins"
-  },
-  {
-   "foreign": "two",
-   "german": "zwei"
-  },
-  {
-   "foreign": "three",
-   "german": "drei"
-  },
-  {
-   "foreign": "four",
-   "german": "vier"
-  },
-  {
-   "foreign": "five",
-   "german": "fünf"
-  },
-  {
-   "foreign": "six",
-   "german": "sechs"
-  },
-  {
-   "foreign": "seven",
-   "german": "sieben"
-  },
-  {
-   "foreign": "eight",
-   "german": "acht"
-  },
-  {
-   "foreign": "nine",
-   "german": "neun"
-  },
-  {
-   "foreign": "ten",
-   "german": "zehn"
-  },
-  {
-   "foreign": "hundred",
-   "german": "hundert"
-  },
-  {
-   "foreign": "number",
-   "german": "die Zahl"
-  },
-  {
-   "foreign": "time",
-   "german": "die Zeit"
-  },
-  {
-   "foreign": "day",
-   "german": "der Tag"
-  },
-  {
-   "foreign": "night",
-   "german": "die Nacht"
-  },
-  {
-   "foreign": "morning",
-   "german": "der Morgen"
-  },
-  {
-   "foreign": "evening",
-   "german": "der Abend"
-  },
-  {
-   "foreign": "hour",
-   "german": "die Stunde"
-  },
-  {
-   "foreign": "minute",
-   "german": "die Minute"
-  },
-  {
-   "foreign": "week",
-   "german": "die Woche"
-  },
-  {
-   "foreign": "month",
-   "german": "der Monat"
-  },
-  {
-   "foreign": "year",
-   "german": "das Jahr"
-  },
-  {
-   "foreign": "today",
-   "german": "heute"
-  },
-  {
-   "foreign": "tomorrow",
-   "german": "morgen"
-  },
-  {
-   "foreign": "yesterday",
-   "german": "gestern"
-  },
-  {
-   "foreign": "Monday",
-   "german": "der Montag"
-  },
-  {
-   "foreign": "week-end",
-   "german": "das Wochenende"
+   "german": "der Freund",
+   "examples": [
+    "My friend sits beside me.",
+    "Her friend speaks English well."
+   ],
+   "examplesDe": [
+    "Mein Freund sitzt neben mir.",
+    "Ihr Freund spricht gut Englisch."
+   ],
+   "phonetic": "frend"
+  },
+  {
+   "foreign": "woman",
+   "german": "die Frau",
+   "examples": [
+    "The woman carries a heavy bag.",
+    "A woman waits at the station."
+   ],
+   "examplesDe": [
+    "Die Frau trägt eine schwere Tasche.",
+    "Eine Frau wartet am Bahnhof."
+   ],
+   "phonetic": "ˈwʊmən"
+  },
+  {
+   "foreign": "man",
+   "german": "der Mann",
+   "examples": [
+    "The man opens the window.",
+    "A tall man stands outside."
+   ],
+   "examplesDe": [
+    "Der Mann öffnet das Fenster.",
+    "Ein grosser Mann steht draussen."
+   ],
+   "phonetic": "mæn"
+  },
+  {
+   "foreign": "girl",
+   "german": "das Mädchen",
+   "examples": [
+    "The girl draws a horse.",
+    "A girl runs across the garden."
+   ],
+   "examplesDe": [
+    "Das Mädchen zeichnet ein Pferd.",
+    "Ein Mädchen rennt durch den Garten."
+   ],
+   "phonetic": "ɡɜːl"
+  },
+  {
+   "foreign": "boy",
+   "german": "der Junge",
+   "examples": [
+    "The boy rides his bike.",
+    "A boy throws the ball."
+   ],
+   "examplesDe": [
+    "Der Junge fährt mit seinem Fahrrad.",
+    "Ein Junge wirft den Ball."
+   ],
+   "phonetic": "bɔɪ"
   },
   {
    "foreign": "school",
-   "german": "die Schule"
+   "german": "die Schule",
+   "examples": [
+    "Our school starts at eight.",
+    "The school has a new library."
+   ],
+   "examplesDe": [
+    "Unsere Schule beginnt um acht Uhr.",
+    "Die Schule hat eine neue Bibliothek."
+   ],
+   "phonetic": "skuːl"
   },
   {
    "foreign": "teacher",
-   "german": "der Lehrer"
+   "german": "die Lehrperson",
+   "examples": [
+    "The teacher writes on the board.",
+    "Our teacher explains the task."
+   ],
+   "examplesDe": [
+    "Die Lehrperson schreibt an die Tafel.",
+    "Unsere Lehrperson erklärt die Aufgabe."
+   ],
+   "phonetic": "ˈtiːtʃə"
   },
   {
-   "foreign": "pupil",
-   "german": "der Schüler"
+   "foreign": "student",
+   "german": "der Schüler",
+   "examples": [
+    "The student asks a question.",
+    "Every student needs a pencil."
+   ],
+   "examplesDe": [
+    "Der Schüler stellt eine Frage.",
+    "Jeder Schüler braucht einen Bleistift."
+   ],
+   "phonetic": "ˈstjuːdənt"
   },
   {
-   "foreign": "book",
-   "german": "das Buch"
-  },
-  {
-   "foreign": "pen",
-   "german": "der Stift"
-  },
-  {
-   "foreign": "pencil",
-   "german": "der Bleistift"
-  },
-  {
-   "foreign": "paper",
-   "german": "das Papier"
-  },
-  {
-   "foreign": "word",
-   "german": "das Wort"
-  },
-  {
-   "foreign": "question",
-   "german": "die Frage"
-  },
-  {
-   "foreign": "answer",
-   "german": "die Antwort"
+   "foreign": "classroom",
+   "german": "das Klassenzimmer",
+   "examples": [
+    "Our classroom has three windows.",
+    "The classroom is very quiet."
+   ],
+   "examplesDe": [
+    "Unser Klassenzimmer hat drei Fenster.",
+    "Das Klassenzimmer ist sehr ruhig."
+   ],
+   "phonetic": "ˈklɑːsruːm"
   },
   {
    "foreign": "lesson",
-   "german": "die Stunde"
+   "german": "die Lektion",
+   "examples": [
+    "The lesson starts after lunch.",
+    "Our English lesson is interesting."
+   ],
+   "examplesDe": [
+    "Die Lektion beginnt nach dem Mittagessen.",
+    "Unsere Englischlektion ist interessant."
+   ],
+   "phonetic": "ˈlesən"
+  },
+  {
+   "foreign": "book",
+   "german": "das Buch",
+   "examples": [
+    "This book has many pictures.",
+    "I read a book every week."
+   ],
+   "examplesDe": [
+    "Dieses Buch hat viele Bilder.",
+    "Ich lese jede Woche ein Buch."
+   ],
+   "phonetic": "bʊk"
+  },
+  {
+   "foreign": "notebook",
+   "german": "das Heft",
+   "examples": [
+    "My notebook is in my bag.",
+    "She writes words in her notebook."
+   ],
+   "examplesDe": [
+    "Mein Heft ist in meiner Tasche.",
+    "Sie schreibt Wörter in ihr Heft."
+   ],
+   "phonetic": "ˈnəʊtbʊk"
+  },
+  {
+   "foreign": "pen",
+   "german": "der Kugelschreiber",
+   "examples": [
+    "My pen is under the desk.",
+    "He writes his name with a pen."
+   ],
+   "examplesDe": [
+    "Mein Kugelschreiber liegt unter dem Pult.",
+    "Er schreibt seinen Namen mit einem Kugelschreiber."
+   ],
+   "phonetic": "pen"
+  },
+  {
+   "foreign": "pencil",
+   "german": "der Bleistift",
+   "examples": [
+    "Her pencil is very short.",
+    "I draw a house with my pencil."
+   ],
+   "examplesDe": [
+    "Ihr Bleistift ist sehr kurz.",
+    "Ich zeichne mit meinem Bleistift ein Haus."
+   ],
+   "phonetic": "ˈpensəl"
+  },
+  {
+   "foreign": "paper",
+   "german": "das Papier",
+   "examples": [
+    "Please write your name on the paper.",
+    "The paper is on my desk."
+   ],
+   "examplesDe": [
+    "Bitte schreibe deinen Namen auf das Papier.",
+    "Das Papier liegt auf meinem Pult."
+   ],
+   "phonetic": "ˈpeɪpə"
+  },
+  {
+   "foreign": "desk",
+   "german": "das Pult",
+   "examples": [
+    "My bag is under the desk.",
+    "The teacher stands beside her desk."
+   ],
+   "examplesDe": [
+    "Meine Tasche liegt unter dem Pult.",
+    "Die Lehrperson steht neben ihrem Pult."
+   ],
+   "phonetic": "desk"
+  },
+  {
+   "foreign": "chair",
+   "german": "der Stuhl",
+   "examples": [
+    "The chair is near the window.",
+    "Please put the chair here."
+   ],
+   "examplesDe": [
+    "Der Stuhl steht beim Fenster.",
+    "Bitte stell den Stuhl hierhin."
+   ],
+   "phonetic": "tʃeə"
+  },
+  {
+   "foreign": "board",
+   "german": "die Tafel",
+   "examples": [
+    "The answer is on the board.",
+    "Our teacher cleans the board."
+   ],
+   "examplesDe": [
+    "Die Antwort steht an der Tafel.",
+    "Unsere Lehrperson wischt die Tafel."
+   ],
+   "phonetic": "bɔːd"
   },
   {
    "foreign": "homework",
-   "german": "die Hausaufgabe"
-  },
-  {
-   "foreign": "nature",
-   "german": "die Natur"
-  },
-  {
-   "foreign": "sun",
-   "german": "die Sonne"
-  },
-  {
-   "foreign": "moon",
-   "german": "der Mond"
-  },
-  {
-   "foreign": "star",
-   "german": "der Stern"
-  },
-  {
-   "foreign": "sky",
-   "german": "der Himmel"
-  },
-  {
-   "foreign": "tree",
-   "german": "der Baum"
-  },
-  {
-   "foreign": "flower",
-   "german": "die Blume"
-  },
-  {
-   "foreign": "grass",
-   "german": "das Gras"
-  },
-  {
-   "foreign": "mountain",
-   "german": "der Berg"
-  },
-  {
-   "foreign": "river",
-   "german": "der Fluss"
-  },
-  {
-   "foreign": "sea",
-   "german": "das Meer"
-  },
-  {
-   "foreign": "rain",
-   "german": "der Regen"
-  },
-  {
-   "foreign": "snow",
-   "german": "der Schnee"
-  },
-  {
-   "foreign": "wind",
-   "german": "der Wind"
-  },
-  {
-   "foreign": "fire",
-   "german": "das Feuer"
-  },
-  {
-   "foreign": "stone",
-   "german": "der Stein"
-  },
-  {
-   "foreign": "to be",
-   "german": "sein"
-  },
-  {
-   "foreign": "to have",
-   "german": "haben"
-  },
-  {
-   "foreign": "to go",
-   "german": "gehen"
-  },
-  {
-   "foreign": "to come",
-   "german": "kommen"
-  },
-  {
-   "foreign": "to make",
-   "german": "machen"
-  },
-  {
-   "foreign": "to do",
-   "german": "tun"
-  },
-  {
-   "foreign": "to say",
-   "german": "sagen"
-  },
-  {
-   "foreign": "to see",
-   "german": "sehen"
-  },
-  {
-   "foreign": "to eat",
-   "german": "essen"
-  },
-  {
-   "foreign": "to drink",
-   "german": "trinken"
-  },
-  {
-   "foreign": "to sleep",
-   "german": "schlafen"
-  },
-  {
-   "foreign": "to read",
-   "german": "lesen"
-  },
-  {
-   "foreign": "to write",
-   "german": "schreiben"
-  },
-  {
-   "foreign": "to play",
-   "german": "spielen"
-  },
-  {
-   "foreign": "to learn",
-   "german": "lernen"
-  },
-  {
-   "foreign": "to speak",
-   "german": "sprechen"
-  },
-  {
-   "foreign": "to give",
-   "german": "geben"
-  },
-  {
-   "foreign": "to take",
-   "german": "nehmen"
-  },
-  {
-   "foreign": "to buy",
-   "german": "kaufen"
-  },
-  {
-   "foreign": "to run",
-   "german": "rennen"
-  },
-  {
-   "foreign": "to walk",
-   "german": "laufen"
-  },
-  {
-   "foreign": "to live",
-   "german": "leben"
-  },
-  {
-   "foreign": "to love",
-   "german": "lieben"
-  },
-  {
-   "foreign": "to like",
-   "german": "mögen"
-  },
-  {
-   "foreign": "to want",
-   "german": "wollen"
-  },
-  {
-   "foreign": "to know",
-   "german": "wissen"
-  },
-  {
-   "foreign": "to think",
-   "german": "denken"
-  },
-  {
-   "foreign": "to work",
-   "german": "arbeiten"
-  },
-  {
-   "foreign": "to help",
-   "german": "helfen"
-  },
-  {
-   "foreign": "to find",
-   "german": "finden"
-  },
-  {
-   "foreign": "to open",
-   "german": "öffnen"
-  },
-  {
-   "foreign": "to close",
-   "german": "schliessen"
-  },
-  {
-   "foreign": "big",
-   "german": "gross"
-  },
-  {
-   "foreign": "small",
-   "german": "klein"
-  },
-  {
-   "foreign": "good",
-   "german": "gut"
-  },
-  {
-   "foreign": "bad",
-   "german": "schlecht"
-  },
-  {
-   "foreign": "new",
-   "german": "neu"
-  },
-  {
-   "foreign": "old",
-   "german": "alt"
-  },
-  {
-   "foreign": "young",
-   "german": "jung"
-  },
-  {
-   "foreign": "long",
-   "german": "lang"
-  },
-  {
-   "foreign": "short",
-   "german": "kurz"
-  },
-  {
-   "foreign": "hot",
-   "german": "heiss"
-  },
-  {
-   "foreign": "cold",
-   "german": "kalt"
-  },
-  {
-   "foreign": "happy",
-   "german": "glücklich"
-  },
-  {
-   "foreign": "sad",
-   "german": "traurig"
-  },
-  {
-   "foreign": "fast",
-   "german": "schnell"
-  },
-  {
-   "foreign": "slow",
-   "german": "langsam"
-  },
-  {
-   "foreign": "easy",
-   "german": "einfach"
-  },
-  {
-   "foreign": "difficult",
-   "german": "schwierig"
-  },
-  {
-   "foreign": "nice",
-   "german": "nett"
-  },
-  {
-   "foreign": "beautiful",
-   "german": "schön"
-  },
-  {
-   "foreign": "strong",
-   "german": "stark"
-  },
-  {
-   "foreign": "and",
-   "german": "und"
-  },
-  {
-   "foreign": "or",
-   "german": "oder"
-  },
-  {
-   "foreign": "but",
-   "german": "aber"
-  },
-  {
-   "foreign": "not",
-   "german": "nicht"
-  },
-  {
-   "foreign": "yes",
-   "german": "ja"
-  },
-  {
-   "foreign": "no",
-   "german": "nein"
-  },
-  {
-   "foreign": "with",
-   "german": "mit"
-  },
-  {
-   "foreign": "without",
-   "german": "ohne"
-  },
-  {
-   "foreign": "here",
-   "german": "hier"
-  },
-  {
-   "foreign": "there",
-   "german": "dort"
-  },
-  {
-   "foreign": "now",
-   "german": "jetzt"
-  },
-  {
-   "foreign": "always",
-   "german": "immer"
-  },
-  {
-   "foreign": "never",
-   "german": "nie"
-  },
-  {
-   "foreign": "very",
-   "german": "sehr"
-  },
-  {
-   "foreign": "also",
-   "german": "auch"
+   "german": "die Hausaufgabe",
+   "examples": [
+    "My homework takes thirty minutes.",
+    "I finish my homework before dinner."
+   ],
+   "examplesDe": [
+    "Meine Hausaufgabe dauert dreissig Minuten.",
+    "Ich erledige meine Hausaufgabe vor dem Abendessen."
+   ],
+   "phonetic": "ˈhəʊmwɜːk"
+  },
+  {
+   "foreign": "test",
+   "german": "die Prüfung",
+   "examples": [
+    "Our test begins at nine.",
+    "She studies hard for the test."
+   ],
+   "examplesDe": [
+    "Unsere Prüfung beginnt um neun Uhr.",
+    "Sie lernt viel für die Prüfung."
+   ],
+   "phonetic": "test"
+  },
+  {
+   "foreign": "question",
+   "german": "die Frage",
+   "examples": [
+    "The teacher asks a difficult question.",
+    "I have a question about this word."
+   ],
+   "examplesDe": [
+    "Die Lehrperson stellt eine schwierige Frage.",
+    "Ich habe eine Frage zu diesem Wort."
+   ],
+   "phonetic": "ˈkwestʃən"
+  },
+  {
+   "foreign": "answer",
+   "german": "die Antwort",
+   "examples": [
+    "His answer is correct.",
+    "Please write the answer here."
+   ],
+   "examplesDe": [
+    "Seine Antwort ist richtig.",
+    "Bitte schreibe die Antwort hierhin."
+   ],
+   "phonetic": "ˈɑːnsə"
+  },
+  {
+   "foreign": "break",
+   "german": "die Pause",
+   "examples": [
+    "We eat outside during the break.",
+    "The break ends in five minutes."
+   ],
+   "examplesDe": [
+    "Wir essen während der Pause draussen.",
+    "Die Pause endet in fünf Minuten."
+   ],
+   "phonetic": "breɪk"
+  },
+  {
+   "foreign": "subject",
+   "german": "das Fach",
+   "examples": [
+    "English is my favourite subject.",
+    "This subject is sometimes difficult."
+   ],
+   "examplesDe": [
+    "Englisch ist mein Lieblingsfach.",
+    "Dieses Fach ist manchmal schwierig."
+   ],
+   "phonetic": "ˈsʌbdʒɪkt"
+  },
+  {
+   "foreign": "language",
+   "german": "die Sprache",
+   "examples": [
+    "English is an important language.",
+    "She learns a new language."
+   ],
+   "examplesDe": [
+    "Englisch ist eine wichtige Sprache.",
+    "Sie lernt eine neue Sprache."
+   ],
+   "phonetic": "ˈlæŋɡwɪdʒ"
   }
  ]
 }

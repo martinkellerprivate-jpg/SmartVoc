@@ -119,12 +119,13 @@ export function App() {
    * die sich loeschen laesst wie jede andere. Damit bleibt sie fuer eine
    * spaetere Bezahlfassung technisch abtrennbar. */
   useEffect(() => {
+    if (!store.migriert) return;   // erst aufraeumen, dann fuellen
     for (const p of activePairs(settings)) {
       for (const s of STARTERS.filter((x) => x.pair === p.id)) {
         if (!isStarterActivated(settings, s.pair, s.stufe)) { activateStarter(store, s.pair, s.stufe); return; }
       }
     }
-  }, [settings.activatedStarters, settings.activePairs]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [store.migriert, settings.activatedStarters, settings.activePairs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // If the active pair was switched off in settings, move to the first one
   // that is still visible — otherwise the app would show a hidden language.

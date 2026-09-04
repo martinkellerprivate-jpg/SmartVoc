@@ -104,10 +104,15 @@ export function WordList() {
   const [pasteSeed, setPasteSeed] = useState("");   // V12: scan → paste seeded text
   const [detailWord, setDetailWord] = useState(null);   // V16: word-detail popup
   const canShare = isConfigured && !!auth.user;
-  /* Tabellen nur im Web und nur angemeldet. `auth.ready` gehoert dazu:
-   * sonst blitzt der Bereich beim Start auf oder weg, waehrend die Sitzung
-   * noch geprueft wird. */
-  const tabellen = istWeb() && auth.ready && isConfigured && !!auth.user;
+  /* Tabellen gibt es nur im Web -- die Bibliothek dahinter waere im
+   * App-Paket 429 kB fuer eine Funktion, die das Telefon nicht hat.
+   *
+   * Eine Anmeldung wird NICHT verlangt. Sie wurde es einmal, und das war
+   * falsch: Excel einlesen und die leere Vorlage herunterladen sind seit
+   * dem Prototyp die Arbeitsweise am Schreibtisch, und eigene Woerter in
+   * die eigene App zu bringen hat mit einem Konto nichts zu tun. Dieselbe
+   * Ueberlegung gilt beim Exportieren. */
+  const tabellen = istWeb();
   const dateiRef = useRef<any>(null);
 
   const leseTabelle = useCallback(async (file: any) => {
@@ -461,6 +466,17 @@ export function WordList() {
           <Icon name="arrowRight" size={14} />
         </button>
       )}
+      {/* Die leere Vorlage. Sie war eine Weile nur noch Programmtext: die
+          Funktion stand da, der Knopf dazu war beim Umbau der Ebenen
+          verschwunden. Sie gehoert direkt unter das Einlesen -- erst die
+          Vorlage holen, ausfuellen, dann wieder hineingeben. */}
+      {tabellen && (
+        <button className="li" onClick={() => { setQuellenBlatt(null); ladeVorlage(); }}>
+          <Icon name="download" size={15} />
+          <span className="g">{txt("Leere Vorlage herunterladen")}<div className="m">{txt("Excel-Datei mit allen Spalten, zum Ausfüllen")}</div></span>
+          <Icon name="arrowRight" size={14} />
+        </button>
+      )}
     </>
   );
 
@@ -651,17 +667,17 @@ export function WordList() {
                       onChange={(v) => setDraft({ ...draft, wortart: v })} />
                   </>
                 )}
-                <FeldEingabe feld={txt("Deutsch")} wert={draft.de}
+                <FeldEingabe feld={P.nativeLabel} wert={draft.de}
                   onChange={(v) => setDraft({ ...draft, de: v })} />
                 <FeldEingabe feld={txt("Lautschrift")} hinweis={txt("optional")} wert={draft.phon}
                   onChange={(v) => setDraft({ ...draft, phon: v })} />
                 <FeldEingabe feld={txt("Beispielsatz 1")} hinweis={P.foreignLabel} wert={draft.ex1}
                   mehrzeilig onChange={(v) => setDraft({ ...draft, ex1: v })} />
-                <FeldEingabe feld={txt("Beispielsatz 1")} hinweis={txt("Deutsch")} wert={draft.ex1de}
+                <FeldEingabe feld={txt("Beispielsatz 1")} hinweis={P.nativeLabel} wert={draft.ex1de}
                   mehrzeilig onChange={(v) => setDraft({ ...draft, ex1de: v })} />
                 <FeldEingabe feld={txt("Beispielsatz 2")} hinweis={P.foreignLabel} wert={draft.ex2}
                   mehrzeilig onChange={(v) => setDraft({ ...draft, ex2: v })} />
-                <FeldEingabe feld={txt("Beispielsatz 2")} hinweis={txt("Deutsch")} wert={draft.ex2de}
+                <FeldEingabe feld={txt("Beispielsatz 2")} hinweis={P.nativeLabel} wert={draft.ex2de}
                   mehrzeilig onChange={(v) => setDraft({ ...draft, ex2de: v })} />
               </div>
               {/* Der Lernstand -- derselbe Block wie in der Statistik. */}

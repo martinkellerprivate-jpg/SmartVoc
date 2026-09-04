@@ -6,16 +6,21 @@ import { LS, load, save } from "../lib/storage";
 import { newId } from "../lib/ids";
 import { RECOMMENDED } from "../lib/defaults";
 import { stempelPlan } from "../lib/plan";
-import { DEFAULT_VOCAB } from "../data/seed";
-import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand, einListeJeWort } from "../lib/migrate";
+import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand, einListeJeWort, stempelMuttersprache, tauscheGrundwortschatz, entferneWaisenSaat } from "../lib/migrate";
 import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER, S2 } from "../lib/fsrs";
 import type { SessionOutcome, SerializedCard } from "../lib/fsrs";
 import type { Word, ListT } from "../lib/types";
 import { fk, isLatinPair } from "../lib/pairs";
 
-function seedVocab(): Word[] {
-  return DEFAULT_VOCAB.map((w) => ({ id: newId(), ...w, pair: "en-de", review: false, source: "seed" })) as Word[];
-}
+/* Frueher fuellte der erste Start eine Liste "Starter Words" mit einem
+ * englischen Demo-Wortschatz. Das stammt aus dem Prototyp und ist seit dem
+ * Grundwortschatz doppelt: der kommt von selbst, sobald eine Sprache
+ * eingeschaltet ist, traegt Beispielsaetze und Lautschrift und heisst in
+ * der Sprache der Oberflaeche. Die App faengt jetzt leer an und fuellt sich
+ * ueber diesen einen Weg.
+ *
+ * DEFAULT_VOCAB bleibt bestehen -- es ist zugleich das mitgelieferte
+ * Woerterbuch der Auto-Uebersetzung (siehe lib/translate.ts). */
 
 const todayStr = () => new Date().toDateString();
 const yesterdayStr = () => {
@@ -27,11 +32,9 @@ const yesterdayStr = () => {
 export function initData() {
   let lists = load(LS.lists, null);
   let vocab = load(LS.vocab, null);
-  if (!vocab || !vocab.length) vocab = seedVocab();
+  if (!vocab) vocab = [];
   if (!lists || !lists.length) {
-    const def = { id: newId(), name: "Starter Words", pair: "en-de", createdAt: Date.now() };
-    lists = [def];
-    vocab = vocab.map((w: Word) => ({ ...w, pair: w.pair || "en-de", lists: (w.lists && w.lists.length) ? w.lists : [def.id] }));
+    lists = [];
   } else {
     lists = lists.map((l: ListT) => ({ ...l, pair: l.pair || "en-de" }));
     vocab = vocab.map((w: Word) => ({ ...w, pair: w.pair || "en-de", lists: Array.isArray(w.lists) ? w.lists : [] }));
@@ -43,6 +46,14 @@ export const StoreContext = React.createContext<any>(null);
 export const useStore = () => React.useContext(StoreContext);
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
+  /* Sind die Migrationen durch? Der Grundwortschatz darf erst DANACH
+   * geladen werden. Vorher lief beides im selben Durchlauf: die Migration
+   * setzte den Merker `activatedStarters` zurueck, nachdem die Aktivierung
+   * ihn gerade gesetzt hatte. Der Grundwortschatz wurde daraufhin ein
+   * zweites Mal geladen, hielt seine eigenen Woerter fuer Doppel, legte
+   * folgerichtig keine Liste an -- und die Woerter der ersten Sprache lagen
+   * ohne Liste da, sichtbar nur noch in "Alle Woerter". */
+  const [migriert, setMigriert] = React.useState(false);
   const initRef = React.useRef<any>(null);
   if (!initRef.current) initRef.current = initData();
   const [vocab, setVocabState] = React.useState(initRef.current.vocab);
@@ -135,9 +146,43 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       });
       applied.planV19 = true;
     }
+    /* V20 — die Muttersprache stempeln. */
+    if (!done.mutterspracheV20) {
+      setSettings((prev: any) => {
+        const stempel = stempelMuttersprache(prev);
+        return stempel ? { ...prev, ...stempel } : prev;
+      });
+      applied.mutterspracheV20 = true;
+    }
+    /* V21 — die alten mitgelieferten Wortlisten hinauswerfen und die
+     * Merker loeschen, damit die neuen beim naechsten Durchlauf geladen
+     * werden. Beides gehoert zusammen: nur loeschen hiesse, ohne
+     * Grundwortschatz dazustehen. */
+    /* V24 — die mitgelieferten Listen austauschen. Drei Schritte, und die
+     * Reihenfolge ist der ganze Punkt:
+     *   1. alte mitgelieferte Listen samt ihrer Woerter hinaus,
+     *   2. die Waisen hinterher -- Woerter aus Listen, die es laengst nicht
+     *      mehr gibt und die in keiner Ansicht mehr auftauchen,
+     *   3. erst DANN den Merker leeren, damit der neue Grundwortschatz
+     *      geladen wird.
+     * Ein frueherer Anlauf raeumte in der umgekehrten Folge auf: der neue
+     * Grundwortschatz kam, waehrend die Waisen noch dalagen, hielt vierzehn
+     * seiner Woerter fuer Doppel und liess sie weg -- und gleich darauf
+     * wurden die Waisen entfernt. Vierzehn Woerter fehlten. */
+    if (!done.grundwortschatzV24) {
+      const t = tauscheGrundwortschatz(initRef.current.lists || [], initRef.current.vocab || []);
+      const w = entferneWaisenSaat(t.vocab, t.lists);
+      if (t.listen || w.weg) {
+        setListsState(t.lists);
+        setVocabState(w.vocab);
+        setSettings((prev: any) => ({ ...prev, activatedStarters: [] }));
+      }
+      applied.grundwortschatzV24 = true;
+    }
     if (Object.keys(applied).length) {
       setMeta((prev: any) => ({ ...prev, migrations: { ...(prev.migrations || {}), ...applied } }));
     }
+    setMigriert(true);
   }, []);
 
   // FR3-2: one daily distribution snapshot per pair (first app contact of the day).
@@ -246,7 +291,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   }, [settings.targetRetention, settings.lernIntensity]);
 
   const api = {
-    vocab, stats, meta, settings, lists,
+    vocab, stats, meta, settings, lists, migriert,
     setVocab: setVocabState,
     setSettings: (patch: any) => setSettings((p: any) => ({ ...p, ...patch })),
     setMeta: (patch: any) => setMeta((p: any) => ({ ...p, ...patch })),

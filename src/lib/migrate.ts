@@ -190,3 +190,77 @@ export function einListeJeWort(vocab: any[]): { vocab: any[]; geaendert: number 
   return { vocab: geaendert ? next : vocab, geaendert };
 }
 
+
+/* V20 — die Muttersprache stempeln.
+ *
+ * Heute gibt es nur Deutsch, und genau deshalb wird sie JETZT geschrieben:
+ * wer den Stempel hat, behaelt ihn, auch wenn die Vorgabe fuer neue
+ * Installationen spaeter eine andere ist. Dieselbe Ueberlegung wie beim
+ * Plan -- ein Zustand, den man spaeter nur raten koennte, wird nicht
+ * gerechnet, sondern aufgeschrieben.
+ */
+export function stempelMuttersprache(settings: any, vorgabe = "de"): Partial<any> | null {
+  if (settings?.muttersprache) return null;
+  return { muttersprache: vorgabe };
+}
+
+/* V22 — die mitgelieferten Wortlisten austauschen.
+ *
+ * Die drei Grundwortschatzlisten stammten aus der Zeit vor den
+ * Beispielsaetzen und der Lautschrift und trugen nur Wort und
+ * Uebersetzung. Dazu kam "Starter Words": ein englischer Demo-Wortschatz
+ * aus dem Prototyp, den der erste Start in jede Installation schrieb.
+ * Beides geht.
+ *
+ * Ohne diesen Schritt bekaeme die neuen Listen nur, wer die App zum ersten
+ * Mal oeffnet -- `activatedStarters` merkt sich, dass schon geladen wurde.
+ * Der Merker wird deshalb mit geleert.
+ *
+ * Die Erkennung laeuft NICHT nur ueber `herkunft`: das Feld gibt es erst
+ * seit V16, und genau die alten Listen, um die es hier geht, haben es
+ * nicht. Deshalb zaehlt auch der Name. Ein erster Anlauf (V21) sah nur auf
+ * `herkunft`, fand nichts und hakte sich trotzdem ab -- daher die neue
+ * Nummer statt einer Korrektur an Ort und Stelle.
+ *
+ * Entfernt werden nur diese Listen und die Woerter, die NUR dort liegen und
+ * die niemand angefasst hat (`source: "seed"`). Ein selbst angelegtes oder
+ * bearbeitetes Wort bleibt; es faellt aus der Liste, aber nicht aus der App.
+ */
+const MITGELIEFERT = (l: any) =>
+  l?.herkunft === "grundwortschatz"
+  || /^Grundwortschatz\b/.test(l?.name || "")
+  || l?.name === "Starter Words";
+
+export function tauscheGrundwortschatz(lists: any[], vocab: any[]):
+  { lists: any[]; vocab: any[]; listen: number; woerter: number } {
+  const alte = new Set(lists.filter(MITGELIEFERT).map((l) => l.id));
+  if (!alte.size) return { lists, vocab, listen: 0, woerter: 0 };
+  const bleibtListe = lists.filter((l) => !alte.has(l.id));
+  let weg = 0;
+  const bleibtVocab: any[] = [];
+  for (const w of vocab) {
+    const drin = (w.lists || []).some((id: string) => alte.has(id));
+    if (drin && w.source === "seed") { weg++; continue; }
+    bleibtVocab.push(drin ? { ...w, lists: (w.lists || []).filter((id: string) => !alte.has(id)) } : w);
+  }
+  return { lists: bleibtListe, vocab: bleibtVocab, listen: alte.size, woerter: weg };
+}
+
+/* V23 — die Waisen des mitgelieferten Wortschatzes.
+ *
+ * Mitgelieferte Woerter, deren Wortliste es nicht mehr gibt. Sie entstehen
+ * auf zwei Wegen: der aelteste Demo-Wortschatz lag in gar keiner Liste, und
+ * eine geloeschte Grundwortschatzliste laesst Woerter mit einer Kennung
+ * zurueck, die ins Leere zeigt. Beide sind in keiner Liste mehr zu finden,
+ * zaehlen aber ueberall mit -- 172 unsichtbare Woerter in "Alle Woerter"
+ * sind kein Bestand, sondern ein Zaehlfehler.
+ *
+ * Nur `source: "seed"`. Ein selbst angelegtes Wort ohne Liste ist eine
+ * bewusste Entscheidung und bleibt.
+ */
+export function entferneWaisenSaat(vocab: any[], lists: any[]): { vocab: any[]; weg: number } {
+  const da = new Set((lists || []).map((l: any) => l.id));
+  const bleibt = vocab.filter((w) =>
+    w.source !== "seed" || (w.lists || []).some((id: string) => da.has(id)));
+  return { vocab: bleibt, weg: vocab.length - bleibt.length };
+}

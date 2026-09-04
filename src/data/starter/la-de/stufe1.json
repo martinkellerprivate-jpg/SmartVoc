@@ -3,1204 +3,604 @@
  "stufe": 1,
  "words": [
   {
-   "grundform": "amicus",
-   "lernform": "amicus, amici m",
-   "wortart": "Substantiv",
-   "german": "der Freund"
+   "grundform": "homo",
+   "lernform": "homo, hominis m",
+   "wortart": "Nomen",
+   "german": "der Mensch",
+   "examples": [
+    "Homo in villa habitat.",
+    "Hominem in foro videmus."
+   ],
+   "examplesDe": [
+    "Der Mensch wohnt im Landhaus.",
+    "Wir sehen den Menschen auf dem Forum."
+   ],
+   "phonetic": "homō"
   },
   {
    "grundform": "vir",
    "lernform": "vir, viri m",
-   "wortart": "Substantiv",
-   "german": "der Mann"
+   "wortart": "Nomen",
+   "german": "der Mann",
+   "examples": [
+    "Vir bonus laborat.",
+    "Femina virum salutat."
+   ],
+   "examplesDe": [
+    "Der gute Mann arbeitet.",
+    "Die Frau grüsst den Mann."
+   ],
+   "phonetic": "vir"
   },
   {
    "grundform": "femina",
    "lernform": "femina, feminae f",
-   "wortart": "Substantiv",
-   "german": "die Frau"
+   "wortart": "Nomen",
+   "german": "die Frau",
+   "examples": [
+    "Femina aquam portat.",
+    "Vir feminam salutat."
+   ],
+   "examplesDe": [
+    "Die Frau trägt Wasser.",
+    "Der Mann grüsst die Frau."
+   ],
+   "phonetic": "fēmina"
   },
   {
    "grundform": "puer",
    "lernform": "puer, pueri m",
-   "wortart": "Substantiv",
-   "german": "der Junge"
+   "wortart": "Nomen",
+   "german": "der Junge",
+   "examples": [
+    "Puer in horto ludit.",
+    "Magister puerum laudat."
+   ],
+   "examplesDe": [
+    "Der Junge spielt im Garten.",
+    "Der Lehrer lobt den Jungen."
+   ],
+   "phonetic": "puer"
   },
   {
    "grundform": "puella",
    "lernform": "puella, puellae f",
-   "wortart": "Substantiv",
-   "german": "das Mädchen"
+   "wortart": "Nomen",
+   "german": "das Mädchen",
+   "examples": [
+    "Puella librum legit.",
+    "Mater puellam vocat."
+   ],
+   "examplesDe": [
+    "Das Mädchen liest ein Buch.",
+    "Die Mutter ruft das Mädchen."
+   ],
+   "phonetic": "puella"
   },
   {
    "grundform": "pater",
    "lernform": "pater, patris m",
-   "wortart": "Substantiv",
-   "german": "der Vater"
+   "wortart": "Nomen",
+   "german": "der Vater",
+   "examples": [
+    "Pater filium vocat.",
+    "Donum patri damus."
+   ],
+   "examplesDe": [
+    "Der Vater ruft den Sohn.",
+    "Wir geben dem Vater ein Geschenk."
+   ],
+   "phonetic": "pater"
   },
   {
    "grundform": "mater",
    "lernform": "mater, matris f",
-   "wortart": "Substantiv",
-   "german": "die Mutter"
-  },
-  {
-   "grundform": "frater",
-   "lernform": "frater, fratris m",
-   "wortart": "Substantiv",
-   "german": "der Bruder"
-  },
-  {
-   "grundform": "soror",
-   "lernform": "soror, sororis f",
-   "wortart": "Substantiv",
-   "german": "die Schwester"
+   "wortart": "Nomen",
+   "german": "die Mutter",
+   "examples": [
+    "Mater cenam parat.",
+    "Filia matrem adiuvat."
+   ],
+   "examplesDe": [
+    "Die Mutter bereitet das Abendessen zu.",
+    "Die Tochter hilft der Mutter."
+   ],
+   "phonetic": "māter"
   },
   {
    "grundform": "filius",
    "lernform": "filius, filii m",
-   "wortart": "Substantiv",
-   "german": "der Sohn"
+   "wortart": "Nomen",
+   "german": "der Sohn",
+   "examples": [
+    "Filius patri paret.",
+    "Pater filium amat."
+   ],
+   "examplesDe": [
+    "Der Sohn gehorcht dem Vater.",
+    "Der Vater liebt den Sohn."
+   ],
+   "phonetic": "fīlius"
   },
   {
-   "grundform": "familia",
-   "lernform": "familia, familiae f",
-   "wortart": "Substantiv",
-   "german": "die Familie"
+   "grundform": "filia",
+   "lernform": "filia, filiae f",
+   "wortart": "Nomen",
+   "german": "die Tochter",
+   "examples": [
+    "Filia matrem adiuvat.",
+    "Mater filiam laudat."
+   ],
+   "examplesDe": [
+    "Die Tochter hilft der Mutter.",
+    "Die Mutter lobt die Tochter."
+   ],
+   "phonetic": "fīlia"
   },
   {
-   "grundform": "homo",
-   "lernform": "homo, hominis m",
-   "wortart": "Substantiv",
-   "german": "der Mensch"
+   "grundform": "frater",
+   "lernform": "frater, fratris m",
+   "wortart": "Nomen",
+   "german": "der Bruder",
+   "examples": [
+    "Frater cum amico ambulat.",
+    "Soror fratrem vocat."
+   ],
+   "examplesDe": [
+    "Der Bruder geht mit dem Freund spazieren.",
+    "Die Schwester ruft den Bruder."
+   ],
+   "phonetic": "frāter"
+  },
+  {
+   "grundform": "soror",
+   "lernform": "soror, sororis f",
+   "wortart": "Nomen",
+   "german": "die Schwester",
+   "examples": [
+    "Soror in villa manet.",
+    "Frater sororem salutat."
+   ],
+   "examplesDe": [
+    "Die Schwester bleibt im Landhaus.",
+    "Der Bruder grüsst die Schwester."
+   ],
+   "phonetic": "soror"
+  },
+  {
+   "grundform": "avus",
+   "lernform": "avus, avi m",
+   "wortart": "Nomen",
+   "german": "der Grossvater",
+   "examples": [
+    "Avus fabulam narrat.",
+    "Puer avum audit."
+   ],
+   "examplesDe": [
+    "Der Grossvater erzählt eine Geschichte.",
+    "Der Junge hört dem Grossvater zu."
+   ],
+   "phonetic": "avus"
+  },
+  {
+   "grundform": "avia",
+   "lernform": "avia, aviae f",
+   "wortart": "Nomen",
+   "german": "die Grossmutter",
+   "examples": [
+    "Avia cibum parat.",
+    "Puella aviam visitat."
+   ],
+   "examplesDe": [
+    "Die Grossmutter bereitet das Essen zu.",
+    "Das Mädchen besucht die Grossmutter."
+   ],
+   "phonetic": "avia"
+  },
+  {
+   "grundform": "amicus",
+   "lernform": "amicus, amici m",
+   "wortart": "Nomen",
+   "german": "der Freund",
+   "examples": [
+    "Amicus ad villam venit.",
+    "Puer amicum videt."
+   ],
+   "examplesDe": [
+    "Der Freund kommt zum Landhaus.",
+    "Der Junge sieht den Freund."
+   ],
+   "phonetic": "amīcus"
+  },
+  {
+   "grundform": "amica",
+   "lernform": "amica, amicae f",
+   "wortart": "Nomen",
+   "german": "die Freundin",
+   "examples": [
+    "Amica puellam salutat.",
+    "Puella cum amica ridet."
+   ],
+   "examplesDe": [
+    "Die Freundin grüsst das Mädchen.",
+    "Das Mädchen lacht mit der Freundin."
+   ],
+   "phonetic": "amīca"
   },
   {
    "grundform": "dominus",
    "lernform": "dominus, domini m",
-   "wortart": "Substantiv",
-   "german": "der Herr"
+   "wortart": "Nomen",
+   "german": "der Herr",
+   "examples": [
+    "Dominus servum vocat.",
+    "Servus domino paret."
+   ],
+   "examplesDe": [
+    "Der Herr ruft den Sklaven.",
+    "Der Sklave gehorcht dem Herrn."
+   ],
+   "phonetic": "dominus"
   },
   {
    "grundform": "servus",
    "lernform": "servus, servi m",
-   "wortart": "Substantiv",
-   "german": "der Sklave"
+   "wortart": "Nomen",
+   "german": "der Sklave",
+   "examples": [
+    "Servus in agro laborat.",
+    "Dominus servum laudat."
+   ],
+   "examplesDe": [
+    "Der Sklave arbeitet auf dem Feld.",
+    "Der Herr lobt den Sklaven."
+   ],
+   "phonetic": "servus"
   },
   {
-   "grundform": "amicitia",
-   "lernform": "amicitia, amicitiae f",
-   "wortart": "Substantiv",
-   "german": "die Freundschaft"
+   "grundform": "magister",
+   "lernform": "magister, magistri m",
+   "wortart": "Nomen",
+   "german": "der Lehrer",
+   "examples": [
+    "Magister discipulos docet.",
+    "Discipulus magistrum audit."
+   ],
+   "examplesDe": [
+    "Der Lehrer unterrichtet die Schüler.",
+    "Der Schüler hört dem Lehrer zu."
+   ],
+   "phonetic": "magister"
   },
   {
-   "grundform": "rex",
-   "lernform": "rex, regis m",
-   "wortart": "Substantiv",
-   "german": "der König"
+   "grundform": "discipulus",
+   "lernform": "discipulus, discipuli m",
+   "wortart": "Nomen",
+   "german": "der Schüler",
+   "examples": [
+    "Discipulus librum legit.",
+    "Magister discipulum laudat."
+   ],
+   "examplesDe": [
+    "Der Schüler liest ein Buch.",
+    "Der Lehrer lobt den Schüler."
+   ],
+   "phonetic": "discipulus"
   },
   {
-   "grundform": "regina",
-   "lernform": "regina, reginae f",
-   "wortart": "Substantiv",
-   "german": "die Königin"
-  },
-  {
-   "grundform": "deus",
-   "lernform": "deus, dei m",
-   "wortart": "Substantiv",
-   "german": "der Gott"
-  },
-  {
-   "grundform": "corpus",
-   "lernform": "corpus, corporis n",
-   "wortart": "Substantiv",
-   "german": "der Körper"
-  },
-  {
-   "grundform": "caput",
-   "lernform": "caput, capitis n",
-   "wortart": "Substantiv",
-   "german": "der Kopf"
-  },
-  {
-   "grundform": "manus",
-   "lernform": "manus, manus f",
-   "wortart": "Substantiv",
-   "german": "die Hand"
-  },
-  {
-   "grundform": "oculus",
-   "lernform": "oculus, oculi m",
-   "wortart": "Substantiv",
-   "german": "das Auge"
-  },
-  {
-   "grundform": "animus",
-   "lernform": "animus, animi m",
-   "wortart": "Substantiv",
-   "german": "der Geist, der Mut"
-  },
-  {
-   "grundform": "vox",
-   "lernform": "vox, vocis f",
-   "wortart": "Substantiv",
-   "german": "die Stimme"
-  },
-  {
-   "grundform": "mors",
-   "lernform": "mors, mortis f",
-   "wortart": "Substantiv",
-   "german": "der Tod"
-  },
-  {
-   "grundform": "vita",
-   "lernform": "vita, vitae f",
-   "wortart": "Substantiv",
-   "german": "das Leben"
-  },
-  {
-   "grundform": "terra",
-   "lernform": "terra, terrae f",
-   "wortart": "Substantiv",
-   "german": "die Erde, das Land"
-  },
-  {
-   "grundform": "aqua",
-   "lernform": "aqua, aquae f",
-   "wortart": "Substantiv",
-   "german": "das Wasser"
-  },
-  {
-   "grundform": "silva",
-   "lernform": "silva, silvae f",
-   "wortart": "Substantiv",
-   "german": "der Wald"
-  },
-  {
-   "grundform": "mare",
-   "lernform": "mare, maris n",
-   "wortart": "Substantiv",
-   "german": "das Meer"
-  },
-  {
-   "grundform": "mons",
-   "lernform": "mons, montis m",
-   "wortart": "Substantiv",
-   "german": "der Berg"
-  },
-  {
-   "grundform": "flumen",
-   "lernform": "flumen, fluminis n",
-   "wortart": "Substantiv",
-   "german": "der Fluss"
-  },
-  {
-   "grundform": "caelum",
-   "lernform": "caelum, caeli n",
-   "wortart": "Substantiv",
-   "german": "der Himmel"
-  },
-  {
-   "grundform": "sol",
-   "lernform": "sol, solis m",
-   "wortart": "Substantiv",
-   "german": "die Sonne"
-  },
-  {
-   "grundform": "luna",
-   "lernform": "luna, lunae f",
-   "wortart": "Substantiv",
-   "german": "der Mond"
-  },
-  {
-   "grundform": "stella",
-   "lernform": "stella, stellae f",
-   "wortart": "Substantiv",
-   "german": "der Stern"
-  },
-  {
-   "grundform": "ventus",
-   "lernform": "ventus, venti m",
-   "wortart": "Substantiv",
-   "german": "der Wind"
-  },
-  {
-   "grundform": "ignis",
-   "lernform": "ignis, ignis m",
-   "wortart": "Substantiv",
-   "german": "das Feuer"
-  },
-  {
-   "grundform": "animal",
-   "lernform": "animal, animalis n",
-   "wortart": "Substantiv",
-   "german": "das Tier"
-  },
-  {
-   "grundform": "equus",
-   "lernform": "equus, equi m",
-   "wortart": "Substantiv",
-   "german": "das Pferd"
-  },
-  {
-   "grundform": "insula",
-   "lernform": "insula, insulae f",
-   "wortart": "Substantiv",
-   "german": "die Insel"
-  },
-  {
-   "grundform": "ager",
-   "lernform": "ager, agri m",
-   "wortart": "Substantiv",
-   "german": "der Acker, das Feld"
-  },
-  {
-   "grundform": "rosa",
-   "lernform": "rosa, rosae f",
-   "wortart": "Substantiv",
-   "german": "die Rose"
+   "grundform": "familia",
+   "lernform": "familia, familiae f",
+   "wortart": "Nomen",
+   "german": "die Familie",
+   "examples": [
+    "Familia in villa habitat.",
+    "Pater familiam curat."
+   ],
+   "examplesDe": [
+    "Die Familie wohnt im Landhaus.",
+    "Der Vater kümmert sich um die Familie."
+   ],
+   "phonetic": "familia"
   },
   {
    "grundform": "domus",
    "lernform": "domus, domus f",
-   "wortart": "Substantiv",
-   "german": "das Haus"
+   "wortart": "Nomen",
+   "german": "das Haus",
+   "examples": [
+    "Domus magna est.",
+    "Puer ad domum currit."
+   ],
+   "examplesDe": [
+    "Das Haus ist gross.",
+    "Der Junge läuft zum Haus."
+   ],
+   "phonetic": "domus"
   },
   {
    "grundform": "villa",
    "lernform": "villa, villae f",
-   "wortart": "Substantiv",
-   "german": "das Landhaus"
+   "wortart": "Nomen",
+   "german": "das Landhaus",
+   "examples": [
+    "Villa in agro stat.",
+    "Servi villam intrant."
+   ],
+   "examplesDe": [
+    "Das Landhaus steht auf dem Feld.",
+    "Die Sklaven betreten das Landhaus."
+   ],
+   "phonetic": "vīlla"
+  },
+  {
+   "grundform": "ianua",
+   "lernform": "ianua, ianuae f",
+   "wortart": "Nomen",
+   "german": "die Tür",
+   "examples": [
+    "Ianua aperta est.",
+    "Puer ianuam claudit."
+   ],
+   "examplesDe": [
+    "Die Tür ist offen.",
+    "Der Junge schliesst die Tür."
+   ],
+   "phonetic": "iānua"
+  },
+  {
+   "grundform": "fenestra",
+   "lernform": "fenestra, fenestrae f",
+   "wortart": "Nomen",
+   "german": "das Fenster",
+   "examples": [
+    "Fenestra magna est.",
+    "Puella fenestram aperit."
+   ],
+   "examplesDe": [
+    "Das Fenster ist gross.",
+    "Das Mädchen öffnet das Fenster."
+   ],
+   "phonetic": "fenestra"
   },
   {
    "grundform": "murus",
    "lernform": "murus, muri m",
-   "wortart": "Substantiv",
-   "german": "die Mauer"
+   "wortart": "Nomen",
+   "german": "die Mauer",
+   "examples": [
+    "Murus urbem defendit.",
+    "Milites ad murum currunt."
+   ],
+   "examplesDe": [
+    "Die Mauer schützt die Stadt.",
+    "Die Soldaten laufen zur Mauer."
+   ],
+   "phonetic": "mūrus"
   },
   {
-   "grundform": "porta",
-   "lernform": "porta, portae f",
-   "wortart": "Substantiv",
-   "german": "das Tor"
+   "grundform": "tectum",
+   "lernform": "tectum, tecti n",
+   "wortart": "Nomen",
+   "german": "das Dach",
+   "examples": [
+    "Tectum villae altum est.",
+    "Puer in tectum ascendit."
+   ],
+   "examplesDe": [
+    "Das Dach des Landhauses ist hoch.",
+    "Der Junge steigt auf das Dach."
+   ],
+   "phonetic": "tēctum"
   },
   {
-   "grundform": "hortus",
-   "lernform": "hortus, horti m",
-   "wortart": "Substantiv",
-   "german": "der Garten"
+   "grundform": "cubiculum",
+   "lernform": "cubiculum, cubiculi n",
+   "wortart": "Nomen",
+   "german": "das Schlafzimmer",
+   "examples": [
+    "Cubiculum parvum est.",
+    "Puella cubiculum intrat."
+   ],
+   "examplesDe": [
+    "Das Schlafzimmer ist klein.",
+    "Das Mädchen betritt das Schlafzimmer."
+   ],
+   "phonetic": "cubiculum"
   },
   {
-   "grundform": "via",
-   "lernform": "via, viae f",
-   "wortart": "Substantiv",
-   "german": "die Strasse, der Weg"
-  },
-  {
-   "grundform": "urbs",
-   "lernform": "urbs, urbis f",
-   "wortart": "Substantiv",
-   "german": "die Stadt"
-  },
-  {
-   "grundform": "oppidum",
-   "lernform": "oppidum, oppidi n",
-   "wortart": "Substantiv",
-   "german": "die Stadt (befestigt)"
-  },
-  {
-   "grundform": "templum",
-   "lernform": "templum, templi n",
-   "wortart": "Substantiv",
-   "german": "der Tempel"
-  },
-  {
-   "grundform": "forum",
-   "lernform": "forum, fori n",
-   "wortart": "Substantiv",
-   "german": "der Marktplatz"
+   "grundform": "atrium",
+   "lernform": "atrium, atrii n",
+   "wortart": "Nomen",
+   "german": "die Eingangshalle",
+   "examples": [
+    "Atrium magnum est.",
+    "Servus atrium purgat."
+   ],
+   "examplesDe": [
+    "Die Eingangshalle ist gross.",
+    "Der Sklave reinigt die Eingangshalle."
+   ],
+   "phonetic": "ātrium"
   },
   {
    "grundform": "mensa",
    "lernform": "mensa, mensae f",
-   "wortart": "Substantiv",
-   "german": "der Tisch"
+   "wortart": "Nomen",
+   "german": "der Tisch",
+   "examples": [
+    "Mensa in atrio stat.",
+    "Servus cibum ad mensam portat."
+   ],
+   "examplesDe": [
+    "Der Tisch steht in der Eingangshalle.",
+    "Der Sklave trägt das Essen zum Tisch."
+   ],
+   "phonetic": "mēnsa"
   },
   {
-   "grundform": "liber",
-   "lernform": "liber, libri m",
-   "wortart": "Substantiv",
-   "german": "das Buch"
+   "grundform": "sella",
+   "lernform": "sella, sellae f",
+   "wortart": "Nomen",
+   "german": "der Stuhl",
+   "examples": [
+    "Sella prope mensam stat.",
+    "Puer in sella sedet."
+   ],
+   "examplesDe": [
+    "Der Stuhl steht nahe beim Tisch.",
+    "Der Junge sitzt auf dem Stuhl."
+   ],
+   "phonetic": "sella"
   },
   {
-   "grundform": "pecunia",
-   "lernform": "pecunia, pecuniae f",
-   "wortart": "Substantiv",
-   "german": "das Geld"
+   "grundform": "lectus",
+   "lernform": "lectus, lecti m",
+   "wortart": "Nomen",
+   "german": "das Bett",
+   "examples": [
+    "Lectus in cubiculo stat.",
+    "Puer ad lectum venit."
+   ],
+   "examplesDe": [
+    "Das Bett steht im Schlafzimmer.",
+    "Der Junge kommt zum Bett."
+   ],
+   "phonetic": "lectus"
   },
   {
-   "grundform": "vinum",
-   "lernform": "vinum, vini n",
-   "wortart": "Substantiv",
-   "german": "der Wein"
+   "grundform": "hortus",
+   "lernform": "hortus, horti m",
+   "wortart": "Nomen",
+   "german": "der Garten",
+   "examples": [
+    "Hortus multas rosas habet.",
+    "Puella in horto ludit."
+   ],
+   "examplesDe": [
+    "Der Garten hat viele Rosen.",
+    "Das Mädchen spielt im Garten."
+   ],
+   "phonetic": "hortus"
   },
   {
-   "grundform": "donum",
-   "lernform": "donum, doni n",
-   "wortart": "Substantiv",
-   "german": "das Geschenk"
+   "grundform": "ager",
+   "lernform": "ager, agri m",
+   "wortart": "Nomen",
+   "german": "das Feld",
+   "examples": [
+    "Ager prope villam est.",
+    "Servi in agro laborant."
+   ],
+   "examplesDe": [
+    "Das Feld liegt nahe beim Landhaus.",
+    "Die Sklaven arbeiten auf dem Feld."
+   ],
+   "phonetic": "ager"
   },
   {
-   "grundform": "bellum",
-   "lernform": "bellum, belli n",
-   "wortart": "Substantiv",
-   "german": "der Krieg"
+   "grundform": "fundus",
+   "lernform": "fundus, fundi m",
+   "wortart": "Nomen",
+   "german": "das Landgut",
+   "examples": [
+    "Fundus domino placet.",
+    "Servi fundum curant."
+   ],
+   "examplesDe": [
+    "Das Landgut gefällt dem Herrn.",
+    "Die Sklaven bewirtschaften das Landgut."
+   ],
+   "phonetic": "fundus"
   },
   {
-   "grundform": "pax",
-   "lernform": "pax, pacis f",
-   "wortart": "Substantiv",
-   "german": "der Friede"
+   "grundform": "culina",
+   "lernform": "culina, culinae f",
+   "wortart": "Nomen",
+   "german": "die Küche",
+   "examples": [
+    "Culina parva est.",
+    "Mater in culina laborat."
+   ],
+   "examplesDe": [
+    "Die Küche ist klein.",
+    "Die Mutter arbeitet in der Küche."
+   ],
+   "phonetic": "culīna"
   },
   {
-   "grundform": "populus",
-   "lernform": "populus, populi m",
-   "wortart": "Substantiv",
-   "german": "das Volk"
+   "grundform": "urbs",
+   "lernform": "urbs, urbis f",
+   "wortart": "Nomen",
+   "german": "die Stadt",
+   "examples": [
+    "Urbs magna est.",
+    "Milites urbem defendunt."
+   ],
+   "examplesDe": [
+    "Die Stadt ist gross.",
+    "Die Soldaten verteidigen die Stadt."
+   ],
+   "phonetic": "urbs"
   },
   {
-   "grundform": "miles",
-   "lernform": "miles, militis m",
-   "wortart": "Substantiv",
-   "german": "der Soldat"
+   "grundform": "forum",
+   "lernform": "forum, fori n",
+   "wortart": "Nomen",
+   "german": "das Forum",
+   "examples": [
+    "Forum in urbe est.",
+    "Cives ad forum currunt."
+   ],
+   "examplesDe": [
+    "Das Forum liegt in der Stadt.",
+    "Die Bürger laufen zum Forum."
+   ],
+   "phonetic": "forum"
   },
   {
-   "grundform": "dux",
-   "lernform": "dux, ducis m",
-   "wortart": "Substantiv",
-   "german": "der Anführer"
+   "grundform": "via",
+   "lernform": "via, viae f",
+   "wortart": "Nomen",
+   "german": "die Strasse",
+   "examples": [
+    "Via ad urbem ducit.",
+    "Milites in via ambulant."
+   ],
+   "examplesDe": [
+    "Die Strasse führt zur Stadt.",
+    "Die Soldaten gehen auf der Strasse."
+   ],
+   "phonetic": "via"
   },
   {
-   "grundform": "hostis",
-   "lernform": "hostis, hostis m",
-   "wortart": "Substantiv",
-   "german": "der Feind"
+   "grundform": "templum",
+   "lernform": "templum, templi n",
+   "wortart": "Nomen",
+   "german": "der Tempel",
+   "examples": [
+    "Templum prope forum stat.",
+    "Cives templum intrant."
+   ],
+   "examplesDe": [
+    "Der Tempel steht nahe beim Forum.",
+    "Die Bürger betreten den Tempel."
+   ],
+   "phonetic": "templum"
   },
   {
    "grundform": "civis",
-   "lernform": "civis, civis m",
-   "wortart": "Substantiv",
-   "german": "der Bürger"
-  },
-  {
-   "grundform": "exercitus",
-   "lernform": "exercitus, exercitus m",
-   "wortart": "Substantiv",
-   "german": "das Heer"
-  },
-  {
-   "grundform": "lex",
-   "lernform": "lex, legis f",
-   "wortart": "Substantiv",
-   "german": "das Gesetz"
-  },
-  {
-   "grundform": "libertas",
-   "lernform": "libertas, libertatis f",
-   "wortart": "Substantiv",
-   "german": "die Freiheit"
-  },
-  {
-   "grundform": "imperium",
-   "lernform": "imperium, imperii n",
-   "wortart": "Substantiv",
-   "german": "die Herrschaft"
-  },
-  {
-   "grundform": "consilium",
-   "lernform": "consilium, consilii n",
-   "wortart": "Substantiv",
-   "german": "der Plan, der Rat"
-  },
-  {
-   "grundform": "periculum",
-   "lernform": "periculum, periculi n",
-   "wortart": "Substantiv",
-   "german": "die Gefahr"
-  },
-  {
-   "grundform": "auxilium",
-   "lernform": "auxilium, auxilii n",
-   "wortart": "Substantiv",
-   "german": "die Hilfe"
-  },
-  {
-   "grundform": "victoria",
-   "lernform": "victoria, victoriae f",
-   "wortart": "Substantiv",
-   "german": "der Sieg"
-  },
-  {
-   "grundform": "virtus",
-   "lernform": "virtus, virtutis f",
-   "wortart": "Substantiv",
-   "german": "die Tapferkeit"
-  },
-  {
-   "grundform": "gloria",
-   "lernform": "gloria, gloriae f",
-   "wortart": "Substantiv",
-   "german": "der Ruhm"
-  },
-  {
-   "grundform": "tempus",
-   "lernform": "tempus, temporis n",
-   "wortart": "Substantiv",
-   "german": "die Zeit"
-  },
-  {
-   "grundform": "dies",
-   "lernform": "dies, diei m",
-   "wortart": "Substantiv",
-   "german": "der Tag"
-  },
-  {
-   "grundform": "nox",
-   "lernform": "nox, noctis f",
-   "wortart": "Substantiv",
-   "german": "die Nacht"
-  },
-  {
-   "grundform": "hora",
-   "lernform": "hora, horae f",
-   "wortart": "Substantiv",
-   "german": "die Stunde"
-  },
-  {
-   "grundform": "annus",
-   "lernform": "annus, anni m",
-   "wortart": "Substantiv",
-   "german": "das Jahr"
-  },
-  {
-   "grundform": "fortuna",
-   "lernform": "fortuna, fortunae f",
-   "wortart": "Substantiv",
-   "german": "das Glück, das Schicksal"
-  },
-  {
-   "grundform": "fides",
-   "lernform": "fides, fidei f",
-   "wortart": "Substantiv",
-   "german": "die Treue"
-  },
-  {
-   "grundform": "spes",
-   "lernform": "spes, spei f",
-   "wortart": "Substantiv",
-   "german": "die Hoffnung"
-  },
-  {
-   "grundform": "res",
-   "lernform": "res, rei f",
-   "wortart": "Substantiv",
-   "german": "die Sache"
-  },
-  {
-   "grundform": "ira",
-   "lernform": "ira, irae f",
-   "wortart": "Substantiv",
-   "german": "der Zorn"
-  },
-  {
-   "grundform": "cura",
-   "lernform": "cura, curae f",
-   "wortart": "Substantiv",
-   "german": "die Sorge"
-  },
-  {
-   "grundform": "verbum",
-   "lernform": "verbum, verbi n",
-   "wortart": "Substantiv",
-   "german": "das Wort"
-  },
-  {
-   "grundform": "nomen",
-   "lernform": "nomen, nominis n",
-   "wortart": "Substantiv",
-   "german": "der Name"
-  },
-  {
-   "grundform": "sum",
-   "lernform": "sum, esse, fui",
-   "wortart": "Verb",
-   "german": "sein"
-  },
-  {
-   "grundform": "possum",
-   "lernform": "possum, posse, potui",
-   "wortart": "Verb",
-   "german": "können"
-  },
-  {
-   "grundform": "eo",
-   "lernform": "eo, ire, ii, itum",
-   "wortart": "Verb",
-   "german": "gehen"
-  },
-  {
-   "grundform": "volo",
-   "lernform": "volo, velle, volui",
-   "wortart": "Verb",
-   "german": "wollen"
-  },
-  {
-   "grundform": "fero",
-   "lernform": "fero, ferre, tuli, latum",
-   "wortart": "Verb",
-   "german": "tragen, bringen"
-  },
-  {
-   "grundform": "amo",
-   "lernform": "amo, amare, amavi, amatum",
-   "wortart": "Verb",
-   "german": "lieben"
-  },
-  {
-   "grundform": "laudo",
-   "lernform": "laudo, laudare, laudavi, laudatum",
-   "wortart": "Verb",
-   "german": "loben"
-  },
-  {
-   "grundform": "voco",
-   "lernform": "voco, vocare, vocavi, vocatum",
-   "wortart": "Verb",
-   "german": "rufen, nennen"
-  },
-  {
-   "grundform": "do",
-   "lernform": "do, dare, dedi, datum",
-   "wortart": "Verb",
-   "german": "geben"
-  },
-  {
-   "grundform": "paro",
-   "lernform": "paro, parare, paravi, paratum",
-   "wortart": "Verb",
-   "german": "vorbereiten"
-  },
-  {
-   "grundform": "pugno",
-   "lernform": "pugno, pugnare, pugnavi, pugnatum",
-   "wortart": "Verb",
-   "german": "kämpfen"
-  },
-  {
-   "grundform": "specto",
-   "lernform": "specto, spectare, spectavi, spectatum",
-   "wortart": "Verb",
-   "german": "betrachten"
-  },
-  {
-   "grundform": "narro",
-   "lernform": "narro, narrare, narravi, narratum",
-   "wortart": "Verb",
-   "german": "erzählen"
-  },
-  {
-   "grundform": "ambulo",
-   "lernform": "ambulo, ambulare, ambulavi, ambulatum",
-   "wortart": "Verb",
-   "german": "spazieren gehen"
-  },
-  {
-   "grundform": "habeo",
-   "lernform": "habeo, habere, habui, habitum",
-   "wortart": "Verb",
-   "german": "haben"
-  },
-  {
-   "grundform": "video",
-   "lernform": "video, videre, vidi, visum",
-   "wortart": "Verb",
-   "german": "sehen"
-  },
-  {
-   "grundform": "moneo",
-   "lernform": "moneo, monere, monui, monitum",
-   "wortart": "Verb",
-   "german": "ermahnen"
-  },
-  {
-   "grundform": "teneo",
-   "lernform": "teneo, tenere, tenui, tentum",
-   "wortart": "Verb",
-   "german": "halten"
-  },
-  {
-   "grundform": "deleo",
-   "lernform": "deleo, delere, delevi, deletum",
-   "wortart": "Verb",
-   "german": "zerstören"
-  },
-  {
-   "grundform": "maneo",
-   "lernform": "maneo, manere, mansi, mansum",
-   "wortart": "Verb",
-   "german": "bleiben"
-  },
-  {
-   "grundform": "timeo",
-   "lernform": "timeo, timere, timui",
-   "wortart": "Verb",
-   "german": "fürchten"
-  },
-  {
-   "grundform": "rideo",
-   "lernform": "rideo, ridere, risi, risum",
-   "wortart": "Verb",
-   "german": "lachen"
-  },
-  {
-   "grundform": "respondeo",
-   "lernform": "respondeo, respondere, respondi, responsum",
-   "wortart": "Verb",
-   "german": "antworten"
-  },
-  {
-   "grundform": "iubeo",
-   "lernform": "iubeo, iubere, iussi, iussum",
-   "wortart": "Verb",
-   "german": "befehlen"
-  },
-  {
-   "grundform": "ago",
-   "lernform": "ago, agere, egi, actum",
-   "wortart": "Verb",
-   "german": "treiben, tun"
-  },
-  {
-   "grundform": "duco",
-   "lernform": "duco, ducere, duxi, ductum",
-   "wortart": "Verb",
-   "german": "führen"
-  },
-  {
-   "grundform": "dico",
-   "lernform": "dico, dicere, dixi, dictum",
-   "wortart": "Verb",
-   "german": "sagen"
-  },
-  {
-   "grundform": "scribo",
-   "lernform": "scribo, scribere, scripsi, scriptum",
-   "wortart": "Verb",
-   "german": "schreiben"
-  },
-  {
-   "grundform": "mitto",
-   "lernform": "mitto, mittere, misi, missum",
-   "wortart": "Verb",
-   "german": "schicken"
-  },
-  {
-   "grundform": "pono",
-   "lernform": "pono, ponere, posui, positum",
-   "wortart": "Verb",
-   "german": "setzen, stellen, legen"
-  },
-  {
-   "grundform": "peto",
-   "lernform": "peto, petere, petivi, petitum",
-   "wortart": "Verb",
-   "german": "bitten, aufsuchen"
-  },
-  {
-   "grundform": "vinco",
-   "lernform": "vinco, vincere, vici, victum",
-   "wortart": "Verb",
-   "german": "siegen, besiegen"
-  },
-  {
-   "grundform": "lego",
-   "lernform": "lego, legere, legi, lectum",
-   "wortart": "Verb",
-   "german": "lesen"
-  },
-  {
-   "grundform": "gero",
-   "lernform": "gero, gerere, gessi, gestum",
-   "wortart": "Verb",
-   "german": "tragen, führen"
-  },
-  {
-   "grundform": "capio",
-   "lernform": "capio, capere, cepi, captum",
-   "wortart": "Verb",
-   "german": "fassen, ergreifen"
-  },
-  {
-   "grundform": "facio",
-   "lernform": "facio, facere, feci, factum",
-   "wortart": "Verb",
-   "german": "machen, tun"
-  },
-  {
-   "grundform": "fugio",
-   "lernform": "fugio, fugere, fugi, fugitum",
-   "wortart": "Verb",
-   "german": "fliehen"
-  },
-  {
-   "grundform": "vivo",
-   "lernform": "vivo, vivere, vixi, victum",
-   "wortart": "Verb",
-   "german": "leben"
-  },
-  {
-   "grundform": "curro",
-   "lernform": "curro, currere, cucurri, cursum",
-   "wortart": "Verb",
-   "german": "laufen"
-  },
-  {
-   "grundform": "relinquo",
-   "lernform": "relinquo, relinquere, reliqui, relictum",
-   "wortart": "Verb",
-   "german": "zurücklassen"
-  },
-  {
-   "grundform": "credo",
-   "lernform": "credo, credere, credidi, creditum",
-   "wortart": "Verb",
-   "german": "glauben"
-  },
-  {
-   "grundform": "defendo",
-   "lernform": "defendo, defendere, defendi, defensum",
-   "wortart": "Verb",
-   "german": "verteidigen"
-  },
-  {
-   "grundform": "audio",
-   "lernform": "audio, audire, audivi, auditum",
-   "wortart": "Verb",
-   "german": "hören"
-  },
-  {
-   "grundform": "venio",
-   "lernform": "venio, venire, veni, ventum",
-   "wortart": "Verb",
-   "german": "kommen"
-  },
-  {
-   "grundform": "invenio",
-   "lernform": "invenio, invenire, inveni, inventum",
-   "wortart": "Verb",
-   "german": "finden"
-  },
-  {
-   "grundform": "munio",
-   "lernform": "munio, munire, munivi, munitum",
-   "wortart": "Verb",
-   "german": "befestigen"
-  },
-  {
-   "grundform": "scio",
-   "lernform": "scio, scire, scivi, scitum",
-   "wortart": "Verb",
-   "german": "wissen"
-  },
-  {
-   "grundform": "dormio",
-   "lernform": "dormio, dormire, dormivi, dormitum",
-   "wortart": "Verb",
-   "german": "schlafen"
-  },
-  {
-   "grundform": "bonus",
-   "lernform": "bonus, bona, bonum",
-   "wortart": "Adjektiv",
-   "german": "gut"
-  },
-  {
-   "grundform": "malus",
-   "lernform": "malus, mala, malum",
-   "wortart": "Adjektiv",
-   "german": "schlecht"
-  },
-  {
-   "grundform": "magnus",
-   "lernform": "magnus, magna, magnum",
-   "wortart": "Adjektiv",
-   "german": "gross"
-  },
-  {
-   "grundform": "parvus",
-   "lernform": "parvus, parva, parvum",
-   "wortart": "Adjektiv",
-   "german": "klein"
-  },
-  {
-   "grundform": "multus",
-   "lernform": "multus, multa, multum",
-   "wortart": "Adjektiv",
-   "german": "viel"
-  },
-  {
-   "grundform": "longus",
-   "lernform": "longus, longa, longum",
-   "wortart": "Adjektiv",
-   "german": "lang"
-  },
-  {
-   "grundform": "altus",
-   "lernform": "altus, alta, altum",
-   "wortart": "Adjektiv",
-   "german": "hoch, tief"
-  },
-  {
-   "grundform": "novus",
-   "lernform": "novus, nova, novum",
-   "wortart": "Adjektiv",
-   "german": "neu"
-  },
-  {
-   "grundform": "clarus",
-   "lernform": "clarus, clara, clarum",
-   "wortart": "Adjektiv",
-   "german": "hell, berühmt"
-  },
-  {
-   "grundform": "pulcher",
-   "lernform": "pulcher, pulchra, pulchrum",
-   "wortart": "Adjektiv",
-   "german": "schön"
-  },
-  {
-   "grundform": "liber",
-   "lernform": "liber, libera, liberum",
-   "wortart": "Adjektiv",
-   "german": "frei"
-  },
-  {
-   "grundform": "laetus",
-   "lernform": "laetus, laeta, laetum",
-   "wortart": "Adjektiv",
-   "german": "fröhlich"
-  },
-  {
-   "grundform": "miser",
-   "lernform": "miser, misera, miserum",
-   "wortart": "Adjektiv",
-   "german": "unglücklich, elend"
-  },
-  {
-   "grundform": "primus",
-   "lernform": "primus, prima, primum",
-   "wortart": "Adjektiv",
-   "german": "der erste"
-  },
-  {
-   "grundform": "fortis",
-   "lernform": "fortis, forte",
-   "wortart": "Adjektiv",
-   "german": "tapfer, stark"
-  },
-  {
-   "grundform": "omnis",
-   "lernform": "omnis, omne",
-   "wortart": "Adjektiv",
-   "german": "jeder, ganz"
-  },
-  {
-   "grundform": "gravis",
-   "lernform": "gravis, grave",
-   "wortart": "Adjektiv",
-   "german": "schwer, ernst"
-  },
-  {
-   "grundform": "facilis",
-   "lernform": "facilis, facile",
-   "wortart": "Adjektiv",
-   "german": "leicht"
-  },
-  {
-   "grundform": "brevis",
-   "lernform": "brevis, breve",
-   "wortart": "Adjektiv",
-   "german": "kurz"
-  },
-  {
-   "grundform": "ingens",
-   "lernform": "ingens, ingentis",
-   "wortart": "Adjektiv",
-   "german": "gewaltig"
-  },
-  {
-   "grundform": "felix",
-   "lernform": "felix, felicis",
-   "wortart": "Adjektiv",
-   "german": "glücklich"
-  },
-  {
-   "grundform": "unus",
-   "lernform": "unus, una, unum",
-   "wortart": "Zahlwort",
-   "german": "ein, einer"
-  },
-  {
-   "grundform": "duo",
-   "lernform": "duo, duae, duo",
-   "wortart": "Zahlwort",
-   "german": "zwei"
-  },
-  {
-   "grundform": "tres",
-   "lernform": "tres, tria",
-   "wortart": "Zahlwort",
-   "german": "drei"
-  },
-  {
-   "grundform": "quattuor",
-   "lernform": "quattuor",
-   "wortart": "Zahlwort",
-   "german": "vier"
-  },
-  {
-   "grundform": "quinque",
-   "lernform": "quinque",
-   "wortart": "Zahlwort",
-   "german": "fünf"
-  },
-  {
-   "grundform": "decem",
-   "lernform": "decem",
-   "wortart": "Zahlwort",
-   "german": "zehn"
-  },
-  {
-   "grundform": "centum",
-   "lernform": "centum",
-   "wortart": "Zahlwort",
-   "german": "hundert"
-  },
-  {
-   "grundform": "ego",
-   "lernform": "ego, mei",
-   "wortart": "Pronomen",
-   "german": "ich"
-  },
-  {
-   "grundform": "tu",
-   "lernform": "tu, tui",
-   "wortart": "Pronomen",
-   "german": "du"
-  },
-  {
-   "grundform": "is",
-   "lernform": "is, ea, id",
-   "wortart": "Pronomen",
-   "german": "er, sie, es; dieser"
-  },
-  {
-   "grundform": "hic",
-   "lernform": "hic, haec, hoc",
-   "wortart": "Pronomen",
-   "german": "dieser (hier)"
-  },
-  {
-   "grundform": "ille",
-   "lernform": "ille, illa, illud",
-   "wortart": "Pronomen",
-   "german": "jener"
-  },
-  {
-   "grundform": "qui",
-   "lernform": "qui, quae, quod",
-   "wortart": "Pronomen",
-   "german": "welcher, der"
-  },
-  {
-   "grundform": "saepe",
-   "lernform": "saepe",
-   "wortart": "Adverb",
-   "german": "oft"
-  },
-  {
-   "grundform": "semper",
-   "lernform": "semper",
-   "wortart": "Adverb",
-   "german": "immer"
-  },
-  {
-   "grundform": "numquam",
-   "lernform": "numquam",
-   "wortart": "Adverb",
-   "german": "niemals"
-  },
-  {
-   "grundform": "iam",
-   "lernform": "iam",
-   "wortart": "Adverb",
-   "german": "schon, bereits"
-  },
-  {
-   "grundform": "nunc",
-   "lernform": "nunc",
-   "wortart": "Adverb",
-   "german": "jetzt"
-  },
-  {
-   "grundform": "bene",
-   "lernform": "bene",
-   "wortart": "Adverb",
-   "german": "gut"
-  },
-  {
-   "grundform": "diu",
-   "lernform": "diu",
-   "wortart": "Adverb",
-   "german": "lange"
-  },
-  {
-   "grundform": "statim",
-   "lernform": "statim",
-   "wortart": "Adverb",
-   "german": "sofort"
-  },
-  {
-   "grundform": "ita",
-   "lernform": "ita",
-   "wortart": "Adverb",
-   "german": "so"
-  },
-  {
-   "grundform": "non",
-   "lernform": "non",
-   "wortart": "Adverb",
-   "german": "nicht"
-  },
-  {
-   "grundform": "in",
-   "lernform": "in (+ Abl./Akk.)",
-   "wortart": "Präposition",
-   "german": "in, auf"
-  },
-  {
-   "grundform": "ad",
-   "lernform": "ad (+ Akk.)",
-   "wortart": "Präposition",
-   "german": "zu, nach"
-  },
-  {
-   "grundform": "cum",
-   "lernform": "cum (+ Abl.)",
-   "wortart": "Präposition",
-   "german": "mit"
-  },
-  {
-   "grundform": "ex",
-   "lernform": "ex/e (+ Abl.)",
-   "wortart": "Präposition",
-   "german": "aus"
-  },
-  {
-   "grundform": "ab",
-   "lernform": "ab/a (+ Abl.)",
-   "wortart": "Präposition",
-   "german": "von, weg von"
-  },
-  {
-   "grundform": "de",
-   "lernform": "de (+ Abl.)",
-   "wortart": "Präposition",
-   "german": "von, über"
-  },
-  {
-   "grundform": "per",
-   "lernform": "per (+ Akk.)",
-   "wortart": "Präposition",
-   "german": "durch"
-  },
-  {
-   "grundform": "sine",
-   "lernform": "sine (+ Abl.)",
-   "wortart": "Präposition",
-   "german": "ohne"
-  },
-  {
-   "grundform": "post",
-   "lernform": "post (+ Akk.)",
-   "wortart": "Präposition",
-   "german": "nach, hinter"
-  },
-  {
-   "grundform": "ante",
-   "lernform": "ante (+ Akk.)",
-   "wortart": "Präposition",
-   "german": "vor"
-  },
-  {
-   "grundform": "et",
-   "lernform": "et",
-   "wortart": "Konjunktion",
-   "german": "und"
-  },
-  {
-   "grundform": "sed",
-   "lernform": "sed",
-   "wortart": "Konjunktion",
-   "german": "aber"
-  },
-  {
-   "grundform": "aut",
-   "lernform": "aut",
-   "wortart": "Konjunktion",
-   "german": "oder"
-  },
-  {
-   "grundform": "nam",
-   "lernform": "nam",
-   "wortart": "Konjunktion",
-   "german": "denn"
-  },
-  {
-   "grundform": "quod",
-   "lernform": "quod",
-   "wortart": "Konjunktion",
-   "german": "weil"
-  },
-  {
-   "grundform": "si",
-   "lernform": "si",
-   "wortart": "Konjunktion",
-   "german": "wenn, falls"
-  },
-  {
-   "grundform": "ut",
-   "lernform": "ut",
-   "wortart": "Konjunktion",
-   "german": "dass, damit; wie"
-  },
-  {
-   "grundform": "tamen",
-   "lernform": "tamen",
-   "wortart": "Konjunktion",
-   "german": "dennoch"
-  },
-  {
-   "grundform": "igitur",
-   "lernform": "igitur",
-   "wortart": "Konjunktion",
-   "german": "also, daher"
-  },
-  {
-   "grundform": "neque",
-   "lernform": "neque",
-   "wortart": "Konjunktion",
-   "german": "und nicht"
+   "lernform": "civis, civis m/f",
+   "wortart": "Nomen",
+   "german": "der Bürger",
+   "examples": [
+    "Civis ad forum ambulat.",
+    "Rex civem laudat."
+   ],
+   "examplesDe": [
+    "Der Bürger geht zum Forum.",
+    "Der König lobt den Bürger."
+   ],
+   "phonetic": "cīvis"
   }
  ]
 }

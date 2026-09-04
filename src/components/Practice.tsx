@@ -15,6 +15,7 @@ import { retrievabilityOf, isDueCard, retentionFor, initialCard, deriveProfile, 
 import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { listReadiness, TONE_VAR, toneLegend } from "../lib/readiness";
 import { PairPill } from "../ui/PairPill";
+import { WahlPille } from "../ui/WahlPille";
 import { SMART_ACCESS, SMART_REFS } from "../lib/smartlists";
 import { tapRichtig, tapFalsch } from "../lib/native";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
@@ -783,15 +784,17 @@ export function Practice() {
         <PairPill />
         {/* Aufgeklappt in Worten, geschlossen als Kürzel: die Wahl braucht
             Klarheit, die Anzeige braucht Platz. */}
-        <label className="pill pill-sel">
-          <span className="dir-kurz">{richtungKurz}</span>
-          <select value={settings.direction} aria-label={txt("Richtung")}
-            onChange={(e) => { store.setSettings({ direction: e.target.value }); restartCard(); }}>
-            <option value="f2n">{P.foreignLabel} → {P.nativeLabel}</option>
-            <option value="n2f">{P.nativeLabel} → {P.foreignLabel}</option>
-            <option value="mixed">{P.nativeLabel} ⇄ {P.foreignLabel} ({txt("zufällig gemischt")})</option>
-          </select>
-        </label>
+        <WahlPille
+          titel={txt("Richtung")}
+          kurz={<span className="dir-kurz">{richtungKurz}</span>}
+          wert={settings.direction}
+          optionen={[
+            { wert: "f2n", label: `${P.foreignLabel} → ${P.nativeLabel}` },
+            { wert: "n2f", label: `${P.nativeLabel} → ${P.foreignLabel}` },
+            { wert: "mixed", label: `${P.nativeLabel} ⇄ ${P.foreignLabel}`, sub: txt("zufällig gemischt") },
+          ]}
+          onWahl={(v) => { store.setSettings({ direction: v }); restartCard(); }}
+        />
         {/* Ohne Auswahl steht dort kein Name und keine Zahl -- die Pille
             sagte sonst „Übung 30", wo gerade nichts gewählt ist. */}
         <button className="pill pill-on" onClick={() => setPickerOpen((o) => !o)}>
@@ -1278,17 +1281,15 @@ export function Practice() {
       {/* Die Antwortart steht UNTER der Karte: sie ist eine Einstellung zum
           Ueben, keine Frage, die vor der Karte beantwortet werden muss. */}
       <div className="practice-controls p-controls">
-        <label className={"pill pill-sel" + (mode === "memorize" ? " pill-quiet" : "")}>
-          <Icon name={MODE_ICON[mode] || "edit"} size={15} />
-          <span>{txt(MODE_NAME[mode] || "Eintippen")}</span>
-          <select value={mode} aria-label={txt("Antwortart")}
-            onChange={(e) => { store.setSettings({ mode: e.target.value }); restartCard(); }}>
-            <option value="type">{txt("Eintippen")}</option>
-            <option value="choice">{txt("Multiple-Choice")}</option>
-            <option value="recall">{txt("Selbstkontrolle")}</option>
-            <option value="memorize">{txt("Nur durchblättern")}</option>
-          </select>
-        </label>
+        <WahlPille
+          titel={txt("Antwortart")}
+          icon={MODE_ICON[mode] || "edit"}
+          ton={mode === "memorize" ? "quiet" : undefined}
+          kurz={txt(MODE_NAME[mode] || "Eintippen")}
+          wert={mode}
+          optionen={Object.keys(MODE_NAME).map((v) => ({ wert: v, label: txt(MODE_NAME[v]) }))}
+          onWahl={(v) => { store.setSettings({ mode: v }); restartCard(); }}
+        />
         <div className="grow" />
         <button className="btn btn-ghost btn-sm" onClick={leaveRun}>{txt("Übung abbrechen")}</button>
       </div>

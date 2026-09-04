@@ -9,7 +9,7 @@ import { RECOMMENDED } from "../lib/defaults";
 import { useAuth } from "../sync/auth";
 import { exportAllData, deleteLocalData } from "../lib/accountData";
 import { deleteCloudAccount } from "../sync/share";
-import { PAIRS, isLatinPair } from "../lib/pairs";
+import { PAIRS, isLatinPair, mutterVon, MUTTERSPRACHE_VORGABE } from "../lib/pairs";
 import { DEFAULTS, previewStabilityGood, retentionFor } from "../lib/fsrs";
 import { FsrsValuesModal } from "./FsrsValuesModal";
 import { toneLegend, TONE_VAR } from "../lib/readiness";
@@ -448,7 +448,10 @@ export function SettingsTab() {
       <div className="set-section">
         <div className="set-section-h"><Icon name="swap" size={16} /> {txt("Sprachen")} <span className="set-section-hint">{txt("zu- und abschaltbar")}</span></div>
         <div className="set-body">
-        {Object.values(PAIRS).map((pp: any) => {
+        {/* Nur die Paare zur eigenen Muttersprache. Heute sind das alle,
+            weil es nur eine gibt -- die Bedingung steht trotzdem hier, damit
+            eine zweite Muttersprache spaeter nicht fremde Paare einblendet. */}
+        {Object.values(PAIRS).filter((pp: any) => mutterVon(pp.id) === (settings.muttersprache || MUTTERSPRACHE_VORGABE)).map((pp: any) => {
           const an = activeIds.includes(pp.id);
           const n = store.vocab.filter((w: any) => w.pair === pp.id).length;
           return (

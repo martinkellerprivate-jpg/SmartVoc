@@ -3,884 +3,524 @@
  "stufe": 1,
  "words": [
   {
+   "foreign": "la famille",
+   "german": "die Familie",
+   "examples": [
+    "Ma famille habite à Genève.",
+    "Toute la famille mange ensemble."
+   ],
+   "examplesDe": [
+    "Meine Familie wohnt in Genf.",
+    "Die ganze Familie isst zusammen."
+   ],
+   "phonetic": "famij"
+  },
+  {
    "foreign": "la mère",
-   "german": "die Mutter"
+   "german": "die Mutter",
+   "examples": [
+    "Ma mère travaille à Lausanne.",
+    "La mère prépare le dîner."
+   ],
+   "examplesDe": [
+    "Meine Mutter arbeitet in Lausanne.",
+    "Die Mutter bereitet das Abendessen zu."
+   ],
+   "phonetic": "mɛʁ"
   },
   {
    "foreign": "le père",
-   "german": "der Vater"
+   "german": "der Vater",
+   "examples": [
+    "Mon père aime la musique.",
+    "Le père joue avec son fils."
+   ],
+   "examplesDe": [
+    "Mein Vater mag Musik.",
+    "Der Vater spielt mit seinem Sohn."
+   ],
+   "phonetic": "pɛʁ"
   },
   {
    "foreign": "les parents",
-   "german": "die Eltern"
-  },
-  {
-   "foreign": "l'enfant",
-   "german": "das Kind"
-  },
-  {
-   "foreign": "le fils",
-   "german": "der Sohn"
-  },
-  {
-   "foreign": "la fille",
-   "german": "die Tochter"
-  },
-  {
-   "foreign": "le frère",
-   "german": "der Bruder"
+   "german": "die Eltern",
+   "examples": [
+    "Mes parents sont à la maison.",
+    "Les parents parlent avec le professeur."
+   ],
+   "examplesDe": [
+    "Meine Eltern sind zu Hause.",
+    "Die Eltern sprechen mit dem Lehrer."
+   ],
+   "phonetic": "paʁɑ̃"
   },
   {
    "foreign": "la sœur",
-   "german": "die Schwester"
+   "german": "die Schwester",
+   "examples": [
+    "Ma sœur a douze ans.",
+    "Je joue avec ma sœur."
+   ],
+   "examplesDe": [
+    "Meine Schwester ist zwölf Jahre alt.",
+    "Ich spiele mit meiner Schwester."
+   ],
+   "phonetic": "sœʁ"
+  },
+  {
+   "foreign": "le frère",
+   "german": "der Bruder",
+   "examples": [
+    "Mon frère va à l'école.",
+    "Le frère de Léa est gentil."
+   ],
+   "examplesDe": [
+    "Mein Bruder geht zur Schule.",
+    "Léas Bruder ist nett."
+   ],
+   "phonetic": "fʁɛʁ"
   },
   {
    "foreign": "la grand-mère",
-   "german": "die Grossmutter"
+   "german": "die Grossmutter",
+   "examples": [
+    "Ma grand-mère habite près de nous.",
+    "Je téléphone à ma grand-mère."
+   ],
+   "examplesDe": [
+    "Meine Grossmutter wohnt in unserer Nähe.",
+    "Ich rufe meine Grossmutter an."
+   ],
+   "phonetic": "ɡʁɑ̃mɛʁ"
   },
   {
    "foreign": "le grand-père",
-   "german": "der Grossvater"
+   "german": "der Grossvater",
+   "examples": [
+    "Mon grand-père lit le journal.",
+    "Le grand-père raconte une histoire."
+   ],
+   "examplesDe": [
+    "Mein Grossvater liest die Zeitung.",
+    "Der Grossvater erzählt eine Geschichte."
+   ],
+   "phonetic": "ɡʁɑ̃pɛʁ"
   },
   {
-   "foreign": "la famille",
-   "german": "die Familie"
+   "foreign": "la fille",
+   "german": "die Tochter",
+   "examples": [
+    "Leur fille s'appelle Emma.",
+    "La fille aide ses parents."
+   ],
+   "examplesDe": [
+    "Ihre Tochter heisst Emma.",
+    "Die Tochter hilft ihren Eltern."
+   ],
+   "phonetic": "fij"
   },
   {
-   "foreign": "l'homme",
-   "german": "der Mann"
+   "foreign": "le fils",
+   "german": "der Sohn",
+   "examples": [
+    "Leur fils joue au football.",
+    "Le fils ressemble à son père."
+   ],
+   "examplesDe": [
+    "Ihr Sohn spielt Fussball.",
+    "Der Sohn ähnelt seinem Vater."
+   ],
+   "phonetic": "fis"
   },
   {
-   "foreign": "la femme",
-   "german": "die Frau"
-  },
-  {
-   "foreign": "le garçon",
-   "german": "der Junge"
-  },
-  {
-   "foreign": "la fille (jeune)",
-   "german": "das Mädchen"
+   "foreign": "l'enfant",
+   "german": "das Kind",
+   "examples": [
+    "L'enfant joue dans le jardin.",
+    "Cet enfant parle très bien français."
+   ],
+   "examplesDe": [
+    "Das Kind spielt im Garten.",
+    "Dieses Kind spricht sehr gut Französisch."
+   ],
+   "phonetic": "ɑ̃fɑ̃"
   },
   {
    "foreign": "le bébé",
-   "german": "das Baby"
+   "german": "das Baby",
+   "examples": [
+    "Le bébé dort dans son lit.",
+    "Elle porte le bébé doucement."
+   ],
+   "examplesDe": [
+    "Das Baby schläft in seinem Bett.",
+    "Sie trägt das Baby vorsichtig."
+   ],
+   "phonetic": "bebe"
   },
   {
    "foreign": "l'ami",
-   "german": "der Freund"
+   "german": "der Freund",
+   "examples": [
+    "Mon ami habite dans cette rue.",
+    "Je retrouve mon ami après l'école."
+   ],
+   "examplesDe": [
+    "Mein Freund wohnt in dieser Strasse.",
+    "Ich treffe meinen Freund nach der Schule."
+   ],
+   "phonetic": "ami"
+  },
+  {
+   "foreign": "la femme",
+   "german": "die Frau",
+   "examples": [
+    "Cette femme attend devant la gare.",
+    "La femme achète du pain."
+   ],
+   "examplesDe": [
+    "Diese Frau wartet vor dem Bahnhof.",
+    "Die Frau kauft Brot."
+   ],
+   "phonetic": "fam"
+  },
+  {
+   "foreign": "l'homme",
+   "german": "der Mann",
+   "examples": [
+    "Cet homme porte un chapeau.",
+    "L'homme parle avec notre voisin."
+   ],
+   "examplesDe": [
+    "Dieser Mann trägt einen Hut.",
+    "Der Mann spricht mit unserem Nachbarn."
+   ],
+   "phonetic": "ɔm"
+  },
+  {
+   "foreign": "le garçon",
+   "german": "der Junge",
+   "examples": [
+    "Le garçon joue dans le parc.",
+    "Ce garçon s'appelle Nicolas."
+   ],
+   "examplesDe": [
+    "Der Junge spielt im Park.",
+    "Dieser Junge heisst Nicolas."
+   ],
+   "phonetic": "ɡaʁsɔ̃"
+  },
+  {
+   "foreign": "la personne",
+   "german": "die Person",
+   "examples": [
+    "Cette personne connaît mon père.",
+    "Une personne attend devant la porte."
+   ],
+   "examplesDe": [
+    "Diese Person kennt meinen Vater.",
+    "Eine Person wartet vor der Tür."
+   ],
+   "phonetic": "pɛʁsɔn"
+  },
+  {
+   "foreign": "le prénom",
+   "german": "der Vorname",
+   "examples": [
+    "Mon prénom est Camille.",
+    "Écris ton prénom sur la feuille."
+   ],
+   "examplesDe": [
+    "Mein Vorname ist Camille.",
+    "Schreib deinen Vornamen auf das Blatt."
+   ],
+   "phonetic": "pʁenɔ̃"
   },
   {
    "foreign": "le nom",
-   "german": "der Name"
-  },
-  {
-   "foreign": "les gens",
-   "german": "die Leute"
-  },
-  {
-   "foreign": "le corps",
-   "german": "der Körper"
-  },
-  {
-   "foreign": "la tête",
-   "german": "der Kopf"
-  },
-  {
-   "foreign": "les cheveux",
-   "german": "die Haare"
-  },
-  {
-   "foreign": "le visage",
-   "german": "das Gesicht"
-  },
-  {
-   "foreign": "l'œil",
-   "german": "das Auge"
-  },
-  {
-   "foreign": "l'oreille",
-   "german": "das Ohr"
-  },
-  {
-   "foreign": "le nez",
-   "german": "die Nase"
-  },
-  {
-   "foreign": "la bouche",
-   "german": "der Mund"
-  },
-  {
-   "foreign": "la dent",
-   "german": "der Zahn"
-  },
-  {
-   "foreign": "la main",
-   "german": "die Hand"
-  },
-  {
-   "foreign": "le bras",
-   "german": "der Arm"
-  },
-  {
-   "foreign": "la jambe",
-   "german": "das Bein"
-  },
-  {
-   "foreign": "le pied",
-   "german": "der Fuss"
-  },
-  {
-   "foreign": "le doigt",
-   "german": "der Finger"
-  },
-  {
-   "foreign": "le cœur",
-   "german": "das Herz"
-  },
-  {
-   "foreign": "l'animal",
-   "german": "das Tier"
-  },
-  {
-   "foreign": "le chien",
-   "german": "der Hund"
-  },
-  {
-   "foreign": "le chat",
-   "german": "die Katze"
-  },
-  {
-   "foreign": "le cheval",
-   "german": "das Pferd"
-  },
-  {
-   "foreign": "la vache",
-   "german": "die Kuh"
-  },
-  {
-   "foreign": "le cochon",
-   "german": "das Schwein"
-  },
-  {
-   "foreign": "le mouton",
-   "german": "das Schaf"
-  },
-  {
-   "foreign": "l'oiseau",
-   "german": "der Vogel"
-  },
-  {
-   "foreign": "le poisson",
-   "german": "der Fisch"
-  },
-  {
-   "foreign": "la souris",
-   "german": "die Maus"
-  },
-  {
-   "foreign": "le lapin",
-   "german": "das Kaninchen"
-  },
-  {
-   "foreign": "l'ours",
-   "german": "der Bär"
-  },
-  {
-   "foreign": "le lion",
-   "german": "der Löwe"
-  },
-  {
-   "foreign": "l'éléphant",
-   "german": "der Elefant"
-  },
-  {
-   "foreign": "la nourriture",
-   "german": "das Essen"
-  },
-  {
-   "foreign": "le pain",
-   "german": "das Brot"
-  },
-  {
-   "foreign": "le beurre",
-   "german": "die Butter"
-  },
-  {
-   "foreign": "le fromage",
-   "german": "der Käse"
-  },
-  {
-   "foreign": "l'œuf",
-   "german": "das Ei"
-  },
-  {
-   "foreign": "le lait",
-   "german": "die Milch"
-  },
-  {
-   "foreign": "l'eau",
-   "german": "das Wasser"
-  },
-  {
-   "foreign": "le jus",
-   "german": "der Saft"
-  },
-  {
-   "foreign": "la pomme",
-   "german": "der Apfel"
-  },
-  {
-   "foreign": "la banane",
-   "german": "die Banane"
-  },
-  {
-   "foreign": "l'orange",
-   "german": "die Orange"
-  },
-  {
-   "foreign": "la pomme de terre",
-   "german": "die Kartoffel"
-  },
-  {
-   "foreign": "la viande",
-   "german": "das Fleisch"
-  },
-  {
-   "foreign": "la soupe",
-   "german": "die Suppe"
-  },
-  {
-   "foreign": "le gâteau",
-   "german": "der Kuchen"
-  },
-  {
-   "foreign": "le sucre",
-   "german": "der Zucker"
-  },
-  {
-   "foreign": "le sel",
-   "german": "das Salz"
-  },
-  {
-   "foreign": "le petit-déjeuner",
-   "german": "das Frühstück"
-  },
-  {
-   "foreign": "le déjeuner",
-   "german": "das Mittagessen"
-  },
-  {
-   "foreign": "le dîner",
-   "german": "das Abendessen"
-  },
-  {
-   "foreign": "la maison",
-   "german": "das Haus"
-  },
-  {
-   "foreign": "la chambre",
-   "german": "das Zimmer"
-  },
-  {
-   "foreign": "la porte",
-   "german": "die Tür"
-  },
-  {
-   "foreign": "la fenêtre",
-   "german": "das Fenster"
-  },
-  {
-   "foreign": "le mur",
-   "german": "die Wand"
-  },
-  {
-   "foreign": "le sol",
-   "german": "der Boden"
-  },
-  {
-   "foreign": "la table",
-   "german": "der Tisch"
-  },
-  {
-   "foreign": "la chaise",
-   "german": "der Stuhl"
-  },
-  {
-   "foreign": "le lit",
-   "german": "das Bett"
-  },
-  {
-   "foreign": "la cuisine",
-   "german": "die Küche"
-  },
-  {
-   "foreign": "la salle de bains",
-   "german": "das Badezimmer"
-  },
-  {
-   "foreign": "le jardin",
-   "german": "der Garten"
-  },
-  {
-   "foreign": "la clé",
-   "german": "der Schlüssel"
-  },
-  {
-   "foreign": "la lampe",
-   "german": "die Lampe"
-  },
-  {
-   "foreign": "les vêtements",
-   "german": "die Kleidung"
-  },
-  {
-   "foreign": "la chemise",
-   "german": "das Hemd"
-  },
-  {
-   "foreign": "le pantalon",
-   "german": "die Hose"
-  },
-  {
-   "foreign": "la robe",
-   "german": "das Kleid"
-  },
-  {
-   "foreign": "la veste",
-   "german": "die Jacke"
-  },
-  {
-   "foreign": "le manteau",
-   "german": "der Mantel"
-  },
-  {
-   "foreign": "la chaussure",
-   "german": "der Schuh"
-  },
-  {
-   "foreign": "la chaussette",
-   "german": "die Socke"
-  },
-  {
-   "foreign": "le chapeau",
-   "german": "der Hut"
-  },
-  {
-   "foreign": "le gant",
-   "german": "der Handschuh"
-  },
-  {
-   "foreign": "la couleur",
-   "german": "die Farbe"
-  },
-  {
-   "foreign": "rouge",
-   "german": "rot"
-  },
-  {
-   "foreign": "bleu",
-   "german": "blau"
-  },
-  {
-   "foreign": "vert",
-   "german": "grün"
-  },
-  {
-   "foreign": "jaune",
-   "german": "gelb"
-  },
-  {
-   "foreign": "noir",
-   "german": "schwarz"
-  },
-  {
-   "foreign": "blanc",
-   "german": "weiss"
-  },
-  {
-   "foreign": "brun",
-   "german": "braun"
-  },
-  {
-   "foreign": "gris",
-   "german": "grau"
-  },
-  {
-   "foreign": "rose",
-   "german": "rosa"
-  },
-  {
-   "foreign": "un",
-   "german": "eins"
-  },
-  {
-   "foreign": "deux",
-   "german": "zwei"
-  },
-  {
-   "foreign": "trois",
-   "german": "drei"
-  },
-  {
-   "foreign": "quatre",
-   "german": "vier"
-  },
-  {
-   "foreign": "cinq",
-   "german": "fünf"
-  },
-  {
-   "foreign": "six",
-   "german": "sechs"
-  },
-  {
-   "foreign": "sept",
-   "german": "sieben"
-  },
-  {
-   "foreign": "huit",
-   "german": "acht"
-  },
-  {
-   "foreign": "neuf",
-   "german": "neun"
-  },
-  {
-   "foreign": "dix",
-   "german": "zehn"
-  },
-  {
-   "foreign": "cent",
-   "german": "hundert"
-  },
-  {
-   "foreign": "le nombre",
-   "german": "die Zahl"
-  },
-  {
-   "foreign": "le temps",
-   "german": "die Zeit"
-  },
-  {
-   "foreign": "le jour",
-   "german": "der Tag"
-  },
-  {
-   "foreign": "la nuit",
-   "german": "die Nacht"
-  },
-  {
-   "foreign": "le matin",
-   "german": "der Morgen"
-  },
-  {
-   "foreign": "le soir",
-   "german": "der Abend"
-  },
-  {
-   "foreign": "l'heure",
-   "german": "die Stunde"
-  },
-  {
-   "foreign": "la minute",
-   "german": "die Minute"
-  },
-  {
-   "foreign": "la semaine",
-   "german": "die Woche"
-  },
-  {
-   "foreign": "le mois",
-   "german": "der Monat"
-  },
-  {
-   "foreign": "l'année",
-   "german": "das Jahr"
-  },
-  {
-   "foreign": "aujourd'hui",
-   "german": "heute"
-  },
-  {
-   "foreign": "demain",
-   "german": "morgen"
-  },
-  {
-   "foreign": "hier",
-   "german": "gestern"
-  },
-  {
-   "foreign": "le week-end",
-   "german": "das Wochenende"
+   "german": "der Nachname",
+   "examples": [
+    "Quel est ton nom?",
+    "J'écris mon nom sur la liste."
+   ],
+   "examplesDe": [
+    "Wie lautet dein Nachname?",
+    "Ich schreibe meinen Nachnamen auf die Liste."
+   ],
+   "phonetic": "nɔ̃"
+  },
+  {
+   "foreign": "l'âge",
+   "german": "das Alter",
+   "examples": [
+    "Quel âge a ton frère?",
+    "Son âge reste un secret."
+   ],
+   "examplesDe": [
+    "Wie alt ist dein Bruder?",
+    "Sein Alter bleibt ein Geheimnis."
+   ],
+   "phonetic": "ɑʒ"
   },
   {
    "foreign": "l'école",
-   "german": "die Schule"
+   "german": "die Schule",
+   "examples": [
+    "L'école commence à huit heures.",
+    "Nous allons ensemble à l'école."
+   ],
+   "examplesDe": [
+    "Die Schule beginnt um acht Uhr.",
+    "Wir gehen zusammen zur Schule."
+   ],
+   "phonetic": "ekɔl"
   },
   {
-   "foreign": "le professeur",
-   "german": "der Lehrer"
+   "foreign": "la classe",
+   "german": "die Klasse",
+   "examples": [
+    "Notre classe compte vingt élèves.",
+    "La classe commence après la pause."
+   ],
+   "examplesDe": [
+    "Unsere Klasse zählt zwanzig Schüler.",
+    "Der Unterricht beginnt nach der Pause."
+   ],
+   "phonetic": "klas"
   },
   {
    "foreign": "l'élève",
-   "german": "der Schüler"
+   "german": "der Schüler",
+   "examples": [
+    "L'élève écoute le professeur.",
+    "Cet élève travaille très bien."
+   ],
+   "examplesDe": [
+    "Der Schüler hört dem Lehrer zu.",
+    "Dieser Schüler arbeitet sehr gut."
+   ],
+   "phonetic": "elɛv"
+  },
+  {
+   "foreign": "le professeur",
+   "german": "der Lehrer",
+   "examples": [
+    "Le professeur explique la leçon.",
+    "Notre professeur parle lentement."
+   ],
+   "examplesDe": [
+    "Der Lehrer erklärt die Lektion.",
+    "Unser Lehrer spricht langsam."
+   ],
+   "phonetic": "pʁɔfɛsœʁ"
   },
   {
    "foreign": "le livre",
-   "german": "das Buch"
+   "german": "das Buch",
+   "examples": [
+    "Le livre est sur la table.",
+    "Je lis un livre français."
+   ],
+   "examplesDe": [
+    "Das Buch liegt auf dem Tisch.",
+    "Ich lese ein französisches Buch."
+   ],
+   "phonetic": "livʁ"
+  },
+  {
+   "foreign": "le cahier",
+   "german": "das Heft",
+   "examples": [
+    "Mon cahier est dans mon sac.",
+    "Elle écrit dans son cahier."
+   ],
+   "examplesDe": [
+    "Mein Heft ist in meiner Tasche.",
+    "Sie schreibt in ihr Heft."
+   ],
+   "phonetic": "kaje"
   },
   {
    "foreign": "le stylo",
-   "german": "der Stift"
+   "german": "der Kugelschreiber",
+   "examples": [
+    "Mon stylo écrit en bleu.",
+    "Je cherche mon stylo noir."
+   ],
+   "examplesDe": [
+    "Mein Kugelschreiber schreibt blau.",
+    "Ich suche meinen schwarzen Kugelschreiber."
+   ],
+   "phonetic": "stilo"
   },
   {
    "foreign": "le crayon",
-   "german": "der Bleistift"
+   "german": "der Bleistift",
+   "examples": [
+    "Le crayon est sous la chaise.",
+    "Il dessine avec un crayon."
+   ],
+   "examplesDe": [
+    "Der Bleistift liegt unter dem Stuhl.",
+    "Er zeichnet mit einem Bleistift."
+   ],
+   "phonetic": "kʁɛjɔ̃"
   },
   {
-   "foreign": "le papier",
-   "german": "das Papier"
+   "foreign": "la gomme",
+   "german": "der Radiergummi",
+   "examples": [
+    "La gomme est dans ma trousse.",
+    "J'utilise la gomme pour corriger."
+   ],
+   "examplesDe": [
+    "Der Radiergummi ist in meinem Etui.",
+    "Ich benutze den Radiergummi zum Korrigieren."
+   ],
+   "phonetic": "ɡɔm"
   },
   {
-   "foreign": "le mot",
-   "german": "das Wort"
+   "foreign": "la règle",
+   "german": "das Lineal",
+   "examples": [
+    "La règle mesure trente centimètres.",
+    "Elle trace une ligne avec la règle."
+   ],
+   "examplesDe": [
+    "Das Lineal ist dreissig Zentimeter lang.",
+    "Sie zieht mit dem Lineal eine Linie."
+   ],
+   "phonetic": "ʁɛɡl"
+  },
+  {
+   "foreign": "le sac",
+   "german": "die Tasche",
+   "examples": [
+    "Mon sac est très lourd.",
+    "Il pose son sac par terre."
+   ],
+   "examplesDe": [
+    "Meine Tasche ist sehr schwer.",
+    "Er stellt seine Tasche auf den Boden."
+   ],
+   "phonetic": "sak"
+  },
+  {
+   "foreign": "le tableau",
+   "german": "die Tafel",
+   "examples": [
+    "Le professeur écrit au tableau.",
+    "La réponse est sur le tableau."
+   ],
+   "examplesDe": [
+    "Der Lehrer schreibt an die Tafel.",
+    "Die Antwort steht an der Tafel."
+   ],
+   "phonetic": "tablo"
+  },
+  {
+   "foreign": "le devoir",
+   "german": "die Hausaufgabe",
+   "examples": [
+    "Je fais mon devoir après l'école.",
+    "Ce devoir est assez facile."
+   ],
+   "examplesDe": [
+    "Ich mache meine Hausaufgabe nach der Schule.",
+    "Diese Hausaufgabe ist ziemlich einfach."
+   ],
+   "phonetic": "dəvwaʁ"
+  },
+  {
+   "foreign": "l'exercice",
+   "german": "die Übung",
+   "examples": [
+    "Nous faisons un exercice ensemble.",
+    "Cet exercice prend dix minutes."
+   ],
+   "examplesDe": [
+    "Wir machen gemeinsam eine Übung.",
+    "Diese Übung dauert zehn Minuten."
+   ],
+   "phonetic": "ɛɡzɛʁsis"
   },
   {
    "foreign": "la question",
-   "german": "die Frage"
+   "german": "die Frage",
+   "examples": [
+    "Le professeur pose une question.",
+    "Je ne comprends pas la question."
+   ],
+   "examplesDe": [
+    "Der Lehrer stellt eine Frage.",
+    "Ich verstehe die Frage nicht."
+   ],
+   "phonetic": "kɛstjɔ̃"
   },
   {
    "foreign": "la réponse",
-   "german": "die Antwort"
-  },
-  {
-   "foreign": "les devoirs",
-   "german": "die Hausaufgabe"
-  },
-  {
-   "foreign": "la nature",
-   "german": "die Natur"
-  },
-  {
-   "foreign": "le soleil",
-   "german": "die Sonne"
-  },
-  {
-   "foreign": "la lune",
-   "german": "der Mond"
-  },
-  {
-   "foreign": "l'étoile",
-   "german": "der Stern"
-  },
-  {
-   "foreign": "le ciel",
-   "german": "der Himmel"
-  },
-  {
-   "foreign": "l'arbre",
-   "german": "der Baum"
-  },
-  {
-   "foreign": "la fleur",
-   "german": "die Blume"
-  },
-  {
-   "foreign": "l'herbe",
-   "german": "das Gras"
-  },
-  {
-   "foreign": "la montagne",
-   "german": "der Berg"
-  },
-  {
-   "foreign": "la rivière",
-   "german": "der Fluss"
-  },
-  {
-   "foreign": "la mer",
-   "german": "das Meer"
-  },
-  {
-   "foreign": "la pluie",
-   "german": "der Regen"
-  },
-  {
-   "foreign": "la neige",
-   "german": "der Schnee"
-  },
-  {
-   "foreign": "le vent",
-   "german": "der Wind"
-  },
-  {
-   "foreign": "le feu",
-   "german": "das Feuer"
-  },
-  {
-   "foreign": "la pierre",
-   "german": "der Stein"
-  },
-  {
-   "foreign": "être",
-   "german": "sein"
-  },
-  {
-   "foreign": "avoir",
-   "german": "haben"
-  },
-  {
-   "foreign": "aller",
-   "german": "gehen"
-  },
-  {
-   "foreign": "venir",
-   "german": "kommen"
-  },
-  {
-   "foreign": "faire",
-   "german": "machen"
-  },
-  {
-   "foreign": "dire",
-   "german": "sagen"
-  },
-  {
-   "foreign": "voir",
-   "german": "sehen"
-  },
-  {
-   "foreign": "manger",
-   "german": "essen"
-  },
-  {
-   "foreign": "boire",
-   "german": "trinken"
-  },
-  {
-   "foreign": "dormir",
-   "german": "schlafen"
-  },
-  {
-   "foreign": "lire",
-   "german": "lesen"
-  },
-  {
-   "foreign": "écrire",
-   "german": "schreiben"
-  },
-  {
-   "foreign": "jouer",
-   "german": "spielen"
-  },
-  {
-   "foreign": "apprendre",
-   "german": "lernen"
-  },
-  {
-   "foreign": "parler",
-   "german": "sprechen"
-  },
-  {
-   "foreign": "donner",
-   "german": "geben"
-  },
-  {
-   "foreign": "prendre",
-   "german": "nehmen"
-  },
-  {
-   "foreign": "acheter",
-   "german": "kaufen"
-  },
-  {
-   "foreign": "courir",
-   "german": "rennen"
-  },
-  {
-   "foreign": "marcher",
-   "german": "laufen"
-  },
-  {
-   "foreign": "vivre",
-   "german": "leben"
-  },
-  {
-   "foreign": "aimer",
-   "german": "lieben"
-  },
-  {
-   "foreign": "vouloir",
-   "german": "wollen"
-  },
-  {
-   "foreign": "savoir",
-   "german": "wissen"
-  },
-  {
-   "foreign": "penser",
-   "german": "denken"
-  },
-  {
-   "foreign": "travailler",
-   "german": "arbeiten"
-  },
-  {
-   "foreign": "aider",
-   "german": "helfen"
-  },
-  {
-   "foreign": "trouver",
-   "german": "finden"
-  },
-  {
-   "foreign": "ouvrir",
-   "german": "öffnen"
-  },
-  {
-   "foreign": "fermer",
-   "german": "schliessen"
-  },
-  {
-   "foreign": "grand",
-   "german": "gross"
-  },
-  {
-   "foreign": "petit",
-   "german": "klein"
-  },
-  {
-   "foreign": "bon",
-   "german": "gut"
-  },
-  {
-   "foreign": "mauvais",
-   "german": "schlecht"
-  },
-  {
-   "foreign": "nouveau",
-   "german": "neu"
-  },
-  {
-   "foreign": "vieux",
-   "german": "alt"
-  },
-  {
-   "foreign": "jeune",
-   "german": "jung"
-  },
-  {
-   "foreign": "long",
-   "german": "lang"
-  },
-  {
-   "foreign": "court",
-   "german": "kurz"
-  },
-  {
-   "foreign": "chaud",
-   "german": "heiss"
-  },
-  {
-   "foreign": "froid",
-   "german": "kalt"
-  },
-  {
-   "foreign": "heureux",
-   "german": "glücklich"
-  },
-  {
-   "foreign": "triste",
-   "german": "traurig"
-  },
-  {
-   "foreign": "rapide",
-   "german": "schnell"
-  },
-  {
-   "foreign": "lent",
-   "german": "langsam"
-  },
-  {
-   "foreign": "facile",
-   "german": "einfach"
-  },
-  {
-   "foreign": "difficile",
-   "german": "schwierig"
-  },
-  {
-   "foreign": "beau",
-   "german": "schön"
-  },
-  {
-   "foreign": "fort",
-   "german": "stark"
-  },
-  {
-   "foreign": "gentil",
-   "german": "nett"
-  },
-  {
-   "foreign": "et",
-   "german": "und"
-  },
-  {
-   "foreign": "ou",
-   "german": "oder"
-  },
-  {
-   "foreign": "mais",
-   "german": "aber"
-  },
-  {
-   "foreign": "ne...pas",
-   "german": "nicht"
-  },
-  {
-   "foreign": "oui",
-   "german": "ja"
-  },
-  {
-   "foreign": "non",
-   "german": "nein"
-  },
-  {
-   "foreign": "avec",
-   "german": "mit"
-  },
-  {
-   "foreign": "sans",
-   "german": "ohne"
-  },
-  {
-   "foreign": "ici",
-   "german": "hier"
-  },
-  {
-   "foreign": "là",
-   "german": "dort"
-  },
-  {
-   "foreign": "maintenant",
-   "german": "jetzt"
-  },
-  {
-   "foreign": "toujours",
-   "german": "immer"
-  },
-  {
-   "foreign": "jamais",
-   "german": "nie"
-  },
-  {
-   "foreign": "très",
-   "german": "sehr"
-  },
-  {
-   "foreign": "aussi",
-   "german": "auch"
+   "german": "die Antwort",
+   "examples": [
+    "Ta réponse est correcte.",
+    "Elle connaît la bonne réponse."
+   ],
+   "examplesDe": [
+    "Deine Antwort ist richtig.",
+    "Sie kennt die richtige Antwort."
+   ],
+   "phonetic": "ʁepɔ̃s"
+  },
+  {
+   "foreign": "la leçon",
+   "german": "die Lektion",
+   "examples": [
+    "Nous apprenons la nouvelle leçon.",
+    "La leçon commence maintenant."
+   ],
+   "examplesDe": [
+    "Wir lernen die neue Lektion.",
+    "Die Lektion beginnt jetzt."
+   ],
+   "phonetic": "ləsɔ̃"
+  },
+  {
+   "foreign": "le mot",
+   "german": "das Wort",
+   "examples": [
+    "Ce mot est difficile.",
+    "Écris le mot au tableau."
+   ],
+   "examplesDe": [
+    "Dieses Wort ist schwierig.",
+    "Schreib das Wort an die Tafel."
+   ],
+   "phonetic": "mo"
+  },
+  {
+   "foreign": "la phrase",
+   "german": "der Satz",
+   "examples": [
+    "Cette phrase a cinq mots.",
+    "Je lis la phrase lentement."
+   ],
+   "examplesDe": [
+    "Dieser Satz hat fünf Wörter.",
+    "Ich lese den Satz langsam."
+   ],
+   "phonetic": "fʁaz"
+  },
+  {
+   "foreign": "la pause",
+   "german": "die Pause",
+   "examples": [
+    "La pause dure quinze minutes.",
+    "Nous mangeons pendant la pause."
+   ],
+   "examplesDe": [
+    "Die Pause dauert fünfzehn Minuten.",
+    "Wir essen während der Pause."
+   ],
+   "phonetic": "poz"
   }
  ]
 }

@@ -11,7 +11,8 @@
  * verschwindet ganz.
  * =================================================================== */
 import { useStore } from "../store/StoreProvider";
-import { PAIRS, activePairs } from "../lib/pairs";
+import { PAIRS, activePairs, SPRACHEN, MUTTERSPRACHE_VORGABE } from "../lib/pairs";
+import { WahlPille } from "./WahlPille";
 import { txt } from "../lib/i18n";
 
 export function PairPill() {
@@ -19,23 +20,20 @@ export function PairPill() {
   const shown = activePairs(settings);
   if (shown.length < 2) return null;
   const p = PAIRS[settings.pair] || PAIRS["en-de"];
+  const mutter = SPRACHEN[settings.muttersprache || MUTTERSPRACHE_VORGABE] || SPRACHEN.de;
   return (
-    <label className="pill pill-sel">
-      {/* Kein Symbol, kein Pfeil. Ein Sprachpaar HAT keine Richtung -- die
-          steht in der Pille daneben. Ein Doppelpfeil hier hiesse "tauschen"
-          und wäre eine zweite Bedeutung für dieselbe Form. Der Punkt
-          verbindet nur. Geschlossen die Kürzel, aufgeklappt ausgeschrieben. */}
-      <span>{p.short} · {"DE"}</span>
-      <select value={settings.pair} aria-label={txt("Sprache")}
-        onChange={(e) => {
-          /* Der Wechsel räumt die Auswahlen mit ab: eine Wortliste der einen
-           * Sprache ist in der anderen kein gültiger Umfang. */
-          if (e.target.value !== settings.pair) setSettings({ pair: e.target.value, selectedLists: [], statLists: [] });
-        }}>
-        {shown.map((x: any) => (
-          <option key={x.id} value={x.id}>{x.foreignLabel} · {x.nativeLabel}</option>
-        ))}
-      </select>
-    </label>
+    /* Kein Symbol, kein Pfeil. Ein Sprachpaar HAT keine Richtung -- die
+       steht in der Pille daneben. Ein Doppelpfeil hier hiesse "tauschen"
+       und waere eine zweite Bedeutung fuer dieselbe Form. Der Punkt
+       verbindet nur. Geschlossen die Kuerzel, aufgeklappt ausgeschrieben. */
+    <WahlPille
+      titel={txt("Sprache")}
+      kurz={`${p.short} · ${mutter.short}`}
+      wert={settings.pair}
+      optionen={shown.map((x: any) => ({ wert: x.id, label: `${x.foreignLabel} · ${x.nativeLabel}` }))}
+      /* Der Wechsel raeumt die Auswahlen mit ab: eine Wortliste der einen
+         Sprache ist in der anderen kein gueltiger Umfang. */
+      onWahl={(v) => setSettings({ pair: v, selectedLists: [], statLists: [] })}
+    />
   );
 }

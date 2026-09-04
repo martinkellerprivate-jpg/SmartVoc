@@ -1,7 +1,10 @@
 /* Light shared types for Phase 0. Kept pragmatic (strict off) so the
  * extraction stays parity-focused; tighten in a later pass. */
 
-export type PairId = "en-de" | "fr-de" | "la-de";
+/* "<fremd>-<mutter>", z. B. "en-de". Bewusst eine Zeichenkette und keine
+ * feste Aufzaehlung: die Kennung steht gespeichert an jedem Wort, und neue
+ * Paare kommen daneben, statt bestehende zu entwerten. */
+export type PairId = string;
 export type Verdict = "correct" | "almost" | "wrong";
 export type Wortart = "Nomen" | "Verb" | "Adjektiv" | "Zahlwort" | "Adverb";
 export type LatinMode = "L2" | "L3";
@@ -23,7 +26,13 @@ export interface Pair {
 export interface Word {
   id: string;
   pair: PairId;
-  de: string;             // native side is always German
+  /* Die Seite in der MUTTERSPRACHE. Der Feldname ist historisch und
+   * bedeutet nicht "Deutsch": lernt jemand mit Spanisch als Muttersprache,
+   * steht sein Spanisch hier. Ein Umbenennen waere die einzige Aenderung an
+   * diesem Modell, die eine Datenmigration braeuchte -- also nicht
+   * umbenennen. Die Sprache steht in der Beschriftung (`nativeLabel` des
+   * Sprachpaars), nicht im Feldnamen. */
+  de: string;
   en?: string;
   fr?: string;
   la?: string;            // generic Latin string (rarely used; forms below preferred)
@@ -128,6 +137,11 @@ export interface Settings {
   /* Womit die App aufmacht: die Tagesliste, die zuletzt geuebte Liste
    * (weitermachen oder neu), oder nichts. */
   startAuswahl?: "heute" | "weiter" | "neu" | "leer";
+  /* Die Muttersprache. Wird einmal gestempelt und danach nie von selbst
+   * geaendert -- wie der Plan. Heute gibt es nur "de"; die Weiche steht,
+   * damit eine spaetere Voreinstellung niemanden anfasst, der schon einen
+   * Stempel hat. Siehe lib/pairs.ts. */
+  muttersprache?: string;
   plan?: "gratis" | "pro";
   planQuelle?: "v1" | "bestandsschutz" | "apple" | "web" | "geschenk";
   planSeit?: number;

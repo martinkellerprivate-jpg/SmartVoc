@@ -23,6 +23,9 @@ const ARTIKEL = /^(der|die|das)\s/i;
 const PAARE = [
   { pair: "en-de", datei: "roh-englisch.txt", latein: false },
   { pair: "fr-de", datei: "roh-franzoesisch.txt", latein: false },
+  { pair: "es-de", datei: "roh-spanisch.txt", latein: false },
+  { pair: "it-de", datei: "roh-italienisch.txt", latein: false },
+  { pair: "pt-de", datei: "roh-portugiesisch.txt", latein: false },
   { pair: "la-de", datei: "roh-latein.txt", latein: true },
 ];
 
