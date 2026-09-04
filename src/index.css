@@ -1464,8 +1464,13 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 
 /* Die beschreibenden Zahlen. Vier im Viereck, darunter der Tagesstreifen
    über die volle Breite — der braucht sie ohnehin. */
-.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-.fact { background: var(--card); border: 1px solid var(--line); border-radius: 13px; padding: 11px 12px 10px; }
+/* Zwei feste Spalten liessen ein Loch, sobald die Zahl der Kacheln ungerade
+   war -- und sie ist es oft: "neu in deinen Listen" und "neu erlernt"
+   erscheinen nur, wenn es dazu etwas zu sagen gibt. Eine umbrechende Reihe
+   hat dieses Problem nicht: die letzte Zeile wird von ihren Kacheln
+   ausgefuellt, wie viele es auch sind. */
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.fact { flex: 1 1 160px; min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 13px; padding: 11px 12px 10px; }
 .fact .ic { width: 25px; height: 25px; border-radius: 999px; display: grid; place-items: center;
             background: var(--bg-2); color: var(--ink-soft); margin-bottom: 7px; }
 .fact.grow .ic { background: color-mix(in srgb, var(--ok) 18%, var(--card)); color: var(--ok); }
@@ -1473,7 +1478,7 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
           font-variant-numeric: tabular-nums; line-height: 1.1; }
 .fact b .klein { font-size: 13px; color: var(--ink-faint); font-weight: 600; }
 .fact > span { display: block; font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; }
-.fact.wide { grid-column: 1 / -1; }
+.fact.wide { flex-basis: 100%; }
 
 /* Ein Punkt je Tag, gefüllt heisst geübt. Eine Serie wäre die schlechtere
    Zahl — ein verpasster Tag macht sie zunichte, die Lücke hier nicht. */

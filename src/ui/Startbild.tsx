@@ -17,11 +17,17 @@
  */
 import React from "react";
 import bild from "../assets/intro.jpg";
+import { istApp } from "../lib/native";
 
 let schonGezeigt = false;
 
 export function Startbild() {
-  const [da, setDa] = React.useState(!schonGezeigt);
+  /* Nur auf dem Geraet. Im Browser startet man die Webfassung staendig neu
+   * -- in einem neuen Tab, nach jedem Neuladen -- und jedes Mal zwei
+   * Sekunden auf ein Bild zu warten ist dort keine Begruessung, sondern
+   * eine Bremse. Auf dem Telefon deckt es die Ladezeit ab, die es dort
+   * wirklich gibt. */
+  const [da, setDa] = React.useState(() => istApp() && !schonGezeigt);
   const [geht, setGeht] = React.useState(false);
 
   React.useEffect(() => {
