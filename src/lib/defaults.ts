@@ -3,6 +3,7 @@ import type { Settings } from "./types";
 /* Research-backed default settings. Each is surfaced in the Settings
  * tab and labelled "Recommended" (best practice from learning psychology). */
 export const RECOMMENDED: Partial<Settings> = {
+  startAuswahl: "heute",  // womit die App aufmacht
   mode: "type",          // active recall (typing) beats recognition
   choicesCount: 4,        // multiple-choice options when in Choose mode
   showExamples: true,     // show a word's foreign-language example sentences on the solution side

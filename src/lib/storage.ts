@@ -28,6 +28,12 @@ export const LS = {
   settings: "vt_v1_settings",
   lists: "vt_v1_lists",
   lessons: "vt_v1_lessons",   // nur noch zum Lesen: V16 löst sie in Wortlisten auf
+  /* Was von der letzten Runde offen blieb. Nur die Wort-Kennungen und die
+   * Auswahl, nicht der Zustand der Warteschlange: aus Kennungen laesst sich
+   * eine Runde neu bauen, und die Lernstaende kommen dabei frisch aus den
+   * Statistiken. Den eingefrorenen FSRS-Zustand ueber einen Neustart zu
+   * schleppen waere die Art Abkuerzung, die Lerndaten beschaedigt. */
+  offeneRunde: "vt_v1_offene_runde",
 };
 
 const nativ = () => Capacitor.isNativePlatform();

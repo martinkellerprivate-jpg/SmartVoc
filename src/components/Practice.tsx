@@ -6,6 +6,7 @@ import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
 import { toneColor } from "../ui/Ring";
 import { scoreAnswer } from "../lib/scoring";
+import { LS, load, save } from "../lib/storage";
 import { resolveList, resolveSmart, resolveToday } from "../lib/engine";
 import { buildQueue, pick, record, outcomeOf, pendingGrades, progress, remaining } from "../lib/runqueue";
 import { MasteryBar } from "../ui/MasteryBar";
@@ -26,6 +27,11 @@ import { lernTipps } from "./Help";
 /* Die vier Antwortarten -- Beschriftung und Symbol an EINER Stelle, damit
  * Waehler und Pille nicht auseinanderlaufen. "Multiple-Choice" heisst so,
  * weil es so heisst; "Auswählen" war meine Erfindung. */
+/* Der Merker fuer "nichts gewaehlt". Ein eigener Wert, kein leerer String:
+ * so bleibt "noch nie etwas gewaehlt" (undefined) von "bewusst geleert"
+ * unterscheidbar. */
+export const LEER = "leer:";
+
 const MODE_NAME: Record<string, string> = {
   type: "Eintippen", choice: "Multiple-Choice", recall: "Selbstkontrolle", memorize: "Nur durchblättern",
 };
@@ -113,18 +119,22 @@ export function Practice() {
   const selValid = rawSel.kind === "smart" ? SMART_REFS.includes(rawSel.ref)
     : rawSel.kind === "list" ? pairLists.some((l: any) => l.id === rawSel.ref)
     : false;
+  /* Nichts gewaehlt ist ein eigener Zustand, kein Rueckfall auf "Heute
+   * dran". Vorher gab es ihn nicht: wer alles abwaehlte, bekam kommentarlos
+   * wieder die Tagesliste, und "Übung abbrechen" tat sichtbar nichts. */
+  const nichtsGewaehlt = settings.practiceSel === LEER;
   // V17: default learning path = "Heute dran"
   const effective = selValid ? rawSel : { kind: "smart", ref: "heute" };
   const tokValid = (tok: string) => { const i = tok.indexOf(":"); return pairLists.some((l: any) => l.id === tok.slice(i + 1)); };
   const validMulti = multiSel.filter(tokValid);
-  const scopeTokens = validMulti.length ? validMulti : [effective.kind + ":" + effective.ref];
+  const scopeTokens = nichtsGewaehlt ? [] : (validMulti.length ? validMulti : [effective.kind + ":" + effective.ref]);
   const selKey = scopeTokens.join("|");
   /* Die Auswahl ist EINE Menge. Was gewaehlt ist, steht in scopeTokens --
    * egal ob eines oder mehrere. Setzen heisst: diese Menge neu schreiben,
    * einmal fuer die Anzeige (multiSel) und einmal fuer die Dauer
    * (practiceSel, nur bei genau einem). */
   const setzeAuswahl = (toks: string[]) => {
-    if (!toks.length) { setMultiSel([]); store.setSettings({ practiceSel: "smart:heute" }); return; }
+    if (!toks.length) { setMultiSel([]); store.setSettings({ practiceSel: LEER }); return; }
     if (toks.length === 1) { setMultiSel([]); store.setSettings({ practiceSel: toks[0] }); return; }
     setMultiSel(toks);
   };
@@ -243,15 +253,60 @@ export function Practice() {
     setCurrent(null); setFace("front"); setAnim(""); setResult(null); setSession([]); setTip(null);
   };
   const startRun = () => beginRun(resolveScopeWords().map((w) => w.id));
+
+  /* Was von dieser Runde noch offen ist -- nur die Kennungen. Daraus laesst
+   * sich beim naechsten Start weitermachen, ohne irgendeinen Lernstand ueber
+   * den Neustart zu schleppen. */
+  const merkeOffene = () => {
+    const st = runRef.current;
+    if (!st) return;
+    const offen = Object.values(st.words).filter((w: any) => !gradedRef.current.has(w.id)).map((w: any) => w.id);
+    save(LS.offeneRunde, offen.length ? { pair, sel: selKey, ids: offen, zeit: Date.now() } : null);
+  };
   // F-CARD-UI: leave the round any time — no dialog (FSRS is saved after each answer).
-  const leaveRun = () => { flushRef.current(); store.setSettings({ practiceSel: "smart:heute" }); };
+  /* Abbrechen heisst: Auswahl leeren. Vorher setzte es auf "Heute dran"
+   * zurueck, und wer ohnehin dort war, sah gar nichts geschehen. */
+  const leaveRun = () => {
+    flushRef.current(); merkeOffene();
+    setMultiSel([]); store.setSettings({ practiceSel: LEER });
+  };
   // V10: re-drill only the words that were wrong/needed a hint this round.
   const startRoundRetry = () => {
     const st = runRef.current; if (!st) return;
     const failed = Object.values(st.words).filter((w: any) => w.failedOnce || w.usedHint).map((w: any) => w.id);
     if (failed.length) beginRun(failed);
   };
-  useEffect(() => { startRun(); }, [pair, selKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  /* Beim allerersten Zeichnen entscheidet die Einstellung, womit die App
+   * aufmacht. Danach nie wieder -- sonst uebersteuerte sie jede Wahl, die
+   * man von Hand trifft. */
+  const startGetan = useRef(false);
+  const weiterGetan = useRef(false);
+  useEffect(() => {
+    if (startGetan.current) return;
+    startGetan.current = true;
+    const wie = settings.startAuswahl || "heute";
+    if (wie === "heute") { setMultiSel([]); store.setSettings({ practiceSel: "smart:heute" }); }
+    else if (wie === "leer") { setMultiSel([]); store.setSettings({ practiceSel: LEER }); }
+    // "weiter" und "neu" lassen die letzte Auswahl stehen; "weiter" nimmt
+    // zusaetzlich die offenen Woerter auf (siehe unten).
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (nichtsGewaehlt) return;
+    /* "Weitermachen": beginnt die Runde mit dem, was letztes Mal offen
+     * blieb -- aber nur beim ersten Mal und nur, wenn die Auswahl dieselbe
+     * ist. Danach ist der Merker verbraucht. */
+    if ((settings.startAuswahl || "heute") === "weiter" && !weiterGetan.current) {
+      weiterGetan.current = true;
+      const m = load(LS.offeneRunde, null);
+      if (m && m.pair === pair && m.sel === selKey && Array.isArray(m.ids) && m.ids.length) {
+        const da = new Set(vocab.map((w: any) => w.id));
+        const ids = m.ids.filter((id: string) => da.has(id));
+        if (ids.length) { beginRun(ids, true); return; }
+      }
+    }
+    startRun();
+  }, [pair, selKey, nichtsGewaehlt]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pool = useMemo(() => {
     // Kein Sprachfilter: der Umfang bestimmt den Vorrat, nicht das aktive Paar.
@@ -374,13 +429,13 @@ export function Practice() {
         hiddenAtRef.current = 0;
       }
     };
-    const onHide = () => { flushRef.current(); hiddenAtRef.current = Date.now(); };
+    const onHide = () => { flushRef.current(); merkeOffene(); hiddenAtRef.current = Date.now(); };
     window.addEventListener("pagehide", onHide);
     document.addEventListener("visibilitychange", onVis);
     return () => {
       window.removeEventListener("pagehide", onHide);
       document.removeEventListener("visibilitychange", onVis);
-      flushRef.current();   // unmount = session end
+      flushRef.current(); merkeOffene();   // unmount = session end
     };
   }, []);
 
@@ -693,6 +748,7 @@ export function Practice() {
   /* Was gerade geübt wird, in einer Zeile. Mehrere Wortlisten werden gezählt,
    * nicht aufgezählt -- eine Zeile, die umbricht, ist keine Zeile mehr. */
   const scopeSummary = (() => {
+    if (nichtsGewaehlt) return txt("Wortliste wählen");
     if (scopeTokens.length > 1) return txt("{n} Wortlisten", { n: scopeTokens.length });
     const tok = scopeTokens[0] || "";
     const i = tok.indexOf(":"); const kind = tok.slice(0, i), ref = tok.slice(i + 1);
@@ -725,10 +781,12 @@ export function Practice() {
             <option value="mixed">{P.nativeLabel} ⇄ {P.foreignLabel} ({txt("zufällig gemischt")})</option>
           </select>
         </label>
+        {/* Ohne Auswahl steht dort kein Name und keine Zahl -- die Pille
+            sagte sonst „Übung 30", wo gerade nichts gewählt ist. */}
         <button className="pill pill-on" onClick={() => setPickerOpen((o) => !o)}>
           <Icon name="calendar" size={15} />
           <span>{scopeSummary}</span>
-          <span className="pill-n">{pool.length}</span>
+          {!nichtsGewaehlt && <span className="pill-n">{pool.length}</span>}
         </button>
       </div>
       {waehlerEl}{chipsHelpEl}
@@ -749,6 +807,33 @@ export function Practice() {
     }
     return null;
   }, [store.lists, pair, vocab]);
+
+  /* Nichts gewaehlt: die Buehne bleibt leer, und es steht da, was zu tun
+   * ist. Vorher fiel die App still auf "Heute dran" zurueck. */
+  if (nichtsGewaehlt) {
+    return (
+      <div className="practice-wrap">
+        {scopeBar}
+        <div className="empty">
+          {pairLists.length ? (
+            <>
+              <div className="big">{txt("Keine Wortliste gewählt")}</div>
+              <div>{txt("Wähle oben eine Wortliste oder einen Schnellzugriff.")}</div>
+            </>
+          ) : (
+            <>
+              <div className="big">{txt("Noch keine Wortliste gespeichert")}</div>
+              <div>{txt("Erfasse deine erste Wortliste, dann kann es losgehen.")}</div>
+              <button className="btn btn-primary" style={{ marginTop: 14 }}
+                onClick={() => window.dispatchEvent(new CustomEvent("vt-tab", { detail: "lists" }))}>
+                <Icon name="plus" size={15} /> {txt("Wortliste anlegen")}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   if (!pool.length) {
     return (
@@ -1194,7 +1279,7 @@ export function Practice() {
           </select>
         </label>
         <div className="grow" />
-        <button className="btn btn-ghost btn-sm" onClick={leaveRun}>{txt("Übung verlassen")}</button>
+        <button className="btn btn-ghost btn-sm" onClick={leaveRun}>{txt("Übung abbrechen")}</button>
       </div>
 
       <TipPopup tip={tip} onClose={() => setTip(null)} />

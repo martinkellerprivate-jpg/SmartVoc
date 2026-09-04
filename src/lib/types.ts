@@ -118,6 +118,9 @@ export interface Settings {
    * selbst geaendert -- siehe lib/plan.ts. Der Stempel ist die
    * Besitzstandswahrung: V2 kann die Voreinstellung fuer neue
    * Installationen aendern, ohne jemanden anzufassen, der schon einen hat. */
+  /* Womit die App aufmacht: die Tagesliste, die zuletzt geuebte Liste
+   * (weitermachen oder neu), oder nichts. */
+  startAuswahl?: "heute" | "weiter" | "neu" | "leer";
   plan?: "gratis" | "pro";
   planQuelle?: "v1" | "bestandsschutz" | "apple" | "web" | "geschenk";
   planSeit?: number;

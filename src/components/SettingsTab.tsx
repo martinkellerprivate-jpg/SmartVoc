@@ -155,6 +155,16 @@ const ARTIKEL: Record<string,string> = {
 /* Dieselben Namen wie in Practice (MODE_NAME). „Auswählen" stand nur hier
  * und hiess im Übungsbildschirm längst Multiple-Choice -- und die
  * Einstellung darunter fragt nach „Vorschlägen bei Multiple-Choice". */
+/* Womit die App aufmacht. „Weitermachen" nimmt die Woerter auf, die beim
+ * letzten Mal offen blieben; die Runde selbst wird neu gebaut, damit kein
+ * Lernstand ueber den Neustart geschleppt wird. */
+const START: Record<string,string> = {
+  heute: "Heute dran",
+  weiter: "Zuletzt geübte Liste, weitermachen",
+  neu: "Zuletzt geübte Liste, neu beginnen",
+  leer: "Nichts vorwählen",
+};
+
 const MODUS: Record<string,string> = { type: "Eintippen", choice: "Multiple-Choice", recall: "Selbstkontrolle", memorize: "Nur durchblättern" };
 
 export function SettingsTab() {
@@ -253,6 +263,8 @@ export function SettingsTab() {
         <div className="set-section-h"><Icon name="cards" size={16} /> {txt("Üben")}</div>
         <div className="set-body">
 
+        <ZeileWert titel={txt("Wortliste beim Öffnen")} atRec={(settings.startAuswahl || "heute") === "heute"}
+          wert={txt(START[settings.startAuswahl || "heute"])} onClick={() => setBlatt("start")} />
         <ZeileWert titel={txt("Antwortart")} atRec={atR("mode")}
           wert={txt(MODUS[settings.mode] || settings.mode)} onClick={() => setBlatt("mode")} />
         <ZeileWert titel={txt("Höchstens pro Tag")} atRec={atR("dailyGoal")}
@@ -283,6 +295,26 @@ export function SettingsTab() {
         )}
         </div>
       </div>
+
+      <Blatt offen={blatt === "start"} titel={txt("Wortliste beim Öffnen")} onClose={() => setBlatt(null)}
+        desc={txt("Womit die App aufmacht, wenn du sie startest. Du kannst oben jederzeit etwas anderes wählen.")}
+        rec={txt("Heute dran")} atRec={(settings.startAuswahl || "heute") === "heute"}
+        onZuruecksetzen={() => set("startAuswahl", "heute")}>
+        <div className="list">
+          {Object.keys(START).map((v) => (
+            <button key={v} className={"li" + ((settings.startAuswahl || "heute") === v ? " sel" : "")}
+              onClick={() => set("startAuswahl", v)}>
+              <span className="g">{txt(START[v])}
+                <div className="m">{txt({
+                  heute: "Die Tagesliste. Fällliges und Neues, sinnvoll gemischt.",
+                  weiter: "Dieselbe Liste wie zuletzt, und zwar mit den Wörtern, die noch offen waren.",
+                  neu: "Dieselbe Liste wie zuletzt, aber von vorn.",
+                  leer: "Nichts. Du wählst jedes Mal selbst.",
+                }[v])}</div></span>
+            </button>
+          ))}
+        </div>
+      </Blatt>
 
       <Blatt offen={blatt === "mode"} titel={txt("Antwortart")} onClose={() => setBlatt(null)}
         desc={txt("Eintippen prägt am stärksten ein. Selbstkontrolle heisst: umdrehen und selbst beurteilen. Durchblättern zählt nicht für den Lernstand.")}
