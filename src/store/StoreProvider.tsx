@@ -5,6 +5,7 @@ import React from "react";
 import { LS, load, save } from "../lib/storage";
 import { newId } from "../lib/ids";
 import { RECOMMENDED } from "../lib/defaults";
+import { stempelPlan } from "../lib/plan";
 import { DEFAULT_VOCAB } from "../data/seed";
 import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand, einListeJeWort } from "../lib/migrate";
 import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER, S2 } from "../lib/fsrs";
@@ -124,6 +125,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     if (!done.eineListeV18) { setVocabState((v: any) => einListeJeWort(v).vocab); applied.eineListeV18 = true; }
     // V17 — Anlagedatum für Wörter, die noch keines haben.
     if (!done.anlagedatumV17) { setVocabState((v: any) => datiereAltbestand(v)); applied.anlagedatumV17 = true; }
+    /* V19 — den Plan stempeln. Muss VOR jeder Grenze existieren, sonst gibt
+     * es später niemanden, dessen Besitzstand man wahren könnte: wer schon
+     * Wörter auf dem Gerät hat, ist kein neuer Nutzer. */
+    if (!done.planV19) {
+      setSettings((prev: any) => {
+        const stempel = stempelPlan(prev, (initRef.current.vocab || []).length > 0);
+        return stempel ? { ...prev, ...stempel } : prev;
+      });
+      applied.planV19 = true;
+    }
     if (Object.keys(applied).length) {
       setMeta((prev: any) => ({ ...prev, migrations: { ...(prev.migrations || {}), ...applied } }));
     }

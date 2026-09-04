@@ -1,6 +1,6 @@
 # Stufen, Konto und Käufe — Konzeption
 
-Stand: 3. September 2026. Grundlage für alles Weitere; noch nicht umgesetzt.
+Stand: 4. September 2026. Entschieden und in den Grundzügen verdrahtet.
 
 ## 1. Der Grundfehler, den wir vermeiden
 
@@ -123,3 +123,80 @@ Kauf auffordern** — sonst greift 3.1.3.
    Liste fasst in der Gratis-Fassung 40 Wörter." Mit dem Weg zum Kauf daneben.
 4. **Kein Rückbau.** Wer Pro hatte und es verliert (Rückerstattung), verliert
    keine Wörter. Die App zeigt sie weiter, verbietet nur Neues.
+
+
+---
+
+# Was wann kommt
+
+## Entschieden
+
+| | |
+|---|---|
+| **Plattformen** | Web-App und iOS. Andere Mobilplattformen laufen über die Web-App — **kein Google Play, kein anderer App Store.** |
+| **Anmeldung V1** | Sign in with Apple **oder** eigenes Konto (E-Mail + Passwort). |
+| **Anmeldung V2** | Google und weitere kommen dazu. |
+| **Stufen** | Gratis und Pro. Pro ist ein **einmaliger Kauf**, kein Abo. |
+| **Kaufen** | **V2.** Idealerweise über Web-Konto *und* über iOS; die pragmatische Lösung schlägt die vollständige. |
+| **Gekaufte Inhalte, KI-Modul** | V3. |
+
+## V1 — was jetzt gebaut wird
+
+* Anmeldung fakultativ, wie bisher. Dazu **Sign in with Apple**.
+* **Keine Mengengrenzen.** Es gibt keinen Weg, Pro zu kaufen — eine Grenze wäre
+  eine Sackgasse und würde nur Leute vertreiben.
+* Aber: der **Anspruch wird gestempelt** (siehe unten). Ohne das gibt es in V2
+  niemanden, dessen Besitzstand man wahren könnte.
+
+## Die Weichen, die jetzt richtig stehen müssen
+
+Vier Dinge, die später sehr teuer wären. Drei davon waren schon in Ordnung, die
+vierte ist neu.
+
+**1. Alles hängt an der Nutzer-Kennung, nichts an der E-Mail.** ✅ war schon so.
+Synchronisation, geteilte Listen und Dokumente sind auf `uid` verschlüsselt; die
+E-Mail-Adresse wird nur angezeigt. Das ist die Voraussetzung für Sign in with
+Apple, denn Apple liefert oft eine Wegwerf-Adresse
+(`…@privaterelay.appleid.com`) und der Mensch kann sie jederzeit ändern.
+
+**2. Lokal zuerst, Konto später.** ✅ war schon so. Wer ohne Konto beginnt und
+sich später anmeldet, nimmt seine Wörter mit. Genau derselbe Weg trägt später
+einen Kauf ans Konto.
+
+**3. Ein Wort gehört in genau eine Liste.** ✅ seit V18. Wäre das offen
+geblieben, liesse sich eine gekaufte Liste nicht sauber von einer eigenen
+trennen — und „diese Liste gehört dir nicht, du hast sie gekauft" wäre nicht
+darstellbar.
+
+**4. Der Anspruch wird aufgeschrieben, nicht ausgerechnet.** ⬅ **neu**, in
+`src/lib/plan.ts` und als Migration V19.
+
+```
+settings.plan        "gratis" | "pro"     was gilt
+settings.planQuelle  woher er kommt       bestandsschutz | v1 | apple | web | geschenk
+settings.planSeit    seit wann
+```
+
+Beim ersten Start wird gestempelt und danach **nie von selbst geändert**. Wer
+schon Wörter auf dem Gerät hat, bekommt `bestandsschutz`; eine frische
+Installation bekommt `v1`. Beide stehen heute auf `pro`.
+
+Damit kann V2 die Voreinstellung für **neue** Installationen auf `gratis`
+setzen, ohne irgendjemanden anzufassen, der schon einen Stempel trägt. Das ist
+der ganze Trick, und er kostet heute nichts.
+
+Die Oberfläche fragt nie `settings.plan`. Sie fragt `darf(...)` oder
+`grenze(...)`. Wechselt V2 die Quelle — von den Einstellungen auf eine
+Berechtigungstabelle vom Server —, ändert sich genau diese eine Datei.
+
+## Zwei Dinge, die in V2 zu beachten sind
+
+**Der Plan reist heute mit den Einstellungen in die Cloud.** Das ist erwünscht
+(auf dem zweiten Gerät gilt derselbe Anspruch), aber die Synchronisation
+entscheidet Konflikte nach „zuletzt geschrieben gewinnt". Sobald echtes Geld im
+Spiel ist, gehört der Anspruch in eine eigene Tabelle, die nur der Server
+schreibt. `plan.ts` ist genau die Stelle, an der das umgehängt wird.
+
+**Ein Kauf gehört der Apple-ID, nicht dem Konto.** Deshalb muss die
+Berechtigungstabelle die `original_transaction_id` führen und darf denselben
+Kauf nie an zwei Konten hängen. Siehe Abschnitt 3 oben.
