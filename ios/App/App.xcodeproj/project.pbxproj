@@ -84,6 +84,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504EC3161FED79650016851F /* Build configuration list for PBXNativeTarget "App" */;
 			buildPhases = (
+				AA11BB22CC33DD44EE550001 /* Weboberflaeche bauen */,
 				504EC3001FED79650016851F /* Sources */,
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
@@ -136,6 +137,28 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AA11BB22CC33DD44EE550001 /* Weboberflaeche bauen */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Weboberflaeche bauen";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n# Baut die Weboberflaeche und kopiert sie nach ios/App/App/public, bevor\n# Xcode die native Huelle uebersetzt. Ohne diesen Schritt zeigt ein Start\n# aus Xcode den zuletzt kopierten Stand, nicht den aktuellen Code.\n#\n# Beim Index-Lauf (Xcode baut im Hintergrund fuer die Codevervollstaendigung)\n# tut die Phase nichts -- sonst laeuft bei jedem Tippen ein Build.\nif [ \"$ACTION\" = \"indexbuild\" ]; then exit 0; fi\n\nset -e\ncd \"$SRCROOT/../..\"\n\n# Xcode kennt die Pfade der Shell nicht. Node dort suchen, wo es ueblicherweise liegt.\nexport PATH=\"/usr/local/bin:/opt/homebrew/bin:$HOME/.volta/bin:$PATH\"\nif ! command -v node >/dev/null 2>&1; then\n  echo \"warning: node nicht gefunden -- die Weboberflaeche wurde NICHT neu gebaut.\"\n  echo \"warning: im Terminal: CAP_PLATFORM=ios npx vite build && npx cap copy ios\"\n  exit 0\nfi\n\necho \"SmartVoc: Weboberflaeche bauen\"\nCAP_PLATFORM=ios npx --no-install vite build\nnpx --no-install cap copy ios\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXResourcesBuildPhase section */
 		504EC3021FED79650016851F /* Resources */ = {
