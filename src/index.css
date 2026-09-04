@@ -1758,36 +1758,21 @@ button.li .m, button.wz .wz-d { color: var(--ink-soft); }
 .fz-name { flex: 0 0 40%; min-width: 0; font-size: 12.5px; color: var(--ink); }
 .fz-opt { display: block; font-size: 10.5px; color: var(--ink-faint); margin-top: 1px; }
 .fz-wert { flex: 1; min-width: 0; text-align: right; font-size: 12.5px; color: var(--ink-soft); }
-/* Der Lernstand traegt kurze Werte -- „7 ×", „in 4 Tagen". Dort darf der
-   Name die Breite nehmen, die er braucht: mit den festen 40 % brach
-   „Richtig beantwortet" auf zwei Zeilen, und die Zeile war doppelt so
-   hoch wie im Entwurf. */
-.fz-stand .fz-name { flex: 1 1 auto; }
-.fz-stand .fz-wert { flex: 0 0 auto; white-space: nowrap; }
-
-/* Der Lernstand ist ANZEIGE, kein Formular. Er sah bisher genau aus wie
-   der Block darueber: gerahmter Kasten, gleiche Zeilen, gleiche Farben --
-   und man konnte nicht sehen, dass hier nichts einzutragen ist.
-   Die Farbregel der App sagt es schon: Anzeige steht hell und ohne Linie,
-   Wahl und Eingabe bekommen Karte und Rahmen. Also kein Kasten, kein
-   Papier darunter, gedaempfte Schrift. */
-.fz-stand { border: none; border-radius: 0; background: none; }
-.fz-stand .fz { padding: 8px 2px; border-bottom: 1px solid var(--line-soft); }
-.fz-stand .fz:last-child { border-bottom: none; }
-.fz-stand .fz-name { color: var(--ink-soft); }
-.fz-stand .fz-wert { color: var(--ink); font-weight: 600; }
+/* Der Lernstand steht als EINZELNE Zeilen, wie im Entwurf: jede ein
+   eigenes Kaertchen mit Rand, Name links, Wert rechts. Vorher war es ein
+   zusammenhaengender Block -- und der sah genau aus wie das Formular
+   darueber, sodass man nicht sehen konnte, wo etwas einzutragen ist und
+   wo nicht. Getrennte Kaertchen sagen das ohne ein Wort. */
+.lern-wert { flex: none; max-width: 55%; text-align: right; font-size: 11.5px;
+             color: var(--ink-faint); font-variant-numeric: tabular-nums; margin-top: 2px; }
+.li .lern-wert b { color: var(--ink); font-weight: 600; }
 
 .fz-edit { cursor: text; }
-/* Eine Linie, auf die man schreibt -- das Bild dieser App. Vorher war ein
-   Eingabefeld von einer Anzeige nicht zu unterscheiden: gleiche Zeile,
-   gleiche Schrift, nichts, was zum Tippen einlaedt. */
-.fz-feld { flex: 1; min-width: 0; border: none; border-bottom: 1px solid var(--line);
-           background: none; font: inherit; padding-bottom: 2px;
+.fz-feld { flex: 1; min-width: 0; border: none; background: none; font: inherit;
            font-size: 13px; color: var(--ink); text-align: right; outline: none;
            padding: 0; resize: none; }
 .fz-feld::placeholder { color: var(--ink-faint); }
 .fz-edit:focus-within { background: var(--bg-2); }
-.fz-edit:focus-within .fz-feld { border-bottom-color: var(--amber); }
 select.fz-feld { text-align: right; }
 
 /* Das Urteil über der Karte, nicht darauf. Farbe UND Zeichen: Farbe allein

@@ -3,8 +3,13 @@
  * Er erscheint im Wort-Detail der Wortlisten und, über dasselbe Fenster,
  * in der Statistik. Genau deshalb steht er hier und nicht dort: zwei
  * Kopien wären zwei Gelegenheiten, denselben Zustand verschieden zu
- * beschreiben — und in dieser App ist das schon passiert (die Stufen
- * standen viermal im Code, mit zwei verschiedenen Farben für „fast").
+ * beschreiben.
+ *
+ * Die Form kommt aus dem Entwurf: eine Überschrift und darunter EINZELNE
+ * Zeilen, jede ein eigenes Kärtchen mit Rand — Name links, Wert rechts.
+ * Vorher war es ein zusammenhängender Block, der genau aussah wie das
+ * Formular darüber; man konnte nicht sehen, wo etwas einzutragen ist und
+ * wo nicht. Getrennte Kärtchen sagen das ohne ein Wort.
  *
  * Was hier NICHT steht: Rohwerte, Kartenzustände, Modellbegriffe. Die
  * gehören nach „Erweitert" in der Statistik, wo man sie bewusst aufsucht.
@@ -14,7 +19,15 @@ import { txt } from "../lib/i18n";
 import { deriveProfile, effectiveRetentionFor } from "../lib/fsrs";
 import { practiceable } from "../lib/pairs";
 import { STUFE_FARBE, STUFE_KURZ } from "../lib/stufen";
-import { FeldZeile } from "./FeldZeile";
+
+function Zeile({ name, wert }: { name: string; wert: any }) {
+  return (
+    <div className="li">
+      <span className="g">{name}</span>
+      <span className="lern-wert">{wert}</span>
+    </div>
+  );
+}
 
 export function LernstandBlock({ word }: { word: any }) {
   const { stats, settings, lists, lessons } = useStore();
@@ -28,24 +41,19 @@ export function LernstandBlock({ word }: { word: any }) {
     : tage < 0 ? txt("jetzt") : tage === 0 ? txt("heute")
     : tage === 1 ? txt("morgen") : txt("in {n} Tagen", { n: tage });
   const inListen = (lists || []).filter((l: any) => (word.lists || []).includes(l.id)).map((l: any) => l.name);
+  const strich = <span className="faint">—</span>;
 
   return (
     <>
       <div className="grp">{txt("Lernstand")} <span className="hint">— {txt("nur zur Ansicht")}</span></div>
-      {/* Fuenf Zeilen, wie im Entwurf. „Haelt im Moment" stand hier als
-          sechste, mit einer Unterzeile -- das ist ein Modellwert, und die
-          gehoeren nach „Erweitert" in der Statistik. Ohne sie tragen alle
-          Zeilen kurze Werte, und der Name passt in eine Zeile. */}
-      <div className="fz-block fz-stand">
-        <FeldZeile feld={txt("Wie gut es sitzt")} wert={
-          <span className="wstufe" style={{ color: STUFE_FARBE[stufe] }}>
-            <i style={{ background: STUFE_FARBE[stufe] }} />{txt(STUFE_KURZ[stufe])}
-          </span>} />
-        <FeldZeile feld={txt("Richtig beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: richtig }) : null} />
-        <FeldZeile feld={txt("Falsch beantwortet")} wert={stat?.seen ? txt("{n} ×", { n: stat.wrongCount || 0 }) : null} />
-        <FeldZeile feld={txt("Nächste Übung")} wert={naechste} />
-        <FeldZeile feld={txt("In der Liste")} wert={inListen.join(" · ")} />
-      </div>
+      <Zeile name={txt("Wie gut es sitzt")} wert={
+        <span className="wstufe" style={{ color: STUFE_FARBE[stufe] }}>
+          <i style={{ background: STUFE_FARBE[stufe] }} />{txt(STUFE_KURZ[stufe])}
+        </span>} />
+      <Zeile name={txt("Richtig beantwortet")} wert={stat?.seen ? <b>{txt("{n} ×", { n: richtig })}</b> : strich} />
+      <Zeile name={txt("Falsch beantwortet")} wert={stat?.seen ? <b>{txt("{n} ×", { n: stat.wrongCount || 0 })}</b> : strich} />
+      <Zeile name={txt("Nächste Übung")} wert={naechste} />
+      <Zeile name={txt("In der Liste")} wert={inListen.join(" · ") || strich} />
     </>
   );
 }
