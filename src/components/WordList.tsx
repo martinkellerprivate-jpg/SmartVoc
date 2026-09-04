@@ -25,7 +25,6 @@ import { useImport } from "./importContext";
 import { PairPill } from "../ui/PairPill";
 import { useAlsUnterkopf } from "../ui/ScreenHead";
 import { Bestaetigen } from "../ui/Bestaetigen";
-import { LeeresBild } from "../ui/LeeresBild";
 import { FeldEingabe, FeldAuswahl } from "../ui/FeldZeile";
 import { LernstandBlock } from "../ui/LernstandBlock";
 import { SMART_ACCESS } from "../lib/smartlists";
@@ -809,18 +808,10 @@ export function WordList() {
           </div>
 
           <div className="wl-roll wl-roll-sichtbar">
-            {sichtbar.length ? sichtbar.map(wortZeile) : q ? (
+            {sichtbar.length ? sichtbar.map(wortZeile) : (
               <div className="empty">
-                <div className="big">{txt("Nichts gefunden")}</div>
-                <div>{txt("Anderer Suchbegriff, oder das Feld leeren")}</div>
-              </div>
-            ) : (
-              /* Eine leere Liste ist kein Fehler, sondern der Anfang. Zwei
-                 Zeilen Text auf einer leeren Seite sagen das nicht. */
-              <div className="empty leer-bild">
-                <LeeresBild />
-                <div className="big">{txt("Noch keine Wörter")}</div>
-                <div>{txt("Zurück, dort stehen die Wege zum Füllen")}</div>
+                <div className="big">{q ? txt("Nichts gefunden") : txt("Noch keine Wörter")}</div>
+                <div>{q ? txt("Anderer Suchbegriff, oder das Feld leeren") : txt("Zurück, dort stehen die Wege zum Füllen")}</div>
               </div>
             )}
           </div>
@@ -993,11 +984,7 @@ export function WordList() {
               </button>
             );
           }) : (
-            <div className="empty leer-bild">
-              <LeeresBild />
-              <div className="big">{txt("Noch keine Wortliste")}</div>
-              <div>{txt("Oben auf „Neue Liste“ — die App fragt dann, woher die Wörter kommen.")}</div>
-            </div>
+            <div className="quiet">{txt("Noch keine Wortliste — lege oben eine an.")}</div>
           )}
 
           {pairLists.length > 0 && (
