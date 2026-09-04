@@ -31,7 +31,7 @@ export function LernstandBlock({ word }: { word: any }) {
 
   return (
     <>
-      <div className="grp">{txt("Lernstand")}</div>
+      <div className="grp">{txt("Lernstand")} <span className="hint">— {txt("nur zur Ansicht")}</span></div>
       {/* Fuenf Zeilen, wie im Entwurf. „Haelt im Moment" stand hier als
           sechste, mit einer Unterzeile -- das ist ein Modellwert, und die
           gehoeren nach „Erweitert" in der Statistik. Ohne sie tragen alle

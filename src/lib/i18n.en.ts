@@ -802,4 +802,5 @@ export const EN: Record<string, string> = {
   "Einzelnes Wort suchen — über alle Sprachen": "Find a single word — across all languages",
   "Ohne Liste": "No list",
   "Suche leeren": "Clear the search",
+  "nur zur Ansicht": "read only",
 };
