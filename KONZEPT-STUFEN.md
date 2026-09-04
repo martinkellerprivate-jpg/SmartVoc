@@ -140,6 +140,13 @@ Kauf auffordern** — sonst greift 3.1.3.
 | **Kaufen** | **V2.** Idealerweise über Web-Konto *und* über iOS; die pragmatische Lösung schlägt die vollständige. |
 | **Gekaufte Inhalte, KI-Modul** | V3. |
 
+### Weiteres für V2 vorgemerkt
+
+* **Wortlisten exportieren in mehrere Formate**, nicht nur Excel — auch PDF (zum
+  Ausdrucken und Abfragen auf Papier).
+* **Bilddateien für Symbole** in organischem Stil.
+* **Google-Anmeldung** und weitere Anmeldedienste.
+
 ## V1 — was jetzt gebaut wird
 
 * Anmeldung fakultativ, wie bisher. Dazu **Sign in with Apple**.
