@@ -56,14 +56,15 @@ export const ANLEITUNG_EN: Kapitel[] = [
     titel: "Creating and filling word lists",
     text: (
       <>
-        <p>A <b>word list</b> is whatever you want to practise together — usually a page from your exercise book, a unit, or the material for a test.</p>
-        <p>Three ways to fill one:</p>
+        <p>A <b>word list</b> is whatever you want to practise together — usually a page from your exercise book, a unit, or the material for a test. <b>Every word belongs to exactly one list.</b></p>
+        <p><b>+ New list</b> asks first where the words come from:</p>
         <ul>
-          <li><b>Paste</b> — drop in copied lines or a list you had an AI write. The app works out the columns itself.</li>
-          <li><b>By hand</b> — word, translation, done. An example sentence and the pronunciation are optional.</li>
-          <li><b>A shared list</b> — someone sends you a link and you take the list over.</li>
+          <li><b>Create an empty list</b> — name and target date now, words later.</li>
+          <li><b>Paste a list</b> — drop in copied lines; the app works out the columns itself. Nothing to copy? The <b>AI prompt</b> in the same window fetches the list from a photo of the page.</li>
+          <li><b>Take over a shared list</b> — someone sends you a link and you take the list over.</li>
         </ul>
-        <p>A word may sit in several lists at once. “Unit 4” and “Irregular verbs” can both be true.</p>
+        <p>An open list shows its details first: target date, progress, statistics. Behind <b>View and edit the words</b> sits the list itself — that is where you search, tap rows to select them, and use <b>Add</b>, <b>Edit</b> and <b>Delete</b>.</p>
+        <p>Two lists that belong together anyway can be <b>merged</b>: the words move over and the empty list disappears.</p>
       </>
     ),
   },
@@ -80,8 +81,8 @@ export const ANLEITUNG_EN: Kapitel[] = [
     titel: "The practice plan",
     text: (
       <>
-        <p>The calendar shows every day a word list is due. The colour of the dot says how far along that list is: <b>green</b> means ready, <b>yellow</b> almost, <b>red</b> still needs work. If several lists fall on one day, the number sits inside the dot and the colour shows the weakest of them — that one needs the work first.</p>
-        <p>Tap a day and you see every list for that day separately, each with <b>Practise</b> and <b>Statistics</b>. You can tick several lists and practise them together.</p>
+        <p>The calendar shows every day a word list is due. The <b>whole day</b> is tinted, and the colour says how far along you are: <b>green</b> means ready, <b>yellow</b> on track, <b>red</b> behind. Under the date it says how many lists are involved — if there are several, the colour shows the weakest of them, because that one needs the work first.</p>
+        <p>Tap a day and you see every list for that day separately, each with <b>Practise</b> and <b>Statistics</b>. Tap several rows and you practise them together.</p>
         <p>The plan covers all your languages. So it also shows you when Latin and French fall in the same week.</p>
       </>
     ),
@@ -104,7 +105,7 @@ export const ANLEITUNG_EN: Kapitel[] = [
           <li><b>Typing</b> — you write the answer. This gives you the most.</li>
           <li><b>Choosing</b> — you pick from several options. Easier, good to begin with.</li>
           <li><b>Self-check</b> — you think, turn the card over and judge for yourself whether you knew it. Be honest; when the word comes back depends on it.</li>
-          <li><b>Browsing</b> — just looking. It does not count towards your progress, and it says so above the card.</li>
+          <li><b>Just flipping through</b> — only looking. It does not count towards your progress, and it says so above the card.</li>
         </ul>
         <p>Next to that you set the <b>direction</b>. <b>Mixed</b> means: sometimes one way, sometimes the other — the card always shows you which way it is asking.</p>
       </>
@@ -127,10 +128,21 @@ export const ANLEITUNG_EN: Kapitel[] = [
     ),
   },
   {
+    titel: "With or without an account",
+    text: (
+      <>
+        <p>The app works fully <b>without an account</b>. Everything you enter then lives on this device — and only there.</p>
+        <p>Sign in and three things follow: your progress is the same on <b>all your devices</b>, you can <b>share lists</b> and take shared ones over, and your words survive if something happens to the device.</p>
+        <p>You can sign in at any later point. Whatever is already on the device, the app asks whether it should come along into the account.</p>
+        <p>You delete your account under <b>Settings</b> → “Account &amp; data”. That removes the data in the cloud too, and it cannot be undone.</p>
+      </>
+    ),
+  },
+  {
     titel: "When something is wrong",
     text: (
       <>
-        <p>Typed a word incorrectly? Tap it under <b>Word lists</b> and change it.</p>
+        <p>Typed a word incorrectly? Under <b>Word lists</b> open the list, go to <b>View and edit the words</b>, tap the row and choose <b>Edit</b>.</p>
         <p>Do not need a list after all? Delete it — the words stay in your collection and only leave that one list.</p>
         <p>Want to start over? In <b>Settings</b>, under “Account &amp; data”, you can reset your progress — points, history and your daily run, in every language. Your words and word lists stay. It cannot be undone.</p>
       </>

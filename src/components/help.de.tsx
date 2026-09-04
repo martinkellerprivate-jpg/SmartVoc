@@ -58,14 +58,15 @@ export const ANLEITUNG_DE: Kapitel[] = [
     titel: "Wortlisten anlegen und füllen",
     text: (
       <>
-        <p>Eine <b>Wortliste</b> ist alles, was du zusammen üben willst — meist eine Heftseite, eine Lektion oder ein Prüfungsstoff.</p>
-        <p>Drei Wege, sie zu füllen:</p>
+        <p>Eine <b>Wortliste</b> ist alles, was du zusammen üben willst — meist eine Heftseite, eine Lektion oder ein Prüfungsstoff. <b>Jedes Wort gehört zu genau einer Liste.</b></p>
+        <p><b>+ Neue Liste</b> fragt zuerst, woher die Wörter kommen:</p>
         <ul>
-          <li><b>Einfügen</b> — kopierte Zeilen oder eine mit KI erstellte Liste einsetzen. Die App erkennt die Spalten selbst.</li>
-          <li><b>Von Hand</b> — Wort, Übersetzung, fertig. Beispielsatz und Aussprache sind freiwillig.</li>
-          <li><b>Geteilte Liste</b> — jemand schickt dir einen Link, du übernimmst die Liste.</li>
+          <li><b>Leere Liste anlegen</b> — Name und Zieldatum jetzt, Wörter später.</li>
+          <li><b>Liste einfügen</b> — kopierte Zeilen einsetzen; die App erkennt die Spalten selbst. Hast du nichts zum Kopieren, holt dir der <b>KI-Prompt</b> aus demselben Fenster die Liste aus einem Foto der Heftseite.</li>
+          <li><b>Geteilte Liste übernehmen</b> — jemand schickt dir einen Link, du übernimmst die Liste.</li>
         </ul>
-        <p>Ein Wort darf in mehreren Wortlisten liegen. „Lektion 4“ und „Unregelmässige Verben“ sind beide wahr.</p>
+        <p>Eine geöffnete Liste zeigt zuerst ihre Angaben: Zieldatum, Fortschritt, Statistik. Hinter <b>Wörter ansehen und bearbeiten</b> liegt die Liste selbst — dort suchst du, tippst Zeilen zum Auswählen an und benutzt <b>Hinzufügen</b>, <b>Bearbeiten</b> und <b>Löschen</b>.</p>
+        <p>Zwei Listen, die ohnehin zusammengehören, lassen sich <b>zusammenführen</b>: die Wörter wandern hinüber, die leere Liste verschwindet.</p>
       </>
     ),
   },
@@ -82,8 +83,8 @@ export const ANLEITUNG_DE: Kapitel[] = [
     titel: "Der Übungsplan",
     text: (
       <>
-        <p>Der Kalender zeigt jeden Tag, an dem eine Wortliste dran ist. Die Farbe des Punktes sagt, wie weit die Liste ist: <b>grün</b> heisst bereit, <b>gelb</b> fast, <b>rot</b> noch üben. Sind mehrere Listen an einem Tag dran, steht die Zahl im Punkt, und die Farbe zeigt die schwächste — die braucht zuerst Arbeit.</p>
-        <p>Tippe einen Tag an, dann siehst du alle Listen dieses Tages einzeln, jede mit <b>Üben</b> und <b>Statistik</b>. Mehrere Listen kannst du ankreuzen und zusammen üben.</p>
+        <p>Der Kalender zeigt jeden Tag, an dem eine Wortliste dran ist. Der <b>ganze Tag</b> ist eingefärbt, und die Farbe sagt, wie weit du bist: <b>grün</b> heisst bereit, <b>gelb</b> auf Kurs, <b>rot</b> im Rückstand. Unter dem Datum steht, um wie viele Listen es geht — sind es mehrere, zeigt die Farbe die schwächste, denn die braucht zuerst Arbeit.</p>
+        <p>Tippe einen Tag an, dann siehst du alle Listen dieses Tages einzeln, jede mit <b>Üben</b> und <b>Statistik</b>. Tippst du mehrere Zeilen an, übst du sie zusammen.</p>
         <p>Der Plan gilt über alle Sprachen. Er zeigt dir also auch, wenn Latein und Französisch in derselben Woche dran sind.</p>
       </>
     ),
@@ -106,7 +107,7 @@ export const ANLEITUNG_DE: Kapitel[] = [
           <li><b>Eintippen</b> — du schreibst die Antwort. Das bringt am meisten.</li>
           <li><b>Auswählen</b> — du wählst aus mehreren Möglichkeiten. Leichter, gut für den Anfang.</li>
           <li><b>Selbstkontrolle</b> — du überlegst, drehst die Karte um und sagst selbst, ob es sass. Sei dabei ehrlich; davon hängt ab, wann das Wort wiederkommt.</li>
-          <li><b>Durchblättern</b> — nur anschauen. Zählt nicht für deinen Lernstand, und das steht auch so über der Karte.</li>
+          <li><b>Nur durchblättern</b> — nur anschauen. Zählt nicht für deinen Lernstand, und das steht auch so über der Karte.</li>
         </ul>
         <p>Daneben stellst du die <b>Richtung</b> ein. <b>Gemischt</b> heisst: mal so herum, mal anders — die Karte zeigt dir immer, was gerade gefragt ist.</p>
       </>
@@ -129,10 +130,21 @@ export const ANLEITUNG_DE: Kapitel[] = [
     ),
   },
   {
+    titel: "Mit oder ohne Konto",
+    text: (
+      <>
+        <p>Die App läuft vollständig <b>ohne Konto</b>. Alles, was du einträgst, liegt dann auf diesem Gerät — und nur dort.</p>
+        <p>Meldest du dich an, kommt dreierlei dazu: dein Stand ist auf <b>allen deinen Geräten</b> derselbe, du kannst <b>Listen teilen</b> und geteilte übernehmen, und deine Wörter überleben, wenn dem Gerät etwas zustösst.</p>
+        <p>Du kannst dich jederzeit später anmelden. Was dann schon auf dem Gerät liegt, fragt die App, ob es mit ins Konto soll.</p>
+        <p>Dein Konto löschst du in den <b>Einstellungen</b> unter „Konto &amp; Daten“. Damit verschwinden auch die Daten in der Cloud; rückgängig machen lässt sich das nicht.</p>
+      </>
+    ),
+  },
+  {
     titel: "Wenn etwas nicht stimmt",
     text: (
       <>
-        <p>Ein Wort falsch eingetippt? Unter <b>Wortlisten</b> antippen und ändern.</p>
+        <p>Ein Wort falsch eingetippt? Unter <b>Wortlisten</b> die Liste öffnen, <b>Wörter ansehen und bearbeiten</b>, die Zeile antippen und <b>Bearbeiten</b>.</p>
         <p>Eine Wortliste doch nicht gebraucht? Löschen — die Wörter bleiben erhalten und verlassen nur diese Liste.</p>
         <p>Von vorne anfangen? In den <b>Einstellungen</b> unter „Konto &amp; Daten“ lässt sich der Fortschritt zurücksetzen — Punkte, Verlauf und Tagesserie, in allen Sprachen. Deine Wörter und Wortlisten bleiben dabei. Rückgängig machen lässt es sich nicht.</p>
       </>

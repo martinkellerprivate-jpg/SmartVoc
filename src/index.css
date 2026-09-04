@@ -644,6 +644,16 @@ table.vt tr:hover .row-actions { opacity: 1; }
 .scan-review { display: flex; flex-direction: column; gap: 8px; max-height: 46vh; overflow: auto; padding: 2px; }
 .scan-row { display: grid; grid-template-columns: 1fr 1fr 32px; gap: 8px; align-items: center; }
 .scan-row-head { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); padding: 0 2px; }
+/* Breit: eine Tabellenzeile. Schmal: eine Karte je Wort -- sieben Spalten
+   passen auf ein iPhone nicht, und eine Tabelle, die rechts aus dem Bild
+   laeuft, ohne dass man es sieht, ist schlimmer als keine. */
+.scan-zeile { display: grid; grid-template-columns: var(--spalten); gap: 8px; align-items: center; }
+@media (max-width: 640px) {
+  .scan-nur-breit { display: none !important; }
+  .scan-zeile { display: flex; flex-direction: column; align-items: stretch; gap: 6px;
+                border: 1px solid var(--line); border-radius: 12px; padding: 10px; background: var(--card-2); }
+  .scan-zeile .icon-btn { align-self: flex-end; }
+}
 
 @media (max-width: 760px) {
   .stat-grid, .cat-grid { grid-template-columns: 1fr 1fr; }

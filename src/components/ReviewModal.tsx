@@ -60,34 +60,38 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
           {valid.length} Wort{valid.length === 1 ? "" : "er"} erkannt. Korrigiere, was nicht stimmt, dann wähle eine Liste.
         </div>
 
+        {/* Sieben Spalten passen auf ein iPhone nicht. Auf dem Handy wird
+            aus jeder Zeile eine Karte, die Felder stehen untereinander und
+            nennen sich selbst -- vorher lief die Tabelle rechts aus dem
+            Bild, ohne dass etwas darauf hinwies. */}
         <div className="scan-review">
-          <div className="scan-row-head" style={{ display: "grid", gridTemplateColumns: grid, gap: 8 }}>
+          <div className="scan-row-head scan-nur-breit" style={{ display: "grid", gridTemplateColumns: grid, gap: 8 }}>
             {isLat
               ? <><span>{txt("Grundform")}</span><span>{txt("Lernform")}</span><span>{txt("Wortart")}</span><span>{txt("Deutsch")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf Deutsch")}</span><span /></>
               : <><span>{P.foreignLabel}</span><span>{txt("Deutsch")}</span><span>{txt("Aussprache")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf Deutsch")}</span><span /></>}
           </div>
           {list.map((r, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: grid, gap: 8, alignItems: "center" }}>
+            <div key={i} className="scan-zeile" style={{ ["--spalten" as any]: grid }}>
               {isLat ? (
                 <>
-                  <input className="mini-input" value={r.grundform ?? ""} placeholder="—" onChange={(e) => setCell(i, "grundform", e.target.value)} />
-                  <input className="mini-input" value={r.lernform ?? ""} placeholder="—" onChange={(e) => setCell(i, "lernform", e.target.value)} />
+                  <input className="mini-input" value={r.grundform ?? ""} placeholder={txt("Grundform")} onChange={(e) => setCell(i, "grundform", e.target.value)} />
+                  <input className="mini-input" value={r.lernform ?? ""} placeholder={txt("Lernform")} onChange={(e) => setCell(i, "lernform", e.target.value)} />
                   <select className="mini-input" value={r.wortart ?? "Nomen"} onChange={(e) => setCell(i, "wortart", e.target.value)}>
                     {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
                   </select>
-                  <input className="mini-input" value={r.de ?? ""} placeholder="—" onChange={(e) => setCell(i, "de", e.target.value)} />
-                  <input className="mini-input" value={r.ex ?? ""} placeholder="—" title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
-                  <input className="mini-input" value={r.exde ?? ""} placeholder="—" title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
-                  <input className="mini-input" value={r.topic ?? ""} placeholder="—" onChange={(e) => setCell(i, "topic", e.target.value)} />
+                  <input className="mini-input" value={r.de ?? ""} placeholder={txt("Deutsch")} onChange={(e) => setCell(i, "de", e.target.value)} />
+                  <input className="mini-input" value={r.ex ?? ""} placeholder={txt("Beispielsätze")} title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
+                  <input className="mini-input" value={r.exde ?? ""} placeholder={txt("… auf Deutsch")} title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
+                  <input className="mini-input" value={r.topic ?? ""} placeholder={txt("Thema")} onChange={(e) => setCell(i, "topic", e.target.value)} />
                 </>
               ) : (
                 <>
-                  <input className="mini-input" value={r.fgn} placeholder="—" onChange={(e) => setCell(i, "fgn", e.target.value)} />
-                  <input className="mini-input" value={r.de} placeholder="—" onChange={(e) => setCell(i, "de", e.target.value)} />
-                  <input className="mini-input" value={r.phonetic ?? ""} placeholder="—" onChange={(e) => setCell(i, "phonetic", e.target.value)} />
-                  <input className="mini-input" value={r.ex ?? ""} placeholder="—" title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
-                  <input className="mini-input" value={r.exde ?? ""} placeholder="—" title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
-                  <input className="mini-input" value={r.topic} placeholder="—" onChange={(e) => setCell(i, "topic", e.target.value)} />
+                  <input className="mini-input" value={r.fgn} placeholder={P.foreignLabel} onChange={(e) => setCell(i, "fgn", e.target.value)} />
+                  <input className="mini-input" value={r.de} placeholder={txt("Deutsch")} onChange={(e) => setCell(i, "de", e.target.value)} />
+                  <input className="mini-input" value={r.phonetic ?? ""} placeholder={txt("Aussprache")} onChange={(e) => setCell(i, "phonetic", e.target.value)} />
+                  <input className="mini-input" value={r.ex ?? ""} placeholder={txt("Beispielsätze")} title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
+                  <input className="mini-input" value={r.exde ?? ""} placeholder={txt("… auf Deutsch")} title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
+                  <input className="mini-input" value={r.topic} placeholder={txt("Thema")} onChange={(e) => setCell(i, "topic", e.target.value)} />
                 </>
               )}
               <button className="icon-btn" style={{ width: 30, height: 30 }} onClick={() => removeRow(i)}><Icon name="trash" size={14} /></button>

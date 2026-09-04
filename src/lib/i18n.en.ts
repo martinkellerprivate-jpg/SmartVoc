@@ -519,7 +519,6 @@ export const EN: Record<string, string> = {
   "Nur die Übungskarte. Nimmt die Farben des gewählten Schemas an.": "The practice card only. It takes the colours of the chosen scheme.",
   "Schrift des grossen Karten-Worts und der Antwort. Die übrige Oberfläche bleibt gleich.": "Typeface for the big word on the card and for the answer. The rest of the interface stays as it is.",
   "Werte ansehen": "See the values",
-  "When off, “grun” for “grün” is a small mistake (partial credit) instead of fully wrong.": "When off, “grun” for “grün” is a small mistake (partial credit) instead of fully wrong.",
   "Wie ein fehlender oder falscher Artikel bewertet wird. Nötig heisst: er muss stehen. Freiwillig heisst: er wird gar nicht angeschaut.": "How a missing or wrong article is judged. Required means it has to be there. Optional means it is not looked at at all.",
   "Wie gut die App ein Wort im Gedächtnis halten will, bevor sie es zur Wiederholung bringt. Intensiver = häufigere Wiederholung, sicherer im Behalten. Alles Weitere regelt die App automatisch.": "How firmly the app wants to hold a word before bringing it back. More intensive means more repetition and safer retention. Everything else the app handles by itself.",
   "Wie schnell ein Wort an Festigkeit gewinnt, wenn du es richtig hast. Höher = die App nimmt schnellere Fortschritte an und fragt seltener nach (riskanter); niedriger = vorsichtiger, häufiger.": "How quickly a word gains staying power when you get it right. Higher means the app assumes faster progress and asks less often (riskier); lower means more cautious and more often.",
@@ -799,4 +798,5 @@ export const EN: Record<string, string> = {
   "Wort hinzugefügt": "Word added",
   "Nichts zum Kopieren? Der KI-Prompt unten holt dir die Liste aus einem Foto der Heftseite.": "Nothing to copy? The AI prompt below fetches the list from a photo of the page.",
   "abtippen, einfügen — oder von einer KI abschreiben lassen": "type it, paste it — or have an AI copy it out for you",
+  "Thema": "Topic",
 };
