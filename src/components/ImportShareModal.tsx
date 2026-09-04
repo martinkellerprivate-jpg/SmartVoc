@@ -40,7 +40,9 @@ export function ImportShareModal({ open, initialToken, onClose }: { open: boolea
     if (!payload) return;
     const pair = payload.pair;
     if (store.settings.pair !== pair) store.setSettings({ pair, selectedLists: [], statLists: [] });
-    const listId = store.addList(payload.name || "Geteilte Liste", pair);
+    /* Eine uebernommene Liste behaelt, von wem sie kam. */
+    const listId = store.addList(payload.name || "Geteilte Liste", pair,
+      { herkunft: "geteilt", autor: (payload as any).autor || undefined });
     const isLat = isLatinPair(pair);
     const key = (w: any) => (isLat ? ((w.grundform || "") + "|" + (w.de || "")) : ((w[fk(pair)] || "") + "|" + (w.de || ""))).toLowerCase();
     const existing = new Set(store.vocab.filter((w: any) => w.pair === pair).map(key));
@@ -86,7 +88,7 @@ export function ImportShareModal({ open, initialToken, onClose }: { open: boolea
         <div className="modal-foot">
           <button className="btn btn-ghost" onClick={onClose}>{txt("Abbrechen")}</button>
           <button className="btn btn-primary" onClick={doImport} disabled={!payload}>
-            <Icon name="download" size={15} /> {payload ? `${payload.words.length} Wörter importieren` : "Importieren"}
+            <Icon name="shareIn" size={15} /> {payload ? `${payload.words.length} Wörter importieren` : "Importieren"}
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { txt } from "../lib/i18n";
+import { txt, getUiLang } from "../lib/i18n";
 import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
@@ -72,6 +72,7 @@ export function WordList() {
   const [quellenBlatt, setQuellenBlatt] = useState<"neu" | "dazu" | null>(null);
   const [mergeWahl, setMergeWahl] = useState(false);
   const [mergeZiel, setMergeZiel] = useState<string | null>(null);
+  const [datumOffen, setDatumOffen] = useState(false);
   const activeList = offen?.art === "liste" ? offen.ref : "__all";
   const [listMenu, setListMenu] = useState(false);
   const [neueListe, setNeueListe] = useState(false);
@@ -289,10 +290,20 @@ export function WordList() {
    * dort gesetzt, bevor die Liste entsteht. Vorher bekam sie einen
    * Platzhalternamen und man benannte sie hinterher um. */
   const legeListeAn = (name: string, dueDate?: number) => {
-    const id = store.addList(name.trim() || txt("Neue Wortliste"), pair);
+    const id = store.addList(name.trim() || txt("Neue Wortliste"), pair,
+      { autor: auth.username || auth.email || undefined });
     if (dueDate) store.updateList(id, { dueDate });
     setOffen({ art: "liste", ref: id });
     return id;
+  };
+  const LOCALE = () => (getUiLang() === "en" ? "en-GB" : "de-CH");
+  /* Ein Datum, wie man es sagt: „heute", „gestern", sonst ausgeschrieben. */
+  const datumLang = (t?: number) => {
+    if (!t) return txt("unbekannt");
+    const tage = Math.floor((Date.now() - t) / 86400000);
+    if (tage <= 0) return txt("heute");
+    if (tage === 1) return txt("gestern");
+    return new Date(t).toLocaleDateString(LOCALE(), { day: "numeric", month: "long", year: "numeric" });
   };
   const commitRename = () => { if (editingListId) store.renameList(editingListId, listName.trim() || "Untitled"); setEditingListId(null); };
   /* `confirm()` ist der Systemdialog: er sieht in der App fremd aus, und in
@@ -396,7 +407,7 @@ export function WordList() {
       </button>
       {isConfigured && (
         <button className="li" onClick={() => { setQuellenBlatt(null); openImport(); }}>
-          <Icon name="download" size={15} />
+          <Icon name="shareIn" size={15} />
           <span className="g">{txt("Geteilte Liste übernehmen")}<div className="m">{txt("jemand hat dir einen Link geschickt")}</div></span>
           <Icon name="arrowRight" size={14} />
         </button>
@@ -532,6 +543,36 @@ export function WordList() {
         onClose={() => setPendingImport(null)}
         onPick={(id: string, name: string) => { const p = pendingImport; setPendingImport(null); commitImport(p, id, name); }} />
       <ShareModal open={!!shareToken} token={shareToken} listName={shareName} onClose={() => setShareToken(null)} />
+
+      {/* Zieldatum setzen und entfernen an einer Stelle. */}
+      {datumOffen && (() => {
+        const l = lists.find((x: any) => x.id === activeList);
+        if (!l) return null;
+        return (
+          <div className="modal-backdrop" onClick={() => setDatumOffen(false)}>
+            <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
+              <div className="modal-head">
+                <div className="modal-title">{txt("Zieldatum")}</div>
+                <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setDatumOffen(false)}><Icon name="x" size={16} /></button>
+              </div>
+              <p className="said" style={{ marginTop: 0 }}>
+                {txt("Meist der Tag der Prüfung. Je näher er rückt, desto häufiger kommen die Wörter dieser Liste. Ohne Datum läuft die Liste nebenher.")}
+              </p>
+              <input type="date" className="field" style={{ width: "100%" }}
+                value={l.dueDate ? new Date(l.dueDate).toISOString().slice(0, 10) : ""}
+                onChange={(e) => setListDue(l.id, e.target.value)} aria-label={txt("Zieldatum")} />
+              <div className="modal-foot">
+                {l.dueDate ? (
+                  <button className="btn btn-ghost" onClick={() => {
+                    setListDue(l.id, ""); setDatumOffen(false); toast(txt("Zieldatum entfernt"), "calendar");
+                  }}><Icon name="trash" size={14} /> {txt("Zieldatum entfernen")}</button>
+                ) : <span />}
+                <button className="btn btn-primary" onClick={() => setDatumOffen(false)}>{txt("Fertig")}</button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Das Dateifeld fuer "Tabelle einlesen". Es lag frueher in der Zeile
           neben dem Knopf und ist beim Umbau der Wortlisten mit ihr
@@ -824,27 +865,23 @@ export function WordList() {
     /* ------------------------------------------- Ebene 2: die Liste */
     return (
       <div className="wl">
+        {/* Neben dem Datum stand ein Papierkorb. Er loeschte das Datum, sah
+            aber aus, als loeschte er die Liste -- ein Zeichen ohne Satz
+            daneben sagt nicht, worauf es sich bezieht. Das Entfernen steht
+            jetzt dort, wo man das Datum ohnehin setzt. */}
         {l && (
           <div className="ruest">
-            <label className="pill pill-sel">
+            <button className="pill pill-on" onClick={() => setDatumOffen(true)}>
               <Icon name="calendar" size={14} />
               <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
-              <input type="date" value={l.dueDate ? new Date(l.dueDate).toISOString().slice(0, 10) : ""}
-                onChange={(e) => setListDue(l.id, e.target.value)} aria-label={txt("Zieldatum")} />
-            </label>
-            {l.dueDate && (
-              <button className="icon-btn" title={txt("Zieldatum entfernen")}
-                onClick={() => { setListDue(l.id, ""); toast(txt("Zieldatum entfernt"), "calendar"); }}>
-                <Icon name="trash" size={13} />
-              </button>
-            )}
+            </button>
             {!istSystemliste && (
               <button className="pill" onClick={() => { setEditingListId(l.id); setListName(l.name); }}>
                 <Icon name="edit" size={14} /> {txt("Umbenennen")}
               </button>
             )}
             {canShare && !istSystemliste && (
-              <button className="pill" onClick={shareActiveList}><Icon name="upload" size={14} /> {txt("Teilen")}</button>
+              <button className="pill" onClick={shareActiveList}><Icon name="share" size={14} /> {txt("Teilen")}</button>
             )}
           </div>
         )}
@@ -883,6 +920,27 @@ export function WordList() {
               <div className="m">{txt("die Wörter wandern hinüber, diese Liste verschwindet")}</div></span>
             <Icon name="arrowRight" size={14} />
           </button>
+        )}
+
+        {/* Woher die Liste kommt und wann sie zuletzt angefasst wurde. Reine
+            Anzeige, deshalb ohne Kasten -- dieselbe Regel wie beim
+            Lernstand: Anzeige steht hell und ohne Linie. */}
+        {l && (
+          <div className="listen-meta">
+            <div className="fz"><span className="fz-name">{txt("Herkunft")}</span>
+              <span className="fz-wert">{txt({
+                geteilt: "Von jemandem übernommen",
+                grundwortschatz: "Mitgeliefert",
+              }[l.herkunft] || "Selbst angelegt")}</span></div>
+            {l.autor && (
+              <div className="fz"><span className="fz-name">{txt("Angelegt von")}</span>
+                <span className="fz-wert">{l.autor}</span></div>
+            )}
+            <div className="fz"><span className="fz-name">{txt("Angelegt")}</span>
+              <span className="fz-wert">{datumLang(l.createdAt)}</span></div>
+            <div className="fz"><span className="fz-name">{txt("Zuletzt geändert")}</span>
+              <span className="fz-wert">{datumLang(l.updatedAt || l.createdAt)}</span></div>
+          </div>
         )}
 
         {l && !istSystemliste && (

@@ -19,6 +19,12 @@ const ICONS: Record<string, string> = {
   trash: "M3 6h18 M8 6V4h8v2 M19 6l-1 14H6L5 6 M10 11v6 M14 11v6",
   edit: "M12 20h9 M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z",
   upload: "M12 16V4 M7 9l5-5 5 5 M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2",
+  /* Teilen und Uebernehmen. Der Pfeil steht AUSSERHALB des Kastens und
+     zeigt hinaus oder hinein -- das uebliche Zeichen fuers Teilen. Die
+     Pfeile von `upload` und `download` bedeuten Hoch- und Herunterladen,
+     also den Weg einer Datei, und das ist hier nicht gemeint. */
+  share: "M12 15V3 M8.5 6.5L12 3l3.5 3.5 M6 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1",
+  shareIn: "M12 3v12 M8.5 11.5L12 15l3.5-3.5 M6 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1",
   download: "M12 4v12 M7 11l5 5 5-5 M4 18v0a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2",
   sparkle: "M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8z M19 14l.7 1.8 1.8.7-1.8.7L19 19l-.7-1.8L16.5 16.5l1.8-.7z",
   cards: "M3 8a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M8 6V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1",

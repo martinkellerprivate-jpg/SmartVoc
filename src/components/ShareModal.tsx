@@ -48,7 +48,7 @@ export function ShareModal({ open, token, listName, onClose }: { open: boolean; 
           </div>
         </div>
         <div className="modal-foot">
-          <button className="btn" onClick={systemTeilen}><Icon name="upload" size={15} /> {txt("Teilen …")}</button>
+          <button className="btn" onClick={systemTeilen}><Icon name="share" size={15} /> {txt("Teilen …")}</button>
           <span className="grow" />
           <button className="btn btn-primary" onClick={onClose}>{txt("Fertig")}</button>
         </div>

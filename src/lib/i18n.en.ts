@@ -757,7 +757,7 @@ export const EN: Record<string, string> = {
   "Auf Kurs": "On track",
   "Im Rückstand": "Behind",
   "So viele Wörter der Liste sitzen schon: ab {g} % bereit, ab {a} % auf Kurs, darunter im Rückstand.": "How many of the list's words have stuck: {g} % and up is ready, {a} % and up is on track, below that you are behind.",
-  "Wortlisten mit Zieldatum: wann sie geprüft werden und wie weit du bist.": "Word lists you have given a date — when they are tested and how far along you are.",
+  "Welche Wortliste wann sitzen muss, und wie weit du bist. Nur Listen mit Zieldatum.": "Which word list has to stick by when, and how far along you are. Only lists with a target date.",
   "{n} Liste": "{n} list",
   "{n} Listen": "{n} lists",
 
@@ -824,4 +824,14 @@ export const EN: Record<string, string> = {
   "Erfasse deine erste Wortliste, dann kann es losgehen.": "Create your first word list and you are ready to go.",
   "Wortliste anlegen": "Create a word list",
   "Wortliste wählen": "Choose a word list",
+  "Herkunft": "Origin",
+  "Selbst angelegt": "Created by you",
+  "Von jemandem übernommen": "Taken from someone",
+  "Mitgeliefert": "Comes with the app",
+  "Angelegt von": "Created by",
+  "Angelegt": "Created",
+  "Zuletzt geändert": "Last changed",
+  "gestern": "yesterday",
+  "unbekannt": "unknown",
+  "Meist der Tag der Prüfung. Je näher er rückt, desto häufiger kommen die Wörter dieser Liste. Ohne Datum läuft die Liste nebenher.": "Usually the day of the test. The closer it gets, the more often the words of this list come up. Without a date the list simply runs alongside.",
 };

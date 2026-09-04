@@ -131,6 +131,7 @@ export const ANLEITUNG_DE: Kapitel[] = [
         <KritzelKalender titel="Die Farbe sagt, wie du stehst" />
         <p>Grün heisst: wenn die Prüfung heute wäre, würdest du bestehen. Rot heisst: da liegt noch Arbeit vor dir. Liegen mehrere Listen auf einem Tag, zeigt die Farbe die schwächste, denn die entscheidet.</p>
         <p>Tipp einen Tag an, dann siehst du, worum es geht, und kannst direkt von dort üben.</p>
+        <p>Der Plan zeigt nur Listen, denen du ein <b>Zieldatum</b> gegeben hast. Alle anderen laufen nebenher und tauchen hier nicht auf.</p>
       </>
     ),
   },

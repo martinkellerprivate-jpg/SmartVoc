@@ -125,6 +125,7 @@ export const ANLEITUNG_EN: Kapitel[] = [
         <KritzelKalender titel="The colour says where you stand" />
         <p>Green means: if the test were today, you would pass. Red means there is work ahead. If several lists fall on one day, the colour shows the weakest, because that one decides.</p>
         <p>Tap a day and you see what it is about, and you can practise straight from there.</p>
+        <p>The plan only shows lists you have given a <b>target date</b>. All the others run alongside and do not appear here.</p>
       </>
     ),
   },

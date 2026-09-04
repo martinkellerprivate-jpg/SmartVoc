@@ -205,7 +205,7 @@ export function PlanTab() {
           in der Leiste ist keine Erklärung. */}
       <div className="tab-kopf">
         <div className="section-title">{txt("Übungsplan")}</div>
-        <div className="muted">{txt("Wortlisten mit Zieldatum: wann sie geprüft werden und wie weit du bist.")}</div>
+        <div className="muted">{txt("Welche Wortliste wann sitzen muss, und wie weit du bist. Nur Listen mit Zieldatum.")}</div>
       </div>
 
       <div className="ruest">

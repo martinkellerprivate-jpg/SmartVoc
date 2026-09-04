@@ -75,6 +75,13 @@ export interface ListT {
   name: string;
   pair: PairId;
   createdAt: number;
+  /* Wer sie angelegt hat, wann sie zuletzt angefasst wurde, und woher sie
+   * stammt. `autor` ist der Anzeigename zum Zeitpunkt des Anlegens, nicht
+   * eine Kennung: eine geteilte Liste soll auch dann noch sagen koennen,
+   * von wem sie kam, wenn das Konto laengst weg ist. */
+  autor?: string;
+  updatedAt?: number;
+  herkunft?: "selbst" | "geteilt" | "grundwortschatz";
 }
 
 // V9: lessons are ALWAYS static snapshots (a fixed set of word ids).

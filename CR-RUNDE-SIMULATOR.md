@@ -253,3 +253,13 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | T-53 · umgesetzt | Eine Smart List schaltet jetzt genauso um wie eine eigene Liste: nochmals antippen hebt sie auf, und die Übung steht auf dem leeren Zustand aus T-48. Dasselbe Antippen hatte zwei Bedeutungen, je nachdem, worauf man tippte. |
 | T-54 | Üben · Auswahl-Blatt | **Konsistenzfehler:** Smart Lists zeigen die Wortzahl rechts, eigene Listen nicht. Die Zahl gehört bei eigenen Listen an dieselbe Stelle. Der Ampelpunkt wandert dafür in Zeile 2 (wo jetzt die Wörterzahl steht) und bekommt **seine Beschriftung dazu**. |
 | T-54 · umgesetzt | Beide Zeilenarten sind jetzt gleich gebaut: Name links, **Zahl rechts**. Die zweite Zeile beginnt mit dem Ampelpunkt und seiner Beschriftung — *„● Im Rückstand · 0 % bereit · in 6 Tagen"*. Ein Punkt allein am rechten Rand sagte niemandem, was er meint; die Beschriftung ist dieselbe wie in der Kalenderlegende (Bereit · Auf Kurs · Im Rückstand). |
+
+### Umgesetzt am 4. September 2026 — T-45 bis T-50
+
+| Nr | Wie gelöst |
+|---|---|
+| T-45 | Der helle Grund hinter „1 Liste“ ist weg — er sass wie ein Aufkleber auf dem Tag und schnitt die Ampelfarbe entzwei. Die Zeile steht jetzt unten am Rand. |
+| T-46 | Oben kurz: *„Welche Wortliste wann sitzen muss, und wie weit du bist. Nur Listen mit Zieldatum.“* Von deinem Text ist in die Anleitung nur gewandert, was dort noch fehlte: dass der Plan **nur Listen mit Zieldatum** zeigt. Der Rest stand schon da, in kürzerer Form. |
+| T-47 | Neue Zeichen `share` und `shareIn`: ein Kasten mit dem Pfeil **ausserhalb**, hinaus zum Teilen, hinein zum Übernehmen. Die alten Pfeile bedeuten Hoch- und Herunterladen, also den Weg einer Datei. „Tabelle einlesen“ behält den Hochlade-Pfeil — dort ist wirklich eine Datei gemeint. |
+| T-49 | Der Papierkorb neben dem Datum ist weg. Die Pille öffnet ein Blatt **„Zieldatum“** mit Erklärung, Datumsfeld und **„Zieldatum entfernen“** im Fuss. |
+| T-50 | Jede Wortliste führt **Herkunft, Autor, angelegt und zuletzt geändert**. Herkunft unterscheidet selbst angelegt, übernommen und mitgeliefert; der Autor ist der Anzeigename zum Zeitpunkt des Anlegens, keine Kennung — eine geteilte Liste soll auch dann noch sagen können, von wem sie kam, wenn das Konto längst weg ist. Angezeigt als reine Anzeige ohne Kasten, unten auf der Listenseite. |

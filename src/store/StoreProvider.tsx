@@ -261,8 +261,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     resetStatsForWords: (ids: string[]) => { setStats((prev: any) => { const next = { ...prev }; ids.forEach((id) => { delete next[id]; }); return next; }); },
     resetSettings: () => setSettings((p: any) => ({ ...p, ...RECOMMENDED })),
     // ---- Wortlisten (V16: der einzige Behaelter fuer Woerter) ----
-    addList: (name: string, pair: string) => {
-      const l = { id: newId(), name: name || "Neue Wortliste", pair: pair || "en-de", createdAt: Date.now() };
+    addList: (name: string, pair: string, mehr: any = {}) => {
+      const l = { id: newId(), name: name || "Neue Wortliste", pair: pair || "en-de",
+                  createdAt: Date.now(), updatedAt: Date.now(), herkunft: "selbst", ...mehr };
       setListsState((ls: any) => [...ls, l]);
       return l.id;
     },
@@ -277,7 +278,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return wid;
     },
     renameList: (id: string, name: string) => {
-      setListsState((ls: any) => ls.map((l: any) => (l.id === id ? { ...l, name } : l)));
+      setListsState((ls: any) => ls.map((l: any) => (l.id === id ? { ...l, name, updatedAt: Date.now() } : l)));
     },
     /* Zieldatum an jeder Wortliste (V16). undefined entfernt es wieder --
      * ein natives Datumsfeld laesst sich auf iOS nicht zuverlaessig leeren. */
@@ -321,6 +322,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       : w)),
     /* Mitgliedschaft steht am Wort. Ein Wort darf in mehreren Listen liegen --
      * "Lektion 4" und "Unregelmaessige Verben" sind beide wahr. */
+    beruehreListe: (id: string) =>
+      setListsState((ls: any) => ls.map((l: any) => (l.id === id ? { ...l, updatedAt: Date.now() } : l))),
     addWordsToList: (listId: string, wordIds: string[]) => {
       const set = new Set(wordIds);
       setVocabState((v: any) => v.map((w: any) => (set.has(w.id) && !(w.lists || []).includes(listId)
