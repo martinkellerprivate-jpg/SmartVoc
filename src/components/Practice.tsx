@@ -142,7 +142,12 @@ export function Practice() {
   /* Smart Lists und Wortlisten schliessen einander aus: eine Smart List
    * rechnet die App taeglich neu, eine Wortliste steht fest. Beides
    * gleichzeitig zu meinen ergaebe keinen Umfang, den man beschreiben kann. */
-  const pickSmart = (ref: string) => setzeAuswahl(["smart:" + ref]);
+  /* Auch eine Smart List laesst sich wieder abwaehlen. Vorher wurde sie nur
+   * gesetzt: einmal angetippt, wurde man sie nur los, indem man zuerst eine
+   * eigene Liste waehlte. Eigene Listen schalten seit jeher um, Smart Lists
+   * nicht -- dasselbe Antippen mit zwei Bedeutungen. */
+  const pickSmart = (ref: string) =>
+    setzeAuswahl(isActiveTok("smart:" + ref) ? [] : ["smart:" + ref]);
   const toggleListe = (id: string) => {
     const tok = "list:" + id;
     const bisher = scopeTokens.filter((t) => t.startsWith("list:"));
