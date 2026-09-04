@@ -6,6 +6,7 @@ import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { useToast } from "../ui/Toast";
 import { PAIRS, isLatinPair } from "../lib/pairs";
+import { spalten, TRENNER } from "../lib/export";
 
 /* EN/FR line splitter: columns Fremd | Deutsch | Topic. Same delimiters as the
  * scan heuristic (tab / : | – — - / 2+ spaces). */
@@ -127,10 +128,13 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText }: { ope
    *
    * Die Spaltenzahl ist fix und jede Spalte wird geschrieben, auch die leeren.
    * Der Parser erkennt das neue Format an genau dieser Anzahl. */
-  const COLS = isLat
-    ? "Grundform | Lernform | Wortart | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Aussprache"
-    : `${P.foreignLabel} | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Aussprache`;
-  const nCols = isLat ? 10 : 8;
+  /* Die Spalten stehen in lib/export.ts -- dieselbe Reihenfolge, in der die
+   * App auch ausgibt. Die Zahl daneben wurde frueher von Hand gefuehrt und
+   * war falsch (sie nannte 8 statt 7 und 10 statt 9), sodass der Prompt eine
+   * Spalte zu viel verlangte. Jetzt wird sie gezaehlt. */
+  const SPALTEN = spalten(pair, P.foreignLabel);
+  const COLS = SPALTEN.join(TRENNER);
+  const nCols = SPALTEN.length;
   const latinRules = isLat
     ? "Lernform = Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: 4 Stammformen; Adjektiv: 3 Genus-Endungen). Wortart ∈ {Nomen, Verb, Adjektiv, Zahlwort, Adverb}.\n"
     : "";

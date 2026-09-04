@@ -12,7 +12,8 @@ import { MasteryBar } from "../ui/MasteryBar";
 import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { isConfigured } from "../lib/supabase";
-import { istWeb } from "../lib/native";
+import { istWeb, teilen } from "../lib/native";
+import { spalten, alsText, wortNutzlast, wortZeile as exportZeile } from "../lib/export";
 import { useAuth } from "../sync/auth";
 import { publishList } from "../sync/share";
 import { ListPicker } from "./ListPicker";
@@ -70,6 +71,7 @@ export function WordList() {
   /* Woher die Woerter kommen -- dasselbe Blatt an zwei Stellen: beim
    * Anlegen einer Liste und beim Ergaenzen einer bestehenden. */
   const [quellenBlatt, setQuellenBlatt] = useState<"neu" | "dazu" | null>(null);
+  const [exportBlatt, setExportBlatt] = useState(false);
   const [mergeWahl, setMergeWahl] = useState(false);
   const [mergeZiel, setMergeZiel] = useState<string | null>(null);
   const [datumOffen, setDatumOffen] = useState(false);
@@ -118,17 +120,33 @@ export function WordList() {
       const rows: any[] = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
       const parsed: any[] = [];
       for (const row of rows) {
+        /* Zu jedem Beispielsatz gehoert seine Uebersetzung, und die beiden
+         * muessen denselben Index bekommen -- sonst steht die deutsche
+         * Fassung unter dem falschen Satz. Deshalb werden sie als Paar
+         * gelesen und erst zum Schluss in zwei Felder getrennt.
+         *
+         * "Beispielsatz 1" und "Beispielsatz 1 deutsch" fangen gleich an,
+         * also entscheidet ein zweiter Blick, welche der beiden Spalten
+         * gemeint ist. */
+        const istDeutsch = (k: string) => /deutsch|german|übersetz|uebersetz/i.test(k);
+        const spalte = (re: RegExp, deutsch: boolean) =>
+          Object.keys(row).find((k) => re.test(k) && istDeutsch(k) === deutsch);
+        const RE1 = /beispiel.*1|example.*1|satz.*1/i, RE2 = /beispiel.*2|example.*2|satz.*2/i;
+        const ex1K = spalte(RE1, false), ex1deK = spalte(RE1, true);
+        const ex2K = spalte(RE2, false), ex2deK = spalte(RE2, true);
         const deK = findKey(row, /germ|deut|^de$/i);
-        const ex1K = findKey(row, /beispiel.*1|example.*1|satz.*1/i);
-        const ex2K = findKey(row, /beispiel.*2|example.*2|satz.*2/i);
         const phK = findKey(row, /ausspr|phonet|lautschr|pronunc|ipa/i);
         const phonetic = (phK ? String(row[phK]) : "").trim();
-        const exK = ex1K ? null : findKey(row, /beispiel|example|satz|phrase/i);
-        const examples = [
-          ...(ex1K ? [String(row[ex1K])] : []),
-          ...(ex2K ? [String(row[ex2K])] : []),
-          ...(exK ? String(row[exK]).split(/\r?\n/) : []),
-        ].map((x) => x.trim()).filter(Boolean);
+        const exK = ex1K ? null : spalte(/beispiel|example|satz|phrase/i, false);
+        const paare: string[][] = [[ex1K, ex1deK], [ex2K, ex2deK]]
+          .filter(([a]) => a)
+          .map(([a, b]) => [String(row[a as string] ?? "").trim(), b ? String(row[b] ?? "").trim() : ""]);
+        if (!paare.length && exK) {
+          for (const z of String(row[exK]).split(/\r?\n/)) { const t = z.trim(); if (t) paare.push([t, ""]); }
+        }
+        const behalten = paare.filter(([a, b]) => a || b);
+        const examples = behalten.map((x) => x[0]);
+        const examplesDe = behalten.map((x) => x[1]);
         if (isLat) {
           const gfK = findKey(row, /grundform|grund|^la$|latein|lat/i);
           const lfK = findKey(row, /lernform|stammform|formen/i);
@@ -137,14 +155,14 @@ export function WordList() {
           const lernform = (lfK ? String(row[lfK]) : "").trim();
           const wortart = (waK ? String(row[waK]) : "").trim();
           const de = (deK ? String(row[deK]) : "").trim();
-          if (grundform || lernform || de) parsed.push({ grundform, lernform, wortart, de, examples, phonetic });
+          if (grundform || lernform || de) parsed.push({ grundform, lernform, wortart, de, examples, examplesDe, phonetic });
           continue;
         }
-        const skip = new Set([deK, ex1K, ex2K, exK, phK].filter(Boolean) as string[]);
+        const skip = new Set([deK, ex1K, ex1deK, ex2K, ex2deK, exK, phK].filter(Boolean) as string[]);
         const fgnK = findKey(row, /eng|fran|fren|^fr$|^en$/i) || Object.keys(row).find((k) => !skip.has(k));
         const fgn = (fgnK ? String(row[fgnK]) : "").trim();
         const de = (deK ? String(row[deK]) : "").trim();
-        if (fgn || de) parsed.push({ fgn, de, examples, phonetic });
+        if (fgn || de) parsed.push({ fgn, de, examples, examplesDe, phonetic });
       }
       setBusy(false);
       if (!parsed.length) { toast(txt("In dieser Datei stehen keine Wörter"), "x"); return; }
@@ -154,9 +172,11 @@ export function WordList() {
 
   const ladeVorlage = async () => {
     const XLSX = await import("xlsx");
-    const head = isLat
-      ? ["Grundform", "Lernform", "Wortart", "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2"]
-      : [P.foreignLabel, "Deutsch", "Aussprache", "Beispielsatz 1", "Beispielsatz 2"];
+    /* Die Vorlage hatte eigene Spalten: die deutschen Beispielsaetze fehlten
+     * ganz, und die Aussprache stand an einer anderen Stelle als im
+     * KI-Prompt. Wer beides nacheinander benutzte, bekam zwei Formate.
+     * Jetzt kommt die Reihenfolge von einer Stelle. */
+    const head = spalten(pair, P.foreignLabel);
     const ws = XLSX.utils.aoa_to_sheet([head, ...exampleRows.map((r: any[]) => r.slice(0, head.length))]);
     ws["!cols"] = head.map((_, i) => ({ wch: i === 0 ? 18 : i === 1 ? 24 : 26 }));
     const wb = XLSX.utils.book_new();
@@ -322,13 +342,29 @@ export function WordList() {
     const l = lists.find((x) => x.id === activeList); if (!l) return;
     const members = pairVocab.filter((w) => (w.lists || []).includes(activeList));
     if (!members.length) { toast("Diese Liste hat noch keine Wörter", "x"); return; }
-    const words = members.map((w) => isLat
-      ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.de || "" }
-      : { [foreign]: w[foreign] || "", de: w.de || "" });
+    /* Frueher standen hier nur Wort und Uebersetzung -- Beispielsaetze und
+     * Aussprache blieben beim Teilen zurueck, obwohl die Gegenseite sie
+     * einlesen kann. Jetzt geht die volle Nutzlast mit. */
+    const words = members.map((w) => wortNutzlast(w, pair, foreign));
     try {
       const token = await publishList({ name: l.name, pair, words });
       setShareName(l.name); setShareToken(token);
     } catch (e) { toast("Teilen fehlgeschlagen — bist du angemeldet?", "x"); }
+  };
+
+  /* Beispielsaetze und ihre Uebersetzungen gehoeren paarweise zusammen und
+   * werden ueber den Index verbunden. Ein `filter(Boolean)` auf nur einer
+   * der beiden Listen verschiebt diese Zuordnung -- danach steht die
+   * deutsche Fassung unter dem falschen Satz. Deshalb wird gemeinsam
+   * gefiltert. `examplesDe` fiel hier bisher ganz weg: eingelesen wurde es,
+   * gespeichert nicht. */
+  const beispielePaar = (r: any) => {
+    const a = (r.examples || []).map((x: any) => String(x ?? "").trim());
+    const b = (r.examplesDe || []).map((x: any) => String(x ?? "").trim());
+    const n = Math.max(a.length, b.length);
+    const behalten: string[][] = [];
+    for (let i = 0; i < n; i++) if ((a[i] || "") || (b[i] || "")) behalten.push([a[i] || "", b[i] || ""]);
+    return { examples: behalten.map((x) => x[0]), examplesDe: behalten.map((x) => x[1]) };
   };
 
   /* ---- commit an import / scan into a chosen list ---- */
@@ -343,9 +379,9 @@ export function WordList() {
         const lernform = (r.lernform || "").trim();
         const wortart = (r.wortart || "").trim();
         const de = (r.de || "").trim();
-        const examples = (r.examples || []).map((s) => String(s).trim()).filter(Boolean);
+        const { examples, examplesDe } = beispielePaar(r);
         const phonetic = (r.phonetic || "").trim();
-        if (grundform || lernform || de) result.push({ grundform, lernform, wortart, de, examples, phonetic, review: false, pair, lists: [listId] });
+        if (grundform || lernform || de) result.push({ grundform, lernform, wortart, de, examples, examplesDe, phonetic, review: false, pair, lists: [listId] });
       }
       const key = (w) => ((w.grundform || "") + "|" + (w.de || "")).toLowerCase();
       const existing = new Set(pairVocab.map(key));
@@ -361,9 +397,9 @@ export function WordList() {
       let review = false;
       if (fgn && !de) { const tr = await translateWord(fgn, foreign, "de"); de = tr.text; review = true; if (tr.text) filled++; }
       else if (de && !fgn) { const tr = await translateWord(de, "de", foreign); fgn = tr.text; review = true; if (tr.text) filled++; }
-      const examples = (r.examples || []).map((s) => String(s).trim()).filter(Boolean);
+      const { examples, examplesDe } = beispielePaar(r);
       const phonetic = (r.phonetic || "").trim();
-      if (fgn || de) result.push({ [foreign]: fgn, de, examples, phonetic, review, pair, lists: [listId] });
+      if (fgn || de) result.push({ [foreign]: fgn, de, examples, examplesDe, phonetic, review, pair, lists: [listId] });
     }
     const existing = new Set(pairVocab.map((w) => ((w[foreign] || "") + "|" + w.de).toLowerCase()));
     const fresh = result.filter((w) => !existing.has(((w[foreign] || "") + "|" + w.de).toLowerCase()));
@@ -378,10 +414,16 @@ export function WordList() {
   // Two explicit example columns instead of one delimited cell: a sentence may
   // contain any punctuation, and "|" / ";" are already column separators here.
   const exampleRows = isLat
-    ? [["canis", "canis, canis, m.", "Nomen", "der Hund", "", "Canis in horto currit.", "", "Tiere"], ["video", "video, videre, vidi, visum", "Verb", "sehen", "", "Puellam video.", "Nihil videre possum.", "Verben"], ["ruber", "ruber, rubra, rubrum", "Adjektiv", "rot", "", "Rosa rubra est.", "", "Farben"]]
+    ? [["canis", "canis, canis, m.", "Nomen", "der Hund", "Canis in horto currit.", "Der Hund läuft im Garten.", "", "", ""],
+       ["video", "video, videre, vidi, visum", "Verb", "sehen", "Puellam video.", "Ich sehe das Mädchen.", "Nihil videre possum.", "Ich kann nichts sehen.", ""],
+       ["ruber", "ruber, rubra, rubrum", "Adjektiv", "rot", "Rosa rubra est.", "Die Rose ist rot.", "", "", ""]]
     : pair === "fr-de"
-    ? [["le chien", "der Hund", "ʃjɛ̃", "Le chien court dans le jardin.", "", "Animaux"], ["rouge", "", "ʁuʒ", "La rose est rouge.", "", "Couleurs"], ["", "das Buch", "", "", "", "École"]]
-    : [["dog", "der Hund", "dɒɡ", "The dog runs in the garden.", "My dog is very old.", "Animals"], ["red", "", "rɛd", "The rose is red.", "", "Colours"], ["", "das Buch", "", "", "", "School"]];
+    ? [["le chien", "der Hund", "Le chien court dans le jardin.", "Der Hund läuft im Garten.", "", "", "ʃjɛ̃"],
+       ["rouge", "rot", "La rose est rouge.", "Die Rose ist rot.", "", "", "ʁuʒ"],
+       ["", "das Buch", "", "", "", "", ""]]
+    : [["dog", "der Hund", "The dog runs in the garden.", "Der Hund läuft im Garten.", "My dog is very old.", "Mein Hund ist sehr alt.", "dɒɡ"],
+       ["red", "rot", "The rose is red.", "Die Rose ist rot.", "", "", "rɛd"],
+       ["", "das Buch", "", "", "", "", ""]];
 
   const catBadge = (w: any) => {
     if (!practiceable(w)) return <span className="badge red"><span className="dot" />{txt("Übersetzung fehlt")}</span>;
@@ -735,6 +777,84 @@ export function WordList() {
     : offen.art === "smart" ? txt((SMART_ACCESS.find((s) => s.ref === offen.ref) || {}).label || "Auswahl")
     : listNameOf(offen.ref);
 
+  /* ============================================== Wörter herausgeben
+   *
+   * Hinein ging es auf drei Wegen, hinaus auf keinem. Das ist nicht nur
+   * unbequem, es ist auch die falsche Haltung: was jemand eingetippt hat,
+   * gehoert ihm, und er muss es wieder mitnehmen koennen.
+   *
+   * Ausgegeben wird in genau dem Format, das die App auch einliest -- die
+   * Spalten stehen dafuer an einer Stelle (lib/export.ts). Damit ist der
+   * Weg hinaus und wieder hinein verlustfrei, und die Textform ist
+   * zugleich das, was man in eine KI wirft, wenn man die Liste erweitern
+   * lassen will.
+   *
+   * Absichtlich OHNE Konto: der Tabellen-Import verlangt eine Anmeldung,
+   * das Herausgeben eigener Daten darf das nicht. */
+  const dateiname = (t: string) =>
+    ("smartvoc-" + (t || "wortliste")).toLowerCase()
+      .replace(/[äàâ]/g, "a").replace(/[öô]/g, "o").replace(/[üû]/g, "u").replace(/ß/g, "ss")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+
+  const exportText = async () => {
+    if (!woerterImBlick.length) { toast(txt("Hier stehen noch keine Wörter"), "x"); return; }
+    const wie = await teilen({
+      titel: titelImBlick,
+      text: alsText(woerterImBlick, pair, foreign),
+    });
+    setExportBlatt(false);
+    if (wie === "gescheitert") { toast(txt("Das hat nicht geklappt"), "x"); return; }
+    toast(wie === "geteilt" ? txt("Geteilt") : txt("In die Zwischenablage kopiert"), "check");
+  };
+
+  const exportTabelle = async () => {
+    if (!woerterImBlick.length) { toast(txt("Hier stehen noch keine Wörter"), "x"); return; }
+    try {
+      const XLSX = await import("xlsx");
+      const head = spalten(pair, P.foreignLabel);
+      const ws = XLSX.utils.aoa_to_sheet([head, ...woerterImBlick.map((w: any) => exportZeile(w, pair, foreign))]);
+      ws["!cols"] = head.map((_, i) => ({ wch: i < 2 ? 22 : 30 }));
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Wortschatz");
+      XLSX.writeFile(wb, dateiname(titelImBlick) + ".xlsx");
+      setExportBlatt(false);
+      toast(txt("Tabelle heruntergeladen"), "download");
+    } catch (e) { toast(txt("Das hat nicht geklappt"), "x"); }
+  };
+
+  /* Dasselbe Blatt wie beim Hineinholen, nur andersherum -- gleiche Form,
+   * gleiche Zeilen, damit man nicht zweimal lernen muss, wie es geht. */
+  const exportFenster = exportBlatt && (
+    <div className="modal-backdrop" onClick={() => setExportBlatt(false)}>
+      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+        <div className="modal-head">
+          <div className="modal-title">{txt("Wörter exportieren")}</div>
+          <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setExportBlatt(false)}><Icon name="x" size={16} /></button>
+        </div>
+        <p className="said" style={{ marginTop: 0 }}>
+          {txt("{n} Wörter aus „{name}“, im selben Format, das die App auch wieder einliest.", { n: String(woerterImBlick.length), name: titelImBlick })}
+        </p>
+        <div className="list">
+          <button className="li" onClick={() => exportText()}>
+            <Icon name="share" size={15} />
+            <span className="g">{txt("Als Text")}<div className="m">{istWeb() ? txt("in die Zwischenablage, zum Einfügen oder Aufbewahren") : txt("teilen oder in die Zwischenablage, eine Zeile je Wort")}</div></span>
+            <Icon name="arrowRight" size={14} />
+          </button>
+          {istWeb() && (
+            <button className="li" onClick={() => exportTabelle()}>
+              <Icon name="download" size={15} />
+              <span className="g">{txt("Als Tabelle")}<div className="m">{txt("Excel oder Numbers, nur in der Webversion")}</div></span>
+              <Icon name="arrowRight" size={14} />
+            </button>
+          )}
+        </div>
+        <div className="modal-foot">
+          <button className="btn btn-ghost" onClick={() => setExportBlatt(false)}>{txt("Abbrechen")}</button>
+        </div>
+      </div>
+    </div>
+  );
+
   /* Eine Zeile, nicht eine Karte. Hier werden Wortlisten gebaut, nicht
    * Statistik gelesen: zwei Spalten, die zwei Woerter, und als einziges
    * Zeichen des Lernstands die Farbe der Zeile -- dieselbe Farbe wie in der
@@ -869,19 +989,29 @@ export function WordList() {
             aber aus, als loeschte er die Liste -- ein Zeichen ohne Satz
             daneben sagt nicht, worauf es sich bezieht. Das Entfernen steht
             jetzt dort, wo man das Datum ohnehin setzt. */}
-        {l && (
+        {/* Eine Werkzeugzeile auf jeder Ebene-2-Ansicht. Zieldatum, Umbenennen
+            und Teilen gelten nur fuer eine echte Liste; Exportieren gilt fuer
+            alles, was hier zu sehen ist -- auch fuer "Alle Wörter" und fuer
+            eine Smart List, denn das sind genauso Wörter, die jemand
+            mitnehmen will. */}
+        {(l || standImBlick.total > 0) && (
           <div className="ruest">
-            <button className="pill pill-on" onClick={() => setDatumOffen(true)}>
-              <Icon name="calendar" size={14} />
-              <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
-            </button>
-            {!istSystemliste && (
+            {l && (
+              <button className="pill pill-on" onClick={() => setDatumOffen(true)}>
+                <Icon name="calendar" size={14} />
+                <span>{l.dueDate ? new Date(l.dueDate).toLocaleDateString("de-CH", { weekday: "short", day: "numeric", month: "numeric" }) : txt("Kein Zieldatum")}</span>
+              </button>
+            )}
+            {l && !istSystemliste && (
               <button className="pill" onClick={() => { setEditingListId(l.id); setListName(l.name); }}>
                 <Icon name="edit" size={14} /> {txt("Umbenennen")}
               </button>
             )}
-            {canShare && !istSystemliste && (
+            {canShare && l && !istSystemliste && (
               <button className="pill" onClick={shareActiveList}><Icon name="share" size={14} /> {txt("Teilen")}</button>
+            )}
+            {standImBlick.total > 0 && (
+              <button className="pill" onClick={() => setExportBlatt(true)}><Icon name="download" size={14} /> {txt("Exportieren")}</button>
             )}
           </div>
         )}
@@ -949,6 +1079,7 @@ export function WordList() {
           </button>
         )}
 
+        {exportFenster}
         {modale}
       </div>
     );
