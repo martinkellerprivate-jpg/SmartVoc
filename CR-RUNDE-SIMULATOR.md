@@ -232,3 +232,11 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | T-42 · umgesetzt | Neuer Bildschirm **„Über SmartVoc"** (`components/UeberModal.tsx`), erreichbar über eine Zeile ganz unten in den Einstellungen. Er beginnt randlos mit dem Startbild, dann ein Satz, dann Datenschutz und Impressum. Beide Zeilen sind aus „Konto & Daten" verschwunden — dort standen Texte zwischen Handlungen, direkt neben den Knöpfen, die etwas löschen. |
 | T-44 | Über SmartVoc | Das Bild füllte den ganzen Rollbereich, mit hartem unterem Rand — man sah nicht, dass darunter Text kommt. **Nach unten ausblenden** und **von Anfang an zeigen, dass gerollt werden kann.** |
 | T-44 · umgesetzt | Das Bild ist auf **38 % der Höhe** beschnitten (Ausschnitt so gesetzt, dass Schriftzug, Gesichter und Karten bleiben; weg fällt das Gras) und läuft nach unten über eine Maske **ins Papier aus**, statt abgeschnitten zu werden. Darunter steht der erste Satz vollständig und der nächste Absatz angeschnitten — damit ist ohne Zeichen klar, dass es weitergeht. Dabei behoben: das Bild reichte nicht bis an die Ränder, weil `.modal` in der Datei **später** steht und bei gleicher Spezifität gewann; die Über-Regeln tragen jetzt beide Klassen. |
+
+## Sechste Runde
+
+| Nr | Bereich | CR |
+|---|---|---|
+| T-45 | Übungsplan · Kalendertag | Die **weisse Hinterlegung** hinter „1 Liste“ **rausnehmen**. Die Schrift soll ausserdem **näher an den unteren Rand**. |
+| T-46 | Übungsplan · Überschrift | Umschreiben. Vorlage: *„Hier behältst du den Überblick, welche Wortlisten du wann beherrschen musst und wie gut du sie schon kannst. Damit kannst du dich effizient auf deine Prüfungen vorbereiten. Gilt nur für Listen, für die du ein Datum definiert hast."* **Achtung: für die Überschrift zu lang** — dort eine **Kurzfassung**, den **vollen Text sinnvoll in die Anleitung** an der passenden Stelle einbauen. Nicht stur übernehmen, sondern nur, wenn es den jetzigen Text besser macht. |
+| T-47 | app-weit · Zeichen fürs Teilen | Für geteilte Listen ist an mehreren Stellen das **falsche Zeichen** im Einsatz: die Pfeile stehen üblicherweise für **Herauf- und Herunterladen**, hier geht es aber ums **Teilen**. Vorbild: das Teilen-Zeichen von Spotify (Kasten mit Pfeil heraus). App-weit in **zwei Richtungen**: Pfeil **nach oben = teilen**, Pfeil **nach unten = geteilte Liste übernehmen**. |

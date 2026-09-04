@@ -806,4 +806,6 @@ export const EN: Record<string, string> = {
   "Über SmartVoc": "About SmartVoc",
   "Datenschutz und Impressum": "Privacy and legal notice",
   "Ein Vokabeltrainer, der ausrechnet, wann ein Wort wiederkommt — statt es zu raten. Gemacht für Schülerinnen und Schüler, die eine Prüfung vor sich haben.": "A vocabulary trainer that works out when a word comes back, instead of guessing. Made for pupils with a test ahead of them.",
+  "Noch keine Wortliste": "No word list yet",
+  "Oben auf „Neue Liste“ — die App fragt dann, woher die Wörter kommen.": "Tap “New list” above — the app then asks where the words come from.",
 };
