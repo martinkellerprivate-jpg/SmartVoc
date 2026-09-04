@@ -142,7 +142,7 @@ function Field({ title, desc, recLabel, atRec, children }: any) {
 const TEMPI = [
   { n: 5,  name: "Gemächlich", sub: "wenig Neues, viel Wiederholung" },
   { n: 10, name: "Normal",     sub: "acht bis zwölf sind der belegte Normalwert" },
-  { n: 20, name: "Zügig",      sub: "für Prüfungsphasen — mehr Rückstau" },
+  { n: 20, name: "Zügig",      sub: "für Prüfungsphasen, dafür mehr Rückstau" },
 ];
 const TEMPO_NAME = (n: number) => (TEMPI.find((t) => t.n === n) || { name: String(n) }).name;
 
@@ -240,7 +240,7 @@ export function SettingsTab() {
         <div>
           <div className="section-title">{txt("Einstellungen")}</div>
           <div className="muted" style={{ fontSize: 13.5, marginTop: 4, maxWidth: 540 }}>
-            {txt("Die Voreinstellungen folgen der Lernpsychologie: verteiltes Üben, aktives Abrufen und wenige neue Wörter pro Tag. Du darfst alles ändern — was du verstellt hast, ist markiert.")}
+            {txt("Die Voreinstellungen folgen der Lernpsychologie: verteiltes Üben, aktives Abrufen und wenige neue Wörter pro Tag. Du darfst alles ändern. Was du verstellt hast, ist markiert.")}
           </div>
         </div>
       </div>
@@ -297,7 +297,7 @@ export function SettingsTab() {
       </Blatt>
 
       <Blatt offen={blatt === "dailyGoal"} titel={txt("Höchstens pro Tag")} onClose={() => setBlatt(null)}
-        desc={txt("So viele Karten schlägt „Heute dran“ höchstens vor. Kein Ziel und keine Serie — die Grenze schützt nur davor, nach einer Pause von zweihundert fälligen Wörtern erschlagen zu werden.")}
+        desc={txt("So viele Karten schlägt „Heute dran“ höchstens vor. Kein Ziel und keine Serie. Die Grenze schützt nur davor, nach einer Pause von zweihundert fälligen Wörtern erschlagen zu werden.")}
         rec={txt("{n} Karten", { n: R.dailyGoal })} atRec={atR("dailyGoal")} onZuruecksetzen={() => set("dailyGoal", R.dailyGoal)}>
         <SliderControl value={settings.dailyGoal} min={10} max={80} step={5} onChange={(v: number) => set("dailyGoal", v)} />
       </Blatt>
@@ -307,7 +307,7 @@ export function SettingsTab() {
           der Zahl daneben beantworten dieselbe Frage in einer Sprache, die
           man ohne Selbstversuch versteht. */}
       <Blatt offen={blatt === "newPerDay"} titel={txt("Neue Wörter pro Tag")} onClose={() => setBlatt(null)}
-        desc={txt("Wie viele ganz neue Wörter höchstens dazukommen. Das ist dein einziger Hebel auf die Menge: der Lernalgorithmus plant jede Karte für sich und kennt kein Tagespensum — eine falsch beantwortete Karte kommt sogar früher wieder, nicht später. Weniger neue Wörter heisst also weniger Rückstau, nicht langsameres Lernen.")}
+        desc={txt("Wie viele ganz neue Wörter höchstens dazukommen. Das ist dein einziger Hebel auf die Menge: der Lernalgorithmus plant jede Karte für sich und kennt kein Tagespensum. Eine falsch beantwortete Karte kommt sogar früher wieder, nicht später. Weniger neue Wörter heisst also weniger Rückstau, nicht langsameres Lernen.")}
         rec={txt(TEMPO_NAME(R.newPerDay))} atRec={atR("newPerDay")} onZuruecksetzen={() => set("newPerDay", R.newPerDay)}>
         <div className="list">
           {TEMPI.map((t) => (
@@ -524,7 +524,7 @@ export function SettingsTab() {
         {advOpen && (
           <>
             <div className="muted" style={{ fontSize: 13, padding: "12px 18px 0", maxWidth: 560 }}>
-              {txt("Für Neugierige. Die App funktioniert mit den Standardwerten optimal — alles hier ist optional und jederzeit zurücksetzbar.")}
+              {txt("Für Neugierige. Die App funktioniert mit den Standardwerten optimal. Alles hier ist freiwillig und jederzeit zurücksetzbar.")}
             </div>
 
             <Field title={txt("Lerntempo")} atRec={cfgVal("learningSpeed") === DEFAULTS.learningSpeed}
@@ -541,27 +541,27 @@ export function SettingsTab() {
             {advParam("S1", "Schwelle „sitzt fast“ (Tage)", "Ab wie vielen Tagen Haltbarkeit ein Wort von „wackelt noch“ (rot) auf „sitzt fast“ (orange) wechselt.", 1, 10, 1, (v: number) => `${v} T`)}
             {advParam("MIN_REPS", "Wiederholungen bis „nicht mehr neu“", "Wie oft ein neues Wort richtig sein muss, bevor es aus der Stufe „neu / frisch“ herauswächst.", 1, 5, 1)}
             {advParam("PUFFER", "Vorlauf „bald fällig“ (Tage)", "Wie viele Tage vor dem eigentlichen Fälligkeitstag ein Wort schon als „bald fällig“ markiert wird.", 0, 7, 1, (v: number) => `${v} T`)}
-            {advParam("D_LEECH", "Schwelle „hartnäckig“ (Zähigkeit)", "Ab welcher Schwierigkeit (0–10) ein oft vergessenes Wort als „hartnäckig“ gilt — zusammen mit der Fehleranzahl.", 4, 10, 1)}
+            {advParam("D_LEECH", "Schwelle „hartnäckig“ (Zähigkeit)", "Ab welcher Schwierigkeit (0 bis 10) ein oft vergessenes Wort als „hartnäckig“ gilt, zusammen mit der Fehleranzahl.", 4, 10, 1)}
             {advParam("LAPSE_LEECH", "Hartnäckig ab Fehlern", "Wie viele Rückfälle ein Wort braucht, um zusätzlich als „hartnäckig“ zu zählen.", 1, 8, 1)}
             {advParam("examWindowDays", "Prüfungs-Fenster (Tage)", "Wie viele Tage vor einem Prüfungstermin die App dichter wiederholt (Prüfungs-Modus).", 1, 7, 1, (v: number) => `${v} T`)}
-            {advParam("examRetention", "Prüfungs-Sicherheit", "Wie sicher Wörter kurz vor der Prüfung sitzen sollen — höher = häufigere Wiederholung im Prüfungs-Fenster.", 0.9, 0.99, 0.01, (v: number) => `${Math.round(v * 100)} %`)}
+            {advParam("examRetention", "Prüfungs-Sicherheit", "Wie sicher Wörter kurz vor der Prüfung sitzen sollen. Höher heisst häufigere Wiederholung im Prüfungs-Fenster.", 0.9, 0.99, 0.01, (v: number) => `${Math.round(v * 100)} %`)}
 
-            <div className="set-subhead">{txt("Übungsrunde — wie oft welche Wörter drankommen")}</div>
+            <div className="set-subhead">{txt("Übungsrunde: wie oft welche Wörter drankommen")}</div>
             {advParam("W_ROT", "Gewicht: wackelnde Wörter", "Wie oft rote (wackelnde) Wörter in einer Runde drankommen. Höher = häufiger. Sollten zusammen mit fälligen am meisten geübt werden.", 1, 10, 1)}
             {advParam("W_FAELLIG", "Gewicht: fällige Wörter", "Wie oft fällige (zur Auffrischung anstehende) Wörter drankommen.", 1, 10, 1)}
             {advParam("W_GRAU", "Gewicht: noch nie geübt", "Wie oft ganz neue, noch nie geübte Wörter drankommen.", 1, 10, 1)}
             {advParam("W_BLAU", "Gewicht: frisch gelernt", "Wie oft frisch gelernte Wörter drankommen.", 1, 10, 1)}
-            {advParam("W_ORANGE", "Gewicht: sitzt fast", "Wie oft fast sitzende Wörter drankommen — die brauchen am wenigsten.", 1, 10, 1)}
+            {advParam("W_ORANGE", "Gewicht: sitzt fast", "Wie oft fast sitzende Wörter drankommen. Die brauchen am wenigsten.", 1, 10, 1)}
             {advParam("ZIEL_WACKELT", "Runden-Ziel: wackelnde Wörter", "Wie oft du ein wackelndes Wort in einer Runde richtig haben musst (mit Abstand), bis es als „für heute erledigt“ gilt.", 1, 5, 1, (v: number) => `${v}×`)}
             {advParam("ZIEL_NEU", "Runden-Ziel: frisch gelernt", "Wie oft ein frisch gelerntes Wort in einer Runde richtig sein muss.", 1, 5, 1, (v: number) => `${v}×`)}
             {advParam("ZIEL_NEU_NIE", "Runden-Ziel: noch nie geübt", "Wie oft ein ganz neues Wort in einer Runde richtig sein muss.", 1, 5, 1, (v: number) => `${v}×`)}
             {advParam("ZIEL_FAST", "Runden-Ziel: sitzt fast", "Wie oft ein fast sitzendes Wort in einer Runde richtig sein muss.", 1, 5, 1, (v: number) => `${v}×`)}
             {advParam("ZIEL_FAELLIG", "Runden-Ziel: fällige Wörter", "Wie oft ein fälliges Wort zur Auffrischung richtig sein muss.", 1, 5, 1, (v: number) => `${v}×`)}
             {advParam("STALE_MIN", "Pause bis Neustart (Minuten)", "Nach so vielen Minuten Pause beginnt die App die Übungsrunde frisch, damit sie zum aktuellen Stand passt.", 10, 120, 5, (v: number) => `${v} min`)}
-            {advParam("GENUG_KARTEN", "Hinweis „Genug für heute“ ab", "Ab so vielen Karten in einer Runde schlägt die App eine Pause vor — ganz ohne Zwang.", 10, 100, 5)}
+            {advParam("GENUG_KARTEN", "Hinweis „Genug für heute“ ab", "Ab so vielen Karten in einer Runde schlägt die App eine Pause vor, ganz ohne Zwang.", 10, 100, 5)}
 
             <Field title={txt("Das Gedächtnis-Modell")}
-              desc={txt("Womit die App rechnet: das Behaltensziel, die abgeleiteten Schwellen und die 19 Modell-Gewichte. Nur zum Ansehen — die App passt diese Werte nicht an dich an und zeichnet dafür auch nichts auf.")}>
+              desc={txt("Womit die App rechnet: das Behaltensziel, die abgeleiteten Schwellen und die 19 Modell-Gewichte. Nur zum Ansehen. Die App passt diese Werte nicht an dich an und zeichnet dafür auch nichts auf.")}>
               <button className="btn btn-ghost btn-sm" onClick={() => setFsrsOpen(true)}><Icon name="chart" size={13} /> {txt("Werte ansehen")}</button>
             </Field>
           </>
@@ -582,7 +582,7 @@ export function SettingsTab() {
         <Field title={txt("Fortschritt zurücksetzen")} desc={txt("Löscht Punkte und Verlauf. Deine Wörter und Wortlisten bleiben.")}>
           <button className="btn btn-sm btn-ghost" onClick={() => setResetOpen(true)}><Icon name="refresh" size={15} /> {txt("Zurücksetzen")}</button>
         </Field>
-        <Field title={txt("Account löschen")} desc={cloudActive ? txt("Löscht deine Daten endgültig — lokal und in der Cloud. Das kann nicht rückgängig gemacht werden.") : txt("Löscht alle Daten auf diesem Gerät. Das kann nicht rückgängig gemacht werden.")}>
+        <Field title={txt("Account löschen")} desc={cloudActive ? txt("Löscht deine Daten endgültig, lokal und in der Cloud. Das kann nicht rückgängig gemacht werden.") : txt("Löscht alle Daten auf diesem Gerät. Das kann nicht rückgängig gemacht werden.")}>
           <button className="btn btn-sm" style={{ borderColor: "var(--red)", color: "var(--red)" }} onClick={() => { setConfirmText(""); setDelErr(""); setDelOpen(true); }}>
             <Icon name="trash" size={15} /> Löschen
           </button>
@@ -590,19 +590,19 @@ export function SettingsTab() {
       </div>
 
       <Bestaetigen offen={voreinstOpen} titel={txt("Einstellungen zurücksetzen")}
-        text={txt("Alle Einstellungen gehen auf die Voreinstellungen zurück — auch das Aussehen und die erweiterten Werte. Deine Wörter, Listen und Lernstände bleiben unberührt.")}
+        text={txt("Alle Einstellungen gehen auf die Voreinstellungen zurück, auch das Aussehen und die erweiterten Werte. Deine Wörter, Listen und Lernstände bleiben unberührt.")}
         knopf={txt("Zurücksetzen")} onClose={() => setVoreinstOpen(false)}
         tun={() => { resetSettings(); setVoreinstOpen(false); toast(txt("Auf die Voreinstellungen zurückgesetzt"), "refresh"); }} />
 
       <Bestaetigen offen={resetOpen} titel={txt("Fortschritt zurücksetzen")}
-        text={txt("Das löscht Punkte, Verlauf und die Tagesserie — in allen Sprachen. Deine Wörter und Wortlisten bleiben. Rückgängig machen lässt es sich nicht.")}
+        text={txt("Das löscht Punkte, Verlauf und die Tagesserie, und zwar in allen Sprachen. Deine Wörter und Wortlisten bleiben. Rückgängig machen lässt es sich nicht.")}
         knopf={txt("Zurücksetzen")} gefahr onClose={() => setResetOpen(false)}
         tun={() => { store.resetStats(); setResetOpen(false); toast(txt("Lernstand zurückgesetzt"), "refresh"); }} />
 
       <Bestaetigen offen={delOpen} titel={txt("Account löschen")} gefahr
         text={<>
           {cloudActive
-            ? txt("Das löscht deine Daten endgültig — auf diesem Gerät und in der Cloud. Danach wirst du abgemeldet.")
+            ? txt("Das löscht deine Daten endgültig, auf diesem Gerät und in der Cloud. Danach wirst du abgemeldet.")
             : txt("Das löscht alle Vokabeln, Listen und Fortschritte auf diesem Gerät.")}
           {" "}{txt("Tippe zum Bestätigen")} <b style={{ color: "var(--ink)" }}>{txt("LÖSCHEN")}</b>.
         </>}

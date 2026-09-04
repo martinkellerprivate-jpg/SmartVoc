@@ -262,8 +262,8 @@ export function Stats() {
             <div className="cheer">
               <Icon name="target" size={15} />
               <span>{txt((vergleich.jetzt - vergleich.davor) === 1
-                ? "1 Wort mehr als im Zeitraum davor — es geht aufwärts."
-                : "{n} Wörter mehr als im Zeitraum davor — es geht aufwärts.",
+                ? "1 Wort mehr als im Zeitraum davor. Es geht aufwärts."
+                : "{n} Wörter mehr als im Zeitraum davor. Es geht aufwärts.",
                 { n: vergleich.jetzt - vergleich.davor })}</span>
             </div>
           )}
@@ -293,8 +293,8 @@ export function Stats() {
                   <LiegendeBalken klassen={versuche.klassen} />
                   {hartnaeckig.length > 0 && (
                     <p className="said faint">{txt(hartnaeckig.length === 1
-                      ? "Gezählt sind nur Wörter, die heute sitzen. Dazu kommt {n} Wort, das es trotz vieler Versuche nicht tut — unten unter „Hartnäckig“."
-                      : "Gezählt sind nur Wörter, die heute sitzen. Dazu kommen {n} Wörter, die es trotz vieler Versuche nicht tun — unten unter „Hartnäckig“.",
+                      ? "Gezählt sind nur Wörter, die heute sitzen. Dazu kommt {n} Wort, das es trotz vieler Versuche nicht tut. Es steht unten unter „Hartnäckig“."
+                      : "Gezählt sind nur Wörter, die heute sitzen. Dazu kommen {n} Wörter, die es trotz vieler Versuche nicht tun. Sie stehen unten unter „Hartnäckig“.",
                       { n: hartnaeckig.length })}</p>
                   )}
                 </div>
@@ -304,7 +304,7 @@ export function Stats() {
                 <div className="card">
                   <h4><Icon name="clock" size={14} />{txt("Wie lange du übst")}</h4>
                   <Kennzahl zahl={Math.round(sitz.schnittMinuten)} einheit={txt("Minuten")}
-                    satz={txt("je Sitzung — {n} Sitzungen im Zeitraum", { n: sitz.anzahl })} />
+                    satz={txt("je Sitzung, {n} Sitzungen im Zeitraum", { n: sitz.anzahl })} />
                   <div className="bars mins">
                     {sitz.sitzungen.map((x, i) => (
                       <i key={i} style={{ height: Math.max(4, Math.round(x.minuten / (sitz.maxMinuten || 1) * 100)) + "%" }} />
@@ -329,7 +329,7 @@ export function Stats() {
                     ))}
                   </div>
                   <div className="barlab">{stunden.bloecke.map((b) => <span key={b.label}>{b.label}</span>)}</div>
-                  <p className="said">{txt("Zwischen {zeit} Uhr sitzt bei dir am meisten — {a} % richtig gegen {b} % zur schwächsten Zeit.",
+                  <p className="said">{txt("Zwischen {zeit} Uhr sitzt bei dir am meisten: {a} % richtig gegen {b} % zur schwächsten Zeit.",
                     { zeit: stunden.beste.label, a: stunden.beste.anteil, b: stunden.schwaechste?.anteil ?? 0 })}</p>
                 </div>
               )}
@@ -395,7 +395,7 @@ export function Stats() {
           </div>
 
           {gekappt > 0 && zeitraum === 90 && (
-            <div className="quiet">{txt("Bei {n} vielgeübten Wörtern reicht der gespeicherte Verlauf nicht über die vollen 3 Monate — die Antwortzahlen sind dort eher zu niedrig.", { n: gekappt })}</div>
+            <div className="quiet">{txt("Bei {n} vielgeübten Wörtern reicht der gespeicherte Verlauf nicht über die vollen 3 Monate. Die Antwortzahlen sind dort eher zu niedrig.", { n: gekappt })}</div>
           )}
         </>
       )}
@@ -458,7 +458,7 @@ function AlleWoerter({ rows, stats, fgnOf, filter, setFilter, sort, setSort, cou
       </div>
 
       {trefferInfo && (
-        <div className="infonote">{txt("Als Treffer zählt jede Antwort, die nicht ganz daneben war — ein fehlender Akzent oder ein Buchstabendreher also auch. Ein Wort, das noch nie abgefragt wurde, zeigt einen Strich.")}</div>
+        <div className="infonote">{txt("Als Treffer zählt jede Antwort, die nicht ganz daneben war. Ein fehlender Akzent oder ein Buchstabendreher zählt also auch. Ein Wort, das noch nie abgefragt wurde, zeigt einen Strich.")}</div>
       )}
 
       <table className="wtable">
@@ -561,7 +561,7 @@ function Erweitert({ settings, tageSitzt, halte, onZurueck }: any) {
             <Kennzahl zahl={Math.round(tageSitzt.schnitt)} einheit={txt("Tage")}
               satz={txt("im Schnitt, vom ersten Mal bis „sitzt“")} />
             <StehendeBalken klassen={tageSitzt.klassen} />
-            <p className="said faint">{txt("Gezählt wird vom ersten Mal, das du ein Wort gesehen hast, bis zu dem Tag, an dem es zum ersten Mal sass. Zwei Achsen für dieselbe Sache: die Versuche in der Übersicht sagen, wie viel Arbeit es war — die Tage hier, wie viel Geduld. Erst danach ist die Frage sinnvoll, wie lange ein Wort dann hält.")}</p>
+            <p className="said faint">{txt("Gezählt wird vom ersten Mal, das du ein Wort gesehen hast, bis zu dem Tag, an dem es zum ersten Mal sass. Zwei Achsen für dieselbe Sache: die Versuche in der Übersicht sagen, wie viel Arbeit es war, die Tage hier, wie viel Geduld. Erst danach ist die Frage sinnvoll, wie lange ein Wort dann hält.")}</p>
           </div>
         </>
       )}
@@ -572,7 +572,7 @@ function Erweitert({ settings, tageSitzt, halte, onZurueck }: any) {
           <div className="card">
             <Kennzahl zahl={Math.round(halte.schnitt)} einheit={txt("Tage")} satz={txt("im Schnitt")} />
             <StehendeBalken klassen={halte.klassen} />
-            <p className="said faint">{txt("Die Haltedauer ist die Zahl der Tage, die ein Wort nach der letzten richtigen Antwort noch sitzt. Danach fragt die App es wieder. Mit jeder richtigen Antwort wächst sie — genau das ist die Vergessenskurve, die flacher wird. Kurz heisst nicht schlecht: jedes neue Wort fängt bei einem Tag an.")}</p>
+            <p className="said faint">{txt("Die Haltedauer ist die Zahl der Tage, die ein Wort nach der letzten richtigen Antwort noch sitzt. Danach fragt die App es wieder. Mit jeder richtigen Antwort wächst sie. Das ist die Vergessenskurve, die flacher wird. Kurz heisst nicht schlecht: jedes neue Wort fängt bei einem Tag an.")}</p>
           </div>
         </>
       )}

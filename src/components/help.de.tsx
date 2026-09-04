@@ -16,9 +16,9 @@ export const TIPPS_DE: Tipp[] = [
   { h: "Lieber täglich kurz als selten lang",
     b: "10 bis 15 Minuten jeden Tag bringen mehr als eine Stunde am Wochenende. In den Pausen dazwischen festigt dein Gehirn die Wörter ganz von selbst." },
   { h: "Erst selbst überlegen, dann umdrehen",
-    b: "Tippe deine Antwort wirklich ein, bevor du die Lösung ansiehst. Genau dieses Anstrengen beim Erinnern macht ein Wort fest — nicht das blosse Anschauen." },
+    b: "Tippe deine Antwort wirklich ein, bevor du die Lösung ansiehst. Genau dieses Anstrengen beim Erinnern macht ein Wort fest, nicht das blosse Anschauen." },
   { h: "Ein Wort braucht viele Begegnungen",
-    b: "Fast niemand kann ein Wort nach einmal Sehen. Dass dir ein Wort über mehrere Tage immer wieder begegnet, ist normal — und genau so soll es sein." },
+    b: "Fast niemand kann ein Wort nach einmal Sehen. Dass dir ein Wort über mehrere Tage immer wieder begegnet, ist normal, und genau so soll es sein." },
   { h: "Mach deine Fehler zu Freunden",
     b: "Wörter, die du falsch hattest, sind die wertvollsten. In der Statistik sammelt „Hartnäckig“ genau diese Wörter zum gezielten Üben." },
   { h: "Wenig Neues, dafür richtig",
@@ -71,10 +71,10 @@ export const ANLEITUNG_DE: Kapitel[] = [
       <>
         <p>Es gibt vier Wege. Sie unterscheiden sich nur darin, wie viel du selbst tippen musst.</p>
         <ol>
-          <li><b>Foto und KI</b> — für eine ganze Heftseite, ohne zu tippen</li>
-          <li><b>Liste einfügen</b> — wenn du den Text schon irgendwo hast</li>
-          <li><b>Einzelnes Wort</b> — für Nachträge</li>
-          <li><b>Geteilte Liste</b> — wenn jemand dir seine schickt</li>
+          <li><b>Foto und KI:</b> für eine ganze Heftseite, ohne zu tippen</li>
+          <li><b>Liste einfügen:</b> wenn du den Text schon irgendwo hast</li>
+          <li><b>Einzelnes Wort:</b> für Nachträge</li>
+          <li><b>Geteilte Liste:</b> wenn jemand dir seine schickt</li>
         </ol>
 
         <h4>1. Foto und KI</h4>
@@ -292,10 +292,10 @@ export const THEORIE_DE: Kapitel[] = [
     titel: "Zum Weiterlesen",
     text: (
       <ul className="help-links">
-        <li><a href="https://de.wikipedia.org/wiki/Vergessenskurve" target="_blank" rel="noreferrer">Vergessenskurve (Wikipedia)</a> — Ebbinghaus’ Messung und was daraus folgt</li>
-        <li><a href="https://de.wikipedia.org/wiki/Verteiltes_Lernen" target="_blank" rel="noreferrer">Verteiltes Lernen (Wikipedia)</a> — warum Abstände wirken</li>
-        <li><a href="https://en.wikipedia.org/wiki/Testing_effect" target="_blank" rel="noreferrer">Testing effect (englisch)</a> — Abrufen schlägt Nachlesen</li>
-        <li><a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki" target="_blank" rel="noreferrer">FSRS (englisch)</a> — das Modell, mit dem diese App rechnet</li>
+        <li><a href="https://de.wikipedia.org/wiki/Vergessenskurve" target="_blank" rel="noreferrer">Vergessenskurve (Wikipedia)</a>: Ebbinghaus’ Messung und was daraus folgt</li>
+        <li><a href="https://de.wikipedia.org/wiki/Verteiltes_Lernen" target="_blank" rel="noreferrer">Verteiltes Lernen (Wikipedia)</a>: warum Abstände wirken</li>
+        <li><a href="https://en.wikipedia.org/wiki/Testing_effect" target="_blank" rel="noreferrer">Testing effect (englisch)</a>: Abrufen schlägt Nachlesen</li>
+        <li><a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki" target="_blank" rel="noreferrer">FSRS (englisch)</a>: das Modell, mit dem diese App rechnet</li>
       </ul>
     ),
   },

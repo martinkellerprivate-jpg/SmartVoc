@@ -205,7 +205,7 @@ export function PlanTab() {
           in der Leiste ist keine Erklärung. */}
       <div className="tab-kopf">
         <div className="section-title">{txt("Übungsplan")}</div>
-        <div className="muted">{txt("Wortlisten, für die du ein Datum gesetzt hast — wann sie geprüft werden und wie weit du bist.")}</div>
+        <div className="muted">{txt("Wortlisten mit Zieldatum: wann sie geprüft werden und wie weit du bist.")}</div>
       </div>
 
       <div className="ruest">
@@ -286,7 +286,7 @@ export function PlanTab() {
             {openList.length === 0 ? (
               <div className="empty">
                 <div className="big">{txt("Kein Termin")}</div>
-                <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum — dann erscheint sie hier.")}</div>
+                <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum, dann erscheint sie hier.")}</div>
               </div>
             ) : <div className="col" style={{ gap: 8 }}>{openList.map(planZeile)}</div>}
           </>
@@ -314,7 +314,7 @@ export function PlanTab() {
             )}
             {!termine.length && !ohneTermin.length && (
               <div className="empty"><div className="big">{txt("Kein Termin")}</div>
-                <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum — dann erscheint sie hier.")}</div></div>
+                <div>{txt("Gib einer Wortliste unter „Wortlisten“ ein Zieldatum, dann erscheint sie hier.")}</div></div>
             )}
           </>
         )}

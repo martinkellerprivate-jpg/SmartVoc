@@ -18,25 +18,25 @@ import { defaultWeights, getCfg, RETENTION } from "../lib/fsrs";
  * Vier Gruppen: womit ein Wort startet, wie zäh es eingeschätzt wird, wie
  * die Haltedauer wächst, und was nach einem Fehler übrig bleibt. */
 const GEWICHT: { name: string; erklaerung: string }[] = [
-  { name: "Erster Halt — gar nicht gewusst", erklaerung: "Tage, die ein neues Wort hält, wenn du es beim ersten Mal nicht konntest" },
-  { name: "Erster Halt — mit Mühe",          erklaerung: "dasselbe, wenn du lange überlegen musstest" },
-  { name: "Erster Halt — gewusst",           erklaerung: "dasselbe, wenn du es konntest" },
-  { name: "Erster Halt — leicht",            erklaerung: "dasselbe, wenn es dir leichtfiel" },
+  { name: "Erster Halt: gar nicht gewusst", erklaerung: "Tage, die ein neues Wort hält, wenn du es beim ersten Mal nicht konntest" },
+  { name: "Erster Halt: mit Mühe",          erklaerung: "dasselbe, wenn du lange überlegen musstest" },
+  { name: "Erster Halt: gewusst",           erklaerung: "dasselbe, wenn du es konntest" },
+  { name: "Erster Halt: leicht",            erklaerung: "dasselbe, wenn es dir leichtfiel" },
   { name: "Anfangs-Zähigkeit",               erklaerung: "wie schwer die App ein Wort einschätzt, bevor sie dich kennt" },
-  { name: "Zähigkeit — Abflachen",           erklaerung: "wie schnell diese erste Einschätzung nachgibt" },
-  { name: "Zähigkeit — Ausschlag",           erklaerung: "wie stark eine einzelne Antwort die Einschätzung verschiebt" },
-  { name: "Zähigkeit — Zug zur Mitte",       erklaerung: "wie stark sie langfristig zum Mittelwert zurückwandert" },
+  { name: "Zähigkeit: Abflachen",           erklaerung: "wie schnell diese erste Einschätzung nachgibt" },
+  { name: "Zähigkeit: Ausschlag",           erklaerung: "wie stark eine einzelne Antwort die Einschätzung verschiebt" },
+  { name: "Zähigkeit: Zug zur Mitte",       erklaerung: "wie stark sie langfristig zum Mittelwert zurückwandert" },
   { name: "Zuwachs beim Halten",             erklaerung: "wie stark die Haltedauer nach einer richtigen Antwort wächst" },
   { name: "Bremse bei langem Halt",          erklaerung: "je länger ein Wort schon hält, desto weniger kommt dazu" },
   { name: "Bonus fürs knappe Erinnern",      erklaerung: "je knapper du es noch wusstest, desto mehr bringt die Wiederholung" },
-  { name: "Nach einem Fehler — Grundwert",   erklaerung: "wie viel Haltedauer ein Wort behält, das du wieder vergessen hast" },
-  { name: "Nach einem Fehler — Zähigkeit",   erklaerung: "wie stark die Zähigkeit dabei mitspricht" },
-  { name: "Nach einem Fehler — bisheriger Halt", erklaerung: "wie stark zählt, wie lange es vorher schon hielt" },
-  { name: "Nach einem Fehler — Vergessensgrad", erklaerung: "wie stark zählt, wie weit es schon weg war" },
+  { name: "Nach einem Fehler: Grundwert",   erklaerung: "wie viel Haltedauer ein Wort behält, das du wieder vergessen hast" },
+  { name: "Nach einem Fehler: Zähigkeit",   erklaerung: "wie stark die Zähigkeit dabei mitspricht" },
+  { name: "Nach einem Fehler: bisheriger Halt", erklaerung: "wie stark zählt, wie lange es vorher schon hielt" },
+  { name: "Nach einem Fehler: Vergessensgrad", erklaerung: "wie stark zählt, wie weit es schon weg war" },
   { name: "Abschlag für „mit Mühe“",         erklaerung: "wie viel weniger es bringt, wenn du lange überlegen musstest" },
   { name: "Zuschlag für „leicht“",           erklaerung: "wie viel mehr es bringt, wenn es dir leichtfiel" },
-  { name: "Am selben Tag — Zuwachs",         erklaerung: "was eine zweite Abfrage am selben Tag noch bringt" },
-  { name: "Am selben Tag — Dämpfung",        erklaerung: "wie schnell dieser Zuwachs abnimmt" },
+  { name: "Am selben Tag: Zuwachs",         erklaerung: "was eine zweite Abfrage am selben Tag noch bringt" },
+  { name: "Am selben Tag: Dämpfung",        erklaerung: "wie schnell dieser Zuwachs abnimmt" },
 ];
 
 export function FsrsValuesModal({ open, onClose, settings }: any) {
@@ -72,7 +72,7 @@ export function FsrsValuesModal({ open, onClose, settings }: any) {
           <div>
             <div className="modal-title">{txt("Womit die App rechnet")}</div>
             <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>
-              {txt("Das Gedächtnis-Modell heisst FSRS. Nur zum Ansehen — hier lässt sich nichts verstellen.")}
+              {txt("Das Gedächtnis-Modell heisst FSRS. Nur zum Ansehen, hier lässt sich nichts verstellen.")}
             </div>
           </div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
@@ -102,7 +102,7 @@ export function FsrsValuesModal({ open, onClose, settings }: any) {
         <div className="panel" style={{ padding: "10px 13px" }}>
           <div className="section-title" style={{ fontSize: 12.5, marginBottom: 2 }}>{txt("Die neunzehn Stellschrauben des Modells")}</div>
           <div className="faint" style={{ fontSize: 11.5, marginBottom: 8 }}>
-            {txt("Mit diesen Zahlen rechnet das Modell aus, wie lange ein Wort hält. Sie stammen aus der Forschung und sind für alle gleich — die App passt sie nicht an dich an und zeichnet dafür auch nichts auf.")}
+            {txt("Mit diesen Zahlen rechnet das Modell aus, wie lange ein Wort hält. Sie stammen aus der Forschung und sind für alle gleich. Die App passt sie nicht an dich an und zeichnet dafür auch nichts auf.")}
           </div>
           {gewichte.map((w: number, i: number) => (
             <Gewicht key={i} name={GEWICHT[i]?.name || `Wert ${i + 1}`}

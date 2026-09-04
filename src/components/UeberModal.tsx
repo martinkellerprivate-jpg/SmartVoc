@@ -27,12 +27,12 @@ export function UeberModal({ offen, onClose }: { offen: boolean; onClose: () => 
           <img className="ueber-bild" src={bild} alt="" />
 
           <p className="ueber-lead">
-            {txt("Ein Vokabeltrainer, der ausrechnet, wann ein Wort wiederkommt — statt es zu raten. Gemacht für Schülerinnen und Schüler, die eine Prüfung vor sich haben.")}
+            {txt("Ein Vokabeltrainer, der ausrechnet, wann ein Wort wiederkommt, statt es zu raten. Gemacht für Schülerinnen und Schüler, die eine Prüfung vor sich haben.")}
           </p>
 
           <h3 className="ueber-h">{txt("Datenschutz")}</h3>
           <div className="muted legal-body">
-            <p>{txt("Kurz: Diese App sammelt nichts über dich. Sie speichert nur, was du selbst einträgst, und braucht dafür nicht mehr als eine E-Mail-Adresse — und die nur, wenn du dich anmeldest.")}</p>
+            <p>{txt("Kurz: Diese App sammelt nichts über dich. Sie speichert nur, was du selbst einträgst, und braucht dafür nicht mehr als eine E-Mail-Adresse, und die nur, wenn du dich anmeldest.")}</p>
 
             <h4>{txt("Was gespeichert wird")}</h4>
             <p>{txt("Deine Wörter, Wortlisten, Lernstände und Einstellungen. Meldest du dich an, zusätzlich deine E-Mail-Adresse und ein selbst gewählter Anzeigename.")}</p>
@@ -44,10 +44,10 @@ export function UeberModal({ offen, onClose }: { offen: boolean; onClose: () => 
             <p>{txt("Keine Werbung, keine Zählpixel, keine Weitergabe an Dritte, kein Verkauf. Die App verfolgt dein Verhalten nicht und legt kein Profil über dich an. Was sie über deinen Lernstand weiss, dient nur dazu, dir die richtigen Wörter zur richtigen Zeit zu zeigen.")}</p>
 
             <h4>{txt("Geteilte Wortlisten")}</h4>
-            <p>{txt("Teilst du eine Wortliste, wird ihr Inhalt unter einem zufälligen Code abgelegt. Wer den Code hat, kann eine Kopie übernehmen — dein Name steht nicht dabei, und dein Lernstand wird nicht mitgeteilt.")}</p>
+            <p>{txt("Teilst du eine Wortliste, wird ihr Inhalt unter einem zufälligen Code abgelegt. Wer den Code hat, kann eine Kopie übernehmen. Dein Name steht nicht dabei, und dein Lernstand wird nicht mitgeteilt.")}</p>
 
             <h4>{txt("Deine Rechte")}</h4>
-            <p>{txt("Du kannst deine Daten jederzeit als Datei exportieren und dein Konto vollständig löschen — beides oben unter „Konto & Daten“. Beim Löschen verschwinden auch die Daten in der Cloud; das lässt sich nicht rückgängig machen.")}</p>
+            <p>{txt("Du kannst deine Daten jederzeit als Datei exportieren und dein Konto vollständig löschen. Beides findest du in den Einstellungen unter „Konto & Daten“. Beim Löschen verschwinden auch die Daten in der Cloud, und das lässt sich nicht rückgängig machen.")}</p>
 
             <h4>{txt("Kinder")}</h4>
             <p>{txt("Die App ist für Schülerinnen und Schüler gemacht. Sie erhebt keine Daten über das hinaus, was zum Lernen nötig ist, und sie enthält keine Werbung und keine Käufe.")}</p>

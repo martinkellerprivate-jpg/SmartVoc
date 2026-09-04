@@ -775,8 +775,8 @@ export function Practice() {
         <div className="practice-wrap">
           {scopeBar}
           <div className="empty">
-            <div className="big">{txt("Alles sitzt — nichts fällig")}</div>
-            <div>{txt("In dieser Auswahl ist gerade nichts dran. Wähle oben eine andere Wortliste oder einen Schnellzugriff — oder komm später wieder.")}</div>
+            <div className="big">{txt("Alles sitzt, nichts fällig")}</div>
+            <div>{txt("In dieser Auswahl ist gerade nichts dran. Wähle oben eine andere Wortliste oder einen Schnellzugriff. Oder komm später wieder.")}</div>
           </div>
         </div>
       );
@@ -788,7 +788,7 @@ export function Practice() {
           {scopeBar}
           <div className="empty round-done">
             <div className="big">{txt("Durchgeblättert")}</div>
-            <div className="round-tally">{txt("Du hast alle Karten dieser Auswahl angesehen. Durchblättern zählt für nichts — kein Lernstand, keine Statistik.")}</div>
+            <div className="round-tally">{txt("Du hast alle Karten dieser Auswahl angesehen. Durchblättern zählt für nichts: kein Lernstand, keine Statistik.")}</div>
             <div className="round-actions">
               <button className="btn btn-primary" onClick={leaveRun}>{txt("Fertig")}</button>
               <button className="btn btn-ghost btn-sm" onClick={() => beginRun(runWordsRef.current, true)}><Icon name="refresh" size={14} /> {txt("Nochmal durchblättern")}</button>
@@ -843,7 +843,7 @@ export function Practice() {
           )}
 
           {back > 0 && (
-            <div className="round-tally">{txt(back === 1 ? "{n} Wort kommt später zur Wiederholung zurück — das ist so gedacht" : "{n} Wörter kommen später zur Wiederholung zurück — das ist so gedacht", { n: back })}</div>
+            <div className="round-tally">{txt(back === 1 ? "{n} Wort kommt später zur Wiederholung zurück, das ist so gedacht" : "{n} Wörter kommen später zur Wiederholung zurück, das ist so gedacht", { n: back })}</div>
           )}
 
           {grown.length > 0 && (
@@ -865,7 +865,7 @@ export function Practice() {
           <button className="btn btn-ghost btn-sm" onClick={() => beginRun(runWordsRef.current, true)}>
             <Icon name="refresh" size={14} /> {txt("Ganze Übung nochmal")}
           </button>
-          <div className="faint" style={{ fontSize: 12.5, marginTop: 10 }}>{txt("Am besten morgen wieder — dann sitzt es dauerhaft")}</div>
+          <div className="faint" style={{ fontSize: 12.5, marginTop: 10 }}>{txt("Am besten morgen wieder, dann sitzt es dauerhaft")}</div>
         </div>
       </div>
     );
@@ -926,7 +926,7 @@ export function Practice() {
   const roundProgressEl = mode === "memorize" ? (
     /* Durchblättern zählt nicht -- dann darf dort auch kein Fortschritt
      * stehen, der etwas anderes behauptet. */
-    <div className="round-progress round-progress-off"><Icon name="eye" size={13} /> {txt("Nur durchblättern — zählt für nichts")}</div>
+    <div className="round-progress round-progress-off"><Icon name="eye" size={13} /> {txt("Nur durchblättern, zählt für nichts")}</div>
   ) : (roundProg && roundProg.total > 0) ? (
     <div className="round-progress">
       <span className="round-progress-label">{txt("Übungsfortschritt")}</span>
@@ -990,9 +990,9 @@ export function Practice() {
         {endspurtListe && (
           <div className="endspurt">
             <Icon name="target" size={13} />
-            {txt(endspurtListe.tage === 0 ? "„{liste}“ ist heute dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt."
-              : endspurtListe.tage === 1 ? "„{liste}“ ist morgen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt."
-              : "„{liste}“ ist in {t} Tagen dran — alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.",
+            {txt(endspurtListe.tage === 0 ? "„{liste}“ ist heute dran. Alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt."
+              : endspurtListe.tage === 1 ? "„{liste}“ ist morgen dran. Alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt."
+              : "„{liste}“ ist in {t} Tagen dran. Alle {n} Wörter sind im Programm, die Tagesgrenze ist ausgesetzt.",
               { liste: endspurtListe.name, n: endspurtListe.n, t: endspurtListe.tage })}
           </div>
         )}
@@ -1132,7 +1132,7 @@ export function Practice() {
               </div>
               <div className="toolbelt">
                 <span className="faint">
-                  {txt(mode === "recall" ? "Erst selber überlegen, dann aufdecken" : "Nur anschauen — das zählt nicht")}
+                  {txt(mode === "recall" ? "Erst selber überlegen, dann aufdecken" : "Nur anschauen, das zählt nicht")}
                 </span>
               </div>
             </>
@@ -1163,7 +1163,7 @@ export function Practice() {
                 <Icon name="x" size={17} /> {txt("Falsch")}
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">{txt("Sei ehrlich — davon hängt ab, wann das Wort wiederkommt")}</span></div>
+            <div className="toolbelt"><span className="faint">{txt("Sei ehrlich, davon hängt ab, wann das Wort wiederkommt")}</span></div>
           </>
         ) : (
           <>
@@ -1172,7 +1172,7 @@ export function Practice() {
                 {txt("Nächste Karte")} <Icon name="arrowRight" size={16} />
               </button>
             </div>
-            <div className="toolbelt"><span className="faint">{txt("Nur durchblättern — kein Lernstand, keine Statistik")}</span></div>
+            <div className="toolbelt"><span className="faint">{txt("Nur durchblättern: kein Lernstand, keine Statistik")}</span></div>
           </>
         )}
       </div>

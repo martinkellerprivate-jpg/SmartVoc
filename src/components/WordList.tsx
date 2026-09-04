@@ -161,7 +161,7 @@ export function WordList() {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Wortschatz");
     XLSX.writeFile(wb, "smartvoc-vorlage.xlsx");
-    toast(txt("Vorlage geladen — ausfüllen und wieder einlesen"), "download");
+    toast(txt("Vorlage geladen, ausfüllen und wieder einlesen"), "download");
   };
 
   const pairLists = useMemo(() => lists.filter((l) => l.pair === pair), [lists, pair]);
@@ -391,7 +391,7 @@ export function WordList() {
           ihn braucht: in das Fenster selbst, als Knopf neben dem Textfeld. */}
       <button className="li" onClick={() => { setQuellenBlatt(null); setPasteSeed(""); setPasteOpen(true); }}>
         <Icon name="list" size={15} />
-        <span className="g">{txt("Liste einfügen")}<div className="m">{txt("abtippen, einfügen — oder von einer KI abschreiben lassen")}</div></span>
+        <span className="g">{txt("Liste einfügen")}<div className="m">{txt("abtippen, einfügen oder von einer KI abschreiben lassen")}</div></span>
         <Icon name="arrowRight" size={14} />
       </button>
       {isConfigured && (
@@ -404,7 +404,7 @@ export function WordList() {
       {tabellen && (
         <button className="li" onClick={() => { setQuellenBlatt(null); dateiRef.current?.click(); }}>
           <Icon name="upload" size={15} />
-          <span className="g">{txt("Tabelle einlesen")}<div className="m">{txt("Excel oder CSV — nur in der Webversion")}</div></span>
+          <span className="g">{txt("Tabelle einlesen")}<div className="m">{txt("Excel oder CSV, nur in der Webversion")}</div></span>
           <Icon name="arrowRight" size={14} />
         </button>
       )}
@@ -501,8 +501,8 @@ export function WordList() {
 
       <Bestaetigen offen={loeschFrage} titel={gewaehlt.length === 1 ? txt("Wort löschen") : txt("Wörter löschen")} gefahr
         text={gewaehlt.length === 1
-          ? txt("Das Wort wird endgültig gelöscht — mit seinem Lernstand. Das lässt sich nicht rückgängig machen.")
-          : txt("{n} Wörter werden endgültig gelöscht — mit ihrem Lernstand. Das lässt sich nicht rückgängig machen.", { n: gewaehlt.length })}
+          ? txt("Das Wort wird endgültig gelöscht, mitsamt seinem Lernstand. Das lässt sich nicht rückgängig machen.")
+          : txt("{n} Wörter werden endgültig gelöscht, mitsamt ihrem Lernstand. Das lässt sich nicht rückgängig machen.", { n: gewaehlt.length })}
         knopf={txt("Löschen")} onClose={() => setLoeschFrage(false)}
         tun={() => {
           const n = gewaehlt.length;
@@ -512,7 +512,7 @@ export function WordList() {
         }} />
 
       <Bestaetigen offen={!!wortLoeschen} titel={txt("Wort löschen")} gefahr
-        text={txt("Das Wort wird endgültig gelöscht — mit seinem Lernstand. Das lässt sich nicht rückgängig machen.")}
+        text={txt("Das Wort wird endgültig gelöscht, mitsamt seinem Lernstand. Das lässt sich nicht rückgängig machen.")}
         knopf={txt("Löschen")} onClose={() => setWortLoeschen(null)}
         tun={() => {
           store.deleteWord(wortLoeschen);
@@ -644,7 +644,7 @@ export function WordList() {
               <div className="modal-title">{txt("Smart Lists")}</div>
               <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={() => setSmartHilfe(false)}><Icon name="x" size={16} /></button>
             </div>
-            <p className="said">{txt("Diese vier Listen stellt die App jeden Tag neu zusammen — quer über deine Wortlisten. Du kannst sie nicht ändern, nur ansehen und üben.")}</p>
+            <p className="said">{txt("Diese vier Listen stellt die App jeden Tag neu zusammen, quer über deine Wortlisten. Du kannst sie nicht ändern, nur ansehen und üben.")}</p>
             <div className="list">
               {SMART_ACCESS.map((sm) => (
                 <div className="li" key={sm.ref}>
@@ -767,7 +767,7 @@ export function WordList() {
 
             {!bearbeitbar ? (
               <div className="quiet links" style={{ paddingTop: 8 }}>
-                {txt("Diese Liste stellt die App täglich neu zusammen — hier lässt sich nichts ändern.")}
+                {txt("Diese Liste stellt die App täglich neu zusammen. Hier lässt sich nichts ändern.")}
               </div>
             ) : (
               /* Drei Knoepfe derselben Form: was man mit der Liste tun kann.
@@ -984,7 +984,7 @@ export function WordList() {
               </button>
             );
           }) : (
-            <div className="quiet">{txt("Noch keine Wortliste — lege oben eine an.")}</div>
+            <div className="quiet">{txt("Noch keine Wortliste. Lege oben eine an.")}</div>
           )}
 
           {pairLists.length > 0 && (
@@ -1027,7 +1027,7 @@ export function WordList() {
           und die Treffer erscheinen darueber. */}
       <div className="search wl-suche">
         <Icon name="search" size={17} />
-        <input className="field" placeholder={txt("Einzelnes Wort suchen — über alle Sprachen")}
+        <input className="field" placeholder={txt("Einzelnes Wort suchen, über alle Sprachen")}
           value={query} onChange={(e) => setQuery(e.target.value)} />
         {query && (
           <button className="such-x" onClick={() => setQuery("")} aria-label={txt("Suche leeren")}>

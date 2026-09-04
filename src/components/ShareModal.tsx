@@ -29,7 +29,7 @@ export function ShareModal({ open, token, listName, onClose }: { open: boolean; 
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
         </div>
         <div className="muted" style={{ fontSize: 13.5, marginBottom: 14, lineHeight: 1.45 }}>
-          {txt("Wer den Code oder Link öffnet, bekommt eine eigene Kopie der Liste — Änderungen daran wirken sich nicht auf deine Liste aus.")}
+          {txt("Wer den Code oder Link öffnet, bekommt eine eigene Kopie der Liste. Änderungen daran wirken sich nicht auf deine Liste aus.")}
         </div>
         <div className="col" style={{ gap: 12 }}>
           <div>

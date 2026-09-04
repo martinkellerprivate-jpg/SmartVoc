@@ -12,7 +12,7 @@ export const TIPPS_EN: Tipp[] = [
   { h: "Think first, then turn the card over",
     b: "Actually type your answer before you look at the solution. That effort of remembering is what makes a word stick — not looking at it again." },
   { h: "A word needs many encounters",
-    b: "Almost nobody knows a word after seeing it once. Meeting the same word again over several days is normal — and exactly how it should be." },
+    b: "Almost nobody knows a word after seeing it once. Meeting the same word again over several days is normal, and exactly how it should be." },
   { h: "Make friends with your mistakes",
     b: "The words you got wrong are the valuable ones. In Statistics, “Stubborn” collects exactly those for focused practice." },
   { h: "Few new words, properly learnt",
@@ -65,10 +65,10 @@ export const ANLEITUNG_EN: Kapitel[] = [
       <>
         <p>There are four ways. They differ only in how much you have to type yourself.</p>
         <ol>
-          <li><b>Photo and AI</b> — for a whole page, without typing</li>
-          <li><b>Paste a list</b> — when you already have the text somewhere</li>
-          <li><b>A single word</b> — for additions</li>
-          <li><b>A shared list</b> — when someone sends you theirs</li>
+          <li><b>Photo and AI:</b> for a whole page, without typing</li>
+          <li><b>Paste a list:</b> when you already have the text somewhere</li>
+          <li><b>A single word:</b> for additions</li>
+          <li><b>A shared list:</b> when someone sends you theirs</li>
         </ol>
 
         <h4>1. Photo and AI</h4>
@@ -285,10 +285,10 @@ export const THEORIE_EN: Kapitel[] = [
     titel: "Further reading",
     text: (
       <ul className="help-links">
-        <li><a href="https://en.wikipedia.org/wiki/Forgetting_curve" target="_blank" rel="noreferrer">Forgetting curve (Wikipedia)</a> — Ebbinghaus’ measurement and what follows from it</li>
-        <li><a href="https://en.wikipedia.org/wiki/Spaced_repetition" target="_blank" rel="noreferrer">Spaced repetition (Wikipedia)</a> — why intervals work</li>
-        <li><a href="https://en.wikipedia.org/wiki/Testing_effect" target="_blank" rel="noreferrer">Testing effect (Wikipedia)</a> — retrieving beats re-reading</li>
-        <li><a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki" target="_blank" rel="noreferrer">FSRS</a> — the model this app calculates with</li>
+        <li><a href="https://en.wikipedia.org/wiki/Forgetting_curve" target="_blank" rel="noreferrer">Forgetting curve (Wikipedia)</a>: Ebbinghaus’ measurement and what follows from it</li>
+        <li><a href="https://en.wikipedia.org/wiki/Spaced_repetition" target="_blank" rel="noreferrer">Spaced repetition (Wikipedia)</a>: why intervals work</li>
+        <li><a href="https://en.wikipedia.org/wiki/Testing_effect" target="_blank" rel="noreferrer">Testing effect (Wikipedia)</a>: retrieving beats re-reading</li>
+        <li><a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki" target="_blank" rel="noreferrer">FSRS</a>: the model this app calculates with</li>
       </ul>
     ),
   },

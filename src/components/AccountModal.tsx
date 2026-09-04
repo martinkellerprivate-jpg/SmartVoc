@@ -122,7 +122,7 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
               )}
             </div>
             {!auth.username && !editingName && (
-              <div className="muted" style={{ fontSize: 12.5, marginTop: -8 }}>{txt("Noch kein Benutzername gesetzt — bisher zeigt die App deine E-Mail. Klicke den Stift, um einen festzulegen.")}</div>
+              <div className="muted" style={{ fontSize: 12.5, marginTop: -8 }}>{txt("Noch kein Benutzername gesetzt. Bisher zeigt die App deine E-Mail-Adresse. Tippe auf den Stift, um einen festzulegen.")}</div>
             )}
             {auth.username && !editingName && <div className="faint" style={{ fontSize: 12, marginTop: -8 }}>{auth.email}</div>}
             <div className="badge slate" style={{ alignSelf: "flex-start" }}><span className="dot" />{STATUS_LABEL[status]}</div>
