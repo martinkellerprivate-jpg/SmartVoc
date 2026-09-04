@@ -191,3 +191,17 @@ damit es an der nächsten Stelle nicht wieder passiert.
 | Lernstand-Block | wich vom Entwurf ab: eine sechste Zeile („Hält im Moment“, ein Modellwert) und Namen, die auf zwei Zeilen brachen | Fünf Zeilen wie im Entwurf; der Name nimmt die Breite, die er braucht |
 | T-30 | Wortlisten · Neue Liste | „Liste einfügen“ und „KI-Prompt zum Abschreiben“ führen in **dasselbe Fenster** — zwei Zeilen, ein Ziel. Der KI-Prompt gehört **nicht** ins Blatt davor, sondern **erst ins Einfügen-Fenster**. |
 | T-30 · umgesetzt | Die Zeile ist weg. Der KI-Weg steht jetzt dort, wo er gebraucht wird: als Satz im Einfügen-Fenster und als Knopf „KI-Prompt kopieren“ darunter — er war dort ohnehin schon. Die Unterzeile von „Liste einfügen“ nennt beide Wege: *abtippen, einfügen — oder von einer KI abschreiben lassen.* |
+
+## Vierte Runde am Simulator
+
+| Nr | Bereich | CR |
+|---|---|---|
+| T-31 | Hilfe | Das Hilfemenü ist **noch nicht gut**. Unter **Lerntipps** klappen die Inhalte an Ort auf — **das ist besser** als das Fenster, das die **Anleitung** öffnet. Wenn aufklappen, dann ist der **Pfeil nach rechts irreführend**: üblich ist ein **Dreieck nach unten**. Und: die **Anleitung soll ebenfalls aufklappen** statt ein Fenster zu öffnen. |
+| T-32 | Hilfe · Inhalt | Die Hilfe braucht **mehr Grafiken**: Bedienelemente zeigen, Kurven zur Theorie. Im **Scribble-Stil**, damit es konzis bleibt — auch die UI-Abbildungen. Die App soll illustratorisch **lebhafter und altersgerechter** werden; der Hilfebereich eignet sich dafür. |
+| T-33 | Hilfe · Anleitung | **Zu kurz und zu beschreibend.** Aus der **Schülerperspektive** schreiben statt aufzuzählen, was die App zeigt — keine Sätze über Offensichtliches („unter dem Datum steht, um wie viele Listen es geht“). Balance: den Nutzer bei seinem Bedürfnis abholen, erklären wie zu bedienen und zu lesen ist, aber nichts beschreiben, was man ohnehin sieht. |
+| T-34 | Hilfe · Wortlisten anlegen und ändern | **Ausführlicher**, mit Bedienelementen als Bild. **Strukturiert anfangen:** es gibt mehrere Arten, kurz aufzählen welche, dann jede einzeln beschreiben. Der **KI-Workflow muss ausführlicher** sein. |
+| T-35 | Hilfe · Übungsplan | Diese Sektion **um Grafiken herum schreiben**, und ebenfalls aus der Schülerperspektive. |
+| T-36 | Hilfe · Die vier Antwortarten | Die langen Gedankenstriche **weg** (KI-Sprache), stattdessen **Zeilenumbrüche**. „Auswählen“ heisst **Multiple-Choice**. **Grafisch klarmachen**, dass „Nur durchblättern“ eine Sonderart ist, und es verständlicher beschreiben, etwa: *„Das richtige, wenn du die Wortliste einfach schnell durchsehen möchtest, zum Beispiel bei einer neuen Liste oder kurz vor einer Prüfung. Wichtig: dieser Modus zählt nicht für die Lernstatistik."* Bei **Selbstkontrolle** der Tipp: *„Am besten schreibst du die Lösung auf ein Blatt Papier und kontrollierst dann in der App. Aber nicht schummeln."* |
+| T-37 | Hilfe · Dahinter | **Ausführlicher.** Nach dem Einleitungssatz in **Kapitel** gliedern und aufklappbar machen (wie T-31). Mit Bildern. |
+| T-38 | App-Start | Ein **kurzer Intro-Bildschirm** beim Starten, im Scribble-Stil: SmartVoc mit Logo, dazu Schülerin und Schüler, die mit Vokabelkarten lernen. |
+| T-39 | Grafiken · Produktion | Entscheid nötig: Grafiken **selbst im Code** oder ausgelagert an **Claude Design**? Die verschiedenen Schemata (Kladde, Tinte, Graphit; hell und dunkel) müssen berücksichtigt sein. Falls ausgelagert: **ein Prompt für alle nötigen Grafiken in einem Abwasch**. |
