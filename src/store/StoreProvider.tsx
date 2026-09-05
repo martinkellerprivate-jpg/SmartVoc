@@ -6,6 +6,7 @@ import { LS, load, save } from "../lib/storage";
 import { newId } from "../lib/ids";
 import { RECOMMENDED } from "../lib/defaults";
 import { stempelPlan } from "../lib/plan";
+import { stempelAnzeige } from "../lib/anzeige";
 import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand, einListeJeWort, stempelMuttersprache, tauscheGrundwortschatz, entferneWaisenSaat } from "../lib/migrate";
 import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER, S2 } from "../lib/fsrs";
 import type { SessionOutcome, SerializedCard } from "../lib/fsrs";
@@ -178,6 +179,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         setSettings((prev: any) => ({ ...prev, activatedStarters: [] }));
       }
       applied.grundwortschatzV24 = true;
+    }
+    /* V25 — aus "Beispielsätze anzeigen: ja/nein" wird ein Modus
+     * (immer / nie / beim Ueben waehlbar). Wer sie eingeschaltet hatte,
+     * bekommt "immer" -- das ist genau, was er hatte. */
+    if (!done.anzeigeV25) {
+      setSettings((prev: any) => {
+        const stempel = stempelAnzeige(prev);
+        return stempel ? { ...prev, ...stempel } : prev;
+      });
+      applied.anzeigeV25 = true;
     }
     if (Object.keys(applied).length) {
       setMeta((prev: any) => ({ ...prev, migrations: { ...(prev.migrations || {}), ...applied } }));

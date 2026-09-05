@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { PAIRS, isLatinPair } from "../lib/pairs";
-
-const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Zahlwort", "Adverb"];
+import { WORTARTEN } from "../lib/export";
 
 export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: boolean; rows: any[] | null; pair: string; onConfirm: (rows: any[]) => void; onClose: () => void }) {
   const isLat = isLatinPair(pair);
@@ -21,8 +20,9 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
     // shape would otherwise silently drop them on the way to the import.
     setList(src.map((r) => ({
       ...(isLat
-        ? { grundform: r.grundform ?? r.fgn ?? "", lernform: r.lernform ?? "", wortart: r.wortart || "Nomen", de: r.de ?? "" }
+        ? { grundform: r.grundform ?? r.fgn ?? "", lernform: r.lernform ?? "", de: r.de ?? "" }
         : { fgn: r.fgn ?? r.grundform ?? "", de: r.de ?? "" }),
+      wortart: r.wortart ?? "",
       /* Satz und Übersetzung als zwei Spalten, jede mit " / " zwischen den
        * beiden Sätzen. Index-treu: Position 1 gehört zu Position 1. */
       ex: (r.examples || []).join(" / "),
@@ -35,7 +35,7 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
 
   const setCell = (i: number, k: string, v: string) => setList((l) => l.map((r, j) => j === i ? { ...r, [k]: v } : r));
   const removeRow = (i: number) => setList((l) => l.filter((_, j) => j !== i));
-  const addRow = () => setList((l) => [...l, isLat ? { grundform: "", lernform: "", wortart: "Nomen", de: "", ex: "", exde: "", phonetic: "" } : { fgn: "", de: "", ex: "", exde: "", phonetic: "" }]);
+  const addRow = () => setList((l) => [...l, { ...(isLat ? { grundform: "", lernform: "" } : { fgn: "" }), wortart: "", de: "", ex: "", exde: "", phonetic: "" }]);
   const g = (r: any, k: string) => ((r?.[k] ?? "") + "").trim();
   const valid = list
     .filter((r) => isLat ? (g(r, "grundform") || g(r, "lernform") || g(r, "de")) : (g(r, "fgn") || g(r, "de")))
@@ -47,7 +47,14 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
       examplesDe: String(exde || "").split("/").map((s) => s.trim()),
     }));
 
-  const grid = isLat ? "1fr 1.3fr 0.7fr 1fr 1.2fr 1.2fr 0.7fr 30px" : "1fr 1fr 0.7fr 1.1fr 1.1fr 0.7fr 30px";
+  /* Dieselben Felder wie in der Vorlage, in derselben Reihenfolge. Die
+   * Stammformen stehen nur bei Latein -- in einer Tabelle, die ohnehin eng
+   * ist, waere eine Spalte, die immer leer bleibt, nur Platzverschwendung.
+   * Beim Wortart-Feld ist "keine Angabe" absichtlich moeglich: eine
+   * Vorbelegung, die niemand gewaehlt hat, ist eine falsche Angabe. */
+  const grid = isLat
+    ? "1fr 1.3fr 0.8fr 1fr 0.8fr 1.2fr 1.2fr 30px"
+    : "1fr 0.8fr 1fr 0.8fr 1.2fr 1.2fr 30px";
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -66,34 +73,33 @@ export function ReviewModal({ open, rows, pair, onConfirm, onClose }: { open: bo
             Bild, ohne dass etwas darauf hinwies. */}
         <div className="scan-review">
           <div className="scan-row-head scan-nur-breit" style={{ display: "grid", gridTemplateColumns: grid, gap: 8 }}>
-            {isLat
-              ? <><span>{txt("Grundform")}</span><span>{txt("Lernform")}</span><span>{txt("Wortart")}</span><span>{P.nativeLabel}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf {sprache}", { sprache: P.nativeLabel })}</span><span /></>
-              : <><span>{P.foreignLabel}</span><span>{P.nativeLabel}</span><span>{txt("Aussprache")}</span><span>{txt("Beispielsätze")}</span><span>{txt("… auf {sprache}", { sprache: P.nativeLabel })}</span><span /></>}
+            <span>{isLat ? txt("Grundform") : P.foreignLabel}</span>
+            {isLat && <span>{txt("Lernform")}</span>}
+            <span>{txt("Wortart")}</span>
+            <span>{P.nativeLabel}</span>
+            <span>{txt("Aussprache")}</span>
+            <span>{txt("Beispielsätze")}</span>
+            <span>{txt("… auf {sprache}", { sprache: P.nativeLabel })}</span>
+            <span />
           </div>
           {list.map((r, i) => (
             <div key={i} className="scan-zeile" style={{ ["--spalten" as any]: grid }}>
-              {isLat ? (
-                <>
-                  <input className="mini-input" value={r.grundform ?? ""} placeholder={txt("Grundform")} onChange={(e) => setCell(i, "grundform", e.target.value)} />
-                  <input className="mini-input" value={r.lernform ?? ""} placeholder={txt("Lernform")} onChange={(e) => setCell(i, "lernform", e.target.value)} />
-                  <select className="mini-input" value={r.wortart ?? "Nomen"} onChange={(e) => setCell(i, "wortart", e.target.value)}>
-                    {WORTARTEN.map((wa) => <option key={wa} value={wa}>{wa}</option>)}
-                  </select>
-                  <input className="mini-input" value={r.de ?? ""} placeholder={P.nativeLabel} onChange={(e) => setCell(i, "de", e.target.value)} />
-                  <input className="mini-input" value={r.ex ?? ""} placeholder={txt("Beispielsätze")} title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
-                  <input className="mini-input" value={r.exde ?? ""} placeholder={txt("… auf Deutsch")} title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
-                  <input className="mini-input" value={r.topic ?? ""} placeholder={txt("Thema")} onChange={(e) => setCell(i, "topic", e.target.value)} />
-                </>
-              ) : (
-                <>
-                  <input className="mini-input" value={r.fgn} placeholder={P.foreignLabel} onChange={(e) => setCell(i, "fgn", e.target.value)} />
-                  <input className="mini-input" value={r.de} placeholder={P.nativeLabel} onChange={(e) => setCell(i, "de", e.target.value)} />
-                  <input className="mini-input" value={r.phonetic ?? ""} placeholder={txt("Aussprache")} onChange={(e) => setCell(i, "phonetic", e.target.value)} />
-                  <input className="mini-input" value={r.ex ?? ""} placeholder={txt("Beispielsätze")} title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
-                  <input className="mini-input" value={r.exde ?? ""} placeholder={txt("… auf Deutsch")} title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
-                  <input className="mini-input" value={r.topic} placeholder={txt("Thema")} onChange={(e) => setCell(i, "topic", e.target.value)} />
-                </>
+              <input className="mini-input" value={(isLat ? r.grundform : r.fgn) ?? ""}
+                placeholder={isLat ? txt("Grundform") : P.foreignLabel}
+                onChange={(e) => setCell(i, isLat ? "grundform" : "fgn", e.target.value)} />
+              {isLat && (
+                <input className="mini-input" value={r.lernform ?? ""} placeholder={txt("Lernform")}
+                  onChange={(e) => setCell(i, "lernform", e.target.value)} />
               )}
+              <select className="mini-input" value={r.wortart ?? ""} aria-label={txt("Wortart")}
+                onChange={(e) => setCell(i, "wortart", e.target.value)}>
+                <option value="">{txt("keine Angabe")}</option>
+                {WORTARTEN.map((wa) => <option key={wa} value={wa}>{txt(wa)}</option>)}
+              </select>
+              <input className="mini-input" value={r.de ?? ""} placeholder={P.nativeLabel} onChange={(e) => setCell(i, "de", e.target.value)} />
+              <input className="mini-input" value={r.phonetic ?? ""} placeholder={txt("Aussprache")} onChange={(e) => setCell(i, "phonetic", e.target.value)} />
+              <input className="mini-input" value={r.ex ?? ""} placeholder={txt("Beispielsätze")} title={txt("Mehrere Sätze mit / trennen")} onChange={(e) => setCell(i, "ex", e.target.value)} />
+              <input className="mini-input" value={r.exde ?? ""} placeholder={txt("… auf {sprache}", { sprache: P.nativeLabel })} title={txt("Übersetzungen, gleiche Reihenfolge, mit / trennen")} onChange={(e) => setCell(i, "exde", e.target.value)} />
               <button className="icon-btn" style={{ width: 30, height: 30 }} onClick={() => removeRow(i)}><Icon name="trash" size={14} /></button>
             </div>
           ))}

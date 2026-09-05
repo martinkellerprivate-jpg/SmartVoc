@@ -13,7 +13,7 @@ import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { isConfigured } from "../lib/supabase";
 import { istWeb, teilen } from "../lib/native";
-import { spalten, alsText, wortNutzlast, wortZeile as exportZeile } from "../lib/export";
+import { spalten, alsText, wortNutzlast, wortZeile as exportZeile, WORTARTEN } from "../lib/export";
 import { useAuth } from "../sync/auth";
 import { publishList } from "../sync/share";
 import { ListPicker } from "./ListPicker";
@@ -31,7 +31,6 @@ import { LernstandBlock } from "../ui/LernstandBlock";
 import { SMART_ACCESS } from "../lib/smartlists";
 import { resolveSmart, resolveToday } from "../lib/engine";
 
-const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Zahlwort", "Adverb"];
 
 /* ===================================================================
  * Bereich "Wortlisten" (V16) — der eine Ort fuer Woerter und Listen.
@@ -91,8 +90,8 @@ export function WordList() {
   const toggleWort = (id: string) => setGewaehlt((g) => g.includes(id) ? g.filter((x) => x !== id) : [...g, id]);
   const [query, setQuery] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [draft, setDraft] = useState({ fgn: "", de: "", lists: [] as any[], lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
-  const [adding, setAdding] = useState({ fgn: "", de: "", listId: "", lernform: "", wortart: "Nomen", ex1: "", ex1de: "", phon: "" });
+  const [draft, setDraft] = useState({ fgn: "", de: "", lists: [] as any[], lernform: "", wortart: "", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
+  const [adding, setAdding] = useState({ fgn: "", de: "", listId: "", lernform: "", wortart: "", ex1: "", ex1de: "", phon: "" });
   const [busy, setBusy] = useState(false);
   const [pendingImport, setPendingImport] = useState(null);
   const [editingListId, setEditingListId] = useState(null);
@@ -141,7 +140,11 @@ export function WordList() {
         const ex2K = spalte(RE2, false), ex2deK = spalte(RE2, true);
         const deK = findKey(row, /germ|deut|^de$/i);
         const phK = findKey(row, /ausspr|phonet|lautschr|pronunc|ipa/i);
+        const lfK = findKey(row, /lernform|stammform|formen/i);
+        const waK = findKey(row, /wortart|wort.?art|^art$|pos/i);
         const phonetic = (phK ? String(row[phK]) : "").trim();
+        const lernform = (lfK ? String(row[lfK]) : "").trim();
+        const wortart = (waK ? String(row[waK]) : "").trim();
         const exK = ex1K ? null : spalte(/beispiel|example|satz|phrase/i, false);
         const paare: string[][] = [[ex1K, ex1deK], [ex2K, ex2deK]]
           .filter(([a]) => a)
@@ -152,22 +155,22 @@ export function WordList() {
         const behalten = paare.filter(([a, b]) => a || b);
         const examples = behalten.map((x) => x[0]);
         const examplesDe = behalten.map((x) => x[1]);
+
+        /* Die erste Spalte traegt das Wort. Ihre Ueberschrift ist der Name
+         * der Sprache ("Español", "Latein"), also wird zuerst danach
+         * gesucht; sonst nach den bekannten Bezeichnungen, und zuletzt
+         * bleibt die erste Spalte uebrig, die noch keine Rolle hat. */
+        const belegt = new Set([deK, ex1K, ex1deK, ex2K, ex2deK, exK, phK, lfK, waK].filter(Boolean) as string[]);
+        const kopfK = Object.keys(row).find((k) => k.trim().toLowerCase() === P.foreignLabel.toLowerCase())
+          || findKey(row, /grundform|fremdsprache|^wort$|eng|fran|fren|espa|itali|portug|latein|^fr$|^en$|^es$|^it$|^pt$|^la$/i)
+          || Object.keys(row).find((k) => !belegt.has(k));
+        const kopf = (kopfK ? String(row[kopfK]) : "").trim();
+        const de = (deK ? String(row[deK]) : "").trim();
         if (isLat) {
-          const gfK = findKey(row, /grundform|grund|^la$|latein|lat/i);
-          const lfK = findKey(row, /lernform|stammform|formen/i);
-          const waK = findKey(row, /wortart|wort.?art|^art$|pos/i);
-          const grundform = (gfK ? String(row[gfK]) : "").trim();
-          const lernform = (lfK ? String(row[lfK]) : "").trim();
-          const wortart = (waK ? String(row[waK]) : "").trim();
-          const de = (deK ? String(row[deK]) : "").trim();
-          if (grundform || lernform || de) parsed.push({ grundform, lernform, wortart, de, examples, examplesDe, phonetic });
+          if (kopf || lernform || de) parsed.push({ grundform: kopf, lernform, wortart, de, examples, examplesDe, phonetic });
           continue;
         }
-        const skip = new Set([deK, ex1K, ex1deK, ex2K, ex2deK, exK, phK].filter(Boolean) as string[]);
-        const fgnK = findKey(row, /eng|fran|fren|^fr$|^en$/i) || Object.keys(row).find((k) => !skip.has(k));
-        const fgn = (fgnK ? String(row[fgnK]) : "").trim();
-        const de = (deK ? String(row[deK]) : "").trim();
-        if (fgn || de) parsed.push({ fgn, de, examples, examplesDe, phonetic });
+        if (kopf || de) parsed.push({ fgn: kopf, wortart, de, examples, examplesDe, phonetic });
       }
       setBusy(false);
       if (!parsed.length) { toast(txt("In dieser Datei stehen keine Wörter"), "x"); return; }
@@ -186,7 +189,10 @@ export function WordList() {
     ws["!cols"] = head.map((_, i) => ({ wch: i === 0 ? 18 : i === 1 ? 24 : 26 }));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Wortschatz");
-    XLSX.writeFile(wb, "smartvoc-vorlage.xlsx");
+    /* Die Sprache gehoert in den Dateinamen. Zwei Vorlagen hiessen beide
+     * "smartvoc-vorlage.xlsx", lagen als "…" und "…-2" nebeneinander im
+     * Download-Ordner und waren nicht zu unterscheiden. */
+    XLSX.writeFile(wb, `smartvoc-vorlage-${dateiname(P.foreignLabel).replace(/^smartvoc-/, "")}.xlsx`);
     toast(txt("Vorlage geladen, ausfüllen und wieder einlesen"), "download");
   };
 
@@ -287,10 +293,10 @@ export function WordList() {
   const NEU = "__neu";
   const startNeu = (listId: string) => {
     setDraft({ fgn: "", de: "", lists: listId && listId !== "__all" ? [listId] : [],
-      lernform: "", wortart: "Nomen", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
+      lernform: "", wortart: "", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
     setEditingId(NEU);
   };
-  const startEdit = (w) => { setEditingId(w.id); setDraft({ fgn: isLat ? (w.grundform || "") : (w[foreign] || ""), de: w.de, lists: w.lists || [], lernform: w.lernform || "", wortart: w.wortart || "Nomen", ex1: (w.examples || [])[0] || "", ex2: (w.examples || [])[1] || "", ex1de: (w.examplesDe || [])[0] || "", ex2de: (w.examplesDe || [])[1] || "", phon: w.phonetic || "" }); };
+  const startEdit = (w) => { setEditingId(w.id); setDraft({ fgn: isLat ? (w.grundform || "") : (w[foreign] || ""), de: w.de, lists: w.lists || [], lernform: w.lernform || "", wortart: w.wortart || "", ex1: (w.examples || [])[0] || "", ex2: (w.examples || [])[1] || "", ex1de: (w.examplesDe || [])[0] || "", ex2de: (w.examplesDe || [])[1] || "", phon: w.phonetic || "" }); };
   const saveEdit = (id) => {
     /* Index-treu speichern: examples[i] und examplesDe[i] gehören zusammen.
      * Deshalb hier KEIN filter(Boolean) — sonst rutscht die zweite Übersetzung
@@ -300,7 +306,7 @@ export function WordList() {
     const phonetic = (draft.phon || "").trim();
     const patch = isLat
       ? { grundform: draft.fgn.trim(), lernform: draft.lernform.trim(), wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false }
-      : { [foreign]: draft.fgn.trim(), de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false };
+      : { [foreign]: draft.fgn.trim(), wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false };
     if (id === NEU) {
       if (!draft.fgn.trim() && !draft.de.trim() && !draft.lernform.trim()) { setEditingId(null); return; }
       store.addWord({ ...patch, pair, source: "manual", createdAt: Date.now() });
@@ -404,7 +410,8 @@ export function WordList() {
       else if (de && !fgn) { const tr = await translateWord(de, "de", foreign); fgn = tr.text; review = true; if (tr.text) filled++; }
       const { examples, examplesDe } = beispielePaar(r);
       const phonetic = (r.phonetic || "").trim();
-      if (fgn || de) result.push({ [foreign]: fgn, de, examples, examplesDe, phonetic, review, pair, lists: [listId] });
+      const wortart = (r.wortart || "").trim();
+      if (fgn || de) result.push({ [foreign]: fgn, wortart, de, examples, examplesDe, phonetic, review, pair, lists: [listId] });
     }
     const existing = new Set(pairVocab.map((w) => ((w[foreign] || "") + "|" + w.de).toLowerCase()));
     const fresh = result.filter((w) => !existing.has(((w[foreign] || "") + "|" + w.de).toLowerCase()));
@@ -418,17 +425,35 @@ export function WordList() {
 
   // Two explicit example columns instead of one delimited cell: a sentence may
   // contain any punctuation, and "|" / ";" are already column separators here.
+/* Beispielzeilen der Vorlage, im EINEN Spaltensatz:
+     Fremdsprache | Lernform | Wortart | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache
+   Die Lernform bleibt ausserhalb des Lateinischen leer -- genau so, wie es
+   auch ausgefuellt aussehen soll. Die letzte Zeile zeigt absichtlich eine
+   halb leere: nur die Uebersetzung, den Rest holt die App oder man traegt
+   ihn spaeter nach. */
   const exampleRows = isLat
-    ? [["canis", "canis, canis, m.", "Nomen", "der Hund", "Canis in horto currit.", "Der Hund läuft im Garten.", "", "", ""],
-       ["video", "video, videre, vidi, visum", "Verb", "sehen", "Puellam video.", "Ich sehe das Mädchen.", "Nihil videre possum.", "Ich kann nichts sehen.", ""],
-       ["ruber", "ruber, rubra, rubrum", "Adjektiv", "rot", "Rosa rubra est.", "Die Rose ist rot.", "", "", ""]]
+    ? [["canis", "canis, canis, m.", "Nomen", "der Hund", "Canis in horto currit.", "Der Hund läuft im Garten.", "", "", "canis"],
+       ["video", "video, videre, vidi, visum", "Verb", "sehen", "Puellam video.", "Ich sehe das Mädchen.", "Nihil videre possum.", "Ich kann nichts sehen.", "videō"],
+       ["ruber", "ruber, rubra, rubrum", "Adjektiv", "rot", "Rosa rubra est.", "Die Rose ist rot.", "", "", "ruber"]]
     : pair === "fr-de"
-    ? [["le chien", "der Hund", "Le chien court dans le jardin.", "Der Hund läuft im Garten.", "", "", "ʃjɛ̃"],
-       ["rouge", "rot", "La rose est rouge.", "Die Rose ist rot.", "", "", "ʁuʒ"],
-       ["", "das Buch", "", "", "", "", ""]]
-    : [["dog", "der Hund", "The dog runs in the garden.", "Der Hund läuft im Garten.", "My dog is very old.", "Mein Hund ist sehr alt.", "dɒɡ"],
-       ["red", "rot", "The rose is red.", "Die Rose ist rot.", "", "", "rɛd"],
-       ["", "das Buch", "", "", "", "", ""]];
+    ? [["le chien", "", "Nomen", "der Hund", "Le chien court dans le jardin.", "Der Hund läuft im Garten.", "", "", "ʃjɛ̃"],
+       ["rouge", "", "Adjektiv", "rot", "La rose est rouge.", "Die Rose ist rot.", "", "", "ʁuʒ"],
+       ["", "", "", "das Buch", "", "", "", "", ""]]
+    : pair === "es-de"
+    ? [["el perro", "", "Nomen", "der Hund", "El perro corre por el jardín.", "Der Hund läuft durch den Garten.", "", "", "ˈpe.ro"],
+       ["rojo", "", "Adjektiv", "rot", "La rosa es roja.", "Die Rose ist rot.", "", "", "ˈro.xo"],
+       ["", "", "", "das Buch", "", "", "", "", ""]]
+    : pair === "it-de"
+    ? [["il cane", "", "Nomen", "der Hund", "Il cane corre nel giardino.", "Der Hund läuft im Garten.", "", "", "ˈkaːne"],
+       ["rosso", "", "Adjektiv", "rot", "La rosa è rossa.", "Die Rose ist rot.", "", "", "ˈrosːo"],
+       ["", "", "", "das Buch", "", "", "", "", ""]]
+    : pair === "pt-de"
+    ? [["o cão", "", "Nomen", "der Hund", "O cão corre no jardim.", "Der Hund läuft im Garten.", "", "", "ˈkɐ̃w"],
+       ["vermelho", "", "Adjektiv", "rot", "A rosa é vermelha.", "Die Rose ist rot.", "", "", "vɨɾˈmɐʎu"],
+       ["", "", "", "das Buch", "", "", "", "", ""]]
+    : [["dog", "", "Nomen", "der Hund", "The dog runs in the garden.", "Der Hund läuft im Garten.", "My dog is very old.", "Mein Hund ist sehr alt.", "dɒɡ"],
+       ["red", "", "Adjektiv", "rot", "The rose is red.", "Die Rose ist rot.", "", "", "rɛd"],
+       ["", "", "", "das Buch", "", "", "", "", ""]];
 
   const catBadge = (w: any) => {
     if (!practiceable(w)) return <span className="badge red"><span className="dot" />{txt("Übersetzung fehlt")}</span>;
@@ -659,14 +684,16 @@ export function WordList() {
               <div className="fz-block">
                 <FeldEingabe feld={isLat ? txt("Grundform") : P.foreignLabel}
                   wert={draft.fgn} onChange={(v) => setDraft({ ...draft, fgn: v })} />
+                {/* Stammformen kennt nur Latein. Die Wortart kennt jede
+                    Sprache -- ein englisches "under" ist genauso eine
+                    Praeposition, und die Angabe steht in den Angaben zum
+                    Wort wie jede andere. */}
                 {isLat && (
-                  <>
-                    <FeldEingabe feld={txt("Stammformen")} wert={draft.lernform}
-                      onChange={(v) => setDraft({ ...draft, lernform: v })} />
-                    <FeldAuswahl feld={txt("Wortart")} wert={draft.wortart} werte={WORTARTEN}
-                      onChange={(v) => setDraft({ ...draft, wortart: v })} />
-                  </>
+                  <FeldEingabe feld={txt("Stammformen")} wert={draft.lernform}
+                    onChange={(v) => setDraft({ ...draft, lernform: v })} />
                 )}
+                <FeldAuswahl feld={txt("Wortart")} hinweis={txt("optional")} wert={draft.wortart} werte={WORTARTEN}
+                  onChange={(v) => setDraft({ ...draft, wortart: v })} />
                 <FeldEingabe feld={P.nativeLabel} wert={draft.de}
                   onChange={(v) => setDraft({ ...draft, de: v })} />
                 <FeldEingabe feld={txt("Lautschrift")} hinweis={txt("optional")} wert={draft.phon}

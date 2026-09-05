@@ -1296,6 +1296,10 @@ table.vt tr.row-sel td { background: var(--amber-bg); }
 .pill-on { background: var(--amber-deep); border-color: var(--amber-deep); color: #fff; font-weight: 600; }
 .pill-on:hover { border-color: var(--ink); }
 .pill-quiet { color: var(--ink-soft); font-weight: 400; }
+/* Eine Pille, die an oder aus ist. Dieselbe Auswahlkonvention wie ueberall
+   sonst: dunklere Fuellung und eine kraeftigere Linie, kein Kaestchen und
+   kein zweiter Ring. `pill-on` waere falsch -- das ist die Handlungsfarbe. */
+.pill-an { background: var(--bg-2); border-color: var(--ink); border-width: 1.5px; font-weight: 600; }
 .pill-n { background: oklch(1 0 0 / .22); border-radius: 999px; padding: 1px 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .pill:not(.pill-on) .pill-n { background: var(--bg-2); color: var(--ink-soft); }
 /* Die Dreiecke an den Pillen sind weg. Sie sagten "hier oeffnet sich etwas"

@@ -16,6 +16,7 @@ import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { listReadiness, TONE_VAR, toneLegend } from "../lib/readiness";
 import { PairPill } from "../ui/PairPill";
 import { WahlPille } from "../ui/WahlPille";
+import { zeigt, hatSchalter, BEISPIELE, PHONETIK } from "../lib/anzeige";
 import { SMART_ACCESS, SMART_REFS } from "../lib/smartlists";
 import { tapRichtig, tapFalsch } from "../lib/native";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
@@ -314,6 +315,18 @@ export function Practice() {
     startRun();
   }, [pair, selKey, nichtsGewaehlt]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  /* Beim allerersten Start ist der Wortschatz noch leer, wenn die Runde oben
+   * zusammengestellt wird: der Grundwortschatz wird eine Umdrehung spaeter
+   * geladen. Die Bedingungen dort aendern sich dabei nicht, also blieb die
+   * Runde leer -- und die App begruesste jeden neuen Benutzer mit "Hier gibt
+   * es nichts zu ueben", bis er neu lud. Dieser Nachzieher greift genau
+   * dann: nichts in der Runde, aber inzwischen Woerter da. */
+  useEffect(() => {
+    if (nichtsGewaehlt || runWordsRef.current.length) return;
+    if (!vocab.some((w: any) => practiceable(w))) return;
+    startRun();
+  }, [vocab.length]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const pool = useMemo(() => {
     // Kein Sprachfilter: der Umfang bestimmt den Vorrat, nicht das aktive Paar.
     const set = new Set(runWordsRef.current);
@@ -599,7 +612,7 @@ export function Practice() {
      * schlimmer als eine Karte, die nicht ganz wie eine Karteikarte aussieht. */
     if (el.scrollHeight > el.clientHeight + 1) card?.classList.add("grow");
     el.classList.toggle("overflows", !card && el.scrollHeight > el.clientHeight + 1);
-  }, [current?.id, face, result, focus, settings.cardFont, settings.showExamples]);
+  }, [current?.id, face, result, focus, settings.cardFont, settings.beispieleModus, settings.beispieleAn]);
 
   useEffect(() => {
     if (!pickerOpen) return;
@@ -983,7 +996,7 @@ export function Practice() {
   const examplesIn = (lang: string) => (lang === NATIVE ? exDe : exFgn).filter(Boolean);
   // Pronunciation belongs to the FOREIGN word, so it may only appear where that
   // word itself is shown — otherwise it would hint at the answer.
-  const phon = (settings.showPhonetic !== false && current?.phonetic) ? String(current.phonetic).trim() : "";
+  const phon = (zeigt(settings, PHONETIK) && current?.phonetic) ? String(current.phonetic).trim() : "";
   const phoneticEl = phon ? <div className="card-phonetic">[{phon.replace(/^\[|\]$/g, "")}]</div> : null;
   /* Beide Seiten tragen ihre eigenen Beispielsaetze -- die Fremdseite die
    * fremdsprachigen, die deutsche die Uebersetzungen. So sieht die Karte in
@@ -991,7 +1004,7 @@ export function Practice() {
    * nichts: er steht in derselben Sprache wie die Frage. */
   const examplesFor = (key: string) => {
     const list = examplesIn(key);
-    if (settings.showExamples === false || !list.length) return null;
+    if (!zeigt(settings, BEISPIELE) || !list.length) return null;
     return <div className="card-examples">{list.map((x: string, i: number) => <p key={i}>{x}</p>)}</div>;
   };
 
@@ -1290,6 +1303,27 @@ export function Practice() {
           optionen={Object.keys(MODE_NAME).map((v) => ({ wert: v, label: txt(MODE_NAME[v]) }))}
           onWahl={(v) => { store.setSettings({ mode: v }); restartCard(); }}
         />
+        {/* Die zwei Schalter stehen NEBEN der Antwortart, weil sie dasselbe
+            sind: Einstellungen zum Üben, die man mitten in der Übung
+            umlegen will. Sie erscheinen nur, wenn die Einstellung sie
+            wählbar lässt -- wer die Lautschrift grundsätzlich nicht will,
+            soll auch den Schalter nicht sehen. */}
+        {hatSchalter(settings, BEISPIELE) && (
+          <button className={"pill" + (zeigt(settings, BEISPIELE) ? " pill-an" : "")}
+            aria-pressed={zeigt(settings, BEISPIELE)}
+            onClick={() => store.setSettings({ beispieleAn: !zeigt(settings, BEISPIELE) })}>
+            <Icon name={zeigt(settings, BEISPIELE) ? "check" : "eye"} size={15} />
+            <span>{txt("Beispielsätze")}</span>
+          </button>
+        )}
+        {hatSchalter(settings, PHONETIK) && (
+          <button className={"pill" + (zeigt(settings, PHONETIK) ? " pill-an" : "")}
+            aria-pressed={zeigt(settings, PHONETIK)}
+            onClick={() => store.setSettings({ phonetikAn: !zeigt(settings, PHONETIK) })}>
+            <Icon name={zeigt(settings, PHONETIK) ? "check" : "eye"} size={15} />
+            <span>{txt("Lautschrift")}</span>
+          </button>
+        )}
         <div className="grow" />
         <button className="btn btn-ghost btn-sm" onClick={leaveRun}>{txt("Übung abbrechen")}</button>
       </div>

@@ -6,8 +6,13 @@ export const RECOMMENDED: Partial<Settings> = {
   startAuswahl: "heute",  // womit die App aufmacht
   mode: "type",          // active recall (typing) beats recognition
   choicesCount: 4,        // multiple-choice options when in Choose mode
-  showExamples: true,     // show a word's foreign-language example sentences on the solution side
-  showPhonetic: true,     // show the pronunciation next to the foreign word
+  /* Beispielsätze und Lautschrift: immer / nie / beim Üben wählbar.
+     Empfohlen ist "wählbar" — es zeigt beides und legt die Entscheidung
+     trotzdem dorthin, wo sie anfällt. Siehe lib/anzeige.ts. */
+  beispieleModus: "waehlbar",
+  phonetikModus: "waehlbar",
+  beispieleAn: true,
+  phonetikAn: true,
   dailyGoal: 30,          // cards/day target (~15 min daily session)
   newPerDay: 10,          // new words introduced per day (8–12 is ideal)
   targetRetention: 0.9,    // V13: THE retention source (Lernintensität-Preset schreibt hierein)

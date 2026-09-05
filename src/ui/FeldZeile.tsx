@@ -33,12 +33,16 @@ export function FeldEingabe({ feld, hinweis, wert, onChange, mehrzeilig, aria }:
   );
 }
 
-export function FeldAuswahl({ feld, wert, onChange, werte }:
-  { feld: string; wert: string; onChange: (v: string) => void; werte: string[] }) {
+export function FeldAuswahl({ feld, hinweis, wert, onChange, werte, leerText }:
+  { feld: string; hinweis?: string; wert: string; onChange: (v: string) => void; werte: string[]; leerText?: string }) {
   return (
     <label className="fz fz-edit">
-      <span className="fz-name">{feld}</span>
+      <span className="fz-name">{feld}{hinweis && <span className="fz-opt">{hinweis}</span>}</span>
       <select className="fz-feld" value={wert} onChange={(e) => onChange(e.target.value)} aria-label={feld}>
+        {/* Ein leerer Eintrag, weil das Feld freiwillig ist. Ohne ihn stuende
+            dort immer der erste Wert und behauptete etwas, das niemand
+            angegeben hat. */}
+        <option value="">{leerText || txt("keine Angabe")}</option>
         {werte.map((w) => <option key={w} value={w}>{txt(w)}</option>)}
       </select>
     </label>

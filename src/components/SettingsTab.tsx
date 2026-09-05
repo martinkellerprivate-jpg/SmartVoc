@@ -10,6 +10,7 @@ import { useAuth } from "../sync/auth";
 import { exportAllData, deleteLocalData } from "../lib/accountData";
 import { deleteCloudAccount } from "../sync/share";
 import { PAIRS, isLatinPair, mutterVon, MUTTERSPRACHE_VORGABE } from "../lib/pairs";
+import { ANZEIGE_NAME, ANZEIGE_KURZ, modusVon, BEISPIELE, PHONETIK } from "../lib/anzeige";
 import { DEFAULTS, previewStabilityGood, retentionFor } from "../lib/fsrs";
 import { FsrsValuesModal } from "./FsrsValuesModal";
 import { toneLegend, TONE_VAR } from "../lib/readiness";
@@ -277,10 +278,14 @@ export function SettingsTab() {
           wert={txt({ locker: "Locker", normal: "Normal", intensiv: "Intensiv" }[
             (settings.targetRetention ?? 0.9) >= 0.95 ? "intensiv" : (settings.targetRetention ?? 0.9) <= 0.85 ? "locker" : "normal"])}
           onClick={() => setBlatt("intensity")} />
-        <ZeileSchalter titel={txt("Beispielsätze anzeigen")} sub={txt("auf der Lösungsseite")}
-          value={settings.showExamples !== false} onChange={(v: boolean) => set("showExamples", v)} />
-        <ZeileSchalter titel={txt("Lautschrift anzeigen")} sub={txt("unter dem Fremdwort")}
-          value={settings.showPhonetic !== false} onChange={(v: boolean) => set("showPhonetic", v)} />
+        {/* Aus zwei Ja/Nein-Schaltern sind zwei Zeilen mit drei Moeglichkeiten
+            geworden: immer, nie, oder wählbar -- dann steht beim Üben ein
+            Schalter unter der Karte. Damit gilt fuer beide Angaben dieselbe
+            Bauart wie fuer jede andere Wahl in den Einstellungen. */}
+        <ZeileWert titel={txt("Beispielsätze")} atRec={modusVon(settings, BEISPIELE) === "waehlbar"}
+          wert={txt(ANZEIGE_NAME[modusVon(settings, BEISPIELE)])} onClick={() => setBlatt("beispiele")} />
+        <ZeileWert titel={txt("Lautschrift")} atRec={modusVon(settings, PHONETIK) === "waehlbar"}
+          wert={txt(ANZEIGE_NAME[modusVon(settings, PHONETIK)])} onClick={() => setBlatt("phonetik")} />
         <ZeileWert titel={txt("Lerntipp-Einblendungen")} atRec={atR("tipsFrequency")}
           wert={txt({ off: "Aus", occasional: "Gelegentlich", frequent: "Häufig" }[settings.tipsFrequency] || "Gelegentlich")}
           onClick={() => setBlatt("tips")} />
@@ -464,6 +469,23 @@ export function SettingsTab() {
         })}
         </div>
       </div>
+
+      {([[ "beispiele", BEISPIELE, "Beispielsätze", "Die Beispielsätze eines Wortes stehen auf der Lösungsseite der Karte — der Satz in der Fremdsprache und darunter seine Übersetzung."],
+         [ "phonetik", PHONETIK, "Lautschrift", "Die Lautschrift steht klein unter dem Fremdwort und sagt, wie man es ausspricht."]] as any[]).map(([schl, feld, titel, desc]) => (
+        <Blatt key={schl} offen={blatt === schl} titel={txt(titel)} onClose={() => setBlatt(null)}
+          desc={txt(desc)}
+          rec={txt(ANZEIGE_NAME.waehlbar)} atRec={modusVon(settings, feld) === "waehlbar"}
+          onZuruecksetzen={() => set(feld.modus, "waehlbar")}>
+          <div className="list">
+            {(["immer", "waehlbar", "nie"] as const).map((m) => (
+              <button key={m} className={"li" + (modusVon(settings, feld) === m ? " sel" : "")}
+                onClick={() => set(feld.modus, m)}>
+                <span className="g">{txt(ANZEIGE_NAME[m])}<div className="m">{txt(ANZEIGE_KURZ[m])}</div></span>
+              </button>
+            ))}
+          </div>
+        </Blatt>
+      ))}
 
       {/* Das Blatt zu Latein trägt beide Einstellungen: eine eigene Box für
           zwei Zeilen war zu viel Gehäuse für zu wenig Inhalt. */}

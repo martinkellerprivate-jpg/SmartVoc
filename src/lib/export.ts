@@ -17,13 +17,38 @@ import { isLatinPair } from "./pairs";
  * Einlesen in zu viele Spalten — deshalb wird es beim Ausgeben ersetzt. */
 export const TRENNER = " | ";
 
+/* EIN Spaltensatz fuer alle Sprachen.
+ *
+ * Vorher gab es zwei: Latein mit Grundform, Lernform und Wortart, alle
+ * anderen ohne. Zwei Vorlagen, die beide "smartvoc-vorlage.xlsx" hiessen,
+ * lagen danach nebeneinander im Download-Ordner und waren nicht zu
+ * unterscheiden -- und wer die falsche ausfuellte, bekam beim Einlesen
+ * Unsinn.
+ *
+ * Jetzt neun Spalten, immer dieselben, in derselben Reihenfolge. Was eine
+ * Sprache nicht kennt, bleibt leer: "Lernform" fuellt nur Latein aus. Eine
+ * leere Spalte kostet nichts; zwei Formate kosten jedes Mal eine
+ * Verwechslung.
+ *
+ * `fremdLabel` steht im Kopf der ersten Spalte, damit man einer
+ * heruntergeladenen Datei ansieht, fuer welche Sprache sie gedacht ist --
+ * die Form ist trotzdem ueberall gleich. */
 export function spalten(pair: string, fremdLabel: string): string[] {
-  return isLatinPair(pair)
-    ? ["Grundform", "Lernform", "Wortart", "Deutsch",
-       "Beispielsatz 1", "Beispielsatz 1 deutsch", "Beispielsatz 2", "Beispielsatz 2 deutsch", "Aussprache"]
-    : [fremdLabel, "Deutsch",
-       "Beispielsatz 1", "Beispielsatz 1 deutsch", "Beispielsatz 2", "Beispielsatz 2 deutsch", "Aussprache"];
+  return [fremdLabel, "Lernform", "Wortart", "Deutsch",
+          "Beispielsatz 1", "Beispielsatz 1 deutsch",
+          "Beispielsatz 2", "Beispielsatz 2 deutsch", "Aussprache"];
 }
+
+/* Die Wortarten. Sie waren auf Latein beschraenkt und dort auf fuenf
+ * Klassen; beides ohne Grund. Ein englisches "under" ist genauso eine
+ * Praeposition, und die Angabe traegt zweierlei: sie steht in den Angaben
+ * zum Wort, und sie kann spaeter die Ablenker beim Multiple-Choice
+ * verbessern -- heute werden die rein zufaellig aus dem Sprachvorrat
+ * gezogen, sodass unter einem Verb drei Nomen stehen koennen. */
+export const WORTARTEN = [
+  "Nomen", "Verb", "Adjektiv", "Adverb", "Pronomen",
+  "Zahlwort", "Präposition", "Konjunktion", "Wendung",
+];
 
 const sauber = (v: any) => String(v ?? "").replace(/\|/g, "/").replace(/[\r\n\t]+/g, " ").trim();
 
@@ -33,10 +58,9 @@ const sauber = (v: any) => String(v ?? "").replace(/\|/g, "/").replace(/[\r\n\t]
 export function wortZeile(w: any, pair: string, fremdSchluessel: string): string[] {
   const bsp = w.examples || [];
   const bspDe = w.examplesDe || [];
-  const schwanz = [bsp[0], bspDe[0], bsp[1], bspDe[1], w.phonetic].map(sauber);
-  return isLatinPair(pair)
-    ? [sauber(w.grundform), sauber(w.lernform), sauber(w.wortart), sauber(w.de), ...schwanz]
-    : [sauber(w[fremdSchluessel]), sauber(w.de), ...schwanz];
+  const kopf = isLatinPair(pair) ? w.grundform : w[fremdSchluessel];
+  return [kopf, w.lernform, w.wortart, w.de,
+          bsp[0], bspDe[0], bsp[1], bspDe[1], w.phonetic].map(sauber);
 }
 
 /* Die Textform: eine Zeile je Wort, keine Ueberschrift. Eine Ueberschrift

@@ -6,7 +6,7 @@ import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { useToast } from "../ui/Toast";
 import { PAIRS, isLatinPair } from "../lib/pairs";
-import { spalten, TRENNER } from "../lib/export";
+import { spalten, TRENNER, WORTARTEN } from "../lib/export";
 
 /* EN/FR line splitter: columns Fremd | Deutsch | Topic. Same delimiters as the
  * scan heuristic (tab / : | – — - / 2+ spaces). */
@@ -38,60 +38,50 @@ function columns(s: string): string[] {
   return p;
 }
 
-function splitForeign(text: string) {
-  const out: any[] = [];
-  (text || "").split(/\r?\n/).forEach((line) => {
-    const s = line.trim();
-    if (!s || s.length < 2) return;
-    if (/^(unit|lesson|lektion|page|seite|vokabel|words?|english|fran|deutsch|german)\b/i.test(s) && !/[-–—:|\t]/.test(s)) return;
-    const p = columns(s);
-    /* Ab sieben Spalten gilt das Format, in dem jeder Beispielsatz sein
-     * deutsches Gegenstück mitbringt:
-     *   Fremd | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache
-     * Der KI-Prompt schreibt immer alle sieben, leere eingeschlossen.
-     * Kürzere Zeilen sind von Hand getippt und behalten ihre Bedeutung —
-     * deshalb die Grenze bei der Spaltenzahl und nicht am Inhalt. */
-    if (p.length >= 7) {
-      out.push({ fgn: p[0], de: p[1],
-        examples: [p[2], p[4]], examplesDe: [p[3], p[5]],
-        phonetic: p[6] });
-      return;
-    }
-    // Fremd | Deutsch | Beispiel 1 | Beispiel 2 — die Beispiele sind optional.
-    if (p.length >= 5) out.push({ fgn: p[0], de: p[1], examples: [p[2], p[3]].filter(Boolean), phonetic: p[4] });
-    else if (p.length === 4) out.push({ fgn: p[0], de: p[1], examples: [p[2], p[3]].filter(Boolean) });
-    else if (p.length === 3) out.push({ fgn: p[0], de: p[1], examples: [p[2]].filter(Boolean) });
-    else if (p.length === 2) out.push({ fgn: p[0], de: p[1] });
-    else out.push({ fgn: p[0], de: "" });
-  });
-  return out;
+/* Eine Zeile in ein Wort. EIN Spaltensatz fuer alle Sprachen (lib/export.ts):
+ *
+ *   Fremdsprache | Lernform | Wortart | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache
+ *
+ * Kuerzere Zeilen sind von Hand getippt und behalten ihre alte Bedeutung --
+ * deshalb entscheidet die Spaltenzahl, nicht der Inhalt. Bei vier Spalten
+ * gehen die beiden Lesarten auseinander: Latein meint dort seine
+ * Stammformen, alle anderen zwei Beispielsaetze. Also entscheidet das Paar.
+ */
+function zeileZuWort(p: string[], isLat: boolean) {
+  const kopf = isLat ? "grundform" : "fgn";
+  const w: any = { [kopf]: p[0] || "" };
+  if (p.length >= 9) {
+    w.lernform = p[1]; w.wortart = p[2]; w.de = p[3];
+    w.examples = [p[4], p[6]]; w.examplesDe = [p[5], p[7]];
+    w.phonetic = p[8];
+    return w;
+  }
+  if (isLat) {
+    // Grundform | Lernform | Wortart | Deutsch | Bsp1 | Bsp2 | Aussprache
+    if (p.length >= 7) { w.lernform = p[1]; w.wortart = p[2]; w.de = p[3]; w.examples = [p[4], p[5]].filter(Boolean); w.phonetic = p[6]; return w; }
+    if (p.length >= 5) { w.lernform = p[1]; w.wortart = p[2]; w.de = p[3]; w.examples = [p[4]].filter(Boolean); return w; }
+    if (p.length === 4) { w.lernform = p[1]; w.wortart = p[2]; w.de = p[3]; return w; }
+    if (p.length === 3) { w.lernform = p[1]; w.de = p[2]; return w; }
+    w.de = p[1] || "";
+    return w;
+  }
+  // Fremdsprache | Deutsch | Bsp1 | Bsp2 | Aussprache
+  w.de = p[1] || "";
+  if (p.length >= 5) { w.examples = [p[2], p[3]].filter(Boolean); w.phonetic = p[4]; return w; }
+  if (p.length === 4) { w.examples = [p[2], p[3]].filter(Boolean); return w; }
+  if (p.length === 3) { w.examples = [p[2]].filter(Boolean); return w; }
+  return w;
 }
 
-/* Latin line splitter: columns Grundform | Lernform | Wortart | Deutsch.
- * Splits on tab / pipe / 2+ spaces — NOT comma, so "canis, canis, m." survives. */
-function splitLatin(text: string) {
+const KOPFZEILE = /^(unit|lesson|lektion|page|seite|vokabel|words?|english|fran|deutsch|german|grundform|latein|wort)\b/i;
+
+function splitZeilen(text: string, isLat: boolean) {
   const out: any[] = [];
   (text || "").split(/\r?\n/).forEach((line) => {
     const s = line.trim();
     if (!s || s.length < 2) return;
-    if (/^(unit|lektion|lesson|seite|page|wort|latein|deutsch|grundform)\b/i.test(s) && !/[\t|]/.test(s)) return;
-    const p = columns(s);
-    /* Ab neun Spalten das Format mit Übersetzung je Beispielsatz:
-     * Grundform | Lernform | Wortart | Deutsch | Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache */
-    if (p.length >= 9) {
-      out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3],
-        examples: [p[4], p[6]], examplesDe: [p[5], p[7]],
-        phonetic: p[8] });
-      return;
-    }
-    // …| Deutsch | Beispiel 1 | Beispiel 2 (die Beispiele sind optional)
-    if (p.length >= 7) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean), phonetic: p[6] });
-    else if (p.length === 6) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4], p[5]].filter(Boolean) });
-    else if (p.length === 5) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3], examples: [p[4]].filter(Boolean) });
-    else if (p.length === 4) out.push({ grundform: p[0], lernform: p[1], wortart: p[2], de: p[3] });
-    else if (p.length === 3) out.push({ grundform: p[0], lernform: p[1], de: p[2] });
-    else if (p.length === 2) out.push({ grundform: p[0], de: p[1] });
-    else out.push({ grundform: p[0] });
+    if (KOPFZEILE.test(s) && !/[-–—:|\t]/.test(s)) return;
+    out.push(zeileZuWort(columns(s), isLat));
   });
   return out;
 }
@@ -107,6 +97,9 @@ function rawLines(text: string, isLat: boolean) {
 const BEISPIELE: Record<string, string> = {
   "en-de": "dog | der Hund\ncat | die Katze",
   "fr-de": "le chien | der Hund\nle chat | die Katze",
+  "es-de": "el perro | der Hund\nla casa | das Haus",
+  "it-de": "il cane | der Hund\nla casa | das Haus",
+  "pt-de": "o cão | der Hund\na casa | das Haus",
   "la-de": "canis | canis, canis, m. | Nomen | der Hund\nliber | liber, librī, m. | Nomen | das Buch",
 };
 
@@ -135,14 +128,19 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText }: { ope
   const SPALTEN = spalten(pair, P.foreignLabel);
   const COLS = SPALTEN.join(TRENNER);
   const nCols = SPALTEN.length;
-  const latinRules = isLat
-    ? "Lernform = Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: 4 Stammformen; Adjektiv: 3 Genus-Endungen). Wortart ∈ {Nomen, Verb, Adjektiv, Zahlwort, Adverb}.\n"
-    : "";
+  /* "Lernform" gibt es in jeder Vorlage, gefuellt wird sie nur bei Latein.
+   * Deshalb steht die Regel dazu auch nur dort -- und fuer alle anderen
+   * Sprachen der ausdrueckliche Hinweis, die Spalte leer zu lassen: sonst
+   * denkt sich eine KI etwas aus. */
+  const lernformRegel = isLat
+    ? "Lernform = die Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: 4 Stammformen; Adjektiv: 3 Genus-Endungen).\n"
+    : "Lernform bleibt bei dieser Sprache LEER — die Spalte gibt es nur für Latein. Trennzeichen trotzdem setzen.\n";
   const aiPrompt =
     `Ich gebe dir ein Foto einer Vokabelliste (z. B. eine Heftseite). Schreib die Wörter daraus ab.\n` +
     `Steht kein Foto dabei, erstelle stattdessen eine Vokabelliste ${isLat ? "Latein" : P.foreignLabel} ⇄ Deutsch zu dem Thema, das ich nenne.\n\n` +
     `Gib NUR eine Tabelle aus, eine Zeile pro Wort, Spalten getrennt durch " | ", in genau dieser Reihenfolge:\n${COLS}\n\n` +
-    latinRules +
+    lernformRegel +
+    `Wortart = genau eines von: ${WORTARTEN.join(", ")}. Nichts anderes, keine Abkürzungen.\n` +
     `Jede Zeile hat genau ${nCols} Spalten. Was du nicht weisst, lässt du leer — das Trennzeichen setzt du trotzdem.\n` +
     `Beispielsätze: kurz und einfach, auf ${isLat ? "Latein" : P.foreignLabel}; direkt daneben die deutsche Übersetzung. Beides ist freiwillig, aber nur zusammen sinnvoll.\n` +
     `Aussprache = Lautschrift des Fremdworts (IPA, ohne Klammern); wenn unsicher, leer lassen.\n` +
@@ -157,7 +155,7 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText }: { ope
 
   const proceed = () => {
     if (!text.trim()) return;
-    let rows = isLat ? splitLatin(text) : splitForeign(text);
+    let rows = splitZeilen(text, isLat);
     if (!rows.length) rows = rawLines(text, isLat); // never crash / never empty
     onParsed(rows);
   };
@@ -175,7 +173,7 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText }: { ope
             als Satz und als Knopf unter dem Textfeld. */}
         <div className="tips-intro" style={{ marginBottom: 12 }}>
           Füge eine Wortliste ein — eine Zeile pro Wort, Spalten getrennt durch Tab, „|", „–" oder „:".
-          {isLat ? " Latein: Grundform | Lernform | Wortart | Deutsch." : ` ${P.foreignLabel} | Deutsch.`}
+          {isLat ? " Kurz genügt: Grundform | Lernform | Wortart | Deutsch." : ` Kurz genügt: ${P.foreignLabel} | Deutsch.`}
           {" "}{txt("Nichts zum Kopieren? Der KI-Prompt unten holt dir die Liste aus einem Foto der Heftseite.")}
         </div>
 
