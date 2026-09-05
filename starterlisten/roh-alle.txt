@@ -453,3 +453,104 @@ o leite |  | m | Nomen | die Milch | A criança bebe leite quente. | Das Kind tr
 a maçã |  | f | Nomen | der Apfel | Esta maçã é muito boa. | Dieser Apfel ist sehr gut. | Ele come uma maçã na escola. | Er isst in der Schule einen Apfel. | mɐˈsɐ̃
 o queijo |  | m | Nomen | der Käse | O queijo está na mesa. | Der Käse liegt auf dem Tisch. | Como pão com queijo. | Ich esse Brot mit Käse. | ˈkɐjʒu
 a carne |  | f | Nomen | das Fleisch | Comemos carne ao jantar. | Wir essen Fleisch zum Abendessen. | A carne ainda está quente. | Das Fleisch ist noch warm. | ˈkaɾnɨ
+o ovo |  | m | Nomen | das Ei | Como um ovo ao pequeno-almoço. | Ich esse ein Ei zum Frühstück. | O ovo está na cozinha. | Das Ei ist in der Küche. | ˈovu
+o peixe |  | m | Nomen | der Fisch | O peixe nada na água. | Der Fisch schwimmt im Wasser. | Comemos peixe ao jantar. | Wir essen Fisch zum Abendessen. | ˈpɐjʃɨ
+a sopa |  | f | Nomen | die Suppe | A sopa está muito quente. | Die Suppe ist sehr heiss. | A minha mãe prepara uma boa sopa. | Meine Mutter kocht eine gute Suppe. | ˈsɔpɐ
+o açúcar |  | m | Nomen | der Zucker | Bebo café com açúcar. | Ich trinke Kaffee mit Zucker. | O açúcar está na mesa. | Der Zucker steht auf dem Tisch. | ɐˈsukaɾ
+o pequeno-almoço |  | m | Nomen | das Frühstück | Tomamos o pequeno-almoço juntos. | Wir frühstücken gemeinsam. | O pequeno-almoço está pronto às sete. | Das Frühstück ist um sieben Uhr bereit. | pɨˈkenu ɐlˈmosu
+o jantar |  | m | Nomen | das Abendessen | O jantar está pronto agora. | Das Abendessen ist jetzt bereit. | Preparamos o jantar juntos. | Wir bereiten das Abendessen gemeinsam zu. | ʒɐ̃ˈtaɾ
+a casa |  | f | Nomen | das Haus | A nossa casa tem um jardim. | Unser Haus hat einen Garten. | A casa fica perto da escola. | Das Haus steht nahe bei der Schule. | ˈkazɐ
+o apartamento |  | m | Nomen | die Wohnung | O apartamento deles é muito pequeno. | Ihre Wohnung ist sehr klein. | Vivemos num apartamento novo. | Wir wohnen in einer neuen Wohnung. | ɐpɐɾtɐˈmẽtu
+o quarto |  | m | Nomen | das Zimmer | O meu quarto tem duas janelas. | Mein Zimmer hat zwei Fenster. | As crianças brincam neste quarto. | Die Kinder spielen in diesem Zimmer. | ˈkwaɾtu
+a porta |  | f | Nomen | die Tür | Fecha a porta, por favor. | Schliesse bitte die Tür. | O cão espera junto à porta. | Der Hund wartet bei der Tür. | ˈpɔɾtɐ
+a janela |  | f | Nomen | das Fenster | Abre a janela, por favor. | Öffne bitte das Fenster. | O gato olha pela janela. | Die Katze schaut aus dem Fenster. | ʒɐˈnɛlɐ
+a cama |  | f | Nomen | das Bett | A criança dorme nesta cama. | Das Kind schläft in diesem Bett. | O meu livro está na cama. | Mein Buch liegt auf dem Bett. | ˈkɐmɐ
+a cozinha |  | f | Nomen | die Küche | O meu pai cozinha na cozinha. | Mein Vater kocht in der Küche. | A nossa cozinha tem uma mesa pequena. | Unsere Küche hat einen kleinen Tisch. | kuˈziɲɐ
+o jardim |  | m | Nomen | der Garten | As crianças brincam no jardim. | Die Kinder spielen im Garten. | Temos muitas flores no jardim. | Wir haben viele Blumen im Garten. | ʒɐɾˈðĩ
+as calças |  | f pl | Nomen | die Hose | Estas calças são demasiado pequenas. | Diese Hose ist zu klein. | As suas calças são novas e azuis. | Seine Hose ist neu und blau. | ˈkalsɐʃ
+a camisa |  | f | Nomen | das Hemd | A sua camisa é branca. | Sein Hemd ist weiss. | Procuro uma camisa nova. | Ich suche ein neues Hemd. | kɐˈmizɐ
+o sapato |  | m | Nomen | der Schuh | Este sapato é demasiado grande. | Dieser Schuh ist zu gross. | O meu sapato está debaixo da cama. | Mein Schuh liegt unter dem Bett. | sɐˈpatu
+o casaco |  | m | Nomen | die Jacke | O seu casaco está na cadeira. | Ihre Jacke liegt auf dem Stuhl. | Uso um casaco quente. | Ich trage eine warme Jacke. | kɐˈzaku
+o cão | o cão, os cães | m | Nomen | der Hund | O cão corre pelo jardim. | Der Hund rennt durch den Garten. | O nosso cão bebe água. | Unser Hund trinkt Wasser. | ˈkɐ̃w̃
+o gato |  | m | Nomen | die Katze | O gato dorme na minha cama. | Die Katze schläft auf meinem Bett. | O nosso gato tem olhos verdes. | Unsere Katze hat grüne Augen. | ˈɡatu
+o cavalo |  | m | Nomen | das Pferd | O cavalo come uma maçã. | Das Pferd frisst einen Apfel. | O seu cavalo corre muito depressa. | Ihr Pferd rennt sehr schnell. | kɐˈvalu
+o pássaro |  | m | Nomen | der Vogel | Um pássaro está na árvore. | Ein Vogel sitzt im Baum. | O pássaro tem penas azuis. | Der Vogel hat blaue Federn. | ˈpasaɾu
+a árvore |  | f | Nomen | der Baum | Esta árvore é muito velha. | Dieser Baum ist sehr alt. | Um pássaro canta na árvore. | Ein Vogel singt im Baum. | ˈaɾvuɾɨ
+a flor |  | f | Nomen | die Blume | Esta flor é muito bonita. | Diese Blume ist sehr schön. | Ela segura uma flor vermelha. | Sie hält eine rote Blume. | ˈfloɾ
+o sol |  | m | Nomen | die Sonne | O sol brilha hoje. | Die Sonne scheint heute. | Sentamo-nos ao sol. | Wir setzen uns in die Sonne. | ˈsɔl
+a chuva |  | f | Nomen | der Regen | A chuva começa esta manhã. | Der Regen beginnt heute Morgen. | Brincamos lá fora depois da chuva. | Wir spielen nach dem Regen draussen. | ˈʃuvɐ
+a cidade |  | f | Nomen | die Stadt | Esta cidade tem uma estação grande. | Diese Stadt hat einen grossen Bahnhof. | Os meus avós vivem na cidade. | Meine Grosseltern wohnen in der Stadt. | siˈðaðɨ
+a rua |  | f | Nomen | die Strasse | A nossa escola fica nesta rua. | Unsere Schule liegt in dieser Strasse. | A rua está muito calma hoje. | Die Strasse ist heute sehr ruhig. | ˈʁuɐ
+a estação |  | f | Nomen | der Bahnhof | O comboio espera na estação. | Der Zug wartet am Bahnhof. | Caminhamos até à estação. | Wir gehen zu Fuss zum Bahnhof. | ɨʃtɐˈsɐ̃w̃
+o carro |  | m | Nomen | das Auto | O nosso carro é muito velho. | Unser Auto ist sehr alt. | A minha mãe conduz o carro. | Meine Mutter fährt das Auto. | ˈkaʁu
+o comboio |  | m | Nomen | der Zug | O comboio chega às dez. | Der Zug kommt um zehn Uhr an. | Vamos para a escola de comboio. | Wir fahren mit dem Zug zur Schule. | kõˈboju
+a loja |  | f | Nomen | das Geschäft | A loja abre às oito. | Das Geschäft öffnet um acht Uhr. | Compro pão na loja. | Ich kaufe Brot im Geschäft. | ˈlɔʒɐ
+ser | ser: sou, és, é |  | Verb | sein | Quero ser professor. | Ich möchte Lehrer sein. | A minha irmã é muito simpática. | Meine Schwester ist sehr nett. | ˈseɾ
+ter | ter: tenho, tens, tem |  | Verb | haben | Tenho um livro novo. | Ich habe ein neues Buch. | Eles têm dois filhos. | Sie haben zwei Kinder. | ˈteɾ
+ir | ir: vou, vais, vai |  | Verb | gehen | Vamos juntos para a escola. | Wir gehen gemeinsam zur Schule. | Vou agora à loja. | Ich gehe jetzt ins Geschäft. | ˈiɾ
+vir | vir: venho, vens, vem |  | Verb | kommen | Os meus amigos vêm a nossa casa. | Meine Freunde kommen zu unserem Haus. | Vem para casa amanhã. | Komm morgen nach Hause. | ˈviɾ
+fazer | fazer: faço, fazes, faz |  | Verb | machen | Fazemos o pequeno-almoço juntos. | Wir machen gemeinsam das Frühstück. | Os alunos fazem um desenho grande. | Die Schüler machen eine grosse Zeichnung. | fɐˈzeɾ
+dizer | dizer: digo, dizes, diz |  | Verb | sagen | Diz o teu nome lentamente. | Sag deinen Namen langsam. | Eles dizem a resposta juntos. | Sie sagen die Antwort gemeinsam. | diˈzeɾ
+ver | ver: vejo, vês, vê |  | Verb | sehen | Vejo um pássaro lá fora. | Ich sehe draussen einen Vogel. | Vemos os nossos amigos na escola. | Wir sehen unsere Freunde in der Schule. | ˈveɾ
+comer |  |  | Verb | essen | Comemos às sete. | Wir essen um sieben Uhr. | As crianças comem pão e queijo. | Die Kinder essen Brot und Käse. | kuˈmeɾ
+beber |  |  | Verb | trinken | Bebo água todos os dias. | Ich trinke jeden Tag Wasser. | Eles bebem leite de manhã. | Sie trinken morgens Milch. | bɨˈbeɾ
+aprender |  |  | Verb | lernen | Aprendemos português na escola. | Wir lernen in der Schule Portugiesisch. | Aprendo dez palavras novas. | Ich lerne zehn neue Wörter. | ɐpɾẽˈdeɾ
+brincar |  |  | Verb | spielen | As crianças brincam no jardim. | Die Kinder spielen im Garten. | Brinco com o meu amigo. | Ich spiele mit meinem Freund. | bɾĩˈkaɾ
+morar |  |  | Verb | wohnen | Moramos perto da estação. | Wir wohnen nahe beim Bahnhof. | Os meus avós moram na cidade. | Meine Grosseltern wohnen in der Stadt. | muˈɾaɾ
+grande |  |  | Adjektiv | gross | A casa deles é muito grande. | Ihr Haus ist sehr gross. | Ele tem um cão grande. | Er hat einen grossen Hund. | ˈɡɾɐ̃dɨ
+pequeno |  |  | Adjektiv | klein | O meu quarto é muito pequeno. | Mein Zimmer ist sehr klein. | Ela tem um gato pequeno. | Sie hat eine kleine Katze. | pɨˈkenu
+bom |  |  | Adjektiv | gut | Esta sopa está muito boa. | Diese Suppe ist sehr gut. | Ele é um bom professor. | Er ist ein guter Lehrer. | ˈbõ
+mau |  |  | Adjektiv | schlecht | O tempo está mau hoje. | Das Wetter ist heute schlecht. | Esta é uma resposta má. | Das ist eine schlechte Antwort. | ˈmaw
+novo |  |  | Adjektiv | neu | A minha irmã tem um livro novo. | Meine Schwester hat ein neues Buch. | Vivemos numa casa nova. | Wir wohnen in einem neuen Haus. | ˈnovu
+velho |  |  | Adjektiv | alt | O meu avô tem um cão velho. | Mein Grossvater hat einen alten Hund. | Esta árvore é muito velha. | Dieser Baum ist sehr alt. | ˈvɛʎu
+=== la-de ===
+familia | familia, familiae f | f | Nomen | die Familie | Familia in villa habitat. | Die Familie wohnt im Landhaus. | Familia mea magna est. | Meine Familie ist gross. | familia
+mater | mater, matris f | f | Nomen | die Mutter | Mater filiam amat. | Die Mutter liebt ihre Tochter. | Mater cenam in culina parat. | Die Mutter bereitet in der Küche das Abendessen zu. | māter
+pater | pater, patris m | m | Nomen | der Vater | Pater librum legit. | Der Vater liest ein Buch. | Pater cum filio ambulat. | Der Vater geht mit seinem Sohn spazieren. | pater
+parentes | parentes, parentum m pl | m pl | Nomen | die Eltern | Parentes liberos vocant. | Die Eltern rufen ihre Kinder. | Parentes hodie domi manent. | Die Eltern bleiben heute zu Hause. | parentēs
+soror | soror, sororis f | f | Nomen | die Schwester | Soror mea cantat. | Meine Schwester singt. | Puer sororem in horto videt. | Der Junge sieht seine Schwester im Garten. | soror
+frater | frater, fratris m | m | Nomen | der Bruder | Frater meus advenit. | Mein Bruder kommt an. | Puella cum fratre ludit. | Das Mädchen spielt mit ihrem Bruder. | frāter
+avia | avia, aviae f | f | Nomen | die Grossmutter | Avia fabulam puellae narrat. | Die Grossmutter erzählt dem Mädchen eine Geschichte. | Avia in villa habitat. | Die Grossmutter wohnt im Landhaus. | avia
+avus | avus, avi m | m | Nomen | der Grossvater | Avus in horto laborat. | Der Grossvater arbeitet im Garten. | Puer avum saepe visitat. | Der Junge besucht seinen Grossvater oft. | avus
+filia | filia, filiae f | f | Nomen | die Tochter | Filia matrem adiuvat. | Die Tochter hilft ihrer Mutter. | Filia cum amica ludit. | Die Tochter spielt mit einer Freundin. | fīlia
+filius | filius, filii m | m | Nomen | der Sohn | Filius patrem audit. | Der Sohn hört auf seinen Vater. | Mater filium ad scholam ducit. | Die Mutter führt ihren Sohn zur Schule. | fīlius
+puer | puer, pueri m | m | Nomen | der Junge | Puer in via currit. | Der Junge rennt auf der Strasse. | Puer magistrum salutat. | Der Junge grüsst den Lehrer. | puer
+puella | puella, puellae f | f | Nomen | das Mädchen | Puella rosam portat. | Das Mädchen trägt eine Rose. | Puella linguam Latinam discit. | Das Mädchen lernt Latein. | puella
+vir | vir, viri m | m | Nomen | der Mann | Vir in foro stat. | Der Mann steht auf dem Forum. | Vir bonus civem adiuvat. | Der gute Mann hilft einem Bürger. | vir
+amicus | amicus, amici m | m | Nomen | der Freund | Amicus meus hodie venit. | Mein Freund kommt heute. | Puer amicum in via videt. | Der Junge sieht seinen Freund auf der Strasse. | amīcus
+schola | schola, scholae f | f | Nomen | die Schule | Schola prope forum est. | Die Schule liegt nahe beim Forum. | Discipuli ad scholam currunt. | Die Schüler rennen zur Schule. | schola
+magister | magister, magistri m | m | Nomen | der Lehrer | Magister discipulos docet. | Der Lehrer unterrichtet die Schüler. | Magister in tabula scribit. | Der Lehrer schreibt auf die Tafel. | magister
+discipulus | discipulus, discipuli m | m | Nomen | der Schüler | Discipulus librum aperit. | Der Schüler öffnet das Buch. | Magister discipulum laudat. | Der Lehrer lobt den Schüler. | discipulus
+liber | liber, libri m | m | Nomen | das Buch | Liber in mensa iacet. | Das Buch liegt auf dem Tisch. | Puer librum diligenter legit. | Der Junge liest das Buch aufmerksam. | līber
+tabula | tabula, tabulae f | f | Nomen | die Tafel | Tabula in schola est. | Die Tafel ist in der Schule. | Magister verba in tabula scribit. | Der Lehrer schreibt Wörter auf die Tafel. | tabula
+lingua | lingua, linguae f | f | Nomen | die Sprache | Lingua Latina antiqua est. | Die lateinische Sprache ist alt. | Discipuli linguam libenter discunt. | Die Schüler lernen die Sprache gern. | lingua
+domus | domus, domus f | f | Nomen | das Haus | Domus in urbe est. | Das Haus steht in der Stadt. | Pater vesperi domum venit. | Der Vater kommt am Abend nach Hause. | domus
+villa | villa, villae f | f | Nomen | das Landhaus | Villa magnum hortum habet. | Das Landhaus hat einen grossen Garten. | Familia in villa cenat. | Die Familie isst im Landhaus zu Abend. | vīlla
+cubiculum | cubiculum, cubiculi n | n | Nomen | das Zimmer | Cubiculum parvam fenestram habet. | Das Zimmer hat ein kleines Fenster. | Puer in cubiculo dormit. | Der Junge schläft im Zimmer. | cubiculum
+ianua | ianua, ianuae f | f | Nomen | die Tür | Ianua villae aperta est. | Die Tür des Landhauses ist offen. | Servus ianuam claudit. | Der Sklave schliesst die Tür. | iānua
+fenestra | fenestra, fenestrae f | f | Nomen | das Fenster | Fenestra lucem in cubiculum mittit. | Das Fenster lässt Licht ins Zimmer. | Puella fenestram aperit. | Das Mädchen öffnet das Fenster. | fenestra
+lectus | lectus, lecti m | m | Nomen | das Bett | Lectus in cubiculo est. | Das Bett steht im Zimmer. | Puer in lecto dormit. | Der Junge schläft im Bett. | lectus
+culina | culina, culinae f | f | Nomen | die Küche | Culina prope atrium est. | Die Küche liegt nahe beim Innenhof. | Mater in culina cenam parat. | Die Mutter bereitet in der Küche das Abendessen zu. | culīna
+hortus | hortus, horti m | m | Nomen | der Garten | Hortus multas rosas habet. | Der Garten hat viele Rosen. | Pueri in horto ludunt. | Die Jungen spielen im Garten. | hortus
+atrium | atrium, atrii n | n | Nomen | der Innenhof | Atrium in media domo est. | Der Innenhof liegt in der Mitte des Hauses. | Familia in atrio sedet. | Die Familie sitzt im Innenhof. | ātrium
+ager | ager, agri m | m | Nomen | das Feld | Ager prope villam est. | Das Feld liegt nahe beim Landhaus. | Agricola agrum diligenter arat. | Der Bauer pflügt das Feld sorgfältig. | ager
+urbs | urbs, urbis f | f | Nomen | die Stadt | Urbs magna muros habet. | Die grosse Stadt hat Mauern. | Multi cives in urbe habitant. | Viele Bürger wohnen in der Stadt. | urbs
+via | via, viae f | f | Nomen | die Strasse | Via ad forum ducit. | Die Strasse führt zum Forum. | Milites per viam currunt. | Die Soldaten rennen durch die Strasse. | via
+forum | forum, fori n | n | Nomen | das Forum | Forum in media urbe est. | Das Forum liegt in der Stadtmitte. | Multi cives in foro sunt. | Viele Bürger sind auf dem Forum. | forum
+templum | templum, templi n | n | Nomen | der Tempel | Templum prope forum stat. | Der Tempel steht nahe beim Forum. | Romani templum deorum intrant. | Die Römer betreten den Tempel der Götter. | templum
+curia | curia, curiae f | f | Nomen | das Rathaus | Curia prope forum stat. | Das Rathaus steht nahe beim Forum. | Consules in curia disputant. | Die Konsuln beraten im Rathaus. | cūria
+populus | populus, populi m | m | Nomen | das Volk | Populus pacem desiderat. | Das Volk wünscht Frieden. | Consul populum Romanum salutat. | Der Konsul grüsst das römische Volk. | populus
+civis | civis, civis m | m | Nomen | der Bürger | Civis in foro clamat. | Der Bürger ruft auf dem Forum. | Rex civem Romanum audit. | Der König hört den römischen Bürger an. | cīvis
+res publica | res publica, rei publicae f | f | Nomen | der Staat | Res publica leges habet. | Der Staat hat Gesetze. | Cives rem publicam defendunt. | Die Bürger verteidigen den Staat. | rēs pūblica
+rex | rex, regis m | m | Nomen | der König | Rex in magna villa habitat. | Der König wohnt in einem grossen Landhaus. | Populus regem non amat. | Das Volk liebt den König nicht. | rēx
+consul | consul, consulis m | m | Nomen | der Konsul | Consul in curia loquitur. | Der Konsul spricht im Rathaus. | Cives consulem diligenter audiunt. | Die Bürger hören dem Konsul aufmerksam zu. | cōnsul
+bellum | bellum, belli n | n | Nomen | der Krieg | Bellum longum est. | Der Krieg dauert lange. | Romani bellum contra hostes gerunt. | Die Römer führen Krieg gegen ihre Feinde. | bellum
+miles | miles, militis m | m | Nomen | der Soldat | Miles gladio pugnat. | Der Soldat kämpft mit dem Schwert. | Dux militem fortem laudat. | Der Feldherr lobt den tapferen Soldaten. | mīles
+exercitus | exercitus, exercitus m | m | Nomen | das Heer | Exercitus ad urbem venit. | Das Heer kommt zur Stadt. | Dux exercitum per agros ducit. | Der Feldherr führt das Heer durch die Felder. | exercitus
+dux | dux, ducis m | m | Nomen | der Feldherr | Dux milites ad bellum ducit. | Der Feldherr führt die Soldaten in den Krieg. | Exercitus ducem fortem sequitur. | Das Heer folgt dem tapferen Feldherrn. | dux
+gladius | gladius, gladii m | m | Nomen | das Schwert | Gladius militis longus est. | Das Schwert des Soldaten ist lang. | Miles gladium in manu tenet. | Der Soldat hält das Schwert in der Hand. | gladius
+arma | arma, armorum n pl | n pl | Nomen | die Waffen | Arma militum in castris sunt. | Die Waffen der Soldaten sind im Lager. | Romani arma contra hostes portant. | Die Römer tragen Waffen gegen ihre Feinde. | arma
+castra | castra, castrorum n pl | n pl | Nomen | das Lager | Castra prope urbem sunt. | Das Lager liegt nahe bei der Stadt. | Milites castra magna defendunt. | Die Soldaten verteidigen das grosse Lager. | castra
+hostis | hostis, hostis m | m | Nomen | der Feind | Hostis ad castra venit. | Der Feind kommt zum Lager. | Miles hostem gladio vincit. | Der Soldat besiegt den Feind mit dem Schwert. | hostis
+deus | deus, dei m | m | Nomen | der Gott | Deus homines saepe adiuvat. | Der Gott hilft den Menschen oft. | Romani deum in templo colunt. | Die Römer verehren den Gott im Tempel. | deus
+dea | dea, deae f | f | Nomen | die Göttin | Dea templum in urbe habet. | Die Göttin hat einen Tempel in der Stadt. | Puella deae rosam dat. | Das Mädchen gibt der Göttin eine Rose. | dea

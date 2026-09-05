@@ -1,0 +1,806 @@
+{
+ "pair": "la-de",
+ "stufe": 1,
+ "words": [
+  {
+   "grundform": "familia",
+   "lernform": "familia, familiae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Familie",
+   "examples": [
+    "Familia in villa habitat.",
+    "Familia mea magna est."
+   ],
+   "examplesDe": [
+    "Die Familie wohnt im Landhaus.",
+    "Meine Familie ist gross."
+   ],
+   "phonetic": "familia"
+  },
+  {
+   "grundform": "mater",
+   "lernform": "mater, matris f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Mutter",
+   "examples": [
+    "Mater filiam amat.",
+    "Mater cenam in culina parat."
+   ],
+   "examplesDe": [
+    "Die Mutter liebt ihre Tochter.",
+    "Die Mutter bereitet in der Küche das Abendessen zu."
+   ],
+   "phonetic": "māter"
+  },
+  {
+   "grundform": "pater",
+   "lernform": "pater, patris m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Vater",
+   "examples": [
+    "Pater librum legit.",
+    "Pater cum filio ambulat."
+   ],
+   "examplesDe": [
+    "Der Vater liest ein Buch.",
+    "Der Vater geht mit seinem Sohn spazieren."
+   ],
+   "phonetic": "pater"
+  },
+  {
+   "grundform": "parentes",
+   "lernform": "parentes, parentum m pl",
+   "genus": "m pl",
+   "wortart": "Nomen",
+   "german": "die Eltern",
+   "examples": [
+    "Parentes liberos vocant.",
+    "Parentes hodie domi manent."
+   ],
+   "examplesDe": [
+    "Die Eltern rufen ihre Kinder.",
+    "Die Eltern bleiben heute zu Hause."
+   ],
+   "phonetic": "parentēs"
+  },
+  {
+   "grundform": "soror",
+   "lernform": "soror, sororis f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schwester",
+   "examples": [
+    "Soror mea cantat.",
+    "Puer sororem in horto videt."
+   ],
+   "examplesDe": [
+    "Meine Schwester singt.",
+    "Der Junge sieht seine Schwester im Garten."
+   ],
+   "phonetic": "soror"
+  },
+  {
+   "grundform": "frater",
+   "lernform": "frater, fratris m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Bruder",
+   "examples": [
+    "Frater meus advenit.",
+    "Puella cum fratre ludit."
+   ],
+   "examplesDe": [
+    "Mein Bruder kommt an.",
+    "Das Mädchen spielt mit ihrem Bruder."
+   ],
+   "phonetic": "frāter"
+  },
+  {
+   "grundform": "avia",
+   "lernform": "avia, aviae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Grossmutter",
+   "examples": [
+    "Avia fabulam puellae narrat.",
+    "Avia in villa habitat."
+   ],
+   "examplesDe": [
+    "Die Grossmutter erzählt dem Mädchen eine Geschichte.",
+    "Die Grossmutter wohnt im Landhaus."
+   ],
+   "phonetic": "avia"
+  },
+  {
+   "grundform": "avus",
+   "lernform": "avus, avi m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Grossvater",
+   "examples": [
+    "Avus in horto laborat.",
+    "Puer avum saepe visitat."
+   ],
+   "examplesDe": [
+    "Der Grossvater arbeitet im Garten.",
+    "Der Junge besucht seinen Grossvater oft."
+   ],
+   "phonetic": "avus"
+  },
+  {
+   "grundform": "filia",
+   "lernform": "filia, filiae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tochter",
+   "examples": [
+    "Filia matrem adiuvat.",
+    "Filia cum amica ludit."
+   ],
+   "examplesDe": [
+    "Die Tochter hilft ihrer Mutter.",
+    "Die Tochter spielt mit einer Freundin."
+   ],
+   "phonetic": "fīlia"
+  },
+  {
+   "grundform": "filius",
+   "lernform": "filius, filii m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Sohn",
+   "examples": [
+    "Filius patrem audit.",
+    "Mater filium ad scholam ducit."
+   ],
+   "examplesDe": [
+    "Der Sohn hört auf seinen Vater.",
+    "Die Mutter führt ihren Sohn zur Schule."
+   ],
+   "phonetic": "fīlius"
+  },
+  {
+   "grundform": "puer",
+   "lernform": "puer, pueri m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Junge",
+   "examples": [
+    "Puer in via currit.",
+    "Puer magistrum salutat."
+   ],
+   "examplesDe": [
+    "Der Junge rennt auf der Strasse.",
+    "Der Junge grüsst den Lehrer."
+   ],
+   "phonetic": "puer"
+  },
+  {
+   "grundform": "puella",
+   "lernform": "puella, puellae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Mädchen",
+   "examples": [
+    "Puella rosam portat.",
+    "Puella linguam Latinam discit."
+   ],
+   "examplesDe": [
+    "Das Mädchen trägt eine Rose.",
+    "Das Mädchen lernt Latein."
+   ],
+   "phonetic": "puella"
+  },
+  {
+   "grundform": "vir",
+   "lernform": "vir, viri m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Mann",
+   "examples": [
+    "Vir in foro stat.",
+    "Vir bonus civem adiuvat."
+   ],
+   "examplesDe": [
+    "Der Mann steht auf dem Forum.",
+    "Der gute Mann hilft einem Bürger."
+   ],
+   "phonetic": "vir"
+  },
+  {
+   "grundform": "amicus",
+   "lernform": "amicus, amici m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Freund",
+   "examples": [
+    "Amicus meus hodie venit.",
+    "Puer amicum in via videt."
+   ],
+   "examplesDe": [
+    "Mein Freund kommt heute.",
+    "Der Junge sieht seinen Freund auf der Strasse."
+   ],
+   "phonetic": "amīcus"
+  },
+  {
+   "grundform": "schola",
+   "lernform": "schola, scholae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schule",
+   "examples": [
+    "Schola prope forum est.",
+    "Discipuli ad scholam currunt."
+   ],
+   "examplesDe": [
+    "Die Schule liegt nahe beim Forum.",
+    "Die Schüler rennen zur Schule."
+   ],
+   "phonetic": "schola"
+  },
+  {
+   "grundform": "magister",
+   "lernform": "magister, magistri m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Lehrer",
+   "examples": [
+    "Magister discipulos docet.",
+    "Magister in tabula scribit."
+   ],
+   "examplesDe": [
+    "Der Lehrer unterrichtet die Schüler.",
+    "Der Lehrer schreibt auf die Tafel."
+   ],
+   "phonetic": "magister"
+  },
+  {
+   "grundform": "discipulus",
+   "lernform": "discipulus, discipuli m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Schüler",
+   "examples": [
+    "Discipulus librum aperit.",
+    "Magister discipulum laudat."
+   ],
+   "examplesDe": [
+    "Der Schüler öffnet das Buch.",
+    "Der Lehrer lobt den Schüler."
+   ],
+   "phonetic": "discipulus"
+  },
+  {
+   "grundform": "liber",
+   "lernform": "liber, libri m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Buch",
+   "examples": [
+    "Liber in mensa iacet.",
+    "Puer librum diligenter legit."
+   ],
+   "examplesDe": [
+    "Das Buch liegt auf dem Tisch.",
+    "Der Junge liest das Buch aufmerksam."
+   ],
+   "phonetic": "līber"
+  },
+  {
+   "grundform": "tabula",
+   "lernform": "tabula, tabulae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tafel",
+   "examples": [
+    "Tabula in schola est.",
+    "Magister verba in tabula scribit."
+   ],
+   "examplesDe": [
+    "Die Tafel ist in der Schule.",
+    "Der Lehrer schreibt Wörter auf die Tafel."
+   ],
+   "phonetic": "tabula"
+  },
+  {
+   "grundform": "lingua",
+   "lernform": "lingua, linguae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Sprache",
+   "examples": [
+    "Lingua Latina antiqua est.",
+    "Discipuli linguam libenter discunt."
+   ],
+   "examplesDe": [
+    "Die lateinische Sprache ist alt.",
+    "Die Schüler lernen die Sprache gern."
+   ],
+   "phonetic": "lingua"
+  },
+  {
+   "grundform": "domus",
+   "lernform": "domus, domus f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Haus",
+   "examples": [
+    "Domus in urbe est.",
+    "Pater vesperi domum venit."
+   ],
+   "examplesDe": [
+    "Das Haus steht in der Stadt.",
+    "Der Vater kommt am Abend nach Hause."
+   ],
+   "phonetic": "domus"
+  },
+  {
+   "grundform": "villa",
+   "lernform": "villa, villae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Landhaus",
+   "examples": [
+    "Villa magnum hortum habet.",
+    "Familia in villa cenat."
+   ],
+   "examplesDe": [
+    "Das Landhaus hat einen grossen Garten.",
+    "Die Familie isst im Landhaus zu Abend."
+   ],
+   "phonetic": "vīlla"
+  },
+  {
+   "grundform": "cubiculum",
+   "lernform": "cubiculum, cubiculi n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "das Zimmer",
+   "examples": [
+    "Cubiculum parvam fenestram habet.",
+    "Puer in cubiculo dormit."
+   ],
+   "examplesDe": [
+    "Das Zimmer hat ein kleines Fenster.",
+    "Der Junge schläft im Zimmer."
+   ],
+   "phonetic": "cubiculum"
+  },
+  {
+   "grundform": "ianua",
+   "lernform": "ianua, ianuae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tür",
+   "examples": [
+    "Ianua villae aperta est.",
+    "Servus ianuam claudit."
+   ],
+   "examplesDe": [
+    "Die Tür des Landhauses ist offen.",
+    "Der Sklave schliesst die Tür."
+   ],
+   "phonetic": "iānua"
+  },
+  {
+   "grundform": "fenestra",
+   "lernform": "fenestra, fenestrae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Fenster",
+   "examples": [
+    "Fenestra lucem in cubiculum mittit.",
+    "Puella fenestram aperit."
+   ],
+   "examplesDe": [
+    "Das Fenster lässt Licht ins Zimmer.",
+    "Das Mädchen öffnet das Fenster."
+   ],
+   "phonetic": "fenestra"
+  },
+  {
+   "grundform": "lectus",
+   "lernform": "lectus, lecti m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Bett",
+   "examples": [
+    "Lectus in cubiculo est.",
+    "Puer in lecto dormit."
+   ],
+   "examplesDe": [
+    "Das Bett steht im Zimmer.",
+    "Der Junge schläft im Bett."
+   ],
+   "phonetic": "lectus"
+  },
+  {
+   "grundform": "culina",
+   "lernform": "culina, culinae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Küche",
+   "examples": [
+    "Culina prope atrium est.",
+    "Mater in culina cenam parat."
+   ],
+   "examplesDe": [
+    "Die Küche liegt nahe beim Innenhof.",
+    "Die Mutter bereitet in der Küche das Abendessen zu."
+   ],
+   "phonetic": "culīna"
+  },
+  {
+   "grundform": "hortus",
+   "lernform": "hortus, horti m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Garten",
+   "examples": [
+    "Hortus multas rosas habet.",
+    "Pueri in horto ludunt."
+   ],
+   "examplesDe": [
+    "Der Garten hat viele Rosen.",
+    "Die Jungen spielen im Garten."
+   ],
+   "phonetic": "hortus"
+  },
+  {
+   "grundform": "atrium",
+   "lernform": "atrium, atrii n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "der Innenhof",
+   "examples": [
+    "Atrium in media domo est.",
+    "Familia in atrio sedet."
+   ],
+   "examplesDe": [
+    "Der Innenhof liegt in der Mitte des Hauses.",
+    "Die Familie sitzt im Innenhof."
+   ],
+   "phonetic": "ātrium"
+  },
+  {
+   "grundform": "ager",
+   "lernform": "ager, agri m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Feld",
+   "examples": [
+    "Ager prope villam est.",
+    "Agricola agrum diligenter arat."
+   ],
+   "examplesDe": [
+    "Das Feld liegt nahe beim Landhaus.",
+    "Der Bauer pflügt das Feld sorgfältig."
+   ],
+   "phonetic": "ager"
+  },
+  {
+   "grundform": "urbs",
+   "lernform": "urbs, urbis f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Stadt",
+   "examples": [
+    "Urbs magna muros habet.",
+    "Multi cives in urbe habitant."
+   ],
+   "examplesDe": [
+    "Die grosse Stadt hat Mauern.",
+    "Viele Bürger wohnen in der Stadt."
+   ],
+   "phonetic": "urbs"
+  },
+  {
+   "grundform": "via",
+   "lernform": "via, viae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Strasse",
+   "examples": [
+    "Via ad forum ducit.",
+    "Milites per viam currunt."
+   ],
+   "examplesDe": [
+    "Die Strasse führt zum Forum.",
+    "Die Soldaten rennen durch die Strasse."
+   ],
+   "phonetic": "via"
+  },
+  {
+   "grundform": "forum",
+   "lernform": "forum, fori n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "das Forum",
+   "examples": [
+    "Forum in media urbe est.",
+    "Multi cives in foro sunt."
+   ],
+   "examplesDe": [
+    "Das Forum liegt in der Stadtmitte.",
+    "Viele Bürger sind auf dem Forum."
+   ],
+   "phonetic": "forum"
+  },
+  {
+   "grundform": "templum",
+   "lernform": "templum, templi n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "der Tempel",
+   "examples": [
+    "Templum prope forum stat.",
+    "Romani templum deorum intrant."
+   ],
+   "examplesDe": [
+    "Der Tempel steht nahe beim Forum.",
+    "Die Römer betreten den Tempel der Götter."
+   ],
+   "phonetic": "templum"
+  },
+  {
+   "grundform": "curia",
+   "lernform": "curia, curiae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Rathaus",
+   "examples": [
+    "Curia prope forum stat.",
+    "Consules in curia disputant."
+   ],
+   "examplesDe": [
+    "Das Rathaus steht nahe beim Forum.",
+    "Die Konsuln beraten im Rathaus."
+   ],
+   "phonetic": "cūria"
+  },
+  {
+   "grundform": "populus",
+   "lernform": "populus, populi m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Volk",
+   "examples": [
+    "Populus pacem desiderat.",
+    "Consul populum Romanum salutat."
+   ],
+   "examplesDe": [
+    "Das Volk wünscht Frieden.",
+    "Der Konsul grüsst das römische Volk."
+   ],
+   "phonetic": "populus"
+  },
+  {
+   "grundform": "civis",
+   "lernform": "civis, civis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Bürger",
+   "examples": [
+    "Civis in foro clamat.",
+    "Rex civem Romanum audit."
+   ],
+   "examplesDe": [
+    "Der Bürger ruft auf dem Forum.",
+    "Der König hört den römischen Bürger an."
+   ],
+   "phonetic": "cīvis"
+  },
+  {
+   "grundform": "res publica",
+   "lernform": "res publica, rei publicae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Staat",
+   "examples": [
+    "Res publica leges habet.",
+    "Cives rem publicam defendunt."
+   ],
+   "examplesDe": [
+    "Der Staat hat Gesetze.",
+    "Die Bürger verteidigen den Staat."
+   ],
+   "phonetic": "rēs pūblica"
+  },
+  {
+   "grundform": "rex",
+   "lernform": "rex, regis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der König",
+   "examples": [
+    "Rex in magna villa habitat.",
+    "Populus regem non amat."
+   ],
+   "examplesDe": [
+    "Der König wohnt in einem grossen Landhaus.",
+    "Das Volk liebt den König nicht."
+   ],
+   "phonetic": "rēx"
+  },
+  {
+   "grundform": "consul",
+   "lernform": "consul, consulis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Konsul",
+   "examples": [
+    "Consul in curia loquitur.",
+    "Cives consulem diligenter audiunt."
+   ],
+   "examplesDe": [
+    "Der Konsul spricht im Rathaus.",
+    "Die Bürger hören dem Konsul aufmerksam zu."
+   ],
+   "phonetic": "cōnsul"
+  },
+  {
+   "grundform": "bellum",
+   "lernform": "bellum, belli n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "der Krieg",
+   "examples": [
+    "Bellum longum est.",
+    "Romani bellum contra hostes gerunt."
+   ],
+   "examplesDe": [
+    "Der Krieg dauert lange.",
+    "Die Römer führen Krieg gegen ihre Feinde."
+   ],
+   "phonetic": "bellum"
+  },
+  {
+   "grundform": "miles",
+   "lernform": "miles, militis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Soldat",
+   "examples": [
+    "Miles gladio pugnat.",
+    "Dux militem fortem laudat."
+   ],
+   "examplesDe": [
+    "Der Soldat kämpft mit dem Schwert.",
+    "Der Feldherr lobt den tapferen Soldaten."
+   ],
+   "phonetic": "mīles"
+  },
+  {
+   "grundform": "exercitus",
+   "lernform": "exercitus, exercitus m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Heer",
+   "examples": [
+    "Exercitus ad urbem venit.",
+    "Dux exercitum per agros ducit."
+   ],
+   "examplesDe": [
+    "Das Heer kommt zur Stadt.",
+    "Der Feldherr führt das Heer durch die Felder."
+   ],
+   "phonetic": "exercitus"
+  },
+  {
+   "grundform": "dux",
+   "lernform": "dux, ducis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Feldherr",
+   "examples": [
+    "Dux milites ad bellum ducit.",
+    "Exercitus ducem fortem sequitur."
+   ],
+   "examplesDe": [
+    "Der Feldherr führt die Soldaten in den Krieg.",
+    "Das Heer folgt dem tapferen Feldherrn."
+   ],
+   "phonetic": "dux"
+  },
+  {
+   "grundform": "gladius",
+   "lernform": "gladius, gladii m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Schwert",
+   "examples": [
+    "Gladius militis longus est.",
+    "Miles gladium in manu tenet."
+   ],
+   "examplesDe": [
+    "Das Schwert des Soldaten ist lang.",
+    "Der Soldat hält das Schwert in der Hand."
+   ],
+   "phonetic": "gladius"
+  },
+  {
+   "grundform": "arma",
+   "lernform": "arma, armorum n pl",
+   "genus": "n pl",
+   "wortart": "Nomen",
+   "german": "die Waffen",
+   "examples": [
+    "Arma militum in castris sunt.",
+    "Romani arma contra hostes portant."
+   ],
+   "examplesDe": [
+    "Die Waffen der Soldaten sind im Lager.",
+    "Die Römer tragen Waffen gegen ihre Feinde."
+   ],
+   "phonetic": "arma"
+  },
+  {
+   "grundform": "castra",
+   "lernform": "castra, castrorum n pl",
+   "genus": "n pl",
+   "wortart": "Nomen",
+   "german": "das Lager",
+   "examples": [
+    "Castra prope urbem sunt.",
+    "Milites castra magna defendunt."
+   ],
+   "examplesDe": [
+    "Das Lager liegt nahe bei der Stadt.",
+    "Die Soldaten verteidigen das grosse Lager."
+   ],
+   "phonetic": "castra"
+  },
+  {
+   "grundform": "hostis",
+   "lernform": "hostis, hostis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Feind",
+   "examples": [
+    "Hostis ad castra venit.",
+    "Miles hostem gladio vincit."
+   ],
+   "examplesDe": [
+    "Der Feind kommt zum Lager.",
+    "Der Soldat besiegt den Feind mit dem Schwert."
+   ],
+   "phonetic": "hostis"
+  },
+  {
+   "grundform": "deus",
+   "lernform": "deus, dei m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Gott",
+   "examples": [
+    "Deus homines saepe adiuvat.",
+    "Romani deum in templo colunt."
+   ],
+   "examplesDe": [
+    "Der Gott hilft den Menschen oft.",
+    "Die Römer verehren den Gott im Tempel."
+   ],
+   "phonetic": "deus"
+  },
+  {
+   "grundform": "dea",
+   "lernform": "dea, deae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Göttin",
+   "examples": [
+    "Dea templum in urbe habet.",
+    "Puella deae rosam dat."
+   ],
+   "examplesDe": [
+    "Die Göttin hat einen Tempel in der Stadt.",
+    "Das Mädchen gibt der Göttin eine Rose."
+   ],
+   "phonetic": "dea"
+  }
+ ]
+}
