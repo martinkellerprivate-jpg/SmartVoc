@@ -3,7 +3,17 @@
 import type { ScoreOpts, ScoreResult } from "./types";
 
 /* ---- text helpers ------------------------------------------------ */
-export const ARTICLE_RE = /^(der|die|das|le|la|les|un|une|des)\s+/i;
+/* Die bestimmten und unbestimmten Artikel ALLER Sprachen, die die App
+ * kennt. Vorher standen hier nur die deutschen und die franzoesischen --
+ * mit zwei Folgen, die beide falsch waren: "el perro" fiel aus der
+ * Artikel-Nachsicht heraus (die spanische Liste ist voll davon), waehrend
+ * "la casa" hineinfiel, weil "la" zufaellig auch franzoesisch ist. Und wer
+ * auf Englisch "the family" schrieb, bekam Abzug fuer ein Wort, das im
+ * Englischen niemand mitlernt.
+ *
+ * Das `\s+` am Ende ist wichtig: es schuetzt einzelne Woerter. "die" allein
+ * bleibt das englische Verb, "a" allein bleibt der Buchstabe. */
+export const ARTICLE_RE = /^(der|die|das|den|dem|des|ein|eine|einen|einem|einer|le|la|les|l'|un|une|des|el|los|las|unos|unas|il|lo|i|gli|uno|una|o|os|as|um|uma|the|a|an)\s+/i;
 export const normExact = (s: string) => (s || "").toLowerCase().trim().replace(/\s+/g, " ");
 export const stripArticle = (s: string) => (s || "").replace(ARTICLE_RE, "").trim();
 export const hasArticle = (s: string) => ARTICLE_RE.test((s || "").trim());
@@ -109,6 +119,15 @@ export function scoreAnswer(user: string, correct: string, opts?: ScoreOpts): Sc
     const note = hasArticle(userOrig) ? "Wrong article — the rest is right" : "Almost! The article is missing";
     return { score: 0.8, verdict: "almost", note, targetDiff, userDiff, errorType: "article" }; // required-partial
   }
+  /* Der umgekehrte Fall: die Loesung traegt keinen Artikel, die Antwort
+   * schon. Das ist der englische Alltag -- "family" steht in der Liste,
+   * getippt wird "the family". Kein Fehler: das Englische traegt im
+   * Artikel keine Auskunft, die man lernen muesste, deshalb wird er auch
+   * nicht abgefragt. Volle Punktzahl, egal wie streng der Artikelmodus
+   * sonst gestellt ist -- er meint die Sprachen, in denen der Artikel das
+   * Geschlecht verraet. */
+  if (!hasArticle(corrOrig) && hasArticle(userOrig) && ceM && uNoArt === ceM)
+    return { score: 1, verdict: "correct", note: "", targetDiff, userDiff, errorType: null };
 
   // Latin length marks (macron ā / breve ĕ) are a textbook reading aid, not
   // spelling. If the user chose not to require them, a difference that is ONLY
