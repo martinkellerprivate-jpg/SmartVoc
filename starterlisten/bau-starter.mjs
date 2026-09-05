@@ -44,6 +44,7 @@ for (const zeile of readFileSync(pfad, "utf8").split(/\r?\n/)) {
 
 let fehlerGesamt = 0;
 const deutschJeSprache = {};
+const PAAREerledigt = [];
 
 for (const pair of PAARE) {
   const zeilen = bloecke[pair];
@@ -86,15 +87,19 @@ for (const pair of PAARE) {
     woerter.push(w);
   });
 
-  if (woerter.length !== SOLL) meckern.push(`Insgesamt ${woerter.length} Woerter statt ${SOLL}`);
+  /* Waehrend die Bloecke noch eintrudeln ist eine kurze Liste kein Fehler,
+   * sondern ein Zwischenstand. Zu VIELE Woerter dagegen sind immer einer. */
+  const unvollstaendig = woerter.length < SOLL;
+  if (woerter.length > SOLL) meckern.push(`Insgesamt ${woerter.length} Woerter statt ${SOLL}`);
   deutschJeSprache[pair] = woerter.map((w) => w.german);
+  PAAREerledigt.push(pair);
 
   const ziel = join(wurzel, "src/data/starter", pair);
   mkdirSync(ziel, { recursive: true });
   writeFileSync(join(ziel, "stufe1.json"),
     JSON.stringify({ pair, stufe: 1, words: woerter }, null, 1) + "\n", "utf8");
 
-  console.log(`\n${pair}: ${woerter.length} Woerter geschrieben`);
+  console.log(`\n${pair}: ${woerter.length} Woerter geschrieben` + (unvollstaendig ? ` — noch ${SOLL - woerter.length} offen` : ""));
   if (meckern.length) {
     fehlerGesamt += meckern.length;
     console.log(`  ${meckern.length} Beanstandungen:`);
@@ -103,14 +108,43 @@ for (const pair of PAARE) {
   } else console.log("  keine Beanstandungen");
 }
 
-/* Die fuenf neueren Sprachen sollen dieselben Begriffe tragen -- sonst ist
- * die Zusage aus dem Prompt gebrochen und niemand merkt es. */
+/* Die deutsche Spalte ist im Prompt Wort fuer Wort vorgegeben. Sie dort
+ * abzuschreiben ist die einzige Aufgabe, bei der eine KI nichts erfinden
+ * darf -- also wird genau das nachgerechnet, Position fuer Position, und
+ * nicht nur die Sprachen gegeneinander. */
+const promptDatei = join(hier, "GRUNDWORTSCHATZ-PROMPT.txt");
+let SOLLBEGRIFFE = [];
+if (existsSync(promptDatei)) {
+  const t = readFileSync(promptDatei, "utf8");
+  const a = t.indexOf("die Familie ·"), b = t.indexOf("Das sind genau 100.");
+  if (a > 0 && b > a) SOLLBEGRIFFE = t.slice(a, b).split(/·|\n/).map((x) => x.trim()).filter(Boolean);
+}
+if (SOLLBEGRIFFE.length === SOLL) {
+  for (const pair of PAAREerledigt) {
+    if (pair === "la-de") continue;
+    const ist = deutschJeSprache[pair] || [];
+    const abw = ist.map((x, i) => (SOLLBEGRIFFE[i] === x ? null : `${i + 1}: erwartet "${SOLLBEGRIFFE[i]}", da steht "${x}"`)).filter(Boolean);
+    if (abw.length) {
+      fehlerGesamt += abw.length;
+      console.log(`\n${pair}: ${abw.length} Abweichungen von der Vorgabe im Prompt`);
+      for (const x of abw.slice(0, 15)) console.log("   · " + x);
+    }
+  }
+} else {
+  console.log("\n(Die Begriffsliste im Prompt liess sich nicht lesen — Abgleich uebersprungen.)");
+}
+
+/* Zusaetzlich die Sprachen gegeneinander -- faengt den Fall, in dem der
+ * Prompt selbst einmal nicht gelesen werden konnte. */
 const modern = PAARE.filter((p) => p !== "la-de" && deutschJeSprache[p]);
 if (modern.length > 1) {
   const [erste, ...rest] = modern;
   for (const p of rest) {
     const a = deutschJeSprache[erste], b = deutschJeSprache[p];
-    const abw = a.map((x, i) => (b[i] === x ? null : `${i + 1}: ${erste}="${x}" ${p}="${b[i]}"`)).filter(Boolean);
+    /* Nur so weit vergleichen, wie beide Listen reichen -- solange die
+     * Bloecke eintrudeln, ist die kuerzere kein Fehler. */
+    const bis = Math.min(a.length, b.length);
+    const abw = a.slice(0, bis).map((x, i) => (b[i] === x ? null : `${i + 1}: ${erste}="${x}" ${p}="${b[i]}"`)).filter(Boolean);
     if (abw.length) {
       fehlerGesamt += abw.length;
       console.log(`\n${p}: ${abw.length} Abweichungen in der deutschen Spalte gegenueber ${erste}`);

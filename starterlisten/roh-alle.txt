@@ -1,0 +1,303 @@
+=== en-de ===
+family |  |  | Nomen | die Familie | My family lives in Switzerland. | Meine Familie lebt in der Schweiz. | Her family eats dinner together. | Ihre Familie isst gemeinsam zu Abend. | ˈfæməli
+mother |  |  | Nomen | die Mutter | My mother works at home. | Meine Mutter arbeitet zu Hause. | His mother makes good soup. | Seine Mutter macht eine gute Suppe. | ˈmʌðə
+father |  |  | Nomen | der Vater | My father reads a book. | Mein Vater liest ein Buch. | Her father drives the car. | Ihr Vater fährt das Auto. | ˈfɑːðə
+parents |  | pl | Nomen | die Eltern | My parents live in Zurich. | Meine Eltern wohnen in Zürich. | Her parents come home today. | Ihre Eltern kommen heute nach Hause. | ˈpeərənts
+sister |  |  | Nomen | die Schwester | My sister goes to school. | Meine Schwester geht zur Schule. | His sister plays in the garden. | Seine Schwester spielt im Garten. | ˈsɪstə
+brother |  |  | Nomen | der Bruder | Her brother has a dog. | Ihr Bruder hat einen Hund. | My brother drinks some milk. | Mein Bruder trinkt etwas Milch. | ˈbrʌðə
+grandmother |  |  | Nomen | die Grossmutter | My grandmother makes fresh bread. | Meine Grossmutter macht frisches Brot. | His grandmother lives near the station. | Seine Grossmutter wohnt nahe beim Bahnhof. | ˈɡrænmʌðə
+grandfather |  |  | Nomen | der Grossvater | Her grandfather reads every day. | Ihr Grossvater liest jeden Tag. | My grandfather has an old car. | Mein Grossvater hat ein altes Auto. | ˈɡrænfɑːðə
+daughter |  |  | Nomen | die Tochter | Their daughter is ten years old. | Ihre Tochter ist zehn Jahre alt. | His daughter learns English at school. | Seine Tochter lernt in der Schule Englisch. | ˈdɔːtə
+son |  |  | Nomen | der Sohn | Their son plays with the dog. | Ihr Sohn spielt mit dem Hund. | Her son comes home tomorrow. | Ihr Sohn kommt morgen nach Hause. | ˈsʌn
+child | child, children |  | Nomen | das Kind | The child drinks some water. | Das Kind trinkt etwas Wasser. | Every child has a book. | Jedes Kind hat ein Buch. | ˈtʃaɪld
+man | man, men |  | Nomen | der Mann | The man opens the door. | Der Mann öffnet die Tür. | A young man drives the car. | Ein junger Mann fährt das Auto. | ˈmæn
+woman | woman, women |  | Nomen | die Frau | The woman buys some cheese. | Die Frau kauft etwas Käse. | A woman waits at the station. | Eine Frau wartet am Bahnhof. | ˈwʊmən
+friend |  |  | Nomen | der Freund | My friend lives near school. | Mein Freund wohnt nahe bei der Schule. | I see my friend today. | Ich sehe meinen Freund heute. | ˈfrend
+school |  |  | Nomen | die Schule | Our school is very big. | Unsere Schule ist sehr gross. | We go to school together. | Wir gehen gemeinsam zur Schule. | ˈskuːl
+teacher |  |  | Nomen | der Lehrer | The teacher writes on the board. | Der Lehrer schreibt an die Tafel. | Our teacher asks a question. | Unser Lehrer stellt eine Frage. | ˈtiːtʃə
+pupil |  |  | Nomen | der Schüler | The pupil opens his book. | Der Schüler öffnet sein Buch. | Every pupil has a pencil. | Jeder Schüler hat einen Bleistift. | ˈpjuːpəl
+book |  |  | Nomen | das Buch | This book is very good. | Dieses Buch ist sehr gut. | I read a book today. | Ich lese heute ein Buch. | ˈbʊk
+exercise book |  |  | Nomen | das Heft | My exercise book is new. | Mein Heft ist neu. | She writes in her exercise book. | Sie schreibt in ihr Heft. | ˈeksəsaɪz bʊk
+pencil |  |  | Nomen | der Bleistift | I write with a pencil. | Ich schreibe mit einem Bleistift. | His pencil is on the table. | Sein Bleistift liegt auf dem Tisch. | ˈpensəl
+pen |  |  | Nomen | der Kugelschreiber | My pen is in my bag. | Mein Kugelschreiber ist in meiner Tasche. | She writes the answer with a pen. | Sie schreibt die Antwort mit einem Kugelschreiber. | ˈpen
+board |  |  | Nomen | die Tafel | The answer is on the board. | Die Antwort steht an der Tafel. | Our teacher cleans the board. | Unser Lehrer reinigt die Tafel. | ˈbɔːd
+table |  |  | Nomen | der Tisch | The books are on the table. | Die Bücher liegen auf dem Tisch. | We eat dinner at the table. | Wir essen am Tisch zu Abend. | ˈteɪbəl
+chair |  |  | Nomen | der Stuhl | The chair is near the window. | Der Stuhl steht beim Fenster. | Please sit on this chair. | Bitte setz dich auf diesen Stuhl. | ˈtʃeə
+question |  |  | Nomen | die Frage | The teacher asks a question. | Der Lehrer stellt eine Frage. | I understand your question. | Ich verstehe deine Frage. | ˈkwestʃən
+answer |  |  | Nomen | die Antwort | Her answer is correct. | Ihre Antwort ist richtig. | He writes the answer carefully. | Er schreibt die Antwort sorgfältig. | ˈɑːnsə
+one |  |  | Zahlwort | eins | I have one brother. | Ich habe einen Bruder. | One apple is on the table. | Ein Apfel liegt auf dem Tisch. | ˈwʌn
+two |  |  | Zahlwort | zwei | She has two good friends. | Sie hat zwei gute Freunde. | We buy two bottles of milk. | Wir kaufen zwei Flaschen Milch. | ˈtuː
+three |  |  | Zahlwort | drei | Three pupils read a book. | Drei Schüler lesen ein Buch. | He eats three small apples. | Er isst drei kleine Äpfel. | ˈθriː
+ten |  |  | Zahlwort | zehn | Our class has ten pupils. | Unsere Klasse hat zehn Schüler. | The train comes in ten minutes. | Der Zug kommt in zehn Minuten. | ˈten
+hundred |  |  | Zahlwort | hundert | This book has one hundred pages. | Dieses Buch hat hundert Seiten. | One hundred people live here. | Hundert Menschen wohnen hier. | ˈhʌndrəd
+day |  |  | Nomen | der Tag | Today is a good day. | Heute ist ein guter Tag. | I learn English every day. | Ich lerne jeden Tag Englisch. | ˈdeɪ
+week |  |  | Nomen | die Woche | We have school this week. | Wir haben diese Woche Schule. | She visits her grandmother every week. | Sie besucht jede Woche ihre Grossmutter. | ˈwiːk
+month |  |  | Nomen | der Monat | This month has thirty days. | Dieser Monat hat dreissig Tage. | We visit them next month. | Wir besuchen sie nächsten Monat. | ˈmʌnθ
+year |  |  | Nomen | das Jahr | The year begins in January. | Das Jahr beginnt im Januar. | He lives here all year. | Er wohnt das ganze Jahr hier. | ˈjɪə
+today |  |  | Adverb | heute | We have English today. | Wir haben heute Englisch. | The weather is good today. | Das Wetter ist heute gut. | təˈdeɪ
+tomorrow |  |  | Adverb | morgen | The train leaves tomorrow morning. | Der Zug fährt morgen früh ab. | I visit my friend tomorrow. | Ich besuche morgen meinen Freund. | təˈmɒrəʊ
+hour |  |  | Nomen | die Stunde | The lesson lasts one hour. | Die Lektion dauert eine Stunde. | We wait for an hour. | Wir warten eine Stunde. | ˈaʊə
+head |  |  | Nomen | der Kopf | My head hurts today. | Mein Kopf tut heute weh. | He puts his hand on his head. | Er legt seine Hand auf den Kopf. | ˈhed
+hand |  |  | Nomen | die Hand | She writes with her left hand. | Sie schreibt mit der linken Hand. | Give me your hand. | Gib mir deine Hand. | ˈhænd
+eye |  |  | Nomen | das Auge | Her left eye is blue. | Ihr linkes Auge ist blau. | Close one eye now. | Schliesse jetzt ein Auge. | ˈaɪ
+foot | foot, feet |  | Nomen | der Fuss | My right foot hurts. | Mein rechter Fuss tut weh. | He washes his foot carefully. | Er wäscht seinen Fuss sorgfältig. | ˈfʊt
+heart |  |  | Nomen | das Herz | My heart beats very fast. | Mein Herz schlägt sehr schnell. | The doctor listens to her heart. | Der Arzt hört ihr Herz ab. | ˈhɑːt
+mouth |  |  | Nomen | der Mund | Open your mouth, please. | Öffne bitte deinen Mund. | The child has a small mouth. | Das Kind hat einen kleinen Mund. | ˈmaʊθ
+water |  |  | Nomen | das Wasser | I drink water every morning. | Ich trinke jeden Morgen Wasser. | The water is very cold. | Das Wasser ist sehr kalt. | ˈwɔːtə
+bread |  |  | Nomen | das Brot | We eat bread for breakfast. | Wir essen Brot zum Frühstück. | She buys fresh bread today. | Sie kauft heute frisches Brot. | ˈbred
+milk |  |  | Nomen | die Milch | The child drinks warm milk. | Das Kind trinkt warme Milch. | We need milk for breakfast. | Wir brauchen Milch zum Frühstück. | ˈmɪlk
+apple |  |  | Nomen | der Apfel | This apple tastes very good. | Dieser Apfel schmeckt sehr gut. | He eats an apple at school. | Er isst in der Schule einen Apfel. | ˈæpəl
+cheese |  |  | Nomen | der Käse | The cheese is on the table. | Der Käse liegt auf dem Tisch. | I eat bread with cheese. | Ich esse Brot mit Käse. | ˈtʃiːz
+meat |  |  | Nomen | das Fleisch | We eat meat for dinner. | Wir essen Fleisch zum Abendessen. | The meat is very hot. | Das Fleisch ist sehr heiss. | ˈmiːt
+egg |  |  | Nomen | das Ei | I eat an egg for breakfast. | Ich esse ein Ei zum Frühstück. | The egg is in the kitchen. | Das Ei ist in der Küche. | ˈeɡ
+fish |  |  | Nomen | der Fisch | The fish swims in the water. | Der Fisch schwimmt im Wasser. | We eat fish for dinner. | Wir essen Fisch zum Abendessen. | ˈfɪʃ
+soup |  |  | Nomen | die Suppe | The soup is very hot. | Die Suppe ist sehr heiss. | My mother makes good soup. | Meine Mutter macht eine gute Suppe. | ˈsuːp
+sugar |  |  | Nomen | der Zucker | I take sugar with my tea. | Ich nehme Zucker zu meinem Tee. | The sugar is on the table. | Der Zucker steht auf dem Tisch. | ˈʃʊɡə
+breakfast |  |  | Nomen | das Frühstück | We eat breakfast in the kitchen. | Wir essen das Frühstück in der Küche. | Breakfast is ready at seven. | Das Frühstück ist um sieben Uhr bereit. | ˈbrekfəst
+dinner |  |  | Nomen | das Abendessen | Dinner is ready now. | Das Abendessen ist jetzt bereit. | We have dinner with our parents. | Wir essen mit unseren Eltern zu Abend. | ˈdɪnə
+house |  |  | Nomen | das Haus | Our house has a garden. | Unser Haus hat einen Garten. | The house is near the school. | Das Haus steht nahe bei der Schule. | ˈhaʊs
+flat |  |  | Nomen | die Wohnung | Their flat is very small. | Ihre Wohnung ist sehr klein. | We live in a new flat. | Wir wohnen in einer neuen Wohnung. | ˈflæt
+room |  |  | Nomen | das Zimmer | My room has two windows. | Mein Zimmer hat zwei Fenster. | The children play in this room. | Die Kinder spielen in diesem Zimmer. | ˈruːm
+door |  |  | Nomen | die Tür | Please close the door. | Bitte schliesse die Tür. | The dog waits by the door. | Der Hund wartet bei der Tür. | ˈdɔː
+window |  |  | Nomen | das Fenster | Please open the window. | Bitte öffne das Fenster. | The cat sits by the window. | Die Katze sitzt beim Fenster. | ˈwɪndəʊ
+bed |  |  | Nomen | das Bett | The child sleeps in this bed. | Das Kind schläft in diesem Bett. | My book is on the bed. | Mein Buch liegt auf dem Bett. | ˈbed
+kitchen |  |  | Nomen | die Küche | My father cooks in the kitchen. | Mein Vater kocht in der Küche. | Our kitchen has a small table. | Unsere Küche hat einen kleinen Tisch. | ˈkɪtʃɪn
+garden |  |  | Nomen | der Garten | The children play in the garden. | Die Kinder spielen im Garten. | We have flowers in our garden. | Wir haben Blumen in unserem Garten. | ˈɡɑːdən
+trousers |  | pl | Nomen | die Hose | These trousers are too small. | Diese Hose ist zu klein. | His trousers are new and blue. | Seine Hose ist neu und blau. | ˈtraʊzəz
+shirt |  |  | Nomen | das Hemd | His shirt is white. | Sein Hemd ist weiss. | I need a new shirt. | Ich brauche ein neues Hemd. | ˈʃɜːt
+shoe |  |  | Nomen | der Schuh | This shoe is too big. | Dieser Schuh ist zu gross. | My shoe is under the bed. | Mein Schuh liegt unter dem Bett. | ˈʃuː
+jacket |  |  | Nomen | die Jacke | Her jacket is on the chair. | Ihre Jacke liegt auf dem Stuhl. | I wear a warm jacket. | Ich trage eine warme Jacke. | ˈdʒækɪt
+dog |  |  | Nomen | der Hund | The dog runs in the garden. | Der Hund rennt im Garten. | Our dog drinks some water. | Unser Hund trinkt etwas Wasser. | ˈdɒɡ
+cat |  |  | Nomen | die Katze | The cat sleeps on my bed. | Die Katze schläft auf meinem Bett. | Our cat has green eyes. | Unsere Katze hat grüne Augen. | ˈkæt
+horse |  |  | Nomen | das Pferd | The horse eats an apple. | Das Pferd frisst einen Apfel. | Her horse runs very fast. | Ihr Pferd rennt sehr schnell. | ˈhɔːs
+bird |  |  | Nomen | der Vogel | A bird sits in the tree. | Ein Vogel sitzt im Baum. | The bird has blue feathers. | Der Vogel hat blaue Federn. | ˈbɜːd
+tree |  |  | Nomen | der Baum | The tree is very old. | Der Baum ist sehr alt. | A bird sits in this tree. | Ein Vogel sitzt in diesem Baum. | ˈtriː
+flower |  |  | Nomen | die Blume | This flower is very beautiful. | Diese Blume ist sehr schön. | She has a flower in her hand. | Sie hält eine Blume in der Hand. | ˈflaʊə
+sun |  |  | Nomen | die Sonne | The sun is warm today. | Die Sonne ist heute warm. | We sit in the sun. | Wir sitzen in der Sonne. | ˈsʌn
+rain |  |  | Nomen | der Regen | The rain starts this morning. | Der Regen beginnt heute Morgen. | We play outside after the rain. | Wir spielen nach dem Regen draussen. | ˈreɪn
+city |  |  | Nomen | die Stadt | This city has a big station. | Diese Stadt hat einen grossen Bahnhof. | My grandparents live in the city. | Meine Grosseltern wohnen in der Stadt. | ˈsɪti
+street |  |  | Nomen | die Strasse | Our school is on this street. | Unsere Schule liegt an dieser Strasse. | The street is very quiet today. | Die Strasse ist heute sehr ruhig. | ˈstriːt
+station |  |  | Nomen | der Bahnhof | The train waits at the station. | Der Zug wartet am Bahnhof. | We walk to the station. | Wir gehen zu Fuss zum Bahnhof. | ˈsteɪʃən
+car |  |  | Nomen | das Auto | Our car is very old. | Unser Auto ist sehr alt. | My mother drives the car. | Meine Mutter fährt das Auto. | ˈkɑː
+train |  |  | Nomen | der Zug | The train comes at ten. | Der Zug kommt um zehn Uhr. | We go to school by train. | Wir fahren mit dem Zug zur Schule. | ˈtreɪn
+shop |  |  | Nomen | das Geschäft | The shop opens at eight. | Das Geschäft öffnet um acht Uhr. | I buy bread at the shop. | Ich kaufe Brot im Geschäft. | ˈʃɒp
+be | be, was, been |  | Verb | sein | I want to be a teacher. | Ich möchte Lehrer sein. | We will be at home today. | Wir werden heute zu Hause sein. | ˈbiː
+have | have, had, had |  | Verb | haben | I have a new book. | Ich habe ein neues Buch. | They have two children. | Sie haben zwei Kinder. | ˈhæv
+go | go, went, gone |  | Verb | gehen | We go to school together. | Wir gehen gemeinsam zur Schule. | I go home after dinner. | Ich gehe nach dem Abendessen nach Hause. | ˈɡəʊ
+come | come, came, come |  | Verb | kommen | My friends come to our house. | Meine Freunde kommen zu unserem Haus. | Please come home before dinner. | Bitte komm vor dem Abendessen nach Hause. | ˈkʌm
+make | make, made, made |  | Verb | machen | We make breakfast in the kitchen. | Wir machen das Frühstück in der Küche. | The pupils make a big poster. | Die Schüler machen ein grosses Plakat. | ˈmeɪk
+say | say, said, said |  | Verb | sagen | Please say your name slowly. | Bitte sag deinen Namen langsam. | They say the answer together. | Sie sagen die Antwort gemeinsam. | ˈseɪ
+see | see, saw, seen |  | Verb | sehen | I see a bird outside. | Ich sehe draussen einen Vogel. | We see our friends at school. | Wir sehen unsere Freunde in der Schule. | ˈsiː
+eat | eat, ate, eaten |  | Verb | essen | We eat breakfast at seven. | Wir essen um sieben Uhr Frühstück. | The children eat bread and cheese. | Die Kinder essen Brot und Käse. | ˈiːt
+drink | drink, drank, drunk |  | Verb | trinken | I drink water every day. | Ich trinke jeden Tag Wasser. | They drink milk for breakfast. | Sie trinken Milch zum Frühstück. | ˈdrɪŋk
+learn |  |  | Verb | lernen | We learn English at school. | Wir lernen in der Schule Englisch. | I learn ten new words. | Ich lerne zehn neue Wörter. | ˈlɜːn
+play |  |  | Verb | spielen | The children play in the garden. | Die Kinder spielen im Garten. | I play with my friend. | Ich spiele mit meinem Freund. | ˈpleɪ
+live |  |  | Verb | wohnen | We live near the station. | Wir wohnen nahe beim Bahnhof. | My grandparents live in a city. | Meine Grosseltern wohnen in einer Stadt. | ˈlɪv
+big |  |  | Adjektiv | gross | Their house is very big. | Ihr Haus ist sehr gross. | He has a big dog. | Er hat einen grossen Hund. | ˈbɪɡ
+small |  |  | Adjektiv | klein | My room is very small. | Mein Zimmer ist sehr klein. | She has a small cat. | Sie hat eine kleine Katze. | ˈsmɔːl
+good | good, better, best |  | Adjektiv | gut | This soup is very good. | Diese Suppe ist sehr gut. | He is a good teacher. | Er ist ein guter Lehrer. | ˈɡʊd
+bad | bad, worse, worst |  | Adjektiv | schlecht | The weather is bad today. | Das Wetter ist heute schlecht. | This is a bad answer. | Das ist eine schlechte Antwort. | ˈbæd
+new |  |  | Adjektiv | neu | My sister has a new jacket. | Meine Schwester hat eine neue Jacke. | We live in a new house. | Wir wohnen in einem neuen Haus. | ˈnjuː
+old |  |  | Adjektiv | alt | My grandfather has an old car. | Mein Grossvater hat ein altes Auto. | This tree is very old. | Dieser Baum ist sehr alt. | ˈəʊld
+=== fr-de ===
+la famille |  | f | Nomen | die Familie | Ma famille habite en Suisse. | Meine Familie lebt in der Schweiz. | Toute la famille mange ensemble. | Die ganze Familie isst gemeinsam. | faˈmij
+la mère |  | f | Nomen | die Mutter | Ma mère travaille à la maison. | Meine Mutter arbeitet zu Hause. | Sa mère prépare une soupe. | Seine Mutter kocht eine Suppe. | ˈmɛʁ
+le père |  | m | Nomen | der Vater | Mon père lit un livre. | Mein Vater liest ein Buch. | Son père conduit la voiture. | Ihr Vater fährt das Auto. | ˈpɛʁ
+les parents |  | m pl | Nomen | die Eltern | Mes parents habitent à Zurich. | Meine Eltern wohnen in Zürich. | Ses parents arrivent demain matin. | Ihre Eltern kommen morgen früh an. | paˈʁɑ̃
+la sœur |  | f | Nomen | die Schwester | Ma sœur va à l'école. | Meine Schwester geht zur Schule. | Sa sœur joue dans le jardin. | Seine Schwester spielt im Garten. | ˈsœʁ
+le frère |  | m | Nomen | der Bruder | Mon frère a un chien. | Mein Bruder hat einen Hund. | Son frère boit du lait. | Ihr Bruder trinkt Milch. | ˈfʁɛʁ
+la grand-mère |  | f | Nomen | die Grossmutter | Ma grand-mère prépare du pain. | Meine Grossmutter macht Brot. | Sa grand-mère habite près d'ici. | Seine Grossmutter wohnt in der Nähe. | ɡʁɑ̃ˈmɛʁ
+le grand-père |  | m | Nomen | der Grossvater | Mon grand-père lit chaque jour. | Mein Grossvater liest jeden Tag. | Son grand-père a une vieille voiture. | Ihr Grossvater hat ein altes Auto. | ɡʁɑ̃ˈpɛʁ
+la fille |  | f | Nomen | die Tochter | Leur fille a dix ans. | Ihre Tochter ist zehn Jahre alt. | Sa fille apprend le français. | Seine Tochter lernt Französisch. | ˈfij
+le fils |  | m | Nomen | der Sohn | Leur fils joue avec le chien. | Ihr Sohn spielt mit dem Hund. | Son fils rentre demain matin. | Ihr Sohn kommt morgen früh zurück. | ˈfis
+l'enfant |  | m | Nomen | das Kind | L'enfant boit de l'eau. | Das Kind trinkt Wasser. | Chaque enfant a un livre. | Jedes Kind hat ein Buch. | ɑ̃ˈfɑ̃
+l'homme |  | m | Nomen | der Mann | L'homme ouvre la porte. | Der Mann öffnet die Tür. | Un homme attend devant l'école. | Ein Mann wartet vor der Schule. | ˈɔm
+la femme |  | f | Nomen | die Frau | La femme achète du fromage. | Die Frau kauft Käse. | Une femme attend à la gare. | Eine Frau wartet am Bahnhof. | ˈfam
+l'ami |  | m | Nomen | der Freund | Mon ami habite près d'ici. | Mein Freund wohnt in der Nähe. | Je vois mon ami aujourd'hui. | Ich sehe meinen Freund heute. | aˈmi
+l'école |  | f | Nomen | die Schule | Notre école est très grande. | Unsere Schule ist sehr gross. | Nous allons ensemble à l'école. | Wir gehen gemeinsam zur Schule. | eˈkɔl
+le professeur |  | m | Nomen | der Lehrer | Le professeur écrit au tableau. | Der Lehrer schreibt an die Tafel. | Notre professeur pose une question. | Unser Lehrer stellt eine Frage. | pʁɔfɛˈsœʁ
+l'élève |  | m | Nomen | der Schüler | L'élève ouvre son livre. | Der Schüler öffnet sein Buch. | Chaque élève a un crayon. | Jeder Schüler hat einen Bleistift. | eˈlɛv
+le livre |  | m | Nomen | das Buch | Ce livre est très intéressant. | Dieses Buch ist sehr interessant. | Je lis un livre aujourd'hui. | Ich lese heute ein Buch. | ˈlivʁ
+le cahier |  | m | Nomen | das Heft | Mon cahier est sur la table. | Mein Heft liegt auf dem Tisch. | Elle écrit dans son cahier. | Sie schreibt in ihr Heft. | kaˈje
+le crayon |  | m | Nomen | der Bleistift | J'écris avec un crayon. | Ich schreibe mit einem Bleistift. | Son crayon est sous la chaise. | Sein Bleistift liegt unter dem Stuhl. | kʁɛˈjɔ̃
+le stylo |  | m | Nomen | der Kugelschreiber | Mon stylo est dans mon sac. | Mein Kugelschreiber ist in meiner Tasche. | Elle écrit avec un stylo bleu. | Sie schreibt mit einem blauen Kugelschreiber. | stiˈlo
+le tableau |  | m | Nomen | die Tafel | La réponse est au tableau. | Die Antwort steht an der Tafel. | Le professeur nettoie le tableau. | Der Lehrer reinigt die Tafel. | taˈblo
+la table |  | f | Nomen | der Tisch | Les livres sont sur la table. | Die Bücher liegen auf dem Tisch. | Nous mangeons autour de la table. | Wir essen am Tisch. | ˈtabl
+la chaise |  | f | Nomen | der Stuhl | La chaise est près de la fenêtre. | Der Stuhl steht beim Fenster. | Le chat dort sur la chaise. | Die Katze schläft auf dem Stuhl. | ˈʃɛz
+la question |  | f | Nomen | die Frage | Le professeur pose une question. | Der Lehrer stellt eine Frage. | Je comprends bien ta question. | Ich verstehe deine Frage gut. | kɛsˈtjɔ̃
+la réponse |  | f | Nomen | die Antwort | Sa réponse est correcte. | Seine Antwort ist richtig. | Il écrit la réponse lentement. | Er schreibt die Antwort langsam. | ʁeˈpɔ̃s
+un |  |  | Zahlwort | eins | J'ai un frère. | Ich habe einen Bruder. | Un livre est sur la table. | Ein Buch liegt auf dem Tisch. | ˈœ̃
+deux |  |  | Zahlwort | zwei | Elle a deux bons amis. | Sie hat zwei gute Freunde. | Nous achetons deux litres de lait. | Wir kaufen zwei Liter Milch. | ˈdø
+trois |  |  | Zahlwort | drei | Trois élèves lisent un livre. | Drei Schüler lesen ein Buch. | Il mange trois petites pommes. | Er isst drei kleine Äpfel. | ˈtʁwa
+dix |  |  | Zahlwort | zehn | Notre classe a dix élèves. | Unsere Klasse hat zehn Schüler. | Le train arrive dans dix minutes. | Der Zug kommt in zehn Minuten. | ˈdis
+cent |  |  | Zahlwort | hundert | Ce livre a cent pages. | Dieses Buch hat hundert Seiten. | Cent personnes habitent dans cette rue. | Hundert Menschen wohnen in dieser Strasse. | ˈsɑ̃
+le jour |  | m | Nomen | der Tag | Aujourd'hui est un beau jour. | Heute ist ein schöner Tag. | J'apprends le français chaque jour. | Ich lerne jeden Tag Französisch. | ˈʒuʁ
+la semaine |  | f | Nomen | die Woche | Nous avons école cette semaine. | Wir haben diese Woche Schule. | Elle visite sa grand-mère chaque semaine. | Sie besucht jede Woche ihre Grossmutter. | səˈmɛn
+le mois |  | m | Nomen | der Monat | Ce mois a trente jours. | Dieser Monat hat dreissig Tage. | Nous partons le mois prochain. | Wir fahren nächsten Monat weg. | ˈmwa
+l'année |  | f | Nomen | das Jahr | L'année commence en janvier. | Das Jahr beginnt im Januar. | Il habite ici toute l'année. | Er wohnt das ganze Jahr hier. | aˈne
+aujourd'hui |  |  | Adverb | heute | Nous avons français aujourd'hui. | Wir haben heute Französisch. | Il fait beau aujourd'hui. | Heute ist schönes Wetter. | oʒuʁˈdɥi
+demain |  |  | Adverb | morgen | Le train part demain matin. | Der Zug fährt morgen früh ab. | Je visite mon ami demain. | Ich besuche morgen meinen Freund. | dəˈmɛ̃
+l'heure |  | f | Nomen | die Stunde | Le cours dure une heure. | Der Unterricht dauert eine Stunde. | Nous attendons ici une heure. | Wir warten hier eine Stunde. | ˈœʁ
+la tête |  | f | Nomen | der Kopf | J'ai mal à la tête. | Ich habe Kopfschmerzen. | Il pose sa main sur sa tête. | Er legt seine Hand auf den Kopf. | ˈtɛt
+la main |  | f | Nomen | die Hand | Elle écrit de la main gauche. | Sie schreibt mit der linken Hand. | Donne-moi ta main. | Gib mir deine Hand. | ˈmɛ̃
+l'œil | l'œil, les yeux | m | Nomen | das Auge | Son œil gauche est bleu. | Ihr linkes Auge ist blau. | Il ferme un œil. | Er schliesst ein Auge. | ˈœj
+le pied |  | m | Nomen | der Fuss | Mon pied droit me fait mal. | Mein rechter Fuss tut weh. | Il lave son pied gauche. | Er wäscht seinen linken Fuss. | ˈpje
+le cœur |  | m | Nomen | das Herz | Mon cœur bat très vite. | Mein Herz schlägt sehr schnell. | Le médecin écoute son cœur. | Der Arzt hört sein Herz ab. | ˈkœʁ
+la bouche |  | f | Nomen | der Mund | Ouvre la bouche, s'il te plaît. | Öffne bitte den Mund. | L'enfant a une petite bouche. | Das Kind hat einen kleinen Mund. | ˈbuʃ
+l'eau | l'eau, les eaux | f | Nomen | das Wasser | Je bois de l'eau chaque matin. | Ich trinke jeden Morgen Wasser. | L'eau est très froide. | Das Wasser ist sehr kalt. | ˈo
+le pain |  | m | Nomen | das Brot | Nous mangeons du pain au petit-déjeuner. | Wir essen Brot zum Frühstück. | Elle achète du pain frais. | Sie kauft frisches Brot. | ˈpɛ̃
+le lait |  | m | Nomen | die Milch | L'enfant boit du lait chaud. | Das Kind trinkt warme Milch. | Nous prenons du lait au petit-déjeuner. | Wir trinken Milch zum Frühstück. | ˈlɛ
+la pomme |  | f | Nomen | der Apfel | Cette pomme est très bonne. | Dieser Apfel ist sehr gut. | Il mange une pomme à l'école. | Er isst in der Schule einen Apfel. | ˈpɔm
+le fromage |  | m | Nomen | der Käse | Le fromage est sur la table. | Der Käse liegt auf dem Tisch. | Je mange du pain avec du fromage. | Ich esse Brot mit Käse. | fʁɔˈmaʒ
+la viande |  | f | Nomen | das Fleisch | Nous mangeons de la viande ce soir. | Wir essen heute Abend Fleisch. | La viande est encore chaude. | Das Fleisch ist noch warm. | ˈvjɑ̃d
+l'œuf |  | m | Nomen | das Ei | Je mange un œuf au petit-déjeuner. | Ich esse ein Ei zum Frühstück. | L'œuf est dans la cuisine. | Das Ei ist in der Küche. | ˈœf
+le poisson |  | m | Nomen | der Fisch | Le poisson nage dans l'eau. | Der Fisch schwimmt im Wasser. | Nous mangeons du poisson ce soir. | Wir essen heute Abend Fisch. | pwaˈsɔ̃
+la soupe |  | f | Nomen | die Suppe | La soupe est très chaude. | Die Suppe ist sehr heiss. | Ma mère prépare une bonne soupe. | Meine Mutter kocht eine gute Suppe. | ˈsup
+le sucre |  | m | Nomen | der Zucker | Je prends du sucre avec mon thé. | Ich nehme Zucker zu meinem Tee. | Le sucre est sur la table. | Der Zucker steht auf dem Tisch. | ˈsykʁ
+le petit-déjeuner |  | m | Nomen | das Frühstück | Nous prenons le petit-déjeuner ensemble. | Wir frühstücken gemeinsam. | Le petit-déjeuner est prêt à sept heures. | Das Frühstück ist um sieben Uhr bereit. | pəti deʒøˈne
+le dîner |  | m | Nomen | das Abendessen | Le dîner est prêt maintenant. | Das Abendessen ist jetzt bereit. | Nous préparons le dîner ensemble. | Wir bereiten das Abendessen gemeinsam zu. | diˈne
+la maison |  | f | Nomen | das Haus | Notre maison a un jardin. | Unser Haus hat einen Garten. | La maison est près de l'école. | Das Haus steht nahe bei der Schule. | mɛˈzɔ̃
+l'appartement |  | m | Nomen | die Wohnung | Leur appartement est très petit. | Ihre Wohnung ist sehr klein. | Nous habitons dans un nouvel appartement. | Wir wohnen in einer neuen Wohnung. | apaʁtəˈmɑ̃
+la chambre |  | f | Nomen | das Zimmer | Ma chambre a deux fenêtres. | Mein Zimmer hat zwei Fenster. | Les enfants jouent dans cette chambre. | Die Kinder spielen in diesem Zimmer. | ˈʃɑ̃bʁ
+la porte |  | f | Nomen | die Tür | Ferme la porte, s'il te plaît. | Schliesse bitte die Tür. | Le chien attend devant la porte. | Der Hund wartet vor der Tür. | ˈpɔʁt
+la fenêtre |  | f | Nomen | das Fenster | Ouvre la fenêtre, s'il te plaît. | Öffne bitte das Fenster. | Le chat regarde par la fenêtre. | Die Katze schaut aus dem Fenster. | fəˈnɛtʁ
+le lit |  | m | Nomen | das Bett | L'enfant dort dans ce lit. | Das Kind schläft in diesem Bett. | Mon livre est sur le lit. | Mein Buch liegt auf dem Bett. | ˈli
+la cuisine |  | f | Nomen | die Küche | Mon père cuisine dans la cuisine. | Mein Vater kocht in der Küche. | Notre cuisine a une petite table. | Unsere Küche hat einen kleinen Tisch. | kɥiˈzin
+le jardin |  | m | Nomen | der Garten | Les enfants jouent dans le jardin. | Die Kinder spielen im Garten. | Nous avons des fleurs dans le jardin. | Wir haben Blumen im Garten. | ʒaʁˈdɛ̃
+le pantalon |  | m | Nomen | die Hose | Ce pantalon est trop petit. | Diese Hose ist zu klein. | Son pantalon est neuf et bleu. | Seine Hose ist neu und blau. | pɑ̃taˈlɔ̃
+la chemise |  | f | Nomen | das Hemd | Sa chemise est blanche. | Sein Hemd ist weiss. | Je cherche une nouvelle chemise. | Ich suche ein neues Hemd. | ʃəˈmiz
+la chaussure |  | f | Nomen | der Schuh | Cette chaussure est trop grande. | Dieser Schuh ist zu gross. | Ma chaussure est sous le lit. | Mein Schuh liegt unter dem Bett. | ʃoˈsyʁ
+la veste |  | f | Nomen | die Jacke | Sa veste est sur la chaise. | Ihre Jacke liegt auf dem Stuhl. | Je porte une veste chaude. | Ich trage eine warme Jacke. | ˈvɛst
+le chien |  | m | Nomen | der Hund | Le chien court dans le jardin. | Der Hund rennt im Garten. | Notre chien boit de l'eau. | Unser Hund trinkt Wasser. | ˈʃjɛ̃
+le chat |  | m | Nomen | die Katze | Le chat dort sur mon lit. | Die Katze schläft auf meinem Bett. | Notre chat a les yeux verts. | Unsere Katze hat grüne Augen. | ˈʃa
+le cheval | le cheval, les chevaux | m | Nomen | das Pferd | Le cheval mange une pomme. | Das Pferd frisst einen Apfel. | Son cheval court très vite. | Ihr Pferd rennt sehr schnell. | ʃəˈval
+l'oiseau |  | m | Nomen | der Vogel | Un oiseau est dans l'arbre. | Ein Vogel sitzt im Baum. | L'oiseau a des plumes bleues. | Der Vogel hat blaue Federn. | waˈzo
+l'arbre |  | m | Nomen | der Baum | Cet arbre est très vieux. | Dieser Baum ist sehr alt. | Un oiseau chante dans l'arbre. | Ein Vogel singt im Baum. | ˈaʁbʁ
+la fleur |  | f | Nomen | die Blume | Cette fleur est très belle. | Diese Blume ist sehr schön. | Elle tient une fleur rouge. | Sie hält eine rote Blume. | ˈflœʁ
+le soleil |  | m | Nomen | die Sonne | Le soleil brille aujourd'hui. | Die Sonne scheint heute. | Nous nous asseyons au soleil. | Wir setzen uns in die Sonne. | sɔˈlɛj
+la pluie |  | f | Nomen | der Regen | La pluie commence ce matin. | Der Regen beginnt heute Morgen. | Nous jouons dehors après la pluie. | Wir spielen nach dem Regen draussen. | ˈplɥi
+la ville |  | f | Nomen | die Stadt | Cette ville a une grande gare. | Diese Stadt hat einen grossen Bahnhof. | Mes grands-parents habitent en ville. | Meine Grosseltern wohnen in der Stadt. | ˈvil
+la rue |  | f | Nomen | die Strasse | Notre école est dans cette rue. | Unsere Schule liegt in dieser Strasse. | La rue est très calme aujourd'hui. | Die Strasse ist heute sehr ruhig. | ˈʁy
+la gare |  | f | Nomen | der Bahnhof | Le train attend à la gare. | Der Zug wartet am Bahnhof. | Nous marchons jusqu'à la gare. | Wir gehen zu Fuss zum Bahnhof. | ˈɡaʁ
+la voiture |  | f | Nomen | das Auto | Notre voiture est très vieille. | Unser Auto ist sehr alt. | Ma mère conduit la voiture. | Meine Mutter fährt das Auto. | vwaˈtyʁ
+le train |  | m | Nomen | der Zug | Le train arrive à dix heures. | Der Zug kommt um zehn Uhr an. | Nous allons à l'école en train. | Wir fahren mit dem Zug zur Schule. | ˈtʁɛ̃
+le magasin |  | m | Nomen | das Geschäft | Le magasin ouvre à huit heures. | Das Geschäft öffnet um acht Uhr. | J'achète du pain au magasin. | Ich kaufe Brot im Geschäft. | maɡaˈzɛ̃
+être | être: je suis, tu es, il est |  | Verb | sein | Je veux être professeur. | Ich möchte Lehrer sein. | Nous sommes à la maison aujourd'hui. | Wir sind heute zu Hause. | ˈɛtʁ
+avoir | avoir: j'ai, tu as, il a |  | Verb | haben | J'ai un nouveau livre. | Ich habe ein neues Buch. | Ils ont deux enfants. | Sie haben zwei Kinder. | aˈvwaʁ
+aller | aller: je vais, tu vas, il va |  | Verb | gehen | Nous allons ensemble à l'école. | Wir gehen gemeinsam zur Schule. | Je vais au magasin maintenant. | Ich gehe jetzt ins Geschäft. | aˈle
+venir | venir: je viens, tu viens, il vient |  | Verb | kommen | Mes amis viennent chez nous. | Meine Freunde kommen zu uns. | Viens à la maison demain. | Komm morgen nach Hause. | vəˈniʁ
+faire | faire: je fais, tu fais, il fait |  | Verb | machen | Nous faisons le petit-déjeuner ensemble. | Wir machen gemeinsam das Frühstück. | Les élèves font un grand dessin. | Die Schüler machen eine grosse Zeichnung. | ˈfɛʁ
+dire | dire: je dis, tu dis, il dit |  | Verb | sagen | Dis ton nom lentement. | Sag deinen Namen langsam. | Ils disent la réponse ensemble. | Sie sagen die Antwort gemeinsam. | ˈdiʁ
+voir | voir: je vois, tu vois, il voit |  | Verb | sehen | Je vois un oiseau dehors. | Ich sehe draussen einen Vogel. | Nous voyons nos amis à l'école. | Wir sehen unsere Freunde in der Schule. | ˈvwaʁ
+manger |  |  | Verb | essen | Nous mangeons à sept heures. | Wir essen um sieben Uhr. | Les enfants mangent du pain. | Die Kinder essen Brot. | mɑ̃ˈʒe
+boire | boire: je bois, tu bois, il boit |  | Verb | trinken | Je bois de l'eau chaque jour. | Ich trinke jeden Tag Wasser. | Ils boivent du lait le matin. | Sie trinken morgens Milch. | ˈbwaʁ
+apprendre | apprendre: j'apprends, tu apprends, il apprend |  | Verb | lernen | Nous apprenons le français à l'école. | Wir lernen in der Schule Französisch. | J'apprends dix nouveaux mots. | Ich lerne zehn neue Wörter. | aˈpʁɑ̃dʁ
+jouer |  |  | Verb | spielen | Les enfants jouent dans le jardin. | Die Kinder spielen im Garten. | Je joue avec mon ami. | Ich spiele mit meinem Freund. | ʒuˈe
+habiter |  |  | Verb | wohnen | Nous habitons près de la gare. | Wir wohnen nahe beim Bahnhof. | Mes grands-parents habitent en ville. | Meine Grosseltern wohnen in der Stadt. | abiˈte
+grand |  |  | Adjektiv | gross | Leur maison est très grande. | Ihr Haus ist sehr gross. | Il a un grand chien. | Er hat einen grossen Hund. | ˈɡʁɑ̃
+petit |  |  | Adjektiv | klein | Ma chambre est très petite. | Mein Zimmer ist sehr klein. | Elle a un petit chat. | Sie hat eine kleine Katze. | pəˈti
+bon |  |  | Adjektiv | gut | Cette soupe est très bonne. | Diese Suppe ist sehr gut. | Il est un bon professeur. | Er ist ein guter Lehrer. | ˈbɔ̃
+mauvais |  |  | Adjektiv | schlecht | Le temps est mauvais aujourd'hui. | Das Wetter ist heute schlecht. | C'est une mauvaise réponse. | Das ist eine schlechte Antwort. | moˈvɛ
+nouveau |  |  | Adjektiv | neu | Ma sœur a un nouveau livre. | Meine Schwester hat ein neues Buch. | Nous habitons dans une nouvelle maison. | Wir wohnen in einem neuen Haus. | nuˈvo
+vieux |  |  | Adjektiv | alt | Mon grand-père a un vieux chien. | Mein Grossvater hat einen alten Hund. | Cet arbre est très vieux. | Dieser Baum ist sehr alt. | ˈvjø
+=== es-de ===
+la familia |  | f | Nomen | die Familie | Mi familia vive en Suiza. | Meine Familie lebt in der Schweiz. | Toda la familia cena junta. | Die ganze Familie isst gemeinsam zu Abend. | faˈmilja
+la madre |  | f | Nomen | die Mutter | Mi madre trabaja en casa. | Meine Mutter arbeitet zu Hause. | Su madre prepara una sopa. | Seine Mutter kocht eine Suppe. | ˈmaðɾe
+el padre |  | m | Nomen | der Vater | Mi padre lee un libro. | Mein Vater liest ein Buch. | Su padre conduce el coche. | Ihr Vater fährt das Auto. | ˈpaðɾe
+los padres |  | m pl | Nomen | die Eltern | Mis padres viven en Zúrich. | Meine Eltern wohnen in Zürich. | Sus padres vienen mañana. | Ihre Eltern kommen morgen. | ˈpaðɾes
+la hermana |  | f | Nomen | die Schwester | Mi hermana va a la escuela. | Meine Schwester geht zur Schule. | Su hermana juega en el jardín. | Seine Schwester spielt im Garten. | eɾˈmana
+el hermano |  | m | Nomen | der Bruder | Mi hermano tiene un perro. | Mein Bruder hat einen Hund. | Su hermano bebe leche. | Ihr Bruder trinkt Milch. | eɾˈmano
+la abuela |  | f | Nomen | die Grossmutter | Mi abuela prepara pan fresco. | Meine Grossmutter macht frisches Brot. | Su abuela vive cerca. | Seine Grossmutter wohnt in der Nähe. | aˈβwela
+el abuelo |  | m | Nomen | der Grossvater | Mi abuelo lee cada día. | Mein Grossvater liest jeden Tag. | Su abuelo tiene un coche viejo. | Ihr Grossvater hat ein altes Auto. | aˈβwelo
+la hija |  | f | Nomen | die Tochter | Su hija tiene diez años. | Ihre Tochter ist zehn Jahre alt. | Mi hija aprende español. | Meine Tochter lernt Spanisch. | ˈixa
+el hijo |  | m | Nomen | der Sohn | Su hijo juega con el perro. | Ihr Sohn spielt mit dem Hund. | Mi hijo vuelve mañana. | Mein Sohn kommt morgen zurück. | ˈixo
+el niño |  | m | Nomen | das Kind | El niño bebe agua. | Das Kind trinkt Wasser. | Cada niño tiene un libro. | Jedes Kind hat ein Buch. | ˈniɲo
+el hombre |  | m | Nomen | der Mann | El hombre abre la puerta. | Der Mann öffnet die Tür. | Un hombre espera delante de la escuela. | Ein Mann wartet vor der Schule. | ˈombɾe
+la mujer |  | f | Nomen | die Frau | La mujer compra queso. | Die Frau kauft Käse. | Una mujer espera en la estación. | Eine Frau wartet am Bahnhof. | muˈxeɾ
+el amigo |  | m | Nomen | der Freund | Mi amigo vive cerca. | Mein Freund wohnt in der Nähe. | Hoy veo a mi amigo. | Heute sehe ich meinen Freund. | aˈmiɣo
+la escuela |  | f | Nomen | die Schule | Nuestra escuela es muy grande. | Unsere Schule ist sehr gross. | Vamos juntos a la escuela. | Wir gehen gemeinsam zur Schule. | esˈkwela
+el profesor |  | m | Nomen | der Lehrer | El profesor escribe en la pizarra. | Der Lehrer schreibt an die Tafel. | Nuestro profesor hace una pregunta. | Unser Lehrer stellt eine Frage. | pɾofeˈsoɾ
+el alumno |  | m | Nomen | der Schüler | El alumno abre su libro. | Der Schüler öffnet sein Buch. | Cada alumno tiene un lápiz. | Jeder Schüler hat einen Bleistift. | aˈlumno
+el libro |  | m | Nomen | das Buch | Este libro es muy interesante. | Dieses Buch ist sehr interessant. | Hoy leo un libro. | Heute lese ich ein Buch. | ˈliβɾo
+el cuaderno |  | m | Nomen | das Heft | Mi cuaderno está sobre la mesa. | Mein Heft liegt auf dem Tisch. | Ella escribe en su cuaderno. | Sie schreibt in ihr Heft. | kwaˈðeɾno
+el lápiz | el lápiz, los lápices | m | Nomen | der Bleistift | Escribo con un lápiz. | Ich schreibe mit einem Bleistift. | Su lápiz está bajo la silla. | Sein Bleistift liegt unter dem Stuhl. | ˈlapiθ
+el bolígrafo |  | m | Nomen | der Kugelschreiber | Mi bolígrafo está en la mochila. | Mein Kugelschreiber ist im Rucksack. | Ella escribe con un bolígrafo azul. | Sie schreibt mit einem blauen Kugelschreiber. | boˈliɣɾafo
+la pizarra |  | f | Nomen | die Tafel | La respuesta está en la pizarra. | Die Antwort steht an der Tafel. | El profesor limpia la pizarra. | Der Lehrer reinigt die Tafel. | piˈθara
+la mesa |  | f | Nomen | der Tisch | Los libros están sobre la mesa. | Die Bücher liegen auf dem Tisch. | Cenamos juntos en la mesa. | Wir essen gemeinsam am Tisch zu Abend. | ˈmesa
+la silla |  | f | Nomen | der Stuhl | La silla está junto a la ventana. | Der Stuhl steht beim Fenster. | El gato duerme en la silla. | Die Katze schläft auf dem Stuhl. | ˈsiʝa
+la pregunta |  | f | Nomen | die Frage | El profesor hace una pregunta. | Der Lehrer stellt eine Frage. | Entiendo bien tu pregunta. | Ich verstehe deine Frage gut. | pɾeˈɣunta
+la respuesta |  | f | Nomen | die Antwort | Su respuesta es correcta. | Seine Antwort ist richtig. | Él escribe la respuesta lentamente. | Er schreibt die Antwort langsam. | resˈpwesta
+uno |  |  | Zahlwort | eins | Tengo un hermano. | Ich habe einen Bruder. | Hay un libro sobre la mesa. | Ein Buch liegt auf dem Tisch. | ˈuno
+dos |  |  | Zahlwort | zwei | Ella tiene dos buenos amigos. | Sie hat zwei gute Freunde. | Compramos dos litros de leche. | Wir kaufen zwei Liter Milch. | ˈdos
+tres |  |  | Zahlwort | drei | Tres alumnos leen un libro. | Drei Schüler lesen ein Buch. | Él come tres manzanas pequeñas. | Er isst drei kleine Äpfel. | ˈtɾes
+diez |  |  | Zahlwort | zehn | Nuestra clase tiene diez alumnos. | Unsere Klasse hat zehn Schüler. | El tren llega en diez minutos. | Der Zug kommt in zehn Minuten. | ˈdjeθ
+cien |  |  | Zahlwort | hundert | Este libro tiene cien páginas. | Dieses Buch hat hundert Seiten. | Cien personas viven en esta calle. | Hundert Menschen wohnen in dieser Strasse. | ˈθjen
+el día |  | m | Nomen | der Tag | Hoy es un buen día. | Heute ist ein guter Tag. | Aprendo español cada día. | Ich lerne jeden Tag Spanisch. | ˈdia
+la semana |  | f | Nomen | die Woche | Tenemos escuela esta semana. | Wir haben diese Woche Schule. | Ella visita a su abuela cada semana. | Sie besucht jede Woche ihre Grossmutter. | seˈmana
+el mes |  | m | Nomen | der Monat | Este mes tiene treinta días. | Dieser Monat hat dreissig Tage. | Viajamos el próximo mes. | Wir verreisen nächsten Monat. | ˈmes
+el año |  | m | Nomen | das Jahr | El año empieza en enero. | Das Jahr beginnt im Januar. | Él vive aquí todo el año. | Er wohnt das ganze Jahr hier. | ˈaɲo
+hoy |  |  | Adverb | heute | Hoy tenemos clase de español. | Heute haben wir Spanischunterricht. | Hace buen tiempo hoy. | Heute ist schönes Wetter. | ˈoj
+mañana |  |  | Adverb | morgen | El tren sale mañana temprano. | Der Zug fährt morgen früh ab. | Mañana visito a mi amigo. | Morgen besuche ich meinen Freund. | maˈɲana
+la hora |  | f | Nomen | die Stunde | La clase dura una hora. | Der Unterricht dauert eine Stunde. | Esperamos aquí durante una hora. | Wir warten hier eine Stunde. | ˈoɾa
+la cabeza |  | f | Nomen | der Kopf | Me duele la cabeza. | Mein Kopf tut weh. | Él pone la mano sobre su cabeza. | Er legt die Hand auf seinen Kopf. | kaˈβeθa
+la mano |  | f | Nomen | die Hand | Ella escribe con la mano izquierda. | Sie schreibt mit der linken Hand. | Dame la mano. | Gib mir die Hand. | ˈmano
+el ojo |  | m | Nomen | das Auge | Su ojo izquierdo es azul. | Ihr linkes Auge ist blau. | Él cierra un ojo. | Er schliesst ein Auge. | ˈoxo
+el pie |  | m | Nomen | der Fuss | Me duele el pie derecho. | Mein rechter Fuss tut weh. | Él se lava el pie izquierdo. | Er wäscht seinen linken Fuss. | ˈpje
+el corazón |  | m | Nomen | das Herz | Mi corazón late muy rápido. | Mein Herz schlägt sehr schnell. | El médico escucha su corazón. | Der Arzt hört sein Herz ab. | koɾaˈθon
+la boca |  | f | Nomen | der Mund | Abre la boca, por favor. | Öffne bitte den Mund. | El niño tiene una boca pequeña. | Das Kind hat einen kleinen Mund. | ˈboka
+el agua |  | f | Nomen | das Wasser | Bebo agua cada mañana. | Ich trinke jeden Morgen Wasser. | El agua está muy fría. | Das Wasser ist sehr kalt. | ˈaɣwa
+el pan |  | m | Nomen | das Brot | Comemos pan en el desayuno. | Wir essen Brot zum Frühstück. | Ella compra pan fresco. | Sie kauft frisches Brot. | ˈpan
+la leche |  | f | Nomen | die Milch | El niño bebe leche caliente. | Das Kind trinkt warme Milch. | Tomamos leche en el desayuno. | Wir trinken Milch zum Frühstück. | ˈletʃe
+la manzana |  | f | Nomen | der Apfel | Esta manzana está muy buena. | Dieser Apfel ist sehr gut. | Él come una manzana en la escuela. | Er isst in der Schule einen Apfel. | manˈθana
+el queso |  | m | Nomen | der Käse | El queso está sobre la mesa. | Der Käse liegt auf dem Tisch. | Como pan con queso. | Ich esse Brot mit Käse. | ˈkeso
+la carne |  | f | Nomen | das Fleisch | Comemos carne para cenar. | Wir essen Fleisch zum Abendessen. | La carne está todavía caliente. | Das Fleisch ist noch warm. | ˈkaɾne
+el huevo |  | m | Nomen | das Ei | Como un huevo en el desayuno. | Ich esse ein Ei zum Frühstück. | El huevo está en la cocina. | Das Ei ist in der Küche. | ˈweβo
+el pez | el pez, los peces | m | Nomen | der Fisch | El pez nada en el agua. | Der Fisch schwimmt im Wasser. | Compramos un pez para el acuario. | Wir kaufen einen Fisch für das Aquarium. | ˈpeθ
+la sopa |  | f | Nomen | die Suppe | La sopa está muy caliente. | Die Suppe ist sehr heiss. | Mi madre prepara una buena sopa. | Meine Mutter kocht eine gute Suppe. | ˈsopa
+el azúcar |  | m | Nomen | der Zucker | Tomo el café con azúcar. | Ich trinke den Kaffee mit Zucker. | El azúcar está sobre la mesa. | Der Zucker steht auf dem Tisch. | aˈθukaɾ
+el desayuno |  | m | Nomen | das Frühstück | Tomamos el desayuno juntos. | Wir frühstücken gemeinsam. | El desayuno está listo a las siete. | Das Frühstück ist um sieben Uhr bereit. | desaˈʝuno
+la cena |  | f | Nomen | das Abendessen | La cena está lista ahora. | Das Abendessen ist jetzt bereit. | Preparamos la cena juntos. | Wir bereiten das Abendessen gemeinsam zu. | ˈθena
+la casa |  | f | Nomen | das Haus | Nuestra casa tiene un jardín. | Unser Haus hat einen Garten. | La casa está cerca de la escuela. | Das Haus steht nahe bei der Schule. | ˈkasa
+el piso |  | m | Nomen | die Wohnung | Su piso es muy pequeño. | Ihre Wohnung ist sehr klein. | Vivimos en un piso nuevo. | Wir wohnen in einer neuen Wohnung. | ˈpiso
+la habitación |  | f | Nomen | das Zimmer | Mi habitación tiene dos ventanas. | Mein Zimmer hat zwei Fenster. | Los niños juegan en esta habitación. | Die Kinder spielen in diesem Zimmer. | aβitaˈθjon
+la puerta |  | f | Nomen | die Tür | Cierra la puerta, por favor. | Schliesse bitte die Tür. | El perro espera junto a la puerta. | Der Hund wartet bei der Tür. | ˈpweɾta
+la ventana |  | f | Nomen | das Fenster | Abre la ventana, por favor. | Öffne bitte das Fenster. | El gato mira por la ventana. | Die Katze schaut aus dem Fenster. | benˈtana
+la cama |  | f | Nomen | das Bett | El niño duerme en esta cama. | Das Kind schläft in diesem Bett. | Mi libro está sobre la cama. | Mein Buch liegt auf dem Bett. | ˈkama
+la cocina |  | f | Nomen | die Küche | Mi padre cocina en la cocina. | Mein Vater kocht in der Küche. | Nuestra cocina tiene una mesa pequeña. | Unsere Küche hat einen kleinen Tisch. | koˈθina
+el jardín |  | m | Nomen | der Garten | Los niños juegan en el jardín. | Die Kinder spielen im Garten. | Tenemos flores en el jardín. | Wir haben Blumen im Garten. | xaɾˈðin
+el pantalón |  | m | Nomen | die Hose | Este pantalón es demasiado pequeño. | Diese Hose ist zu klein. | Su pantalón es nuevo y azul. | Seine Hose ist neu und blau. | pantaˈlon
+la camisa |  | f | Nomen | das Hemd | Su camisa es blanca. | Sein Hemd ist weiss. | Busco una camisa nueva. | Ich suche ein neues Hemd. | kaˈmisa
+el zapato |  | m | Nomen | der Schuh | Este zapato es demasiado grande. | Dieser Schuh ist zu gross. | Mi zapato está bajo la cama. | Mein Schuh liegt unter dem Bett. | θaˈpato
+la chaqueta |  | f | Nomen | die Jacke | Su chaqueta está sobre la silla. | Ihre Jacke liegt auf dem Stuhl. | Llevo una chaqueta caliente. | Ich trage eine warme Jacke. | tʃaˈketa
+el perro |  | m | Nomen | der Hund | El perro corre por el jardín. | Der Hund rennt durch den Garten. | Nuestro perro bebe agua. | Unser Hund trinkt Wasser. | ˈpero
+el gato |  | m | Nomen | die Katze | El gato duerme sobre mi cama. | Die Katze schläft auf meinem Bett. | Nuestro gato tiene los ojos verdes. | Unsere Katze hat grüne Augen. | ˈɡato
+el caballo |  | m | Nomen | das Pferd | El caballo come una manzana. | Das Pferd frisst einen Apfel. | Su caballo corre muy rápido. | Ihr Pferd rennt sehr schnell. | kaˈβaʝo
+el pájaro |  | m | Nomen | der Vogel | Un pájaro está en el árbol. | Ein Vogel sitzt im Baum. | El pájaro tiene plumas azules. | Der Vogel hat blaue Federn. | ˈpaxaɾo
+el árbol |  | m | Nomen | der Baum | Este árbol es muy viejo. | Dieser Baum ist sehr alt. | Un pájaro canta en el árbol. | Ein Vogel singt im Baum. | ˈaɾβol
+la flor |  | f | Nomen | die Blume | Esta flor es muy bonita. | Diese Blume ist sehr schön. | Ella lleva una flor roja. | Sie trägt eine rote Blume. | ˈfloɾ
+el sol |  | m | Nomen | die Sonne | El sol brilla hoy. | Die Sonne scheint heute. | Nos sentamos bajo el sol. | Wir setzen uns in die Sonne. | ˈsol
+la lluvia |  | f | Nomen | der Regen | La lluvia empieza esta mañana. | Der Regen beginnt heute Morgen. | Jugamos fuera después de la lluvia. | Wir spielen nach dem Regen draussen. | ˈʝuβja
+la ciudad |  | f | Nomen | die Stadt | Esta ciudad tiene una estación grande. | Diese Stadt hat einen grossen Bahnhof. | Mis abuelos viven en la ciudad. | Meine Grosseltern wohnen in der Stadt. | θjuˈðað
+la calle |  | f | Nomen | die Strasse | Nuestra escuela está en esta calle. | Unsere Schule liegt in dieser Strasse. | La calle está muy tranquila hoy. | Die Strasse ist heute sehr ruhig. | ˈkaʝe
+la estación |  | f | Nomen | der Bahnhof | El tren espera en la estación. | Der Zug wartet am Bahnhof. | Caminamos hasta la estación. | Wir gehen zu Fuss zum Bahnhof. | estaˈθjon
+el coche |  | m | Nomen | das Auto | Nuestro coche es muy viejo. | Unser Auto ist sehr alt. | Mi madre conduce el coche. | Meine Mutter fährt das Auto. | ˈkotʃe
+el tren |  | m | Nomen | der Zug | El tren llega a las diez. | Der Zug kommt um zehn Uhr an. | Vamos a la escuela en tren. | Wir fahren mit dem Zug zur Schule. | ˈtɾen
+la tienda |  | f | Nomen | das Geschäft | La tienda abre a las ocho. | Das Geschäft öffnet um acht Uhr. | Compro pan en la tienda. | Ich kaufe Brot im Geschäft. | ˈtjenda
+ser | ser: soy, eres, es |  | Verb | sein | Quiero ser profesor. | Ich möchte Lehrer sein. | Mi hermana es muy simpática. | Meine Schwester ist sehr nett. | ˈseɾ
+tener | tener: tengo, tienes, tiene |  | Verb | haben | Tengo un libro nuevo. | Ich habe ein neues Buch. | Ellos tienen dos hijos. | Sie haben zwei Kinder. | teˈneɾ
+ir | ir: voy, vas, va |  | Verb | gehen | Vamos juntos a la escuela. | Wir gehen gemeinsam zur Schule. | Voy ahora a la tienda. | Ich gehe jetzt ins Geschäft. | ˈiɾ
+venir | venir: vengo, vienes, viene |  | Verb | kommen | Mis amigos vienen a nuestra casa. | Meine Freunde kommen zu unserem Haus. | Ven a casa mañana. | Komm morgen nach Hause. | beˈniɾ
+hacer | hacer: hago, haces, hace |  | Verb | machen | Hacemos el desayuno juntos. | Wir machen gemeinsam das Frühstück. | Los alumnos hacen un dibujo grande. | Die Schüler machen eine grosse Zeichnung. | aˈθeɾ
+decir | decir: digo, dices, dice |  | Verb | sagen | Di tu nombre lentamente. | Sag deinen Namen langsam. | Ellos dicen la respuesta juntos. | Sie sagen die Antwort gemeinsam. | deˈθiɾ
+ver | ver: veo, ves, ve |  | Verb | sehen | Veo un pájaro fuera. | Ich sehe draussen einen Vogel. | Vemos a nuestros amigos en la escuela. | Wir sehen unsere Freunde in der Schule. | ˈbeɾ
+comer |  |  | Verb | essen | Comemos a las siete. | Wir essen um sieben Uhr. | Los niños comen pan y queso. | Die Kinder essen Brot und Käse. | koˈmeɾ
+beber |  |  | Verb | trinken | Bebo agua cada día. | Ich trinke jeden Tag Wasser. | Ellos beben leche por la mañana. | Sie trinken morgens Milch. | beˈβeɾ
+aprender |  |  | Verb | lernen | Aprendemos español en la escuela. | Wir lernen in der Schule Spanisch. | Aprendo diez palabras nuevas. | Ich lerne zehn neue Wörter. | apɾenˈdeɾ
+jugar | jugar: juego, juegas, juega |  | Verb | spielen | Los niños juegan en el jardín. | Die Kinder spielen im Garten. | Juego con mi amigo. | Ich spiele mit meinem Freund. | xuˈɣaɾ
+vivir |  |  | Verb | wohnen | Vivimos cerca de la estación. | Wir wohnen nahe beim Bahnhof. | Mis abuelos viven en la ciudad. | Meine Grosseltern wohnen in der Stadt. | biˈβiɾ
+grande |  |  | Adjektiv | gross | Su casa es muy grande. | Ihr Haus ist sehr gross. | Él tiene un perro grande. | Er hat einen grossen Hund. | ˈɡɾande
+pequeño |  |  | Adjektiv | klein | Mi habitación es muy pequeña. | Mein Zimmer ist sehr klein. | Ella tiene un gato pequeño. | Sie hat eine kleine Katze. | peˈkeɲo
+bueno |  |  | Adjektiv | gut | Esta sopa está muy buena. | Diese Suppe ist sehr gut. | Él es un buen profesor. | Er ist ein guter Lehrer. | ˈbweno
+malo |  |  | Adjektiv | schlecht | El tiempo es malo hoy. | Das Wetter ist heute schlecht. | Esta es una respuesta mala. | Das ist eine schlechte Antwort. | ˈmalo
+nuevo |  |  | Adjektiv | neu | Mi hermana tiene un libro nuevo. | Meine Schwester hat ein neues Buch. | Vivimos en una casa nueva. | Wir wohnen in einem neuen Haus. | ˈnweβo
+viejo |  |  | Adjektiv | alt | Mi abuelo tiene un perro viejo. | Mein Grossvater hat einen alten Hund. | Este árbol es muy viejo. | Dieser Baum ist sehr alt. | ˈbjexo

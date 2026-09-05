@@ -1,0 +1,1606 @@
+{
+ "pair": "fr-de",
+ "stufe": 1,
+ "words": [
+  {
+   "foreign": "la famille",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Familie",
+   "examples": [
+    "Ma famille habite en Suisse.",
+    "Toute la famille mange ensemble."
+   ],
+   "examplesDe": [
+    "Meine Familie lebt in der Schweiz.",
+    "Die ganze Familie isst gemeinsam."
+   ],
+   "phonetic": "faˈmij"
+  },
+  {
+   "foreign": "la mère",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Mutter",
+   "examples": [
+    "Ma mère travaille à la maison.",
+    "Sa mère prépare une soupe."
+   ],
+   "examplesDe": [
+    "Meine Mutter arbeitet zu Hause.",
+    "Seine Mutter kocht eine Suppe."
+   ],
+   "phonetic": "ˈmɛʁ"
+  },
+  {
+   "foreign": "le père",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Vater",
+   "examples": [
+    "Mon père lit un livre.",
+    "Son père conduit la voiture."
+   ],
+   "examplesDe": [
+    "Mein Vater liest ein Buch.",
+    "Ihr Vater fährt das Auto."
+   ],
+   "phonetic": "ˈpɛʁ"
+  },
+  {
+   "foreign": "les parents",
+   "lernform": "",
+   "genus": "m pl",
+   "wortart": "Nomen",
+   "german": "die Eltern",
+   "examples": [
+    "Mes parents habitent à Zurich.",
+    "Ses parents arrivent demain matin."
+   ],
+   "examplesDe": [
+    "Meine Eltern wohnen in Zürich.",
+    "Ihre Eltern kommen morgen früh an."
+   ],
+   "phonetic": "paˈʁɑ̃"
+  },
+  {
+   "foreign": "la sœur",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schwester",
+   "examples": [
+    "Ma sœur va à l'école.",
+    "Sa sœur joue dans le jardin."
+   ],
+   "examplesDe": [
+    "Meine Schwester geht zur Schule.",
+    "Seine Schwester spielt im Garten."
+   ],
+   "phonetic": "ˈsœʁ"
+  },
+  {
+   "foreign": "le frère",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Bruder",
+   "examples": [
+    "Mon frère a un chien.",
+    "Son frère boit du lait."
+   ],
+   "examplesDe": [
+    "Mein Bruder hat einen Hund.",
+    "Ihr Bruder trinkt Milch."
+   ],
+   "phonetic": "ˈfʁɛʁ"
+  },
+  {
+   "foreign": "la grand-mère",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Grossmutter",
+   "examples": [
+    "Ma grand-mère prépare du pain.",
+    "Sa grand-mère habite près d'ici."
+   ],
+   "examplesDe": [
+    "Meine Grossmutter macht Brot.",
+    "Seine Grossmutter wohnt in der Nähe."
+   ],
+   "phonetic": "ɡʁɑ̃ˈmɛʁ"
+  },
+  {
+   "foreign": "le grand-père",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Grossvater",
+   "examples": [
+    "Mon grand-père lit chaque jour.",
+    "Son grand-père a une vieille voiture."
+   ],
+   "examplesDe": [
+    "Mein Grossvater liest jeden Tag.",
+    "Ihr Grossvater hat ein altes Auto."
+   ],
+   "phonetic": "ɡʁɑ̃ˈpɛʁ"
+  },
+  {
+   "foreign": "la fille",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tochter",
+   "examples": [
+    "Leur fille a dix ans.",
+    "Sa fille apprend le français."
+   ],
+   "examplesDe": [
+    "Ihre Tochter ist zehn Jahre alt.",
+    "Seine Tochter lernt Französisch."
+   ],
+   "phonetic": "ˈfij"
+  },
+  {
+   "foreign": "le fils",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Sohn",
+   "examples": [
+    "Leur fils joue avec le chien.",
+    "Son fils rentre demain matin."
+   ],
+   "examplesDe": [
+    "Ihr Sohn spielt mit dem Hund.",
+    "Ihr Sohn kommt morgen früh zurück."
+   ],
+   "phonetic": "ˈfis"
+  },
+  {
+   "foreign": "l'enfant",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Kind",
+   "examples": [
+    "L'enfant boit de l'eau.",
+    "Chaque enfant a un livre."
+   ],
+   "examplesDe": [
+    "Das Kind trinkt Wasser.",
+    "Jedes Kind hat ein Buch."
+   ],
+   "phonetic": "ɑ̃ˈfɑ̃"
+  },
+  {
+   "foreign": "l'homme",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Mann",
+   "examples": [
+    "L'homme ouvre la porte.",
+    "Un homme attend devant l'école."
+   ],
+   "examplesDe": [
+    "Der Mann öffnet die Tür.",
+    "Ein Mann wartet vor der Schule."
+   ],
+   "phonetic": "ˈɔm"
+  },
+  {
+   "foreign": "la femme",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Frau",
+   "examples": [
+    "La femme achète du fromage.",
+    "Une femme attend à la gare."
+   ],
+   "examplesDe": [
+    "Die Frau kauft Käse.",
+    "Eine Frau wartet am Bahnhof."
+   ],
+   "phonetic": "ˈfam"
+  },
+  {
+   "foreign": "l'ami",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Freund",
+   "examples": [
+    "Mon ami habite près d'ici.",
+    "Je vois mon ami aujourd'hui."
+   ],
+   "examplesDe": [
+    "Mein Freund wohnt in der Nähe.",
+    "Ich sehe meinen Freund heute."
+   ],
+   "phonetic": "aˈmi"
+  },
+  {
+   "foreign": "l'école",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schule",
+   "examples": [
+    "Notre école est très grande.",
+    "Nous allons ensemble à l'école."
+   ],
+   "examplesDe": [
+    "Unsere Schule ist sehr gross.",
+    "Wir gehen gemeinsam zur Schule."
+   ],
+   "phonetic": "eˈkɔl"
+  },
+  {
+   "foreign": "le professeur",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Lehrer",
+   "examples": [
+    "Le professeur écrit au tableau.",
+    "Notre professeur pose une question."
+   ],
+   "examplesDe": [
+    "Der Lehrer schreibt an die Tafel.",
+    "Unser Lehrer stellt eine Frage."
+   ],
+   "phonetic": "pʁɔfɛˈsœʁ"
+  },
+  {
+   "foreign": "l'élève",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Schüler",
+   "examples": [
+    "L'élève ouvre son livre.",
+    "Chaque élève a un crayon."
+   ],
+   "examplesDe": [
+    "Der Schüler öffnet sein Buch.",
+    "Jeder Schüler hat einen Bleistift."
+   ],
+   "phonetic": "eˈlɛv"
+  },
+  {
+   "foreign": "le livre",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Buch",
+   "examples": [
+    "Ce livre est très intéressant.",
+    "Je lis un livre aujourd'hui."
+   ],
+   "examplesDe": [
+    "Dieses Buch ist sehr interessant.",
+    "Ich lese heute ein Buch."
+   ],
+   "phonetic": "ˈlivʁ"
+  },
+  {
+   "foreign": "le cahier",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Heft",
+   "examples": [
+    "Mon cahier est sur la table.",
+    "Elle écrit dans son cahier."
+   ],
+   "examplesDe": [
+    "Mein Heft liegt auf dem Tisch.",
+    "Sie schreibt in ihr Heft."
+   ],
+   "phonetic": "kaˈje"
+  },
+  {
+   "foreign": "le crayon",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Bleistift",
+   "examples": [
+    "J'écris avec un crayon.",
+    "Son crayon est sous la chaise."
+   ],
+   "examplesDe": [
+    "Ich schreibe mit einem Bleistift.",
+    "Sein Bleistift liegt unter dem Stuhl."
+   ],
+   "phonetic": "kʁɛˈjɔ̃"
+  },
+  {
+   "foreign": "le stylo",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Kugelschreiber",
+   "examples": [
+    "Mon stylo est dans mon sac.",
+    "Elle écrit avec un stylo bleu."
+   ],
+   "examplesDe": [
+    "Mein Kugelschreiber ist in meiner Tasche.",
+    "Sie schreibt mit einem blauen Kugelschreiber."
+   ],
+   "phonetic": "stiˈlo"
+  },
+  {
+   "foreign": "le tableau",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Tafel",
+   "examples": [
+    "La réponse est au tableau.",
+    "Le professeur nettoie le tableau."
+   ],
+   "examplesDe": [
+    "Die Antwort steht an der Tafel.",
+    "Der Lehrer reinigt die Tafel."
+   ],
+   "phonetic": "taˈblo"
+  },
+  {
+   "foreign": "la table",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Tisch",
+   "examples": [
+    "Les livres sont sur la table.",
+    "Nous mangeons autour de la table."
+   ],
+   "examplesDe": [
+    "Die Bücher liegen auf dem Tisch.",
+    "Wir essen am Tisch."
+   ],
+   "phonetic": "ˈtabl"
+  },
+  {
+   "foreign": "la chaise",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Stuhl",
+   "examples": [
+    "La chaise est près de la fenêtre.",
+    "Le chat dort sur la chaise."
+   ],
+   "examplesDe": [
+    "Der Stuhl steht beim Fenster.",
+    "Die Katze schläft auf dem Stuhl."
+   ],
+   "phonetic": "ˈʃɛz"
+  },
+  {
+   "foreign": "la question",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Frage",
+   "examples": [
+    "Le professeur pose une question.",
+    "Je comprends bien ta question."
+   ],
+   "examplesDe": [
+    "Der Lehrer stellt eine Frage.",
+    "Ich verstehe deine Frage gut."
+   ],
+   "phonetic": "kɛsˈtjɔ̃"
+  },
+  {
+   "foreign": "la réponse",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Antwort",
+   "examples": [
+    "Sa réponse est correcte.",
+    "Il écrit la réponse lentement."
+   ],
+   "examplesDe": [
+    "Seine Antwort ist richtig.",
+    "Er schreibt die Antwort langsam."
+   ],
+   "phonetic": "ʁeˈpɔ̃s"
+  },
+  {
+   "foreign": "un",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "eins",
+   "examples": [
+    "J'ai un frère.",
+    "Un livre est sur la table."
+   ],
+   "examplesDe": [
+    "Ich habe einen Bruder.",
+    "Ein Buch liegt auf dem Tisch."
+   ],
+   "phonetic": "ˈœ̃"
+  },
+  {
+   "foreign": "deux",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zwei",
+   "examples": [
+    "Elle a deux bons amis.",
+    "Nous achetons deux litres de lait."
+   ],
+   "examplesDe": [
+    "Sie hat zwei gute Freunde.",
+    "Wir kaufen zwei Liter Milch."
+   ],
+   "phonetic": "ˈdø"
+  },
+  {
+   "foreign": "trois",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "drei",
+   "examples": [
+    "Trois élèves lisent un livre.",
+    "Il mange trois petites pommes."
+   ],
+   "examplesDe": [
+    "Drei Schüler lesen ein Buch.",
+    "Er isst drei kleine Äpfel."
+   ],
+   "phonetic": "ˈtʁwa"
+  },
+  {
+   "foreign": "dix",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zehn",
+   "examples": [
+    "Notre classe a dix élèves.",
+    "Le train arrive dans dix minutes."
+   ],
+   "examplesDe": [
+    "Unsere Klasse hat zehn Schüler.",
+    "Der Zug kommt in zehn Minuten."
+   ],
+   "phonetic": "ˈdis"
+  },
+  {
+   "foreign": "cent",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "hundert",
+   "examples": [
+    "Ce livre a cent pages.",
+    "Cent personnes habitent dans cette rue."
+   ],
+   "examplesDe": [
+    "Dieses Buch hat hundert Seiten.",
+    "Hundert Menschen wohnen in dieser Strasse."
+   ],
+   "phonetic": "ˈsɑ̃"
+  },
+  {
+   "foreign": "le jour",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Tag",
+   "examples": [
+    "Aujourd'hui est un beau jour.",
+    "J'apprends le français chaque jour."
+   ],
+   "examplesDe": [
+    "Heute ist ein schöner Tag.",
+    "Ich lerne jeden Tag Französisch."
+   ],
+   "phonetic": "ˈʒuʁ"
+  },
+  {
+   "foreign": "la semaine",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Woche",
+   "examples": [
+    "Nous avons école cette semaine.",
+    "Elle visite sa grand-mère chaque semaine."
+   ],
+   "examplesDe": [
+    "Wir haben diese Woche Schule.",
+    "Sie besucht jede Woche ihre Grossmutter."
+   ],
+   "phonetic": "səˈmɛn"
+  },
+  {
+   "foreign": "le mois",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Monat",
+   "examples": [
+    "Ce mois a trente jours.",
+    "Nous partons le mois prochain."
+   ],
+   "examplesDe": [
+    "Dieser Monat hat dreissig Tage.",
+    "Wir fahren nächsten Monat weg."
+   ],
+   "phonetic": "ˈmwa"
+  },
+  {
+   "foreign": "l'année",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Jahr",
+   "examples": [
+    "L'année commence en janvier.",
+    "Il habite ici toute l'année."
+   ],
+   "examplesDe": [
+    "Das Jahr beginnt im Januar.",
+    "Er wohnt das ganze Jahr hier."
+   ],
+   "phonetic": "aˈne"
+  },
+  {
+   "foreign": "aujourd'hui",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "heute",
+   "examples": [
+    "Nous avons français aujourd'hui.",
+    "Il fait beau aujourd'hui."
+   ],
+   "examplesDe": [
+    "Wir haben heute Französisch.",
+    "Heute ist schönes Wetter."
+   ],
+   "phonetic": "oʒuʁˈdɥi"
+  },
+  {
+   "foreign": "demain",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "morgen",
+   "examples": [
+    "Le train part demain matin.",
+    "Je visite mon ami demain."
+   ],
+   "examplesDe": [
+    "Der Zug fährt morgen früh ab.",
+    "Ich besuche morgen meinen Freund."
+   ],
+   "phonetic": "dəˈmɛ̃"
+  },
+  {
+   "foreign": "l'heure",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Stunde",
+   "examples": [
+    "Le cours dure une heure.",
+    "Nous attendons ici une heure."
+   ],
+   "examplesDe": [
+    "Der Unterricht dauert eine Stunde.",
+    "Wir warten hier eine Stunde."
+   ],
+   "phonetic": "ˈœʁ"
+  },
+  {
+   "foreign": "la tête",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Kopf",
+   "examples": [
+    "J'ai mal à la tête.",
+    "Il pose sa main sur sa tête."
+   ],
+   "examplesDe": [
+    "Ich habe Kopfschmerzen.",
+    "Er legt seine Hand auf den Kopf."
+   ],
+   "phonetic": "ˈtɛt"
+  },
+  {
+   "foreign": "la main",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Hand",
+   "examples": [
+    "Elle écrit de la main gauche.",
+    "Donne-moi ta main."
+   ],
+   "examplesDe": [
+    "Sie schreibt mit der linken Hand.",
+    "Gib mir deine Hand."
+   ],
+   "phonetic": "ˈmɛ̃"
+  },
+  {
+   "foreign": "l'œil",
+   "lernform": "l'œil, les yeux",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Auge",
+   "examples": [
+    "Son œil gauche est bleu.",
+    "Il ferme un œil."
+   ],
+   "examplesDe": [
+    "Ihr linkes Auge ist blau.",
+    "Er schliesst ein Auge."
+   ],
+   "phonetic": "ˈœj"
+  },
+  {
+   "foreign": "le pied",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Fuss",
+   "examples": [
+    "Mon pied droit me fait mal.",
+    "Il lave son pied gauche."
+   ],
+   "examplesDe": [
+    "Mein rechter Fuss tut weh.",
+    "Er wäscht seinen linken Fuss."
+   ],
+   "phonetic": "ˈpje"
+  },
+  {
+   "foreign": "le cœur",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Herz",
+   "examples": [
+    "Mon cœur bat très vite.",
+    "Le médecin écoute son cœur."
+   ],
+   "examplesDe": [
+    "Mein Herz schlägt sehr schnell.",
+    "Der Arzt hört sein Herz ab."
+   ],
+   "phonetic": "ˈkœʁ"
+  },
+  {
+   "foreign": "la bouche",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Mund",
+   "examples": [
+    "Ouvre la bouche, s'il te plaît.",
+    "L'enfant a une petite bouche."
+   ],
+   "examplesDe": [
+    "Öffne bitte den Mund.",
+    "Das Kind hat einen kleinen Mund."
+   ],
+   "phonetic": "ˈbuʃ"
+  },
+  {
+   "foreign": "l'eau",
+   "lernform": "l'eau, les eaux",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Wasser",
+   "examples": [
+    "Je bois de l'eau chaque matin.",
+    "L'eau est très froide."
+   ],
+   "examplesDe": [
+    "Ich trinke jeden Morgen Wasser.",
+    "Das Wasser ist sehr kalt."
+   ],
+   "phonetic": "ˈo"
+  },
+  {
+   "foreign": "le pain",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Brot",
+   "examples": [
+    "Nous mangeons du pain au petit-déjeuner.",
+    "Elle achète du pain frais."
+   ],
+   "examplesDe": [
+    "Wir essen Brot zum Frühstück.",
+    "Sie kauft frisches Brot."
+   ],
+   "phonetic": "ˈpɛ̃"
+  },
+  {
+   "foreign": "le lait",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Milch",
+   "examples": [
+    "L'enfant boit du lait chaud.",
+    "Nous prenons du lait au petit-déjeuner."
+   ],
+   "examplesDe": [
+    "Das Kind trinkt warme Milch.",
+    "Wir trinken Milch zum Frühstück."
+   ],
+   "phonetic": "ˈlɛ"
+  },
+  {
+   "foreign": "la pomme",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Apfel",
+   "examples": [
+    "Cette pomme est très bonne.",
+    "Il mange une pomme à l'école."
+   ],
+   "examplesDe": [
+    "Dieser Apfel ist sehr gut.",
+    "Er isst in der Schule einen Apfel."
+   ],
+   "phonetic": "ˈpɔm"
+  },
+  {
+   "foreign": "le fromage",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Käse",
+   "examples": [
+    "Le fromage est sur la table.",
+    "Je mange du pain avec du fromage."
+   ],
+   "examplesDe": [
+    "Der Käse liegt auf dem Tisch.",
+    "Ich esse Brot mit Käse."
+   ],
+   "phonetic": "fʁɔˈmaʒ"
+  },
+  {
+   "foreign": "la viande",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Fleisch",
+   "examples": [
+    "Nous mangeons de la viande ce soir.",
+    "La viande est encore chaude."
+   ],
+   "examplesDe": [
+    "Wir essen heute Abend Fleisch.",
+    "Das Fleisch ist noch warm."
+   ],
+   "phonetic": "ˈvjɑ̃d"
+  },
+  {
+   "foreign": "l'œuf",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Ei",
+   "examples": [
+    "Je mange un œuf au petit-déjeuner.",
+    "L'œuf est dans la cuisine."
+   ],
+   "examplesDe": [
+    "Ich esse ein Ei zum Frühstück.",
+    "Das Ei ist in der Küche."
+   ],
+   "phonetic": "ˈœf"
+  },
+  {
+   "foreign": "le poisson",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Fisch",
+   "examples": [
+    "Le poisson nage dans l'eau.",
+    "Nous mangeons du poisson ce soir."
+   ],
+   "examplesDe": [
+    "Der Fisch schwimmt im Wasser.",
+    "Wir essen heute Abend Fisch."
+   ],
+   "phonetic": "pwaˈsɔ̃"
+  },
+  {
+   "foreign": "la soupe",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Suppe",
+   "examples": [
+    "La soupe est très chaude.",
+    "Ma mère prépare une bonne soupe."
+   ],
+   "examplesDe": [
+    "Die Suppe ist sehr heiss.",
+    "Meine Mutter kocht eine gute Suppe."
+   ],
+   "phonetic": "ˈsup"
+  },
+  {
+   "foreign": "le sucre",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Zucker",
+   "examples": [
+    "Je prends du sucre avec mon thé.",
+    "Le sucre est sur la table."
+   ],
+   "examplesDe": [
+    "Ich nehme Zucker zu meinem Tee.",
+    "Der Zucker steht auf dem Tisch."
+   ],
+   "phonetic": "ˈsykʁ"
+  },
+  {
+   "foreign": "le petit-déjeuner",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Frühstück",
+   "examples": [
+    "Nous prenons le petit-déjeuner ensemble.",
+    "Le petit-déjeuner est prêt à sept heures."
+   ],
+   "examplesDe": [
+    "Wir frühstücken gemeinsam.",
+    "Das Frühstück ist um sieben Uhr bereit."
+   ],
+   "phonetic": "pəti deʒøˈne"
+  },
+  {
+   "foreign": "le dîner",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Abendessen",
+   "examples": [
+    "Le dîner est prêt maintenant.",
+    "Nous préparons le dîner ensemble."
+   ],
+   "examplesDe": [
+    "Das Abendessen ist jetzt bereit.",
+    "Wir bereiten das Abendessen gemeinsam zu."
+   ],
+   "phonetic": "diˈne"
+  },
+  {
+   "foreign": "la maison",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Haus",
+   "examples": [
+    "Notre maison a un jardin.",
+    "La maison est près de l'école."
+   ],
+   "examplesDe": [
+    "Unser Haus hat einen Garten.",
+    "Das Haus steht nahe bei der Schule."
+   ],
+   "phonetic": "mɛˈzɔ̃"
+  },
+  {
+   "foreign": "l'appartement",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Wohnung",
+   "examples": [
+    "Leur appartement est très petit.",
+    "Nous habitons dans un nouvel appartement."
+   ],
+   "examplesDe": [
+    "Ihre Wohnung ist sehr klein.",
+    "Wir wohnen in einer neuen Wohnung."
+   ],
+   "phonetic": "apaʁtəˈmɑ̃"
+  },
+  {
+   "foreign": "la chambre",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Zimmer",
+   "examples": [
+    "Ma chambre a deux fenêtres.",
+    "Les enfants jouent dans cette chambre."
+   ],
+   "examplesDe": [
+    "Mein Zimmer hat zwei Fenster.",
+    "Die Kinder spielen in diesem Zimmer."
+   ],
+   "phonetic": "ˈʃɑ̃bʁ"
+  },
+  {
+   "foreign": "la porte",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tür",
+   "examples": [
+    "Ferme la porte, s'il te plaît.",
+    "Le chien attend devant la porte."
+   ],
+   "examplesDe": [
+    "Schliesse bitte die Tür.",
+    "Der Hund wartet vor der Tür."
+   ],
+   "phonetic": "ˈpɔʁt"
+  },
+  {
+   "foreign": "la fenêtre",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Fenster",
+   "examples": [
+    "Ouvre la fenêtre, s'il te plaît.",
+    "Le chat regarde par la fenêtre."
+   ],
+   "examplesDe": [
+    "Öffne bitte das Fenster.",
+    "Die Katze schaut aus dem Fenster."
+   ],
+   "phonetic": "fəˈnɛtʁ"
+  },
+  {
+   "foreign": "le lit",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Bett",
+   "examples": [
+    "L'enfant dort dans ce lit.",
+    "Mon livre est sur le lit."
+   ],
+   "examplesDe": [
+    "Das Kind schläft in diesem Bett.",
+    "Mein Buch liegt auf dem Bett."
+   ],
+   "phonetic": "ˈli"
+  },
+  {
+   "foreign": "la cuisine",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Küche",
+   "examples": [
+    "Mon père cuisine dans la cuisine.",
+    "Notre cuisine a une petite table."
+   ],
+   "examplesDe": [
+    "Mein Vater kocht in der Küche.",
+    "Unsere Küche hat einen kleinen Tisch."
+   ],
+   "phonetic": "kɥiˈzin"
+  },
+  {
+   "foreign": "le jardin",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Garten",
+   "examples": [
+    "Les enfants jouent dans le jardin.",
+    "Nous avons des fleurs dans le jardin."
+   ],
+   "examplesDe": [
+    "Die Kinder spielen im Garten.",
+    "Wir haben Blumen im Garten."
+   ],
+   "phonetic": "ʒaʁˈdɛ̃"
+  },
+  {
+   "foreign": "le pantalon",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Hose",
+   "examples": [
+    "Ce pantalon est trop petit.",
+    "Son pantalon est neuf et bleu."
+   ],
+   "examplesDe": [
+    "Diese Hose ist zu klein.",
+    "Seine Hose ist neu und blau."
+   ],
+   "phonetic": "pɑ̃taˈlɔ̃"
+  },
+  {
+   "foreign": "la chemise",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Hemd",
+   "examples": [
+    "Sa chemise est blanche.",
+    "Je cherche une nouvelle chemise."
+   ],
+   "examplesDe": [
+    "Sein Hemd ist weiss.",
+    "Ich suche ein neues Hemd."
+   ],
+   "phonetic": "ʃəˈmiz"
+  },
+  {
+   "foreign": "la chaussure",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Schuh",
+   "examples": [
+    "Cette chaussure est trop grande.",
+    "Ma chaussure est sous le lit."
+   ],
+   "examplesDe": [
+    "Dieser Schuh ist zu gross.",
+    "Mein Schuh liegt unter dem Bett."
+   ],
+   "phonetic": "ʃoˈsyʁ"
+  },
+  {
+   "foreign": "la veste",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Jacke",
+   "examples": [
+    "Sa veste est sur la chaise.",
+    "Je porte une veste chaude."
+   ],
+   "examplesDe": [
+    "Ihre Jacke liegt auf dem Stuhl.",
+    "Ich trage eine warme Jacke."
+   ],
+   "phonetic": "ˈvɛst"
+  },
+  {
+   "foreign": "le chien",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Hund",
+   "examples": [
+    "Le chien court dans le jardin.",
+    "Notre chien boit de l'eau."
+   ],
+   "examplesDe": [
+    "Der Hund rennt im Garten.",
+    "Unser Hund trinkt Wasser."
+   ],
+   "phonetic": "ˈʃjɛ̃"
+  },
+  {
+   "foreign": "le chat",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Katze",
+   "examples": [
+    "Le chat dort sur mon lit.",
+    "Notre chat a les yeux verts."
+   ],
+   "examplesDe": [
+    "Die Katze schläft auf meinem Bett.",
+    "Unsere Katze hat grüne Augen."
+   ],
+   "phonetic": "ˈʃa"
+  },
+  {
+   "foreign": "le cheval",
+   "lernform": "le cheval, les chevaux",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Pferd",
+   "examples": [
+    "Le cheval mange une pomme.",
+    "Son cheval court très vite."
+   ],
+   "examplesDe": [
+    "Das Pferd frisst einen Apfel.",
+    "Ihr Pferd rennt sehr schnell."
+   ],
+   "phonetic": "ʃəˈval"
+  },
+  {
+   "foreign": "l'oiseau",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Vogel",
+   "examples": [
+    "Un oiseau est dans l'arbre.",
+    "L'oiseau a des plumes bleues."
+   ],
+   "examplesDe": [
+    "Ein Vogel sitzt im Baum.",
+    "Der Vogel hat blaue Federn."
+   ],
+   "phonetic": "waˈzo"
+  },
+  {
+   "foreign": "l'arbre",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Baum",
+   "examples": [
+    "Cet arbre est très vieux.",
+    "Un oiseau chante dans l'arbre."
+   ],
+   "examplesDe": [
+    "Dieser Baum ist sehr alt.",
+    "Ein Vogel singt im Baum."
+   ],
+   "phonetic": "ˈaʁbʁ"
+  },
+  {
+   "foreign": "la fleur",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Blume",
+   "examples": [
+    "Cette fleur est très belle.",
+    "Elle tient une fleur rouge."
+   ],
+   "examplesDe": [
+    "Diese Blume ist sehr schön.",
+    "Sie hält eine rote Blume."
+   ],
+   "phonetic": "ˈflœʁ"
+  },
+  {
+   "foreign": "le soleil",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Sonne",
+   "examples": [
+    "Le soleil brille aujourd'hui.",
+    "Nous nous asseyons au soleil."
+   ],
+   "examplesDe": [
+    "Die Sonne scheint heute.",
+    "Wir setzen uns in die Sonne."
+   ],
+   "phonetic": "sɔˈlɛj"
+  },
+  {
+   "foreign": "la pluie",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Regen",
+   "examples": [
+    "La pluie commence ce matin.",
+    "Nous jouons dehors après la pluie."
+   ],
+   "examplesDe": [
+    "Der Regen beginnt heute Morgen.",
+    "Wir spielen nach dem Regen draussen."
+   ],
+   "phonetic": "ˈplɥi"
+  },
+  {
+   "foreign": "la ville",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Stadt",
+   "examples": [
+    "Cette ville a une grande gare.",
+    "Mes grands-parents habitent en ville."
+   ],
+   "examplesDe": [
+    "Diese Stadt hat einen grossen Bahnhof.",
+    "Meine Grosseltern wohnen in der Stadt."
+   ],
+   "phonetic": "ˈvil"
+  },
+  {
+   "foreign": "la rue",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Strasse",
+   "examples": [
+    "Notre école est dans cette rue.",
+    "La rue est très calme aujourd'hui."
+   ],
+   "examplesDe": [
+    "Unsere Schule liegt in dieser Strasse.",
+    "Die Strasse ist heute sehr ruhig."
+   ],
+   "phonetic": "ˈʁy"
+  },
+  {
+   "foreign": "la gare",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Bahnhof",
+   "examples": [
+    "Le train attend à la gare.",
+    "Nous marchons jusqu'à la gare."
+   ],
+   "examplesDe": [
+    "Der Zug wartet am Bahnhof.",
+    "Wir gehen zu Fuss zum Bahnhof."
+   ],
+   "phonetic": "ˈɡaʁ"
+  },
+  {
+   "foreign": "la voiture",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Auto",
+   "examples": [
+    "Notre voiture est très vieille.",
+    "Ma mère conduit la voiture."
+   ],
+   "examplesDe": [
+    "Unser Auto ist sehr alt.",
+    "Meine Mutter fährt das Auto."
+   ],
+   "phonetic": "vwaˈtyʁ"
+  },
+  {
+   "foreign": "le train",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Zug",
+   "examples": [
+    "Le train arrive à dix heures.",
+    "Nous allons à l'école en train."
+   ],
+   "examplesDe": [
+    "Der Zug kommt um zehn Uhr an.",
+    "Wir fahren mit dem Zug zur Schule."
+   ],
+   "phonetic": "ˈtʁɛ̃"
+  },
+  {
+   "foreign": "le magasin",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Geschäft",
+   "examples": [
+    "Le magasin ouvre à huit heures.",
+    "J'achète du pain au magasin."
+   ],
+   "examplesDe": [
+    "Das Geschäft öffnet um acht Uhr.",
+    "Ich kaufe Brot im Geschäft."
+   ],
+   "phonetic": "maɡaˈzɛ̃"
+  },
+  {
+   "foreign": "être",
+   "lernform": "être: je suis, tu es, il est",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sein",
+   "examples": [
+    "Je veux être professeur.",
+    "Nous sommes à la maison aujourd'hui."
+   ],
+   "examplesDe": [
+    "Ich möchte Lehrer sein.",
+    "Wir sind heute zu Hause."
+   ],
+   "phonetic": "ˈɛtʁ"
+  },
+  {
+   "foreign": "avoir",
+   "lernform": "avoir: j'ai, tu as, il a",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "haben",
+   "examples": [
+    "J'ai un nouveau livre.",
+    "Ils ont deux enfants."
+   ],
+   "examplesDe": [
+    "Ich habe ein neues Buch.",
+    "Sie haben zwei Kinder."
+   ],
+   "phonetic": "aˈvwaʁ"
+  },
+  {
+   "foreign": "aller",
+   "lernform": "aller: je vais, tu vas, il va",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "gehen",
+   "examples": [
+    "Nous allons ensemble à l'école.",
+    "Je vais au magasin maintenant."
+   ],
+   "examplesDe": [
+    "Wir gehen gemeinsam zur Schule.",
+    "Ich gehe jetzt ins Geschäft."
+   ],
+   "phonetic": "aˈle"
+  },
+  {
+   "foreign": "venir",
+   "lernform": "venir: je viens, tu viens, il vient",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "kommen",
+   "examples": [
+    "Mes amis viennent chez nous.",
+    "Viens à la maison demain."
+   ],
+   "examplesDe": [
+    "Meine Freunde kommen zu uns.",
+    "Komm morgen nach Hause."
+   ],
+   "phonetic": "vəˈniʁ"
+  },
+  {
+   "foreign": "faire",
+   "lernform": "faire: je fais, tu fais, il fait",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "machen",
+   "examples": [
+    "Nous faisons le petit-déjeuner ensemble.",
+    "Les élèves font un grand dessin."
+   ],
+   "examplesDe": [
+    "Wir machen gemeinsam das Frühstück.",
+    "Die Schüler machen eine grosse Zeichnung."
+   ],
+   "phonetic": "ˈfɛʁ"
+  },
+  {
+   "foreign": "dire",
+   "lernform": "dire: je dis, tu dis, il dit",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sagen",
+   "examples": [
+    "Dis ton nom lentement.",
+    "Ils disent la réponse ensemble."
+   ],
+   "examplesDe": [
+    "Sag deinen Namen langsam.",
+    "Sie sagen die Antwort gemeinsam."
+   ],
+   "phonetic": "ˈdiʁ"
+  },
+  {
+   "foreign": "voir",
+   "lernform": "voir: je vois, tu vois, il voit",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sehen",
+   "examples": [
+    "Je vois un oiseau dehors.",
+    "Nous voyons nos amis à l'école."
+   ],
+   "examplesDe": [
+    "Ich sehe draussen einen Vogel.",
+    "Wir sehen unsere Freunde in der Schule."
+   ],
+   "phonetic": "ˈvwaʁ"
+  },
+  {
+   "foreign": "manger",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "essen",
+   "examples": [
+    "Nous mangeons à sept heures.",
+    "Les enfants mangent du pain."
+   ],
+   "examplesDe": [
+    "Wir essen um sieben Uhr.",
+    "Die Kinder essen Brot."
+   ],
+   "phonetic": "mɑ̃ˈʒe"
+  },
+  {
+   "foreign": "boire",
+   "lernform": "boire: je bois, tu bois, il boit",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "trinken",
+   "examples": [
+    "Je bois de l'eau chaque jour.",
+    "Ils boivent du lait le matin."
+   ],
+   "examplesDe": [
+    "Ich trinke jeden Tag Wasser.",
+    "Sie trinken morgens Milch."
+   ],
+   "phonetic": "ˈbwaʁ"
+  },
+  {
+   "foreign": "apprendre",
+   "lernform": "apprendre: j'apprends, tu apprends, il apprend",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "lernen",
+   "examples": [
+    "Nous apprenons le français à l'école.",
+    "J'apprends dix nouveaux mots."
+   ],
+   "examplesDe": [
+    "Wir lernen in der Schule Französisch.",
+    "Ich lerne zehn neue Wörter."
+   ],
+   "phonetic": "aˈpʁɑ̃dʁ"
+  },
+  {
+   "foreign": "jouer",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "spielen",
+   "examples": [
+    "Les enfants jouent dans le jardin.",
+    "Je joue avec mon ami."
+   ],
+   "examplesDe": [
+    "Die Kinder spielen im Garten.",
+    "Ich spiele mit meinem Freund."
+   ],
+   "phonetic": "ʒuˈe"
+  },
+  {
+   "foreign": "habiter",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "wohnen",
+   "examples": [
+    "Nous habitons près de la gare.",
+    "Mes grands-parents habitent en ville."
+   ],
+   "examplesDe": [
+    "Wir wohnen nahe beim Bahnhof.",
+    "Meine Grosseltern wohnen in der Stadt."
+   ],
+   "phonetic": "abiˈte"
+  },
+  {
+   "foreign": "grand",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "gross",
+   "examples": [
+    "Leur maison est très grande.",
+    "Il a un grand chien."
+   ],
+   "examplesDe": [
+    "Ihr Haus ist sehr gross.",
+    "Er hat einen grossen Hund."
+   ],
+   "phonetic": "ˈɡʁɑ̃"
+  },
+  {
+   "foreign": "petit",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "klein",
+   "examples": [
+    "Ma chambre est très petite.",
+    "Elle a un petit chat."
+   ],
+   "examplesDe": [
+    "Mein Zimmer ist sehr klein.",
+    "Sie hat eine kleine Katze."
+   ],
+   "phonetic": "pəˈti"
+  },
+  {
+   "foreign": "bon",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "gut",
+   "examples": [
+    "Cette soupe est très bonne.",
+    "Il est un bon professeur."
+   ],
+   "examplesDe": [
+    "Diese Suppe ist sehr gut.",
+    "Er ist ein guter Lehrer."
+   ],
+   "phonetic": "ˈbɔ̃"
+  },
+  {
+   "foreign": "mauvais",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "schlecht",
+   "examples": [
+    "Le temps est mauvais aujourd'hui.",
+    "C'est une mauvaise réponse."
+   ],
+   "examplesDe": [
+    "Das Wetter ist heute schlecht.",
+    "Das ist eine schlechte Antwort."
+   ],
+   "phonetic": "moˈvɛ"
+  },
+  {
+   "foreign": "nouveau",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "neu",
+   "examples": [
+    "Ma sœur a un nouveau livre.",
+    "Nous habitons dans une nouvelle maison."
+   ],
+   "examplesDe": [
+    "Meine Schwester hat ein neues Buch.",
+    "Wir wohnen in einem neuen Haus."
+   ],
+   "phonetic": "nuˈvo"
+  },
+  {
+   "foreign": "vieux",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "alt",
+   "examples": [
+    "Mon grand-père a un vieux chien.",
+    "Cet arbre est très vieux."
+   ],
+   "examplesDe": [
+    "Mein Grossvater hat einen alten Hund.",
+    "Dieser Baum ist sehr alt."
+   ],
+   "phonetic": "ˈvjø"
+  }
+ ]
+}

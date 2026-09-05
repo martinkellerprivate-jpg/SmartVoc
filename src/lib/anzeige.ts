@@ -95,12 +95,16 @@ import { stripArticle, hasArticle } from "./scoring";
  * einen Sprache nur im Plural vorkommt, tut es in der anderen so gut wie
  * immer auch. */
 export function genusDeutsch(de: string, genusFremd?: string): string {
-  if (/\bpl\b/.test(genusFremd || "")) return "pl";
   const a = (de || "").trim().toLowerCase();
   if (a.startsWith("der ")) return "m";
   if (a.startsWith("das ")) return "n";
-  if (a.startsWith("die ")) return "f";
-  return "";
+  if (!a.startsWith("die ")) return "";
+  /* "die" ist die eine zweideutige Stelle: weiblich oder Plural. Aus dem
+   * Fremdwort laesst sich das nicht schliessen -- "trousers" ist Plural,
+   * "die Hose" nicht; "parents" ist Plural, "die Eltern" auch. Wo die
+   * Angabe unsicher ist, wird gar keine gemacht: nichts zu behaupten ist
+   * besser, als etwas Falsches zu behaupten. */
+  return /\bpl\b/.test(genusFremd || "") ? "" : "f";
 }
 
 export interface Wortanzeige { haupt: string; zusatz: string }
