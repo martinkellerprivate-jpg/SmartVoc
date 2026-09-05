@@ -128,24 +128,43 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText }: { ope
   const SPALTEN = spalten(pair, P.foreignLabel);
   const COLS = SPALTEN.join(TRENNER);
   const nCols = SPALTEN.length;
-  /* "Lernform" gibt es in jeder Vorlage, gefuellt wird sie nur bei Latein.
-   * Deshalb steht die Regel dazu auch nur dort -- und fuer alle anderen
-   * Sprachen der ausdrueckliche Hinweis, die Spalte leer zu lassen: sonst
-   * denkt sich eine KI etwas aus. */
+  /* Die Formen gibt es in jeder Sprache, aber sie bedeuten nicht ueberall
+   * dasselbe -- bei Latein die Stammformen, sonst Plural und
+   * unregelmaessige Formen. Deshalb zwei Regeln statt einer. */
   const formenRegel = isLat
-    ? "Formen = die Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: 4 Stammformen; Adjektiv: 3 Genus-Endungen).\n"
-    : `Formen = die Formen, die man zum Wort mitlernt: beim Nomen Singular und Plural, beim Verb die Gegenwart oder die unregelmässigen Formen. Beispiele: "child, children" · "aller: je vais, tu vas, il va". Weisst du nichts Nennenswertes, lass es leer.\n`;
+    ? "Formen = die Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: die vier Stammformen; Deponens: drei; Adjektiv: die drei Genusformen). Bei unveränderlichen Wörtern leer.\n"
+    : `Formen = was man zum Wort mitlernt: beim Nomen Singular und Plural, beim Verb die Gegenwart oder die unregelmässigen Formen. Beispiele: "child, children" · "aller: je vais, tu vas, il va". Ist alles regelmässig, lass es leer.\n`;
+
+  /* Der Prompt hat zwei Aufgaben, und sie sind verschieden streng:
+   *
+   * ABSCHREIBEN aus einem Foto -- der uebliche Fall. Was auf dem Blatt
+   * steht, ist die Liste des Lehrers und muss Wort fuer Wort so
+   * uebernommen werden, auch wenn die KI es anders uebersetzt haette. Was
+   * darauf zusaetzlich steht -- Beispielsaetze, Lautschrift, Geschlecht,
+   * Stammformen -- wird ebenfalls abgeschrieben statt neu erfunden.
+   * Nur was FEHLT, ergaenzt die KI. Vorher hiess es "was du nicht weisst,
+   * lässt du leer"; damit kam von einer abfotografierten Heftseite eine
+   * Liste ohne einen einzigen Beispielsatz zurueck.
+   *
+   * ERZEUGEN zu einem Thema -- der zweite Fall, wenn kein Foto dabei ist.
+   */
+  const sprache = isLat ? "Latein" : P.foreignLabel;
   const aiPrompt =
-    `Ich gebe dir ein Foto einer Vokabelliste (z. B. eine Heftseite). Schreib die Wörter daraus ab.\n` +
-    `Steht kein Foto dabei, erstelle stattdessen eine Vokabelliste ${isLat ? "Latein" : P.foreignLabel} ⇄ Deutsch zu dem Thema, das ich nenne.\n\n` +
+    `Ich gebe dir gleich ein Foto einer Vokabelliste — meist eine Heftseite oder eine Buchseite. Schreib die Wörter daraus ab und ergänze, was fehlt.\n\n` +
+    `ABSCHREIBEN, NICHT ÜBERSETZEN: Wort und Übersetzung stehen auf dem Blatt und werden genau so übernommen, auch wenn du es anders sagen würdest. Keine Wörter weglassen, keine dazuerfinden, die Reihenfolge des Blattes beibehalten.\n` +
+    `ÜBERNEHMEN, WAS DASTEHT: Steht auf dem Blatt schon ein Beispielsatz, eine Lautschrift, ein Geschlecht oder eine Stammform, dann übernimm genau die — erfinde nichts Eigenes daneben.\n` +
+    `ERGÄNZEN, WAS FEHLT: Alle übrigen Felder füllst DU aus, nach den Regeln unten. Leer bleiben nur die Felder, bei denen unten ausdrücklich steht, dass sie leer bleiben dürfen.\n\n` +
+    `Ist kein Foto dabei, erstelle stattdessen eine Vokabelliste ${sprache} ⇄ Deutsch zu dem Thema, das ich nenne.\n\n` +
     `Gib NUR eine Tabelle aus, eine Zeile pro Wort, Spalten getrennt durch " | ", in genau dieser Reihenfolge:\n${COLS}\n\n` +
+    `Jede Zeile hat genau ${nCols} Spalten, also ${nCols - 1} Trennstriche — auch um leere Felder herum.\n` +
     formenRegel +
-    `Genus = das Geschlecht des Fremdworts, genau eines von: ${GENUS.join(", ")}. Nur bei Nomen; sonst leer. Im Englischen immer leer.\n` +
+    `Genus = das Geschlecht des Fremdworts, genau eines von: ${GENUS.join(", ")}. Nur bei Nomen, sonst leer.${isLat ? "" : P.foreignLabel === "English" ? " Im Englischen leer, ausser bei Wörtern, die es nur im Plural gibt (pl)." : ""}\n` +
     `Wortart = genau eines von: ${WORTARTEN.join(", ")}. Nichts anderes, keine Abkürzungen.\n` +
-    `Jede Zeile hat genau ${nCols} Spalten. Was du nicht weisst, lässt du leer — das Trennzeichen setzt du trotzdem.\n` +
-    `Beispielsätze: kurz und einfach, auf ${isLat ? "Latein" : P.foreignLabel}; direkt daneben die deutsche Übersetzung. Beides ist freiwillig, aber nur zusammen sinnvoll.\n` +
-    `Aussprache = Lautschrift des Fremdworts (IPA, ohne Klammern); wenn unsicher, leer lassen.\n` +
-    `Deutsche Nomen mit Artikel (der/die/das).\n` +
+    `Beispielsätze: zwei verschiedene, kurz und einfach, auf ${sprache}; daneben jeweils die deutsche Übersetzung.\n` +
+    `Aussprache = ${isLat
+      ? "das Stichwort noch einmal, mit Längenzeichen über den langen Vokalen (amicus → amīcus). Keine Lautschrift."
+      : "IPA-Lautschrift des Fremdworts, ohne Klammern, mit Betonungszeichen; beim Nomen ohne den Artikel."}\n` +
+    `Nomen mit Artikel, auf beiden Seiten${isLat ? " (Latein ohne Artikel, dafür mit Stammformen)" : ""}. Schweizer Schreibung: „ss" statt „ß".\n` +
     `Verwende " | " nirgends im Text selbst. Keine Nummerierung, keine Überschrift, kein weiterer Text.`;
 
   const copyPrompt = () => navigator.clipboard?.writeText(aiPrompt).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1600); });

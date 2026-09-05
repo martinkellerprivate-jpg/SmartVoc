@@ -1020,7 +1020,11 @@ export function Practice() {
   const examplesIn = (lang: string) => (lang === NATIVE ? exDe : exFgn).filter(Boolean);
   // Pronunciation belongs to the FOREIGN word, so it may only appear where that
   // word itself is shown — otherwise it would hint at the answer.
-  const phon = (zeigt(settings, PHONETIK) && current?.phonetic) ? String(current.phonetic).trim() : "";
+  /* Bei Latein steht in dieser Spalte die Grundform mit Laengenzeichen. Hat
+   * ein Wort keine langen Vokale, ist sie mit dem Wort selbst identisch --
+   * dann sagt "[familia]" unter "familia" nichts und faellt weg. */
+  const phonRoh = (zeigt(settings, PHONETIK) && current?.phonetic) ? String(current.phonetic).trim() : "";
+  const phon = (phonRoh && current && phonRoh === String(sideText(current, isLatOf(current) ? pairOf(current).foreign : "")).trim()) ? "" : phonRoh;
   const phoneticEl = phon ? <div className="card-phonetic">[{phon.replace(/^\[|\]$/g, "")}]</div> : null;
   /* Beide Seiten tragen ihre eigenen Beispielsaetze -- die Fremdseite die
    * fremdsprachigen, die deutsche die Uebersetzungen. So sieht die Karte in

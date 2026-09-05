@@ -554,3 +554,53 @@ castra | castra, castrorum n pl | n pl | Nomen | das Lager | Castra prope urbem 
 hostis | hostis, hostis m | m | Nomen | der Feind | Hostis ad castra venit. | Der Feind kommt zum Lager. | Miles hostem gladio vincit. | Der Soldat besiegt den Feind mit dem Schwert. | hostis
 deus | deus, dei m | m | Nomen | der Gott | Deus homines saepe adiuvat. | Der Gott hilft den Menschen oft. | Romani deum in templo colunt. | Die Römer verehren den Gott im Tempel. | deus
 dea | dea, deae f | f | Nomen | die Göttin | Dea templum in urbe habet. | Die Göttin hat einen Tempel in der Stadt. | Puella deae rosam dat. | Das Mädchen gibt der Göttin eine Rose. | dea
+sacerdos | sacerdos, sacerdotis m | m | Nomen | der Priester | Sacerdos deae sacrificium parat. | Der Priester bereitet der Göttin ein Opfer vor. | Cives sacerdotem in templo audiunt. | Die Bürger hören den Priester im Tempel. | sacerdōs
+sacrificium | sacrificium, sacrificii n | n | Nomen | das Opfer | Sacrificium in templo fit. | Das Opfer findet im Tempel statt. | Sacerdos sacrificium deis offert. | Der Priester bringt den Göttern ein Opfer dar. | sacrificium
+fabula | fabula, fabulae f | f | Nomen | die Erzählung | Avia fabulam antiquam narrat. | Die Grossmutter erzählt eine alte Geschichte. | Discipuli fabulam de deis legunt. | Die Schüler lesen eine Erzählung über die Götter. | fābula
+fatum | fatum, fati n | n | Nomen | das Schicksal | Fatum homines regit. | Das Schicksal lenkt die Menschen. | Nemo fatum suum cognoscit. | Niemand kennt sein Schicksal. | fātum
+sol | sol, solis m | m | Nomen | die Sonne | Sol super urbem lucet. | Die Sonne scheint über der Stadt. | Agricola solem in agro videt. | Der Bauer sieht die Sonne auf dem Feld. | sōl
+luna | luna, lunae f | f | Nomen | der Mond | Luna nocte lucet. | Der Mond scheint in der Nacht. | Puella lunam per fenestram videt. | Das Mädchen sieht den Mond durch das Fenster. | lūna
+terra | terra, terrae f | f | Nomen | die Erde | Terra aquam accipit. | Die Erde nimmt Wasser auf. | Agricola terram diligenter arat. | Der Bauer pflügt die Erde sorgfältig. | terra
+aqua | aqua, aquae f | f | Nomen | das Wasser | Aqua in flumine fluit. | Das Wasser fliesst im Fluss. | Puer aquam frigidam bibit. | Der Junge trinkt kaltes Wasser. | aqua
+flumen | flumen, fluminis n | n | Nomen | der Fluss | Flumen prope urbem fluit. | Der Fluss fliesst nahe bei der Stadt. | Milites flumen transire volunt. | Die Soldaten wollen den Fluss überqueren. | flūmen
+mons | mons, montis m | m | Nomen | der Berg | Mons procul altus est. | Der Berg in der Ferne ist hoch. | Milites ad montem pergunt. | Die Soldaten ziehen zum Berg. | mōns
+equus | equus, equi m | m | Nomen | das Pferd | Equus per agrum currit. | Das Pferd rennt über das Feld. | Miles equum ad flumen ducit. | Der Soldat führt das Pferd zum Fluss. | equus
+canis | canis, canis m | m | Nomen | der Hund | Canis in horto ludit. | Der Hund spielt im Garten. | Puer canem suum vocat. | Der Junge ruft seinen Hund. | canis
+caput | caput, capitis n | n | Nomen | der Kopf | Puer caput movet. | Der Junge bewegt den Kopf. | Miles galeam in capite habet. | Der Soldat trägt einen Helm auf dem Kopf. | caput
+manus | manus, manus f | f | Nomen | die Hand | Puella rosam manu tenet. | Das Mädchen hält eine Rose in der Hand. | Miles gladium e manu mittit. | Der Soldat lässt das Schwert aus der Hand fallen. | manus
+oculus | oculus, oculi m | m | Nomen | das Auge | Oculus pueri dolet. | Das Auge des Jungen schmerzt. | Puella oculos lente claudit. | Das Mädchen schliesst langsam die Augen. | oculus
+pes | pes, pedis m | m | Nomen | der Fuss | Pes militis dolet. | Der Fuss des Soldaten schmerzt. | Puer pedem in aqua habet. | Der Junge hat den Fuss im Wasser. | pēs
+cor | cor, cordis n | n | Nomen | das Herz | Cor militis celeriter pulsat. | Das Herz des Soldaten schlägt schnell. | Timor cor puellae movet. | Die Angst bewegt das Herz des Mädchens. | cor
+corpus | corpus, corporis n | n | Nomen | der Körper | Corpus hominis dormit. | Der Körper des Menschen schläft. | Aqua corpus pueri refrigerat. | Das Wasser kühlt den Körper des Jungen. | corpus
+dies | dies, diei m | m | Nomen | der Tag | Dies longus est. | Der Tag ist lang. | Puer totum diem laborat. | Der Junge arbeitet den ganzen Tag. | diēs
+nox | nox, noctis f | f | Nomen | die Nacht | Nox obscura est. | Die Nacht ist dunkel. | Milites nocte castra defendunt. | Die Soldaten verteidigen nachts das Lager. | nox
+hora | hora, horae f | f | Nomen | die Stunde | Hora celeriter transit. | Die Stunde vergeht schnell. | Discipuli unam horam discunt. | Die Schüler lernen eine Stunde lang. | hōra
+annus | annus, anni m | m | Nomen | das Jahr | Annus duodecim menses habet. | Das Jahr hat zwölf Monate. | Familia multos annos ibi habitat. | Die Familie wohnt seit vielen Jahren dort. | annus
+locus | locus, loci m | m | Nomen | der Ort | Locus prope flumen est. | Der Ort liegt nahe beim Fluss. | Dux locum castris eligit. | Der Feldherr wählt einen Ort für das Lager. | locus
+tempus | tempus, temporis n | n | Nomen | die Zeit | Tempus celeriter fugit. | Die Zeit vergeht schnell. | Discipulus multum temporis habet. | Der Schüler hat viel Zeit. | tempus
+esse | sum, esse, fui, futurus |  | Verb | sein | Puer in horto est. | Der Junge ist im Garten. | Cives Romani fortes sunt. | Die römischen Bürger sind tapfer. | esse
+habere | habeo, habere, habui, habitum |  | Verb | haben | Villa magnum hortum habet. | Das Landhaus hat einen grossen Garten. | Discipuli multos libros habent. | Die Schüler haben viele Bücher. | habēre
+ire | eo, ire, ii, itum |  | Verb | gehen | Puella ad scholam it. | Das Mädchen geht zur Schule. | Cives per forum eunt. | Die Bürger gehen über das Forum. | īre
+venire | venio, venire, veni, ventum |  | Verb | kommen | Amicus hodie venit. | Der Freund kommt heute. | Milites ad castra veniunt. | Die Soldaten kommen zum Lager. | venīre
+facere | facio, facere, feci, factum |  | Verb | machen | Mater cenam facit. | Die Mutter macht das Abendessen. | Discipuli magnum opus faciunt. | Die Schüler machen eine grosse Arbeit. | facere
+dicere | dico, dicere, dixi, dictum |  | Verb | sagen | Magister verba Latina dicit. | Der Lehrer sagt lateinische Wörter. | Puella amico verum dicit. | Das Mädchen sagt ihrem Freund die Wahrheit. | dīcere
+videre | video, videre, vidi, visum |  | Verb | sehen | Puer equum in agro videt. | Der Junge sieht ein Pferd auf dem Feld. | Milites urbem procul vident. | Die Soldaten sehen die Stadt in der Ferne. | vidēre
+dare | do, dare, dedi, datum |  | Verb | geben | Mater filiae librum dat. | Die Mutter gibt ihrer Tochter ein Buch. | Puella amico rosam dat. | Das Mädchen gibt seinem Freund eine Rose. | dare
+amare | amo, amare, amavi, amatum |  | Verb | lieben | Mater liberos suos amat. | Die Mutter liebt ihre Kinder. | Puer puellam valde amat. | Der Junge liebt das Mädchen sehr. | amāre
+audire | audio, audire, audivi, auditum |  | Verb | hören | Discipulus magistrum diligenter audit. | Der Schüler hört dem Lehrer aufmerksam zu. | Puella canem in horto audit. | Das Mädchen hört den Hund im Garten. | audīre
+magnus | magnus, magna, magnum |  | Adjektiv | gross | Urbs magna multos cives habet. | Die grosse Stadt hat viele Bürger. | Puer magnum equum videt. | Der Junge sieht ein grosses Pferd. | magnus
+parvus | parvus, parva, parvum |  | Adjektiv | klein | Puella parvam rosam tenet. | Das Mädchen hält eine kleine Rose. | Cubiculum parvum fenestram habet. | Das kleine Zimmer hat ein Fenster. | parvus
+bonus | bonus, bona, bonum |  | Adjektiv | gut | Magister bonus discipulos laudat. | Der gute Lehrer lobt die Schüler. | Puella bonum librum legit. | Das Mädchen liest ein gutes Buch. | bonus
+malus | malus, mala, malum |  | Adjektiv | schlecht | Rex malus populum terret. | Der schlechte König erschreckt das Volk. | Discipulus malum responsum dat. | Der Schüler gibt eine schlechte Antwort. | malus
+novus | novus, nova, novum |  | Adjektiv | neu | Familia novam domum habet. | Die Familie hat ein neues Haus. | Discipulus librum novum aperit. | Der Schüler öffnet ein neues Buch. | novus
+antiquus | antiquus, antiqua, antiquum |  | Adjektiv | alt | Templum antiquum prope forum stat. | Der alte Tempel steht nahe beim Forum. | Avia fabulam antiquam narrat. | Die Grossmutter erzählt eine alte Geschichte. | antīquus
+longus | longus, longa, longum |  | Adjektiv | lang | Via longa ad urbem ducit. | Die lange Strasse führt zur Stadt. | Miles gladium longum portat. | Der Soldat trägt ein langes Schwert. | longus
+brevis | brevis, breve |  | Adjektiv | kurz | Fabula brevis discipulis placet. | Die kurze Geschichte gefällt den Schülern. | Tempus breve celeriter fugit. | Die kurze Zeit vergeht schnell. | brevis
+fortis | fortis, forte |  | Adjektiv | tapfer | Miles fortis castra defendit. | Der tapfere Soldat verteidigt das Lager. | Dux exercitum fortem laudat. | Der Feldherr lobt das tapfere Heer. | fortis
+felix | felix, felicis |  | Adjektiv | glücklich | Puella felix in horto ludit. | Das glückliche Mädchen spielt im Garten. | Familia felicem diem agit. | Die Familie verbringt einen glücklichen Tag. | fēlix
+unus | unus, una, unum |  | Zahlwort | eins | Unus puer in schola manet. | Ein Junge bleibt in der Schule. | Puella unum librum habet. | Das Mädchen hat ein Buch. | ūnus
+duo | duo, duae, duo |  | Zahlwort | zwei | Duo milites castra defendunt. | Zwei Soldaten verteidigen das Lager. | Mater duas filias habet. | Die Mutter hat zwei Töchter. | duō
+tres | tres, tria |  | Zahlwort | drei | Tres pueri in horto ludunt. | Drei Jungen spielen im Garten. | Discipulus tria verba scribit. | Der Schüler schreibt drei Wörter. | trēs
+decem |  |  | Zahlwort | zehn | Decem discipuli magistrum audiunt. | Zehn Schüler hören dem Lehrer zu. | Villa decem fenestras habet. | Das Landhaus hat zehn Fenster. | decem
+hodie |  |  | Adverb | heute | Amicus hodie advenit. | Der Freund kommt heute an. | Hodie discipuli linguam Latinam discunt. | Heute lernen die Schüler Latein. | hodiē
+saepe |  |  | Adverb | oft | Puer saepe in horto ludit. | Der Junge spielt oft im Garten. | Avia saepe fabulas narrat. | Die Grossmutter erzählt oft Geschichten. | saepe

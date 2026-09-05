@@ -143,16 +143,16 @@ in dieser Reihenfolge und Anzahl:
 
    14  Menschen und Familie
     6  Schule, Buch, Sprache
-   10  Haus, Hof, Landgut
-   10  Stadt, Forum, Staat
+    9  Haus, Hof, Landgut
+    9  Stadt, Forum, Staat
     8  Krieg und Militär
-    6  Götter, Religion, Mythos
+    5  Götter, Religion, Mythos
     8  Natur, Tiere, Landschaft
     6  Körper und Sinne
     6  Zeit und Raum
-   20  häufige Verben
-   10  häufige Adjektive
-    6  Zahlwörter und Adverbien
+   12  häufige Verben
+    9  häufige Adjektive
+    8  Zahlwörter und Adverbien
 
 Keine Wiederholungen. Die Themennamen NICHT ausgeben.
 

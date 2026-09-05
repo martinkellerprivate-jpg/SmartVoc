@@ -74,7 +74,11 @@ for (const pair of PAARE) {
     if (!GENUS.includes(genus)) meckern.push(`Zeile ${nr}: Genus "${genus}" — ${kopf}`);
     if (wortart !== "Nomen" && genus) meckern.push(`Zeile ${nr}: Genus bei "${wortart}" — ${kopf}`);
     if (wortart === "Nomen" && !genus && pair !== "en-de") meckern.push(`Zeile ${nr}: Nomen ohne Genus — ${kopf}`);
-    if (latein && !lernform) meckern.push(`Zeile ${nr}: keine Stammformen — ${kopf}`);
+    /* Stammformen hat im Lateinischen nur, was sich beugt. "decem", "saepe"
+     * und "hodie" sind unveraenderlich -- dort ist das leere Feld richtig
+     * und nicht ein Versaeumnis. */
+    if (latein && !lernform && ["Nomen", "Verb", "Adjektiv"].includes(wortart))
+      meckern.push(`Zeile ${nr}: keine Stammformen — ${kopf}`);
     if (/^[A-ZÄÖÜ]/.test(german) && !ARTIKEL.test(german)) meckern.push(`Zeile ${nr}: Nomen ohne Artikel — ${german}`);
     if (/ß/.test(german + e1de + e2de)) meckern.push(`Zeile ${nr}: ß statt ss — ${kopf}`);
     if (/^[[/]/.test(phon)) meckern.push(`Zeile ${nr}: Lautschrift in Klammern — ${phon}`);

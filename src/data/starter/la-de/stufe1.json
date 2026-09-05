@@ -801,6 +801,806 @@
     "Das Mädchen gibt der Göttin eine Rose."
    ],
    "phonetic": "dea"
+  },
+  {
+   "grundform": "sacerdos",
+   "lernform": "sacerdos, sacerdotis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Priester",
+   "examples": [
+    "Sacerdos deae sacrificium parat.",
+    "Cives sacerdotem in templo audiunt."
+   ],
+   "examplesDe": [
+    "Der Priester bereitet der Göttin ein Opfer vor.",
+    "Die Bürger hören den Priester im Tempel."
+   ],
+   "phonetic": "sacerdōs"
+  },
+  {
+   "grundform": "sacrificium",
+   "lernform": "sacrificium, sacrificii n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "das Opfer",
+   "examples": [
+    "Sacrificium in templo fit.",
+    "Sacerdos sacrificium deis offert."
+   ],
+   "examplesDe": [
+    "Das Opfer findet im Tempel statt.",
+    "Der Priester bringt den Göttern ein Opfer dar."
+   ],
+   "phonetic": "sacrificium"
+  },
+  {
+   "grundform": "fabula",
+   "lernform": "fabula, fabulae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Erzählung",
+   "examples": [
+    "Avia fabulam antiquam narrat.",
+    "Discipuli fabulam de deis legunt."
+   ],
+   "examplesDe": [
+    "Die Grossmutter erzählt eine alte Geschichte.",
+    "Die Schüler lesen eine Erzählung über die Götter."
+   ],
+   "phonetic": "fābula"
+  },
+  {
+   "grundform": "fatum",
+   "lernform": "fatum, fati n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "das Schicksal",
+   "examples": [
+    "Fatum homines regit.",
+    "Nemo fatum suum cognoscit."
+   ],
+   "examplesDe": [
+    "Das Schicksal lenkt die Menschen.",
+    "Niemand kennt sein Schicksal."
+   ],
+   "phonetic": "fātum"
+  },
+  {
+   "grundform": "sol",
+   "lernform": "sol, solis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Sonne",
+   "examples": [
+    "Sol super urbem lucet.",
+    "Agricola solem in agro videt."
+   ],
+   "examplesDe": [
+    "Die Sonne scheint über der Stadt.",
+    "Der Bauer sieht die Sonne auf dem Feld."
+   ],
+   "phonetic": "sōl"
+  },
+  {
+   "grundform": "luna",
+   "lernform": "luna, lunae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Mond",
+   "examples": [
+    "Luna nocte lucet.",
+    "Puella lunam per fenestram videt."
+   ],
+   "examplesDe": [
+    "Der Mond scheint in der Nacht.",
+    "Das Mädchen sieht den Mond durch das Fenster."
+   ],
+   "phonetic": "lūna"
+  },
+  {
+   "grundform": "terra",
+   "lernform": "terra, terrae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Erde",
+   "examples": [
+    "Terra aquam accipit.",
+    "Agricola terram diligenter arat."
+   ],
+   "examplesDe": [
+    "Die Erde nimmt Wasser auf.",
+    "Der Bauer pflügt die Erde sorgfältig."
+   ],
+   "phonetic": "terra"
+  },
+  {
+   "grundform": "aqua",
+   "lernform": "aqua, aquae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Wasser",
+   "examples": [
+    "Aqua in flumine fluit.",
+    "Puer aquam frigidam bibit."
+   ],
+   "examplesDe": [
+    "Das Wasser fliesst im Fluss.",
+    "Der Junge trinkt kaltes Wasser."
+   ],
+   "phonetic": "aqua"
+  },
+  {
+   "grundform": "flumen",
+   "lernform": "flumen, fluminis n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "der Fluss",
+   "examples": [
+    "Flumen prope urbem fluit.",
+    "Milites flumen transire volunt."
+   ],
+   "examplesDe": [
+    "Der Fluss fliesst nahe bei der Stadt.",
+    "Die Soldaten wollen den Fluss überqueren."
+   ],
+   "phonetic": "flūmen"
+  },
+  {
+   "grundform": "mons",
+   "lernform": "mons, montis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Berg",
+   "examples": [
+    "Mons procul altus est.",
+    "Milites ad montem pergunt."
+   ],
+   "examplesDe": [
+    "Der Berg in der Ferne ist hoch.",
+    "Die Soldaten ziehen zum Berg."
+   ],
+   "phonetic": "mōns"
+  },
+  {
+   "grundform": "equus",
+   "lernform": "equus, equi m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Pferd",
+   "examples": [
+    "Equus per agrum currit.",
+    "Miles equum ad flumen ducit."
+   ],
+   "examplesDe": [
+    "Das Pferd rennt über das Feld.",
+    "Der Soldat führt das Pferd zum Fluss."
+   ],
+   "phonetic": "equus"
+  },
+  {
+   "grundform": "canis",
+   "lernform": "canis, canis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Hund",
+   "examples": [
+    "Canis in horto ludit.",
+    "Puer canem suum vocat."
+   ],
+   "examplesDe": [
+    "Der Hund spielt im Garten.",
+    "Der Junge ruft seinen Hund."
+   ],
+   "phonetic": "canis"
+  },
+  {
+   "grundform": "caput",
+   "lernform": "caput, capitis n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "der Kopf",
+   "examples": [
+    "Puer caput movet.",
+    "Miles galeam in capite habet."
+   ],
+   "examplesDe": [
+    "Der Junge bewegt den Kopf.",
+    "Der Soldat trägt einen Helm auf dem Kopf."
+   ],
+   "phonetic": "caput"
+  },
+  {
+   "grundform": "manus",
+   "lernform": "manus, manus f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Hand",
+   "examples": [
+    "Puella rosam manu tenet.",
+    "Miles gladium e manu mittit."
+   ],
+   "examplesDe": [
+    "Das Mädchen hält eine Rose in der Hand.",
+    "Der Soldat lässt das Schwert aus der Hand fallen."
+   ],
+   "phonetic": "manus"
+  },
+  {
+   "grundform": "oculus",
+   "lernform": "oculus, oculi m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Auge",
+   "examples": [
+    "Oculus pueri dolet.",
+    "Puella oculos lente claudit."
+   ],
+   "examplesDe": [
+    "Das Auge des Jungen schmerzt.",
+    "Das Mädchen schliesst langsam die Augen."
+   ],
+   "phonetic": "oculus"
+  },
+  {
+   "grundform": "pes",
+   "lernform": "pes, pedis m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Fuss",
+   "examples": [
+    "Pes militis dolet.",
+    "Puer pedem in aqua habet."
+   ],
+   "examplesDe": [
+    "Der Fuss des Soldaten schmerzt.",
+    "Der Junge hat den Fuss im Wasser."
+   ],
+   "phonetic": "pēs"
+  },
+  {
+   "grundform": "cor",
+   "lernform": "cor, cordis n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "das Herz",
+   "examples": [
+    "Cor militis celeriter pulsat.",
+    "Timor cor puellae movet."
+   ],
+   "examplesDe": [
+    "Das Herz des Soldaten schlägt schnell.",
+    "Die Angst bewegt das Herz des Mädchens."
+   ],
+   "phonetic": "cor"
+  },
+  {
+   "grundform": "corpus",
+   "lernform": "corpus, corporis n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "der Körper",
+   "examples": [
+    "Corpus hominis dormit.",
+    "Aqua corpus pueri refrigerat."
+   ],
+   "examplesDe": [
+    "Der Körper des Menschen schläft.",
+    "Das Wasser kühlt den Körper des Jungen."
+   ],
+   "phonetic": "corpus"
+  },
+  {
+   "grundform": "dies",
+   "lernform": "dies, diei m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Tag",
+   "examples": [
+    "Dies longus est.",
+    "Puer totum diem laborat."
+   ],
+   "examplesDe": [
+    "Der Tag ist lang.",
+    "Der Junge arbeitet den ganzen Tag."
+   ],
+   "phonetic": "diēs"
+  },
+  {
+   "grundform": "nox",
+   "lernform": "nox, noctis f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Nacht",
+   "examples": [
+    "Nox obscura est.",
+    "Milites nocte castra defendunt."
+   ],
+   "examplesDe": [
+    "Die Nacht ist dunkel.",
+    "Die Soldaten verteidigen nachts das Lager."
+   ],
+   "phonetic": "nox"
+  },
+  {
+   "grundform": "hora",
+   "lernform": "hora, horae f",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Stunde",
+   "examples": [
+    "Hora celeriter transit.",
+    "Discipuli unam horam discunt."
+   ],
+   "examplesDe": [
+    "Die Stunde vergeht schnell.",
+    "Die Schüler lernen eine Stunde lang."
+   ],
+   "phonetic": "hōra"
+  },
+  {
+   "grundform": "annus",
+   "lernform": "annus, anni m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Jahr",
+   "examples": [
+    "Annus duodecim menses habet.",
+    "Familia multos annos ibi habitat."
+   ],
+   "examplesDe": [
+    "Das Jahr hat zwölf Monate.",
+    "Die Familie wohnt seit vielen Jahren dort."
+   ],
+   "phonetic": "annus"
+  },
+  {
+   "grundform": "locus",
+   "lernform": "locus, loci m",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Ort",
+   "examples": [
+    "Locus prope flumen est.",
+    "Dux locum castris eligit."
+   ],
+   "examplesDe": [
+    "Der Ort liegt nahe beim Fluss.",
+    "Der Feldherr wählt einen Ort für das Lager."
+   ],
+   "phonetic": "locus"
+  },
+  {
+   "grundform": "tempus",
+   "lernform": "tempus, temporis n",
+   "genus": "n",
+   "wortart": "Nomen",
+   "german": "die Zeit",
+   "examples": [
+    "Tempus celeriter fugit.",
+    "Discipulus multum temporis habet."
+   ],
+   "examplesDe": [
+    "Die Zeit vergeht schnell.",
+    "Der Schüler hat viel Zeit."
+   ],
+   "phonetic": "tempus"
+  },
+  {
+   "grundform": "esse",
+   "lernform": "sum, esse, fui, futurus",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sein",
+   "examples": [
+    "Puer in horto est.",
+    "Cives Romani fortes sunt."
+   ],
+   "examplesDe": [
+    "Der Junge ist im Garten.",
+    "Die römischen Bürger sind tapfer."
+   ],
+   "phonetic": "esse"
+  },
+  {
+   "grundform": "habere",
+   "lernform": "habeo, habere, habui, habitum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "haben",
+   "examples": [
+    "Villa magnum hortum habet.",
+    "Discipuli multos libros habent."
+   ],
+   "examplesDe": [
+    "Das Landhaus hat einen grossen Garten.",
+    "Die Schüler haben viele Bücher."
+   ],
+   "phonetic": "habēre"
+  },
+  {
+   "grundform": "ire",
+   "lernform": "eo, ire, ii, itum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "gehen",
+   "examples": [
+    "Puella ad scholam it.",
+    "Cives per forum eunt."
+   ],
+   "examplesDe": [
+    "Das Mädchen geht zur Schule.",
+    "Die Bürger gehen über das Forum."
+   ],
+   "phonetic": "īre"
+  },
+  {
+   "grundform": "venire",
+   "lernform": "venio, venire, veni, ventum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "kommen",
+   "examples": [
+    "Amicus hodie venit.",
+    "Milites ad castra veniunt."
+   ],
+   "examplesDe": [
+    "Der Freund kommt heute.",
+    "Die Soldaten kommen zum Lager."
+   ],
+   "phonetic": "venīre"
+  },
+  {
+   "grundform": "facere",
+   "lernform": "facio, facere, feci, factum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "machen",
+   "examples": [
+    "Mater cenam facit.",
+    "Discipuli magnum opus faciunt."
+   ],
+   "examplesDe": [
+    "Die Mutter macht das Abendessen.",
+    "Die Schüler machen eine grosse Arbeit."
+   ],
+   "phonetic": "facere"
+  },
+  {
+   "grundform": "dicere",
+   "lernform": "dico, dicere, dixi, dictum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sagen",
+   "examples": [
+    "Magister verba Latina dicit.",
+    "Puella amico verum dicit."
+   ],
+   "examplesDe": [
+    "Der Lehrer sagt lateinische Wörter.",
+    "Das Mädchen sagt ihrem Freund die Wahrheit."
+   ],
+   "phonetic": "dīcere"
+  },
+  {
+   "grundform": "videre",
+   "lernform": "video, videre, vidi, visum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sehen",
+   "examples": [
+    "Puer equum in agro videt.",
+    "Milites urbem procul vident."
+   ],
+   "examplesDe": [
+    "Der Junge sieht ein Pferd auf dem Feld.",
+    "Die Soldaten sehen die Stadt in der Ferne."
+   ],
+   "phonetic": "vidēre"
+  },
+  {
+   "grundform": "dare",
+   "lernform": "do, dare, dedi, datum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "geben",
+   "examples": [
+    "Mater filiae librum dat.",
+    "Puella amico rosam dat."
+   ],
+   "examplesDe": [
+    "Die Mutter gibt ihrer Tochter ein Buch.",
+    "Das Mädchen gibt seinem Freund eine Rose."
+   ],
+   "phonetic": "dare"
+  },
+  {
+   "grundform": "amare",
+   "lernform": "amo, amare, amavi, amatum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "lieben",
+   "examples": [
+    "Mater liberos suos amat.",
+    "Puer puellam valde amat."
+   ],
+   "examplesDe": [
+    "Die Mutter liebt ihre Kinder.",
+    "Der Junge liebt das Mädchen sehr."
+   ],
+   "phonetic": "amāre"
+  },
+  {
+   "grundform": "audire",
+   "lernform": "audio, audire, audivi, auditum",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "hören",
+   "examples": [
+    "Discipulus magistrum diligenter audit.",
+    "Puella canem in horto audit."
+   ],
+   "examplesDe": [
+    "Der Schüler hört dem Lehrer aufmerksam zu.",
+    "Das Mädchen hört den Hund im Garten."
+   ],
+   "phonetic": "audīre"
+  },
+  {
+   "grundform": "magnus",
+   "lernform": "magnus, magna, magnum",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "gross",
+   "examples": [
+    "Urbs magna multos cives habet.",
+    "Puer magnum equum videt."
+   ],
+   "examplesDe": [
+    "Die grosse Stadt hat viele Bürger.",
+    "Der Junge sieht ein grosses Pferd."
+   ],
+   "phonetic": "magnus"
+  },
+  {
+   "grundform": "parvus",
+   "lernform": "parvus, parva, parvum",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "klein",
+   "examples": [
+    "Puella parvam rosam tenet.",
+    "Cubiculum parvum fenestram habet."
+   ],
+   "examplesDe": [
+    "Das Mädchen hält eine kleine Rose.",
+    "Das kleine Zimmer hat ein Fenster."
+   ],
+   "phonetic": "parvus"
+  },
+  {
+   "grundform": "bonus",
+   "lernform": "bonus, bona, bonum",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "gut",
+   "examples": [
+    "Magister bonus discipulos laudat.",
+    "Puella bonum librum legit."
+   ],
+   "examplesDe": [
+    "Der gute Lehrer lobt die Schüler.",
+    "Das Mädchen liest ein gutes Buch."
+   ],
+   "phonetic": "bonus"
+  },
+  {
+   "grundform": "malus",
+   "lernform": "malus, mala, malum",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "schlecht",
+   "examples": [
+    "Rex malus populum terret.",
+    "Discipulus malum responsum dat."
+   ],
+   "examplesDe": [
+    "Der schlechte König erschreckt das Volk.",
+    "Der Schüler gibt eine schlechte Antwort."
+   ],
+   "phonetic": "malus"
+  },
+  {
+   "grundform": "novus",
+   "lernform": "novus, nova, novum",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "neu",
+   "examples": [
+    "Familia novam domum habet.",
+    "Discipulus librum novum aperit."
+   ],
+   "examplesDe": [
+    "Die Familie hat ein neues Haus.",
+    "Der Schüler öffnet ein neues Buch."
+   ],
+   "phonetic": "novus"
+  },
+  {
+   "grundform": "antiquus",
+   "lernform": "antiquus, antiqua, antiquum",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "alt",
+   "examples": [
+    "Templum antiquum prope forum stat.",
+    "Avia fabulam antiquam narrat."
+   ],
+   "examplesDe": [
+    "Der alte Tempel steht nahe beim Forum.",
+    "Die Grossmutter erzählt eine alte Geschichte."
+   ],
+   "phonetic": "antīquus"
+  },
+  {
+   "grundform": "longus",
+   "lernform": "longus, longa, longum",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "lang",
+   "examples": [
+    "Via longa ad urbem ducit.",
+    "Miles gladium longum portat."
+   ],
+   "examplesDe": [
+    "Die lange Strasse führt zur Stadt.",
+    "Der Soldat trägt ein langes Schwert."
+   ],
+   "phonetic": "longus"
+  },
+  {
+   "grundform": "brevis",
+   "lernform": "brevis, breve",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "kurz",
+   "examples": [
+    "Fabula brevis discipulis placet.",
+    "Tempus breve celeriter fugit."
+   ],
+   "examplesDe": [
+    "Die kurze Geschichte gefällt den Schülern.",
+    "Die kurze Zeit vergeht schnell."
+   ],
+   "phonetic": "brevis"
+  },
+  {
+   "grundform": "fortis",
+   "lernform": "fortis, forte",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "tapfer",
+   "examples": [
+    "Miles fortis castra defendit.",
+    "Dux exercitum fortem laudat."
+   ],
+   "examplesDe": [
+    "Der tapfere Soldat verteidigt das Lager.",
+    "Der Feldherr lobt das tapfere Heer."
+   ],
+   "phonetic": "fortis"
+  },
+  {
+   "grundform": "felix",
+   "lernform": "felix, felicis",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "glücklich",
+   "examples": [
+    "Puella felix in horto ludit.",
+    "Familia felicem diem agit."
+   ],
+   "examplesDe": [
+    "Das glückliche Mädchen spielt im Garten.",
+    "Die Familie verbringt einen glücklichen Tag."
+   ],
+   "phonetic": "fēlix"
+  },
+  {
+   "grundform": "unus",
+   "lernform": "unus, una, unum",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "eins",
+   "examples": [
+    "Unus puer in schola manet.",
+    "Puella unum librum habet."
+   ],
+   "examplesDe": [
+    "Ein Junge bleibt in der Schule.",
+    "Das Mädchen hat ein Buch."
+   ],
+   "phonetic": "ūnus"
+  },
+  {
+   "grundform": "duo",
+   "lernform": "duo, duae, duo",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zwei",
+   "examples": [
+    "Duo milites castra defendunt.",
+    "Mater duas filias habet."
+   ],
+   "examplesDe": [
+    "Zwei Soldaten verteidigen das Lager.",
+    "Die Mutter hat zwei Töchter."
+   ],
+   "phonetic": "duō"
+  },
+  {
+   "grundform": "tres",
+   "lernform": "tres, tria",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "drei",
+   "examples": [
+    "Tres pueri in horto ludunt.",
+    "Discipulus tria verba scribit."
+   ],
+   "examplesDe": [
+    "Drei Jungen spielen im Garten.",
+    "Der Schüler schreibt drei Wörter."
+   ],
+   "phonetic": "trēs"
+  },
+  {
+   "grundform": "decem",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zehn",
+   "examples": [
+    "Decem discipuli magistrum audiunt.",
+    "Villa decem fenestras habet."
+   ],
+   "examplesDe": [
+    "Zehn Schüler hören dem Lehrer zu.",
+    "Das Landhaus hat zehn Fenster."
+   ],
+   "phonetic": "decem"
+  },
+  {
+   "grundform": "hodie",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "heute",
+   "examples": [
+    "Amicus hodie advenit.",
+    "Hodie discipuli linguam Latinam discunt."
+   ],
+   "examplesDe": [
+    "Der Freund kommt heute an.",
+    "Heute lernen die Schüler Latein."
+   ],
+   "phonetic": "hodiē"
+  },
+  {
+   "grundform": "saepe",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "oft",
+   "examples": [
+    "Puer saepe in horto ludit.",
+    "Avia saepe fabulas narrat."
+   ],
+   "examplesDe": [
+    "Der Junge spielt oft im Garten.",
+    "Die Grossmutter erzählt oft Geschichten."
+   ],
+   "phonetic": "saepe"
   }
  ]
 }
