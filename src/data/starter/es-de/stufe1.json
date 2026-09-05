@@ -1,0 +1,526 @@
+{
+ "pair": "es-de",
+ "stufe": 1,
+ "words": [
+  {
+   "foreign": "la familia",
+   "german": "die Familie",
+   "examples": [
+    "Mi familia vive cerca de Madrid.",
+    "La familia come junta los domingos."
+   ],
+   "examplesDe": [
+    "Meine Familie wohnt in der Nähe von Madrid.",
+    "Die Familie isst sonntags gemeinsam."
+   ],
+   "phonetic": "faˈmi.lja"
+  },
+  {
+   "foreign": "la madre",
+   "german": "die Mutter",
+   "examples": [
+    "Mi madre trabaja en un hospital.",
+    "La madre prepara la cena."
+   ],
+   "examplesDe": [
+    "Meine Mutter arbeitet in einem Krankenhaus.",
+    "Die Mutter bereitet das Abendessen zu."
+   ],
+   "phonetic": "ˈma.ðɾe"
+  },
+  {
+   "foreign": "el padre",
+   "german": "der Vater",
+   "examples": [
+    "Mi padre lee el periódico.",
+    "El padre juega con sus hijos."
+   ],
+   "examplesDe": [
+    "Mein Vater liest die Zeitung.",
+    "Der Vater spielt mit seinen Kindern."
+   ],
+   "phonetic": "ˈpa.ðɾe"
+  },
+  {
+   "foreign": "los padres",
+   "german": "die Eltern",
+   "examples": [
+    "Mis padres están en casa.",
+    "Los padres hablan con la profesora."
+   ],
+   "examplesDe": [
+    "Meine Eltern sind zu Hause.",
+    "Die Eltern sprechen mit der Lehrerin."
+   ],
+   "phonetic": "ˈpa.ðɾes"
+  },
+  {
+   "foreign": "el hermano",
+   "german": "der Bruder",
+   "examples": [
+    "Mi hermano tiene doce años.",
+    "El hermano de Ana estudia mucho."
+   ],
+   "examplesDe": [
+    "Mein Bruder ist zwölf Jahre alt.",
+    "Anas Bruder lernt viel."
+   ],
+   "phonetic": "eɾˈma.no"
+  },
+  {
+   "foreign": "la hermana",
+   "german": "die Schwester",
+   "examples": [
+    "Mi hermana canta muy bien.",
+    "La hermana de Luis es simpática."
+   ],
+   "examplesDe": [
+    "Meine Schwester singt sehr gut.",
+    "Die Schwester von Luis ist sympathisch."
+   ],
+   "phonetic": "eɾˈma.na"
+  },
+  {
+   "foreign": "el abuelo",
+   "german": "der Grossvater",
+   "examples": [
+    "Mi abuelo vive en Valencia.",
+    "El abuelo cuenta una historia."
+   ],
+   "examplesDe": [
+    "Mein Grossvater wohnt in Valencia.",
+    "Der Grossvater erzählt eine Geschichte."
+   ],
+   "phonetic": "aˈβwe.lo"
+  },
+  {
+   "foreign": "la abuela",
+   "german": "die Grossmutter",
+   "examples": [
+    "Mi abuela hace una tarta.",
+    "La abuela ha llamado hoy."
+   ],
+   "examplesDe": [
+    "Meine Grossmutter backt einen Kuchen.",
+    "Die Grossmutter hat heute angerufen."
+   ],
+   "phonetic": "aˈβwe.la"
+  },
+  {
+   "foreign": "el hijo",
+   "german": "der Sohn",
+   "examples": [
+    "Su hijo juega al fútbol.",
+    "El hijo ayuda a su padre."
+   ],
+   "examplesDe": [
+    "Ihr Sohn spielt Fussball.",
+    "Der Sohn hilft seinem Vater."
+   ],
+   "phonetic": "ˈi.xo"
+  },
+  {
+   "foreign": "la hija",
+   "german": "die Tochter",
+   "examples": [
+    "Mi hija aprende español.",
+    "La hija de Marta ha llegado."
+   ],
+   "examplesDe": [
+    "Meine Tochter lernt Spanisch.",
+    "Martas Tochter ist angekommen."
+   ],
+   "phonetic": "ˈi.xa"
+  },
+  {
+   "foreign": "el niño",
+   "german": "der Junge",
+   "examples": [
+    "El niño corre por el parque.",
+    "Un niño pregunta por su madre."
+   ],
+   "examplesDe": [
+    "Der Junge läuft durch den Park.",
+    "Ein Junge fragt nach seiner Mutter."
+   ],
+   "phonetic": "ˈni.ɲo"
+  },
+  {
+   "foreign": "la niña",
+   "german": "das Mädchen",
+   "examples": [
+    "La niña dibuja una casa.",
+    "Una niña ha encontrado la pelota."
+   ],
+   "examplesDe": [
+    "Das Mädchen zeichnet ein Haus.",
+    "Ein Mädchen hat den Ball gefunden."
+   ],
+   "phonetic": "ˈni.ɲa"
+  },
+  {
+   "foreign": "el hombre",
+   "german": "der Mann",
+   "examples": [
+    "El hombre lleva una camisa azul.",
+    "Un hombre espera delante del banco."
+   ],
+   "examplesDe": [
+    "Der Mann trägt ein blaues Hemd.",
+    "Ein Mann wartet vor der Bank."
+   ],
+   "phonetic": "ˈom.bɾe"
+  },
+  {
+   "foreign": "la mujer",
+   "german": "die Frau",
+   "examples": [
+    "La mujer compra pan fresco.",
+    "Una mujer ha abierto la puerta."
+   ],
+   "examplesDe": [
+    "Die Frau kauft frisches Brot.",
+    "Eine Frau hat die Tür geöffnet."
+   ],
+   "phonetic": "muˈxeɾ"
+  },
+  {
+   "foreign": "el amigo",
+   "german": "der Freund",
+   "examples": [
+    "Mi amigo vive en Barcelona.",
+    "Un amigo viene esta tarde."
+   ],
+   "examplesDe": [
+    "Mein Freund wohnt in Barcelona.",
+    "Ein Freund kommt heute Nachmittag."
+   ],
+   "phonetic": "aˈmi.ɣo"
+  },
+  {
+   "foreign": "la amiga",
+   "german": "die Freundin",
+   "examples": [
+    "Mi amiga estudia conmigo.",
+    "Una amiga me ha escrito."
+   ],
+   "examplesDe": [
+    "Meine Freundin lernt mit mir.",
+    "Eine Freundin hat mir geschrieben."
+   ],
+   "phonetic": "aˈmi.ɣa"
+  },
+  {
+   "foreign": "la persona",
+   "german": "die Person",
+   "examples": [
+    "Esta persona habla tres idiomas.",
+    "Hay una persona en la entrada."
+   ],
+   "examplesDe": [
+    "Diese Person spricht drei Sprachen.",
+    "Am Eingang steht eine Person."
+   ],
+   "phonetic": "peɾˈso.na"
+  },
+  {
+   "foreign": "el nombre",
+   "german": "der Name",
+   "examples": [
+    "Mi nombre es Carlos.",
+    "Escribe tu nombre en la hoja."
+   ],
+   "examplesDe": [
+    "Mein Name ist Carlos.",
+    "Schreib deinen Namen auf das Blatt."
+   ],
+   "phonetic": "ˈnom.bɾe"
+  },
+  {
+   "foreign": "la edad",
+   "german": "das Alter",
+   "examples": [
+    "La edad no es importante.",
+    "¿Cuál es la edad de Pedro?"
+   ],
+   "examplesDe": [
+    "Das Alter ist nicht wichtig.",
+    "Wie alt ist Pedro?"
+   ],
+   "phonetic": "eˈðað"
+  },
+  {
+   "foreign": "la gente",
+   "german": "die Leute",
+   "examples": [
+    "La gente espera el autobús.",
+    "Hay mucha gente en la plaza."
+   ],
+   "examplesDe": [
+    "Die Leute warten auf den Bus.",
+    "Auf dem Platz sind viele Leute."
+   ],
+   "phonetic": "ˈxen.te"
+  },
+  {
+   "foreign": "la escuela",
+   "german": "die Schule",
+   "examples": [
+    "La escuela está cerca de casa.",
+    "Los niños van juntos a la escuela."
+   ],
+   "examplesDe": [
+    "Die Schule ist nahe bei unserem Haus.",
+    "Die Kinder gehen gemeinsam zur Schule."
+   ],
+   "phonetic": "esˈkwe.la"
+  },
+  {
+   "foreign": "el instituto",
+   "german": "das Gymnasium",
+   "examples": [
+    "Mi instituto tiene una biblioteca grande.",
+    "Vamos al instituto cada mañana."
+   ],
+   "examplesDe": [
+    "Mein Gymnasium hat eine grosse Bibliothek.",
+    "Wir gehen jeden Morgen ins Gymnasium."
+   ],
+   "phonetic": "ins.tiˈtu.to"
+  },
+  {
+   "foreign": "la clase",
+   "german": "der Unterricht",
+   "examples": [
+    "La clase empieza a las ocho.",
+    "Hoy tenemos clase de español."
+   ],
+   "examplesDe": [
+    "Der Unterricht beginnt um acht Uhr.",
+    "Heute haben wir Spanischunterricht."
+   ],
+   "phonetic": "ˈkla.se"
+  },
+  {
+   "foreign": "el profesor",
+   "german": "der Lehrer",
+   "examples": [
+    "El profesor explica la tarea.",
+    "Nuestro profesor habla muy claro."
+   ],
+   "examplesDe": [
+    "Der Lehrer erklärt die Aufgabe.",
+    "Unser Lehrer spricht sehr deutlich."
+   ],
+   "phonetic": "pɾo.feˈsoɾ"
+  },
+  {
+   "foreign": "la profesora",
+   "german": "die Lehrerin",
+   "examples": [
+    "La profesora escribe en la pizarra.",
+    "Nuestra profesora ha corregido los textos."
+   ],
+   "examplesDe": [
+    "Die Lehrerin schreibt an die Tafel.",
+    "Unsere Lehrerin hat die Texte korrigiert."
+   ],
+   "phonetic": "pɾo.feˈso.ɾa"
+  },
+  {
+   "foreign": "el alumno",
+   "german": "der Schüler",
+   "examples": [
+    "El alumno escucha con atención.",
+    "Un alumno responde correctamente."
+   ],
+   "examplesDe": [
+    "Der Schüler hört aufmerksam zu.",
+    "Ein Schüler antwortet richtig."
+   ],
+   "phonetic": "aˈlum.no"
+  },
+  {
+   "foreign": "la alumna",
+   "german": "die Schülerin",
+   "examples": [
+    "La alumna lee un texto.",
+    "Una alumna ha cerrado la ventana."
+   ],
+   "examplesDe": [
+    "Die Schülerin liest einen Text.",
+    "Eine Schülerin hat das Fenster geschlossen."
+   ],
+   "phonetic": "aˈlum.na"
+  },
+  {
+   "foreign": "el libro",
+   "german": "das Buch",
+   "examples": [
+    "El libro está sobre la mesa.",
+    "He leído este libro."
+   ],
+   "examplesDe": [
+    "Das Buch liegt auf dem Tisch.",
+    "Ich habe dieses Buch gelesen."
+   ],
+   "phonetic": "ˈli.βɾo"
+  },
+  {
+   "foreign": "el cuaderno",
+   "german": "das Heft",
+   "examples": [
+    "Escribo las palabras en el cuaderno.",
+    "Mi cuaderno tiene muchas páginas."
+   ],
+   "examplesDe": [
+    "Ich schreibe die Wörter ins Heft.",
+    "Mein Heft hat viele Seiten."
+   ],
+   "phonetic": "kwaˈðeɾ.no"
+  },
+  {
+   "foreign": "el lápiz",
+   "german": "der Bleistift",
+   "examples": [
+    "Necesito un lápiz para dibujar.",
+    "El lápiz está en mi mochila."
+   ],
+   "examplesDe": [
+    "Ich brauche einen Bleistift zum Zeichnen.",
+    "Der Bleistift ist in meinem Rucksack."
+   ],
+   "phonetic": "ˈla.piθ"
+  },
+  {
+   "foreign": "el bolígrafo",
+   "german": "der Kugelschreiber",
+   "examples": [
+    "Escribo mi nombre con bolígrafo.",
+    "Este bolígrafo no funciona bien."
+   ],
+   "examplesDe": [
+    "Ich schreibe meinen Namen mit dem Kugelschreiber.",
+    "Dieser Kugelschreiber funktioniert nicht gut."
+   ],
+   "phonetic": "boˈli.ɣɾa.fo"
+  },
+  {
+   "foreign": "la mochila",
+   "german": "der Rucksack",
+   "examples": [
+    "Mi mochila es roja y negra.",
+    "Llevo los libros en la mochila."
+   ],
+   "examplesDe": [
+    "Mein Rucksack ist rot und schwarz.",
+    "Ich trage die Bücher im Rucksack."
+   ],
+   "phonetic": "moˈtʃi.la"
+  },
+  {
+   "foreign": "la mesa",
+   "german": "der Tisch",
+   "examples": [
+    "Los cuadernos están sobre la mesa.",
+    "Compartimos una mesa en clase."
+   ],
+   "examplesDe": [
+    "Die Hefte liegen auf dem Tisch.",
+    "Wir teilen uns im Unterricht einen Tisch."
+   ],
+   "phonetic": "ˈme.sa"
+  },
+  {
+   "foreign": "la silla",
+   "german": "der Stuhl",
+   "examples": [
+    "La silla está junto a la ventana.",
+    "Pedro se sienta en una silla."
+   ],
+   "examplesDe": [
+    "Der Stuhl steht neben dem Fenster.",
+    "Pedro setzt sich auf einen Stuhl."
+   ],
+   "phonetic": "ˈsi.ʎa"
+  },
+  {
+   "foreign": "la pizarra",
+   "german": "die Tafel",
+   "examples": [
+    "Hay tres palabras en la pizarra.",
+    "La profesora limpia la pizarra."
+   ],
+   "examplesDe": [
+    "An der Tafel stehen drei Wörter.",
+    "Die Lehrerin wischt die Tafel."
+   ],
+   "phonetic": "piˈθa.ra"
+  },
+  {
+   "foreign": "los deberes",
+   "german": "die Hausaufgaben",
+   "examples": [
+    "Hago los deberes después de comer.",
+    "Hoy tenemos pocos deberes."
+   ],
+   "examplesDe": [
+    "Ich mache die Hausaufgaben nach dem Essen.",
+    "Heute haben wir wenig Hausaufgaben."
+   ],
+   "phonetic": "deˈβe.ɾes"
+  },
+  {
+   "foreign": "el examen",
+   "german": "die Prüfung",
+   "examples": [
+    "El examen empieza mañana.",
+    "Hemos preparado bien el examen."
+   ],
+   "examplesDe": [
+    "Die Prüfung beginnt morgen.",
+    "Wir haben uns gut auf die Prüfung vorbereitet."
+   ],
+   "phonetic": "eɣˈsa.men"
+  },
+  {
+   "foreign": "la pregunta",
+   "german": "die Frage",
+   "examples": [
+    "La pregunta es muy fácil.",
+    "Tengo una pregunta para usted."
+   ],
+   "examplesDe": [
+    "Die Frage ist sehr einfach.",
+    "Ich habe eine Frage an Sie."
+   ],
+   "phonetic": "pɾeˈɣun.ta"
+  },
+  {
+   "foreign": "la respuesta",
+   "german": "die Antwort",
+   "examples": [
+    "No conozco la respuesta.",
+    "Su respuesta ha sido correcta."
+   ],
+   "examplesDe": [
+    "Ich kenne die Antwort nicht.",
+    "Seine Antwort ist richtig gewesen."
+   ],
+   "phonetic": "resˈpwes.ta"
+  },
+  {
+   "foreign": "la asignatura",
+   "german": "das Schulfach",
+   "examples": [
+    "Mi asignatura favorita es historia.",
+    "Esta asignatura tiene dos exámenes."
+   ],
+   "examplesDe": [
+    "Mein Lieblingsfach ist Geschichte.",
+    "Dieses Schulfach hat zwei Prüfungen."
+   ],
+   "phonetic": "a.siɣ.naˈtu.ɾa"
+  }
+ ]
+}

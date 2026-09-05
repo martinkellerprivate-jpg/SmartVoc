@@ -1,0 +1,40 @@
+la familia | die Familie | Mi familia vive cerca de Madrid. | Meine Familie wohnt in der Nähe von Madrid. | La familia come junta los domingos. | Die Familie isst sonntags gemeinsam. | faˈmi.lja
+la madre | die Mutter | Mi madre trabaja en un hospital. | Meine Mutter arbeitet in einem Krankenhaus. | La madre prepara la cena. | Die Mutter bereitet das Abendessen zu. | ˈma.ðɾe
+el padre | der Vater | Mi padre lee el periódico. | Mein Vater liest die Zeitung. | El padre juega con sus hijos. | Der Vater spielt mit seinen Kindern. | ˈpa.ðɾe
+los padres | die Eltern | Mis padres están en casa. | Meine Eltern sind zu Hause. | Los padres hablan con la profesora. | Die Eltern sprechen mit der Lehrerin. | ˈpa.ðɾes
+el hermano | der Bruder | Mi hermano tiene doce años. | Mein Bruder ist zwölf Jahre alt. | El hermano de Ana estudia mucho. | Anas Bruder lernt viel. | eɾˈma.no
+la hermana | die Schwester | Mi hermana canta muy bien. | Meine Schwester singt sehr gut. | La hermana de Luis es simpática. | Die Schwester von Luis ist sympathisch. | eɾˈma.na
+el abuelo | der Grossvater | Mi abuelo vive en Valencia. | Mein Grossvater wohnt in Valencia. | El abuelo cuenta una historia. | Der Grossvater erzählt eine Geschichte. | aˈβwe.lo
+la abuela | die Grossmutter | Mi abuela hace una tarta. | Meine Grossmutter backt einen Kuchen. | La abuela ha llamado hoy. | Die Grossmutter hat heute angerufen. | aˈβwe.la
+el hijo | der Sohn | Su hijo juega al fútbol. | Ihr Sohn spielt Fussball. | El hijo ayuda a su padre. | Der Sohn hilft seinem Vater. | ˈi.xo
+la hija | die Tochter | Mi hija aprende español. | Meine Tochter lernt Spanisch. | La hija de Marta ha llegado. | Martas Tochter ist angekommen. | ˈi.xa
+el niño | der Junge | El niño corre por el parque. | Der Junge läuft durch den Park. | Un niño pregunta por su madre. | Ein Junge fragt nach seiner Mutter. | ˈni.ɲo
+la niña | das Mädchen | La niña dibuja una casa. | Das Mädchen zeichnet ein Haus. | Una niña ha encontrado la pelota. | Ein Mädchen hat den Ball gefunden. | ˈni.ɲa
+el hombre | der Mann | El hombre lleva una camisa azul. | Der Mann trägt ein blaues Hemd. | Un hombre espera delante del banco. | Ein Mann wartet vor der Bank. | ˈom.bɾe
+la mujer | die Frau | La mujer compra pan fresco. | Die Frau kauft frisches Brot. | Una mujer ha abierto la puerta. | Eine Frau hat die Tür geöffnet. | muˈxeɾ
+el amigo | der Freund | Mi amigo vive en Barcelona. | Mein Freund wohnt in Barcelona. | Un amigo viene esta tarde. | Ein Freund kommt heute Nachmittag. | aˈmi.ɣo
+la amiga | die Freundin | Mi amiga estudia conmigo. | Meine Freundin lernt mit mir. | Una amiga me ha escrito. | Eine Freundin hat mir geschrieben. | aˈmi.ɣa
+la persona | die Person | Esta persona habla tres idiomas. | Diese Person spricht drei Sprachen. | Hay una persona en la entrada. | Am Eingang steht eine Person. | peɾˈso.na
+el nombre | der Name | Mi nombre es Carlos. | Mein Name ist Carlos. | Escribe tu nombre en la hoja. | Schreib deinen Namen auf das Blatt. | ˈnom.bɾe
+la edad | das Alter | La edad no es importante. | Das Alter ist nicht wichtig. | ¿Cuál es la edad de Pedro? | Wie alt ist Pedro? | eˈðað
+la gente | die Leute | La gente espera el autobús. | Die Leute warten auf den Bus. | Hay mucha gente en la plaza. | Auf dem Platz sind viele Leute. | ˈxen.te
+la escuela | die Schule | La escuela está cerca de casa. | Die Schule ist nahe bei unserem Haus. | Los niños van juntos a la escuela. | Die Kinder gehen gemeinsam zur Schule. | esˈkwe.la
+el instituto | das Gymnasium | Mi instituto tiene una biblioteca grande. | Mein Gymnasium hat eine grosse Bibliothek. | Vamos al instituto cada mañana. | Wir gehen jeden Morgen ins Gymnasium. | ins.tiˈtu.to
+la clase | der Unterricht | La clase empieza a las ocho. | Der Unterricht beginnt um acht Uhr. | Hoy tenemos clase de español. | Heute haben wir Spanischunterricht. | ˈkla.se
+el profesor | der Lehrer | El profesor explica la tarea. | Der Lehrer erklärt die Aufgabe. | Nuestro profesor habla muy claro. | Unser Lehrer spricht sehr deutlich. | pɾo.feˈsoɾ
+la profesora | die Lehrerin | La profesora escribe en la pizarra. | Die Lehrerin schreibt an die Tafel. | Nuestra profesora ha corregido los textos. | Unsere Lehrerin hat die Texte korrigiert. | pɾo.feˈso.ɾa
+el alumno | der Schüler | El alumno escucha con atención. | Der Schüler hört aufmerksam zu. | Un alumno responde correctamente. | Ein Schüler antwortet richtig. | aˈlum.no
+la alumna | die Schülerin | La alumna lee un texto. | Die Schülerin liest einen Text. | Una alumna ha cerrado la ventana. | Eine Schülerin hat das Fenster geschlossen. | aˈlum.na
+el libro | das Buch | El libro está sobre la mesa. | Das Buch liegt auf dem Tisch. | He leído este libro. | Ich habe dieses Buch gelesen. | ˈli.βɾo
+el cuaderno | das Heft | Escribo las palabras en el cuaderno. | Ich schreibe die Wörter ins Heft. | Mi cuaderno tiene muchas páginas. | Mein Heft hat viele Seiten. | kwaˈðeɾ.no
+el lápiz | der Bleistift | Necesito un lápiz para dibujar. | Ich brauche einen Bleistift zum Zeichnen. | El lápiz está en mi mochila. | Der Bleistift ist in meinem Rucksack. | ˈla.piθ
+el bolígrafo | der Kugelschreiber | Escribo mi nombre con bolígrafo. | Ich schreibe meinen Namen mit dem Kugelschreiber. | Este bolígrafo no funciona bien. | Dieser Kugelschreiber funktioniert nicht gut. | boˈli.ɣɾa.fo
+la mochila | der Rucksack | Mi mochila es roja y negra. | Mein Rucksack ist rot und schwarz. | Llevo los libros en la mochila. | Ich trage die Bücher im Rucksack. | moˈtʃi.la
+la mesa | der Tisch | Los cuadernos están sobre la mesa. | Die Hefte liegen auf dem Tisch. | Compartimos una mesa en clase. | Wir teilen uns im Unterricht einen Tisch. | ˈme.sa
+la silla | der Stuhl | La silla está junto a la ventana. | Der Stuhl steht neben dem Fenster. | Pedro se sienta en una silla. | Pedro setzt sich auf einen Stuhl. | ˈsi.ʎa
+la pizarra | die Tafel | Hay tres palabras en la pizarra. | An der Tafel stehen drei Wörter. | La profesora limpia la pizarra. | Die Lehrerin wischt die Tafel. | piˈθa.ra
+los deberes | die Hausaufgaben | Hago los deberes después de comer. | Ich mache die Hausaufgaben nach dem Essen. | Hoy tenemos pocos deberes. | Heute haben wir wenig Hausaufgaben. | deˈβe.ɾes
+el examen | die Prüfung | El examen empieza mañana. | Die Prüfung beginnt morgen. | Hemos preparado bien el examen. | Wir haben uns gut auf die Prüfung vorbereitet. | eɣˈsa.men
+la pregunta | die Frage | La pregunta es muy fácil. | Die Frage ist sehr einfach. | Tengo una pregunta para usted. | Ich habe eine Frage an Sie. | pɾeˈɣun.ta
+la respuesta | die Antwort | No conozco la respuesta. | Ich kenne die Antwort nicht. | Su respuesta ha sido correcta. | Seine Antwort ist richtig gewesen. | resˈpwes.ta
+la asignatura | das Schulfach | Mi asignatura favorita es historia. | Mein Lieblingsfach ist Geschichte. | Esta asignatura tiene dos exámenes. | Dieses Schulfach hat zwei Prüfungen. | a.siɣ.naˈtu.ɾa

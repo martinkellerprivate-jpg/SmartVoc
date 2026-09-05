@@ -1,0 +1,526 @@
+{
+ "pair": "pt-de",
+ "stufe": 1,
+ "words": [
+  {
+   "foreign": "a família",
+   "german": "die Familie",
+   "examples": [
+    "A minha família vive em Lisboa.",
+    "A família janta sempre junta."
+   ],
+   "examplesDe": [
+    "Meine Familie lebt in Lissabon.",
+    "Die Familie isst immer gemeinsam zu Abend."
+   ],
+   "phonetic": "fɐˈmiljɐ"
+  },
+  {
+   "foreign": "a mãe",
+   "german": "die Mutter",
+   "examples": [
+    "A minha mãe trabalha em casa.",
+    "A mãe prepara o jantar."
+   ],
+   "examplesDe": [
+    "Meine Mutter arbeitet zu Hause.",
+    "Die Mutter bereitet das Abendessen zu."
+   ],
+   "phonetic": "ˈmɐ̃j̃"
+  },
+  {
+   "foreign": "o pai",
+   "german": "der Vater",
+   "examples": [
+    "O meu pai conduz bem.",
+    "O pai brinca com os filhos."
+   ],
+   "examplesDe": [
+    "Mein Vater fährt gut Auto.",
+    "Der Vater spielt mit den Kindern."
+   ],
+   "phonetic": "ˈpaj"
+  },
+  {
+   "foreign": "os pais",
+   "german": "die Eltern",
+   "examples": [
+    "Os meus pais vivem na Suíça.",
+    "Os pais chegaram ontem à noite."
+   ],
+   "examplesDe": [
+    "Meine Eltern leben in der Schweiz.",
+    "Die Eltern kamen gestern Abend an."
+   ],
+   "phonetic": "ˈpajʃ"
+  },
+  {
+   "foreign": "o irmão",
+   "german": "der Bruder",
+   "examples": [
+    "O meu irmão joga futebol.",
+    "O irmão da Ana estuda muito."
+   ],
+   "examplesDe": [
+    "Mein Bruder spielt Fussball.",
+    "Anas Bruder lernt viel."
+   ],
+   "phonetic": "iɾˈmɐ̃w"
+  },
+  {
+   "foreign": "a irmã",
+   "german": "die Schwester",
+   "examples": [
+    "A minha irmã canta muito bem.",
+    "A irmã do Pedro mora aqui."
+   ],
+   "examplesDe": [
+    "Meine Schwester singt sehr gut.",
+    "Pedros Schwester wohnt hier."
+   ],
+   "phonetic": "iɾˈmɐ̃"
+  },
+  {
+   "foreign": "o filho",
+   "german": "der Sohn",
+   "examples": [
+    "O filho deles tem dez anos.",
+    "O meu filho dormiu cedo."
+   ],
+   "examplesDe": [
+    "Ihr Sohn ist zehn Jahre alt.",
+    "Mein Sohn schlief früh ein."
+   ],
+   "phonetic": "ˈfiʎu"
+  },
+  {
+   "foreign": "a filha",
+   "german": "die Tochter",
+   "examples": [
+    "A filha da Maria estuda português.",
+    "A minha filha chegou agora."
+   ],
+   "examplesDe": [
+    "Marias Tochter lernt Portugiesisch.",
+    "Meine Tochter ist gerade angekommen."
+   ],
+   "phonetic": "ˈfiʎɐ"
+  },
+  {
+   "foreign": "o avô",
+   "german": "der Grossvater",
+   "examples": [
+    "O meu avô conta histórias.",
+    "O avô passeia todas as manhãs."
+   ],
+   "examplesDe": [
+    "Mein Grossvater erzählt Geschichten.",
+    "Der Grossvater geht jeden Morgen spazieren."
+   ],
+   "phonetic": "ɐˈvo"
+  },
+  {
+   "foreign": "a avó",
+   "german": "die Grossmutter",
+   "examples": [
+    "A minha avó faz sopa.",
+    "A avó mora perto daqui."
+   ],
+   "examplesDe": [
+    "Meine Grossmutter kocht Suppe.",
+    "Die Grossmutter wohnt in der Nähe."
+   ],
+   "phonetic": "ɐˈvɔ"
+  },
+  {
+   "foreign": "o tio",
+   "german": "der Onkel",
+   "examples": [
+    "O meu tio trabalha no Porto.",
+    "O tio trouxe um presente."
+   ],
+   "examplesDe": [
+    "Mein Onkel arbeitet in Porto.",
+    "Der Onkel brachte ein Geschenk mit."
+   ],
+   "phonetic": "ˈtiu"
+  },
+  {
+   "foreign": "a tia",
+   "german": "die Tante",
+   "examples": [
+    "A minha tia fala francês.",
+    "A tia chegou de manhã."
+   ],
+   "examplesDe": [
+    "Meine Tante spricht Französisch.",
+    "Die Tante kam am Morgen an."
+   ],
+   "phonetic": "ˈtiɐ"
+  },
+  {
+   "foreign": "o primo",
+   "german": "der Cousin",
+   "examples": [
+    "O meu primo gosta de música.",
+    "O primo do Rui joga comigo."
+   ],
+   "examplesDe": [
+    "Mein Cousin mag Musik.",
+    "Ruis Cousin spielt mit mir."
+   ],
+   "phonetic": "ˈpɾimu"
+  },
+  {
+   "foreign": "a prima",
+   "german": "die Cousine",
+   "examples": [
+    "A minha prima vive em Coimbra.",
+    "A prima da Sara veio ontem."
+   ],
+   "examplesDe": [
+    "Meine Cousine lebt in Coimbra.",
+    "Saras Cousine kam gestern."
+   ],
+   "phonetic": "ˈpɾimɐ"
+  },
+  {
+   "foreign": "o homem",
+   "german": "der Mann",
+   "examples": [
+    "O homem espera pelo autocarro.",
+    "Aquele homem trabalha no hospital."
+   ],
+   "examplesDe": [
+    "Der Mann wartet auf den Bus.",
+    "Jener Mann arbeitet im Krankenhaus."
+   ],
+   "phonetic": "ˈɔmɐ̃j̃"
+  },
+  {
+   "foreign": "a mulher",
+   "german": "die Frau",
+   "examples": [
+    "A mulher compra pão fresco.",
+    "Aquela mulher fala muito depressa."
+   ],
+   "examplesDe": [
+    "Die Frau kauft frisches Brot.",
+    "Jene Frau spricht sehr schnell."
+   ],
+   "phonetic": "muˈʎɛɾ"
+  },
+  {
+   "foreign": "o rapaz",
+   "german": "der Junge",
+   "examples": [
+    "O rapaz corre no parque.",
+    "Aquele rapaz chama-se Miguel."
+   ],
+   "examplesDe": [
+    "Der Junge rennt im Park.",
+    "Jener Junge heisst Miguel."
+   ],
+   "phonetic": "ʁɐˈpaʃ"
+  },
+  {
+   "foreign": "a rapariga",
+   "german": "das Mädchen",
+   "examples": [
+    "A rapariga lê um livro.",
+    "Aquela rapariga mora na minha rua."
+   ],
+   "examplesDe": [
+    "Das Mädchen liest ein Buch.",
+    "Jenes Mädchen wohnt in meiner Strasse."
+   ],
+   "phonetic": "ʁɐpɐˈɾiɣɐ"
+  },
+  {
+   "foreign": "o amigo",
+   "german": "der Freund",
+   "examples": [
+    "O meu amigo chama-se João.",
+    "Encontrei o amigo do Pedro."
+   ],
+   "examplesDe": [
+    "Mein Freund heisst João.",
+    "Ich traf Pedros Freund."
+   ],
+   "phonetic": "ɐˈmiɣu"
+  },
+  {
+   "foreign": "a amiga",
+   "german": "die Freundin",
+   "examples": [
+    "A minha amiga estuda comigo.",
+    "A amiga da Marta chegou cedo."
+   ],
+   "examplesDe": [
+    "Meine Freundin lernt mit mir.",
+    "Martas Freundin kam früh."
+   ],
+   "phonetic": "ɐˈmiɣɐ"
+  },
+  {
+   "foreign": "a escola",
+   "german": "die Schule",
+   "examples": [
+    "A escola fica perto de casa.",
+    "Hoje cheguei cedo à escola."
+   ],
+   "examplesDe": [
+    "Die Schule liegt nahe bei unserem Haus.",
+    "Heute kam ich früh zur Schule."
+   ],
+   "phonetic": "ɨʃˈkɔlɐ"
+  },
+  {
+   "foreign": "o professor",
+   "german": "der Lehrer",
+   "examples": [
+    "O professor explica a lição.",
+    "O nosso professor fala devagar."
+   ],
+   "examplesDe": [
+    "Der Lehrer erklärt die Lektion.",
+    "Unser Lehrer spricht langsam."
+   ],
+   "phonetic": "pɾufɨˈsoɾ"
+  },
+  {
+   "foreign": "a professora",
+   "german": "die Lehrerin",
+   "examples": [
+    "A professora escreve no quadro.",
+    "A nossa professora chegou cedo."
+   ],
+   "examplesDe": [
+    "Die Lehrerin schreibt an die Tafel.",
+    "Unsere Lehrerin kam früh."
+   ],
+   "phonetic": "pɾufɨˈsoɾɐ"
+  },
+  {
+   "foreign": "o aluno",
+   "german": "der Schüler",
+   "examples": [
+    "O aluno responde à pergunta.",
+    "Cada aluno tem um caderno."
+   ],
+   "examplesDe": [
+    "Der Schüler beantwortet die Frage.",
+    "Jeder Schüler hat ein Heft."
+   ],
+   "phonetic": "ɐˈlunu"
+  },
+  {
+   "foreign": "a aluna",
+   "german": "die Schülerin",
+   "examples": [
+    "A aluna lê o texto.",
+    "A nova aluna chama-se Sofia."
+   ],
+   "examplesDe": [
+    "Die Schülerin liest den Text.",
+    "Die neue Schülerin heisst Sofia."
+   ],
+   "phonetic": "ɐˈlunɐ"
+  },
+  {
+   "foreign": "a aula",
+   "german": "die Unterrichtsstunde",
+   "examples": [
+    "A aula começa às oito.",
+    "Hoje tivemos uma aula interessante."
+   ],
+   "examplesDe": [
+    "Die Unterrichtsstunde beginnt um acht Uhr.",
+    "Heute hatten wir eine interessante Unterrichtsstunde."
+   ],
+   "phonetic": "ˈawlɐ"
+  },
+  {
+   "foreign": "a sala",
+   "german": "das Klassenzimmer",
+   "examples": [
+    "A sala tem vinte cadeiras.",
+    "Entrámos na sala em silêncio."
+   ],
+   "examplesDe": [
+    "Das Klassenzimmer hat zwanzig Stühle.",
+    "Wir betraten das Klassenzimmer schweigend."
+   ],
+   "phonetic": "ˈsalɐ"
+  },
+  {
+   "foreign": "o livro",
+   "german": "das Buch",
+   "examples": [
+    "O livro está na mesa.",
+    "Ontem li este livro."
+   ],
+   "examplesDe": [
+    "Das Buch liegt auf dem Tisch.",
+    "Gestern las ich dieses Buch."
+   ],
+   "phonetic": "ˈlivɾu"
+  },
+  {
+   "foreign": "o caderno",
+   "german": "das Heft",
+   "examples": [
+    "O meu caderno é azul.",
+    "Escrevi a resposta no caderno."
+   ],
+   "examplesDe": [
+    "Mein Heft ist blau.",
+    "Ich schrieb die Antwort ins Heft."
+   ],
+   "phonetic": "kɐˈdɛɾnu"
+  },
+  {
+   "foreign": "a caneta",
+   "german": "der Kugelschreiber",
+   "examples": [
+    "A caneta está na mochila.",
+    "Escrevo o nome com a caneta."
+   ],
+   "examplesDe": [
+    "Der Kugelschreiber ist im Rucksack.",
+    "Ich schreibe den Namen mit dem Kugelschreiber."
+   ],
+   "phonetic": "kɐˈnetɐ"
+  },
+  {
+   "foreign": "o lápis",
+   "german": "der Bleistift",
+   "examples": [
+    "O lápis caiu no chão.",
+    "Desenho uma casa com o lápis."
+   ],
+   "examplesDe": [
+    "Der Bleistift fiel auf den Boden.",
+    "Ich zeichne mit dem Bleistift ein Haus."
+   ],
+   "phonetic": "ˈlapiʃ"
+  },
+  {
+   "foreign": "a borracha",
+   "german": "der Radiergummi",
+   "examples": [
+    "A borracha está ao lado do lápis.",
+    "Apaguei o erro com a borracha."
+   ],
+   "examplesDe": [
+    "Der Radiergummi liegt neben dem Bleistift.",
+    "Ich radierte den Fehler mit dem Radiergummi aus."
+   ],
+   "phonetic": "buˈʁaʃɐ"
+  },
+  {
+   "foreign": "a mochila",
+   "german": "der Rucksack",
+   "examples": [
+    "A mochila está muito pesada.",
+    "Guardei os livros na mochila."
+   ],
+   "examplesDe": [
+    "Der Rucksack ist sehr schwer.",
+    "Ich packte die Bücher in den Rucksack."
+   ],
+   "phonetic": "muˈʃilɐ"
+  },
+  {
+   "foreign": "o quadro",
+   "german": "die Tafel",
+   "examples": [
+    "O professor escreve no quadro.",
+    "Há uma palavra no quadro."
+   ],
+   "examplesDe": [
+    "Der Lehrer schreibt an die Tafel.",
+    "An der Tafel steht ein Wort."
+   ],
+   "phonetic": "ˈkwadɾu"
+  },
+  {
+   "foreign": "a mesa",
+   "german": "der Tisch",
+   "examples": [
+    "Os livros estão na mesa.",
+    "Sentei-me junto à mesa."
+   ],
+   "examplesDe": [
+    "Die Bücher liegen auf dem Tisch.",
+    "Ich setzte mich an den Tisch."
+   ],
+   "phonetic": "ˈmezɐ"
+  },
+  {
+   "foreign": "a cadeira",
+   "german": "der Stuhl",
+   "examples": [
+    "A cadeira está perto da janela.",
+    "O aluno sentou-se na cadeira."
+   ],
+   "examplesDe": [
+    "Der Stuhl steht nahe beim Fenster.",
+    "Der Schüler setzte sich auf den Stuhl."
+   ],
+   "phonetic": "kɐˈðɐjɾɐ"
+  },
+  {
+   "foreign": "a pergunta",
+   "german": "die Frage",
+   "examples": [
+    "A pergunta é muito fácil.",
+    "Fiz uma pergunta ao professor."
+   ],
+   "examplesDe": [
+    "Die Frage ist sehr einfach.",
+    "Ich stellte dem Lehrer eine Frage."
+   ],
+   "phonetic": "pɨɾˈɣũtɐ"
+  },
+  {
+   "foreign": "a resposta",
+   "german": "die Antwort",
+   "examples": [
+    "A tua resposta está correta.",
+    "Não sei a resposta."
+   ],
+   "examplesDe": [
+    "Deine Antwort ist richtig.",
+    "Ich kenne die Antwort nicht."
+   ],
+   "phonetic": "ʁɨʃˈpɔʃtɐ"
+  },
+  {
+   "foreign": "o exercício",
+   "german": "die Übung",
+   "examples": [
+    "O exercício parece bastante fácil.",
+    "Fiz o exercício em casa."
+   ],
+   "examplesDe": [
+    "Die Übung scheint ziemlich einfach.",
+    "Ich machte die Übung zu Hause."
+   ],
+   "phonetic": "izɨɾˈsisju"
+  },
+  {
+   "foreign": "o teste",
+   "german": "der Test",
+   "examples": [
+    "O teste começa amanhã cedo.",
+    "Ontem fizemos um teste difícil."
+   ],
+   "examplesDe": [
+    "Der Test beginnt morgen früh.",
+    "Gestern machten wir einen schwierigen Test."
+   ],
+   "phonetic": "ˈtɛʃtɨ"
+  }
+ ]
+}

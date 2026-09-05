@@ -1,0 +1,40 @@
+la famiglia | die Familie | La mia famiglia vive a Zurigo. | Meine Familie lebt in Zürich. | La famiglia mangia insieme ogni sera. | Die Familie isst jeden Abend zusammen. | faˈmiʎːa
+la madre | die Mutter | La madre prepara la cena. | Die Mutter bereitet das Abendessen zu. | Mia madre lavora in città. | Meine Mutter arbeitet in der Stadt. | ˈmaːdre
+il padre | der Vater | Il padre legge il giornale. | Der Vater liest die Zeitung. | Mio padre cucina molto bene. | Mein Vater kocht sehr gut. | ˈpaːdre
+i genitori | die Eltern | I genitori aspettano davanti alla scuola. | Die Eltern warten vor der Schule. | I miei genitori sono molto gentili. | Meine Eltern sind sehr freundlich. | dʒeniˈtoːri
+la sorella | die Schwester | Mia sorella studia italiano. | Meine Schwester lernt Italienisch. | La sorella di Luca è simpatica. | Lucas Schwester ist sympathisch. | soˈrɛlːa
+il fratello | der Bruder | Mio fratello gioca a calcio. | Mein Bruder spielt Fussball. | Il fratello di Anna è alto. | Annas Bruder ist gross. | fraˈtɛlːo
+la nonna | die Grossmutter | La nonna prepara una torta. | Die Grossmutter backt einen Kuchen. | Mia nonna abita vicino a noi. | Meine Grossmutter wohnt in unserer Nähe. | ˈnɔnːa
+il nonno | der Grossvater | Il nonno racconta una storia. | Der Grossvater erzählt eine Geschichte. | Mio nonno cammina ogni mattina. | Mein Grossvater geht jeden Morgen spazieren. | ˈnɔnːo
+la figlia | die Tochter | La figlia dorme nella sua camera. | Die Tochter schläft in ihrem Zimmer. | Sua figlia ha dieci anni. | Seine Tochter ist zehn Jahre alt. | ˈfiʎːa
+il figlio | der Sohn | Il figlio aiuta suo padre. | Der Sohn hilft seinem Vater. | Mio figlio frequenta questa scuola. | Mein Sohn besucht diese Schule. | ˈfiʎːo
+la bambina | das Mädchen | La bambina disegna un fiore. | Das Mädchen zeichnet eine Blume. | Una bambina gioca nel parco. | Ein Mädchen spielt im Park. | bamˈbiːna
+il bambino | der Junge | Il bambino beve un bicchiere d'acqua. | Der Junge trinkt ein Glas Wasser. | Un bambino corre verso casa. | Ein Junge läuft nach Hause. | bamˈbiːno
+la donna | die Frau | La donna aspetta il treno. | Die Frau wartet auf den Zug. | Una donna apre la porta. | Eine Frau öffnet die Tür. | ˈdɔnːa
+l'uomo | der Mann | L'uomo porta una giacca blu. | Der Mann trägt eine blaue Jacke. | Un uomo compra il pane. | Ein Mann kauft das Brot. | ˈwɔːmo
+l'amica | die Freundin | La mia amica si chiama Sara. | Meine Freundin heisst Sara. | L'amica di Giulia arriva domani. | Giulias Freundin kommt morgen. | aˈmiːka
+l'amico | der Freund | Il mio amico abita qui. | Mein Freund wohnt hier. | L'amico di Marco parla tedesco. | Marcos Freund spricht Deutsch. | aˈmiːko
+la persona | die Person | Questa persona è molto gentile. | Diese Person ist sehr freundlich. | Ogni persona ha un biglietto. | Jede Person hat eine Fahrkarte. | perˈsoːna
+il nome | der Name | Il mio nome è Paolo. | Mein Name ist Paolo. | Scrivo il nome sul foglio. | Ich schreibe den Namen auf das Blatt. | ˈnoːme
+l'età | das Alter | Qual è la tua età? | Wie alt bist du? | L'età non è importante. | Das Alter ist nicht wichtig. | eˈta
+il vicino | der Nachbar | Il vicino saluta ogni mattina. | Der Nachbar grüsst jeden Morgen. | Il mio vicino ha un cane. | Mein Nachbar hat einen Hund. | viˈtʃiːno
+la scuola | die Schule | La scuola apre alle otto. | Die Schule öffnet um acht Uhr. | Vado a scuola ogni mattina. | Ich gehe jeden Morgen zur Schule. | ˈskwɔːla
+la classe | die Klasse | La nostra classe è grande. | Unsere Klasse ist gross. | Oggi la classe visita un museo. | Heute besucht die Klasse ein Museum. | ˈklasːe
+l'insegnante | die Lehrperson | L'insegnante spiega la nuova regola. | Die Lehrperson erklärt die neue Regel. | Il nostro insegnante parla lentamente. | Unsere Lehrperson spricht langsam. | inseɲˈɲante
+lo studente | der Schüler | Lo studente apre il libro. | Der Schüler öffnet das Buch. | Ogni studente riceve un foglio. | Jeder Schüler erhält ein Blatt. | stuˈdɛnte
+la studentessa | die Schülerin | La studentessa risponde alla domanda. | Die Schülerin beantwortet die Frage. | Una studentessa scrive alla lavagna. | Eine Schülerin schreibt an die Tafel. | studenˈtesːa
+il libro | das Buch | Il libro è sul tavolo. | Das Buch liegt auf dem Tisch. | Leggo un libro in italiano. | Ich lese ein Buch auf Italienisch. | ˈliːbro
+il quaderno | das Heft | Il quaderno è nello zaino. | Das Heft ist im Rucksack. | Scrivo le parole nel quaderno. | Ich schreibe die Wörter ins Heft. | kwaˈdɛrno
+la penna | der Kugelschreiber | La penna è sul banco. | Der Kugelschreiber liegt auf dem Pult. | Scrivo il mio nome con la penna. | Ich schreibe meinen Namen mit dem Kugelschreiber. | ˈpenːa
+la matita | der Bleistift | La matita è molto corta. | Der Bleistift ist sehr kurz. | Disegno una casa con la matita. | Ich zeichne mit dem Bleistift ein Haus. | maˈtiːta
+la gomma | der Radiergummi | La gomma è accanto alla matita. | Der Radiergummi liegt neben dem Bleistift. | Cancello la parola con la gomma. | Ich radiere das Wort mit dem Radiergummi aus. | ˈɡomːa
+lo zaino | der Rucksack | Lo zaino è molto pesante. | Der Rucksack ist sehr schwer. | Metto il libro nello zaino. | Ich lege das Buch in den Rucksack. | ˈdzai̯no
+il banco | das Schulpult | Il banco è vicino alla finestra. | Das Schulpult steht am Fenster. | Appoggio il quaderno sul banco. | Ich lege das Heft auf das Schulpult. | ˈbaŋko
+la lavagna | die Wandtafel | La lavagna è davanti alla classe. | Die Wandtafel ist vor der Klasse. | L'insegnante scrive sulla lavagna. | Die Lehrperson schreibt an die Wandtafel. | laˈvaɲːa
+la lezione | die Unterrichtsstunde | La lezione comincia alle nove. | Die Unterrichtsstunde beginnt um neun Uhr. | Oggi la lezione è interessante. | Heute ist die Unterrichtsstunde interessant. | letˈtsjoːne
+il compito | die Aufgabe | Il compito è molto facile. | Die Aufgabe ist sehr einfach. | Finisco il compito prima della pausa. | Ich beende die Aufgabe vor der Pause. | ˈkompito
+la domanda | die Frage | La domanda è difficile. | Die Frage ist schwierig. | L'insegnante fa una domanda. | Die Lehrperson stellt eine Frage. | doˈmanda
+la risposta | die Antwort | La risposta è corretta. | Die Antwort ist richtig. | Scrivo la risposta sul foglio. | Ich schreibe die Antwort auf das Blatt. | riˈspɔsta
+la pausa | die Pause | La pausa dura dieci minuti. | Die Pause dauert zehn Minuten. | Durante la pausa mangiamo una mela. | Während der Pause essen wir einen Apfel. | ˈpau̯za
+l'esame | die Prüfung | L'esame comincia domani mattina. | Die Prüfung beginnt morgen früh. | Studio molto per l'esame. | Ich lerne viel für die Prüfung. | eˈzaːme
+il voto | die Note | Il voto è molto buono. | Die Note ist sehr gut. | Oggi ricevo il mio voto. | Heute bekomme ich meine Note. | ˈvɔːto
