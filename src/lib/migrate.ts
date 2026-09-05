@@ -264,3 +264,38 @@ export function entferneWaisenSaat(vocab: any[], lists: any[]): { vocab: any[]; 
     w.source !== "seed" || (w.lists || []).some((id: string) => da.has(id)));
   return { vocab: bleibt, weg: vocab.length - bleibt.length };
 }
+
+/* V26 — der Schnitt vor dem Start.
+ *
+ * Alle Woerter, alle Wortlisten und alle Lernstaende gehen hinaus, in jeder
+ * Sprache. Das ist kein Aufraeumen, sondern ein Schnitt: der mitgelieferte
+ * Wortschatz wird ersetzt, und ein halb alter, halb neuer Bestand waere
+ * schlimmer als ein leerer. Die App fuellt sich danach ueber den einen Weg
+ * neu -- der Grundwortschatz kommt, sobald eine Sprache eingeschaltet ist.
+ *
+ * Bewusst NICHT betroffen: die Einstellungen. Farbschema, Sprachwahl,
+ * Antwortart und Lernintensitaet sind Entscheidungen ueber die App, nicht
+ * ueber ihren Inhalt.
+ *
+ * Diese Migration laeuft genau einmal je Installation und ist danach fuer
+ * immer erledigt. Sie stammt aus der Zeit vor der Veroeffentlichung; bei
+ * einer frischen Installation gibt es nichts zu loeschen, sie tut also
+ * nichts.
+ */
+export function leerRaeumen(settings: any) {
+  return {
+    vocab: [] as any[],
+    lists: [] as any[],
+    stats: {} as Record<string, any>,
+    settings: {
+      ...settings,
+      /* Die Merker der mitgelieferten Listen mit -- sonst kaeme der neue
+       * Grundwortschatz nie, weil die App den alten fuer geladen haelt. */
+      activatedStarters: [],
+      /* Auswahlen zeigen auf Listen, die es nicht mehr gibt. */
+      practiceSel: "",
+      selectedLists: [],
+      statLists: [],
+    },
+  };
+}

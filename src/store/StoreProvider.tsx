@@ -7,7 +7,7 @@ import { newId } from "../lib/ids";
 import { RECOMMENDED } from "../lib/defaults";
 import { stempelPlan } from "../lib/plan";
 import { stempelAnzeige } from "../lib/anzeige";
-import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand, einListeJeWort, stempelMuttersprache, tauscheGrundwortschatz, entferneWaisenSaat } from "../lib/migrate";
+import { migrateTopics, lessonsForLists, swissifyVocab, migrateLessonsStatic, planWortlisten, retokenSettings, datiereAltbestand, einListeJeWort, stempelMuttersprache, tauscheGrundwortschatz, entferneWaisenSaat, leerRaeumen } from "../lib/migrate";
 import { deriveRating, gradeFromCard, initialCard, retentionFor, RETENTION, configure, deriveProfile, STUFE_ORDER, S2 } from "../lib/fsrs";
 import type { SessionOutcome, SerializedCard } from "../lib/fsrs";
 import type { Word, ListT } from "../lib/types";
@@ -189,6 +189,18 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         return stempel ? { ...prev, ...stempel } : prev;
       });
       applied.anzeigeV25 = true;
+    }
+    /* V26 — der Schnitt: Woerter, Wortlisten und Lernstaende raus, in jeder
+     * Sprache. Steht bewusst NACH allen anderen: was hier weggeht, muss
+     * vorher nicht mehr migriert werden, aber die Reihenfolge der
+     * Migrationsnummern soll trotzdem stimmen. */
+    if (!done.schnittV26) {
+      setVocabState([]);
+      setListsState([]);
+      setStats({});
+      setSettings((prev: any) => leerRaeumen(prev).settings);
+      try { localStorage.removeItem(LS.offeneRunde); } catch (e) {}
+      applied.schnittV26 = true;
     }
     if (Object.keys(applied).length) {
       setMeta((prev: any) => ({ ...prev, migrations: { ...(prev.migrations || {}), ...applied } }));

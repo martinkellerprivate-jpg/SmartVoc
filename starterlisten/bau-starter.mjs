@@ -1,14 +1,20 @@
-/* Aus den Rohtexten der KI werden die mitgelieferten Wortlisten.
+/* Aus dem Rohtext der KI werden die mitgelieferten Wortlisten.
  *
- * Erwartet je Sprachpaar eine Datei mit einer Zeile pro Wort, Spalten
- * getrennt durch " | ", in derselben Reihenfolge wie in den Briefings
- * (und wie in src/lib/export.ts). Schreibt src/data/starter/<paar>/stufe1.json.
+ * Erwartet EINE Datei, `roh-alle.txt`, mit allen sechs Sprachen
+ * hintereinander. Jede Sprache beginnt mit einer Markierungszeile:
+ *
+ *     === en-de ===
+ *
+ * Danach eine Zeile je Wort, neun Spalten, getrennt durch " | ", in der
+ * Reihenfolge aus src/lib/export.ts:
+ *
+ *     Fremdsprache | Lernform | Wortart | Deutsch |
+ *     Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache
+ *
+ * Schreibt src/data/starter/<paar>/stufe1.json und prueft dabei, was eine
+ * KI erfahrungsgemaess falsch macht.
  *
  *   node starterlisten/bau-starter.mjs
- *
- * Prueft dabei, was eine KI erfahrungsgemaess falsch macht: zu wenige oder
- * zu viele Spalten, leere Pflichtfelder, deutsche Nomen ohne Artikel,
- * unerlaubte Wortarten, Doppeleintraege, Klammern um die Lautschrift.
  */
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -17,28 +23,31 @@ import { fileURLToPath } from "node:url";
 const hier = dirname(fileURLToPath(import.meta.url));
 const wurzel = join(hier, "..");
 
-const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Zahlwort", "Adverb"];
+const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Adverb", "Pronomen",
+                   "Zahlwort", "Präposition", "Konjunktion", "Wendung"];
 const ARTIKEL = /^(der|die|das)\s/i;
+const PAARE = ["en-de", "fr-de", "es-de", "it-de", "pt-de", "la-de"];
+const SOLL = 100;
 
-const PAARE = [
-  { pair: "en-de", datei: "roh-englisch.txt", latein: false },
-  { pair: "fr-de", datei: "roh-franzoesisch.txt", latein: false },
-  { pair: "es-de", datei: "roh-spanisch.txt", latein: false },
-  { pair: "it-de", datei: "roh-italienisch.txt", latein: false },
-  { pair: "pt-de", datei: "roh-portugiesisch.txt", latein: false },
-  { pair: "la-de", datei: "roh-latein.txt", latein: true },
-];
+const pfad = join(hier, "roh-alle.txt");
+if (!existsSync(pfad)) { console.log("roh-alle.txt fehlt."); process.exit(1); }
+
+/* Nach Sprachen zerlegen. Alles vor der ersten Markierung ist Vorrede. */
+const bloecke = {};
+let aktuell = null;
+for (const zeile of readFileSync(pfad, "utf8").split(/\r?\n/)) {
+  const m = zeile.trim().match(/^=+\s*([a-z]{2}-[a-z]{2})\s*=+$/);
+  if (m) { aktuell = m[1]; bloecke[aktuell] = bloecke[aktuell] || []; continue; }
+  if (aktuell && zeile.includes("|")) bloecke[aktuell].push(zeile.trim());
+}
 
 let fehlerGesamt = 0;
+const deutschJeSprache = {};
 
-for (const { pair, datei, latein } of PAARE) {
-  const pfad = join(hier, datei);
-  if (!existsSync(pfad)) { console.log(`— ${datei} fehlt, ${pair} uebersprungen`); continue; }
-
-  const soll = latein ? 9 : 7;
-  const zeilen = readFileSync(pfad, "utf8").split(/\r?\n/)
-    .map((z) => z.trim()).filter((z) => z && z.includes("|"));
-
+for (const pair of PAARE) {
+  const zeilen = bloecke[pair];
+  if (!zeilen) { console.log(`— ${pair} fehlt im Rohtext`); continue; }
+  const latein = pair === "la-de";
   const woerter = [];
   const meckern = [];
   const gesehen = new Set();
@@ -46,47 +55,65 @@ for (const { pair, datei, latein } of PAARE) {
   zeilen.forEach((z, i) => {
     const nr = i + 1;
     const sp = z.split("|").map((x) => x.trim());
-    if (sp.length !== soll) { meckern.push(`Zeile ${nr}: ${sp.length} Spalten statt ${soll} — ${z.slice(0, 70)}`); return; }
+    if (sp.length !== 9) { meckern.push(`Zeile ${nr}: ${sp.length} Spalten statt 9 — ${z.slice(0, 60)}`); return; }
+    const [kopf, lernform, wortart, german, e1, e1de, e2, e2de, phon] = sp;
 
     const w = latein
-      ? { grundform: sp[0], lernform: sp[1], wortart: sp[2], german: sp[3],
-          examples: [sp[4], sp[6]], examplesDe: [sp[5], sp[7]], phonetic: sp[8] }
-      : { foreign: sp[0], german: sp[1],
-          examples: [sp[2], sp[4]], examplesDe: [sp[3], sp[5]], phonetic: sp[6] };
+      ? { grundform: kopf, lernform, wortart, german, examples: [e1, e2], examplesDe: [e1de, e2de], phonetic: phon }
+      : { foreign: kopf, wortart, german, examples: [e1, e2], examplesDe: [e1de, e2de], phonetic: phon };
 
-    const kopf = latein ? w.grundform : w.foreign;
     if (!kopf) { meckern.push(`Zeile ${nr}: kein Stichwort`); return; }
-    if (!w.german) { meckern.push(`Zeile ${nr}: keine Uebersetzung — ${kopf}`); return; }
+    if (!german) { meckern.push(`Zeile ${nr}: keine Uebersetzung — ${kopf}`); return; }
 
-    const schluessel = (kopf + "|" + w.german).toLowerCase();
+    const schluessel = (kopf + "|" + german).toLowerCase();
     if (gesehen.has(schluessel)) { meckern.push(`Zeile ${nr}: schon da — ${kopf}`); return; }
     gesehen.add(schluessel);
 
-    if (latein && !WORTARTEN.includes(w.wortart)) meckern.push(`Zeile ${nr}: Wortart "${w.wortart}" — ${kopf}`);
-    if (latein && !w.lernform) meckern.push(`Zeile ${nr}: keine Lernform — ${kopf}`);
-    if (/^[A-ZÄÖÜ]/.test(w.german) && !ARTIKEL.test(w.german)) meckern.push(`Zeile ${nr}: Nomen ohne Artikel — ${w.german}`);
-    if (/^[\[\/]/.test(w.phonetic)) meckern.push(`Zeile ${nr}: Lautschrift in Klammern — ${w.phonetic}`);
-    for (const [feld, wert] of [["Beispiel 1", w.examples[0]], ["Beispiel 1 dt", w.examplesDe[0]],
-                                ["Beispiel 2", w.examples[1]], ["Beispiel 2 dt", w.examplesDe[1]],
-                                ["Aussprache", w.phonetic]]) {
+    if (!WORTARTEN.includes(wortart)) meckern.push(`Zeile ${nr}: Wortart "${wortart}" — ${kopf}`);
+    if (latein && !lernform) meckern.push(`Zeile ${nr}: keine Lernform — ${kopf}`);
+    if (!latein && lernform) meckern.push(`Zeile ${nr}: Lernform gefuellt, gehoert nur zu Latein — ${kopf}`);
+    if (/^[A-ZÄÖÜ]/.test(german) && !ARTIKEL.test(german)) meckern.push(`Zeile ${nr}: Nomen ohne Artikel — ${german}`);
+    if (/ß/.test(german + e1de + e2de)) meckern.push(`Zeile ${nr}: ß statt ss — ${kopf}`);
+    if (/^[[/]/.test(phon)) meckern.push(`Zeile ${nr}: Lautschrift in Klammern — ${phon}`);
+    for (const [feld, wert] of [["Beispiel 1", e1], ["Beispiel 1 dt", e1de],
+                                ["Beispiel 2", e2], ["Beispiel 2 dt", e2de],
+                                ["Aussprache", phon]]) {
       if (!wert) meckern.push(`Zeile ${nr}: ${feld} leer — ${kopf}`);
     }
+    if (e1 && e1 === e2) meckern.push(`Zeile ${nr}: beide Beispielsaetze gleich — ${kopf}`);
     woerter.push(w);
   });
+
+  if (woerter.length !== SOLL) meckern.push(`Insgesamt ${woerter.length} Woerter statt ${SOLL}`);
+  deutschJeSprache[pair] = woerter.map((w) => w.german);
 
   const ziel = join(wurzel, "src/data/starter", pair);
   mkdirSync(ziel, { recursive: true });
   writeFileSync(join(ziel, "stufe1.json"),
     JSON.stringify({ pair, stufe: 1, words: woerter }, null, 1) + "\n", "utf8");
 
-  console.log(`\n${pair}: ${woerter.length} Woerter geschrieben (${zeilen.length} Zeilen gelesen)`);
+  console.log(`\n${pair}: ${woerter.length} Woerter geschrieben`);
   if (meckern.length) {
     fehlerGesamt += meckern.length;
     console.log(`  ${meckern.length} Beanstandungen:`);
     for (const m of meckern.slice(0, 40)) console.log("   · " + m);
     if (meckern.length > 40) console.log(`   … und ${meckern.length - 40} weitere`);
-  } else {
-    console.log("  keine Beanstandungen");
+  } else console.log("  keine Beanstandungen");
+}
+
+/* Die fuenf neueren Sprachen sollen dieselben Begriffe tragen -- sonst ist
+ * die Zusage aus dem Prompt gebrochen und niemand merkt es. */
+const modern = PAARE.filter((p) => p !== "la-de" && deutschJeSprache[p]);
+if (modern.length > 1) {
+  const [erste, ...rest] = modern;
+  for (const p of rest) {
+    const a = deutschJeSprache[erste], b = deutschJeSprache[p];
+    const abw = a.map((x, i) => (b[i] === x ? null : `${i + 1}: ${erste}="${x}" ${p}="${b[i]}"`)).filter(Boolean);
+    if (abw.length) {
+      fehlerGesamt += abw.length;
+      console.log(`\n${p}: ${abw.length} Abweichungen in der deutschen Spalte gegenueber ${erste}`);
+      for (const x of abw.slice(0, 15)) console.log("   · " + x);
+    }
   }
 }
 

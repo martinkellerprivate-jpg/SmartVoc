@@ -1,0 +1,168 @@
+Du hilfst mir, den Grundwortschatz für eine Vokabeltrainer-App zu erstellen.
+Zielgruppe: Schülerinnen und Schüler in der Schweiz, 1. bis 2. Lernjahr.
+Sechs Sprachen, je 100 Wörter, Übersetzung immer ins Deutsche.
+Das Format ist bindend, weil die Listen maschinell eingelesen werden.
+
+
+═══════════════════════════════════════════════════════════════════════
+1  AUSGABEFORMAT — gilt für alle sechs Sprachen
+═══════════════════════════════════════════════════════════════════════
+
+Eine Zeile pro Wort. Spalten getrennt durch " | " (Leerzeichen, senkrechter
+Strich, Leerzeichen), in genau dieser Reihenfolge:
+
+Fremdsprache | Lernform | Wortart | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Aussprache
+
+Jede Zeile hat genau 9 Spalten, also genau 8 Trennstriche.
+Kein Feld bleibt leer — mit EINER Ausnahme: die Spalte «Lernform» wird nur
+bei Latein ausgefüllt. Bei den anderen fünf Sprachen bleibt sie leer, das
+Trennzeichen wird trotzdem gesetzt.
+
+Der senkrechte Strich "|" darf im Inhalt selbst NIRGENDS vorkommen.
+Keine Zeilenumbrüche innerhalb einer Zeile.
+Keine Kopfzeile, keine Nummerierung, keine Markdown-Formatierung, keine
+Code-Blöcke, keine Sternchen, kein einleitender oder abschliessender Text.
+
+
+═══════════════════════════════════════════════════════════════════════
+2  WAS IN DIE SPALTEN GEHÖRT
+═══════════════════════════════════════════════════════════════════════
+
+Fremdsprache
+  Das Wort in der jeweiligen Sprache.
+  Nomen IMMER mit bestimmtem Artikel — und zwar dem richtigen:
+    English    ohne Artikel (Englisch hat keinen bestimmten Artikel im Lexikon)
+    Français   le / la / l'      Español   el / la
+    Italiano   il / lo / la / l' Português o / a
+    Latein     ohne Artikel, dafür die Lernform (siehe unten)
+  Verben im Infinitiv. Adjektive in der männlichen Einzahl.
+  Keine Klammern, keine Alternativen, keine Kommas.
+
+Lernform
+  NUR bei Latein. Die Stammformen, wie man sie auswendig lernt:
+    Nomen      Nominativ, Genitiv, Genus     amicus, amici m
+    Verb       vier Stammformen              video, videre, vidi, visum
+               (Deponens: drei)              sequor, sequi, secutus sum
+    Adjektiv   drei Genusformen              ruber, rubra, rubrum
+               (einendig: Nom. und Gen.)     felix, felicis
+    sonst      das Wort selbst
+  Bei allen anderen Sprachen: leer.
+
+Wortart
+  Genau eines dieser neun Wörter, nichts anderes, keine Abkürzungen:
+    Nomen · Verb · Adjektiv · Adverb · Pronomen · Zahlwort ·
+    Präposition · Konjunktion · Wendung
+  Schreibe NICHT «Substantiv» und NICHT «Artikel».
+
+Deutsch
+  Die vorgegebene deutsche Übersetzung, genau so wie sie unten steht,
+  mit Artikel und ohne Änderung. Keine zweite Bedeutung, kein Schrägstrich.
+
+Beispielsatz 1 und Beispielsatz 2
+  Zwei verschiedene Sätze in der Fremdsprache, in denen das Wort vorkommt.
+  Kurz und einfach: 4 bis 9 Wörter (Latein: 3 bis 7), Gegenwart oder
+  einfache Vergangenheit, Anfängerwortschatz.
+  Die beiden Sätze zeigen möglichst verschiedene Verwendungen.
+  Gross beginnen, mit Punkt oder Fragezeichen enden.
+  Alle Akzente, Tilden und Sonderzeichen korrekt setzen.
+
+Beispielsatz 1 deutsch und Beispielsatz 2 deutsch
+  Die Übersetzung des Satzes daneben — natürliches Deutsch, nicht Wort für
+  Wort. Schweizer Rechtschreibung: «ss» statt «ß».
+
+Aussprache
+  Fünf Sprachen: IPA-Lautschrift des Wortes, OHNE Schrägstriche, OHNE
+  eckige Klammern, MIT Betonungszeichen ˈ. Beim Nomen nur das Wort selbst,
+  ohne den Artikel. Varietäten: britisches Englisch, europäisches Spanisch,
+  Standarditalienisch, europäisches Portugiesisch.
+  Latein: KEINE Lautschrift. Schreibe stattdessen die Grundform noch einmal,
+  diesmal mit Längenzeichen über den langen Vokalen (amicus → amīcus,
+  video → videō, ruber → ruber). Kurze Vokale bleiben unmarkiert.
+
+
+═══════════════════════════════════════════════════════════════════════
+3  DIE 100 BEGRIFFE FÜR ENGLISCH, FRANZÖSISCH, SPANISCH,
+   ITALIENISCH UND PORTUGIESISCH
+═══════════════════════════════════════════════════════════════════════
+
+Diese fünf Sprachen bekommen DIESELBEN 100 Begriffe, in DIESER Reihenfolge.
+Die deutsche Spalte ist damit in allen fünf Listen identisch — das ist
+Absicht: wer die Sprache wechselt, findet denselben Wortschatz wieder.
+Übersetze also, erfinde nicht.
+
+die Familie · die Mutter · der Vater · die Eltern · die Schwester ·
+der Bruder · die Grossmutter · der Grossvater · die Tochter · der Sohn ·
+das Kind · der Mann · die Frau · der Freund ·
+die Schule · der Lehrer · der Schüler · das Buch · das Heft ·
+der Bleistift · der Kugelschreiber · die Tafel · der Tisch · der Stuhl ·
+die Frage · die Antwort ·
+eins · zwei · drei · zehn · hundert · der Tag · die Woche · der Monat ·
+das Jahr · heute · morgen · die Stunde ·
+der Kopf · die Hand · das Auge · der Fuss · das Herz · der Mund ·
+das Wasser · das Brot · die Milch · der Apfel · der Käse · das Fleisch ·
+das Ei · der Fisch · die Suppe · der Zucker · das Frühstück ·
+das Abendessen ·
+das Haus · die Wohnung · das Zimmer · die Tür · das Fenster · das Bett ·
+die Küche · der Garten ·
+die Hose · das Hemd · die Schuhe · die Jacke ·
+der Hund · die Katze · das Pferd · der Vogel · der Baum · die Blume ·
+die Sonne · der Regen ·
+die Stadt · die Strasse · der Bahnhof · das Auto · der Zug · das Geschäft ·
+sein · haben · gehen · kommen · machen · sagen · sehen · essen · trinken ·
+lernen · spielen · wohnen ·
+gross · klein · gut · schlecht · neu · alt
+
+Das sind genau 100. Zähle nach, bevor du eine Sprache abschliesst.
+
+
+═══════════════════════════════════════════════════════════════════════
+4  DIE 100 WÖRTER FÜR LATEIN
+═══════════════════════════════════════════════════════════════════════
+
+Latein bekommt einen EIGENEN Wortschatz — «der Bahnhof» und «die Jacke»
+gibt es dort nicht. Nimm die Wörter, die in Schweizer Lehrmitteln im
+ersten und zweiten Lernjahr tatsächlich vorkommen, genau 100, nach Themen
+in dieser Reihenfolge und Anzahl:
+
+   14  Menschen und Familie
+    6  Schule, Buch, Sprache
+   10  Haus, Hof, Landgut
+   10  Stadt, Forum, Staat
+    8  Krieg und Militär
+    6  Götter, Religion, Mythos
+    8  Natur, Tiere, Landschaft
+    6  Körper und Sinne
+    6  Zeit und Raum
+   20  häufige Verben
+   10  häufige Adjektive
+    6  Zahlwörter und Adverbien
+
+Keine Wiederholungen. Die Themennamen NICHT ausgeben.
+
+
+═══════════════════════════════════════════════════════════════════════
+5  WIE DU LIEFERST
+═══════════════════════════════════════════════════════════════════════
+
+In dieser Reihenfolge, eine Sprache nach der anderen:
+
+    1. English    2. Français    3. Español
+    4. Italiano   5. Português   6. Latein
+
+Beginne jede Sprache mit EINER Markierungszeile, allein auf ihrer Zeile,
+genau so geschrieben:
+
+    === en-de ===   === fr-de ===   === es-de ===
+    === it-de ===   === pt-de ===   === la-de ===
+
+Dann 50 Zeilen und halten. Ich schreibe «weiter», du gibst die nächsten
+50 aus — ohne Einleitung, ohne Wiederholung, ohne die Markierung erneut.
+Zwei Antworten pro Sprache, zwölf insgesamt.
+
+Prüfe jede Zeile, bevor du sie ausgibst:
+  – genau 8 Trennstriche?
+  – alle Felder gefüllt, ausser «Lernform» ausserhalb des Lateinischen?
+  – Nomen mit Artikel, in beiden Sprachen?
+  – Wortart eines der neun erlaubten Wörter?
+  – deutsche Spalte genau wie vorgegeben, «ss» statt «ß»?
+  – Lautschrift ohne Klammern und ohne Artikel?

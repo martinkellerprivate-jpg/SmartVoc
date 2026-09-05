@@ -115,7 +115,15 @@ input, button, textarea, select { font-family: inherit; }
 /* Spalte statt Block: so darf ein Bereich (die geoeffnete Wortliste) die
    volle Hoehe fuellen und sein Rollen selbst fuehren, waehrend alle
    anderen sich normal in die Laenge ziehen. */
+/* Der Fokusrahmen eines Eingabefeldes liegt 4px AUSSERHALB des Feldes.
+   Ein Feld ueber die volle Breite beginnt genau an der Kante dieses
+   rollenden Kastens -- und weil der waagerecht abschneidet, fehlte der
+   Rahmen dort auf der linken Seite, sobald jemand hineinklickte.
+   Der Kasten greift jetzt 5px ueber seine Kante hinaus und schiebt seinen
+   Inhalt um dieselben 5px zurueck: gleiche Optik, gleiche Breite fuer die
+   Kinder, aber der Rahmen hat Platz. */
 .app-body { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden;
+            margin-inline: -5px; padding-inline: 5px;
             padding-bottom: 40px; display: flex; flex-direction: column; }
 /* `min-width: 0` ist bei einer Spalte aus Flex-Elementen Pflicht: ohne sie
    darf ein Kind nicht unter seine Inhaltsbreite schrumpfen, und ein
