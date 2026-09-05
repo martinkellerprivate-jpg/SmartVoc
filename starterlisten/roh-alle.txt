@@ -301,3 +301,155 @@ bueno |  |  | Adjektiv | gut | Esta sopa está muy buena. | Diese Suppe ist sehr
 malo |  |  | Adjektiv | schlecht | El tiempo es malo hoy. | Das Wetter ist heute schlecht. | Esta es una respuesta mala. | Das ist eine schlechte Antwort. | ˈmalo
 nuevo |  |  | Adjektiv | neu | Mi hermana tiene un libro nuevo. | Meine Schwester hat ein neues Buch. | Vivimos en una casa nueva. | Wir wohnen in einem neuen Haus. | ˈnweβo
 viejo |  |  | Adjektiv | alt | Mi abuelo tiene un perro viejo. | Mein Grossvater hat einen alten Hund. | Este árbol es muy viejo. | Dieser Baum ist sehr alt. | ˈbjexo
+=== it-de ===
+la famiglia |  | f | Nomen | die Familie | La mia famiglia vive in Svizzera. | Meine Familie lebt in der Schweiz. | Tutta la famiglia cena insieme. | Die ganze Familie isst gemeinsam zu Abend. | faˈmiʎʎa
+la madre |  | f | Nomen | die Mutter | Mia madre lavora a casa. | Meine Mutter arbeitet zu Hause. | Sua madre prepara una minestra. | Seine Mutter kocht eine Suppe. | ˈmadre
+il padre |  | m | Nomen | der Vater | Mio padre legge un libro. | Mein Vater liest ein Buch. | Suo padre guida la macchina. | Ihr Vater fährt das Auto. | ˈpadre
+i genitori |  | m pl | Nomen | die Eltern | I miei genitori vivono a Zurigo. | Meine Eltern wohnen in Zürich. | I suoi genitori arrivano domani. | Ihre Eltern kommen morgen an. | dʒeniˈtori
+la sorella |  | f | Nomen | die Schwester | Mia sorella va a scuola. | Meine Schwester geht zur Schule. | Sua sorella gioca in giardino. | Seine Schwester spielt im Garten. | soˈrɛlla
+il fratello |  | m | Nomen | der Bruder | Mio fratello ha un cane. | Mein Bruder hat einen Hund. | Suo fratello beve il latte. | Ihr Bruder trinkt Milch. | fraˈtɛllo
+la nonna |  | f | Nomen | die Grossmutter | Mia nonna prepara il pane. | Meine Grossmutter macht Brot. | Sua nonna abita qui vicino. | Seine Grossmutter wohnt hier in der Nähe. | ˈnɔnna
+il nonno |  | m | Nomen | der Grossvater | Mio nonno legge ogni giorno. | Mein Grossvater liest jeden Tag. | Suo nonno ha una vecchia macchina. | Ihr Grossvater hat ein altes Auto. | ˈnɔnno
+la figlia |  | f | Nomen | die Tochter | Sua figlia ha dieci anni. | Ihre Tochter ist zehn Jahre alt. | Mia figlia impara l'italiano. | Meine Tochter lernt Italienisch. | ˈfiʎʎa
+il figlio |  | m | Nomen | der Sohn | Suo figlio gioca con il cane. | Ihr Sohn spielt mit dem Hund. | Mio figlio torna domani. | Mein Sohn kommt morgen zurück. | ˈfiʎʎo
+il bambino |  | m | Nomen | das Kind | Il bambino beve acqua. | Das Kind trinkt Wasser. | Ogni bambino ha un libro. | Jedes Kind hat ein Buch. | bamˈbino
+l'uomo | l'uomo, gli uomini | m | Nomen | der Mann | L'uomo apre la porta. | Der Mann öffnet die Tür. | Un uomo aspetta davanti alla scuola. | Ein Mann wartet vor der Schule. | ˈwɔmo
+la donna |  | f | Nomen | die Frau | La donna compra il formaggio. | Die Frau kauft Käse. | Una donna aspetta alla stazione. | Eine Frau wartet am Bahnhof. | ˈdɔnna
+l'amico |  | m | Nomen | der Freund | Il mio amico abita vicino. | Mein Freund wohnt in der Nähe. | Oggi vedo il mio amico. | Heute sehe ich meinen Freund. | aˈmiko
+la scuola |  | f | Nomen | die Schule | La nostra scuola è molto grande. | Unsere Schule ist sehr gross. | Andiamo insieme a scuola. | Wir gehen gemeinsam zur Schule. | ˈskwɔla
+l'insegnante |  | m | Nomen | der Lehrer | L'insegnante scrive alla lavagna. | Der Lehrer schreibt an die Tafel. | Il nostro insegnante fa una domanda. | Unser Lehrer stellt eine Frage. | inseɲˈɲante
+lo studente |  | m | Nomen | der Schüler | Lo studente apre il suo libro. | Der Schüler öffnet sein Buch. | Ogni studente ha una matita. | Jeder Schüler hat einen Bleistift. | stuˈdɛnte
+il libro |  | m | Nomen | das Buch | Questo libro è molto interessante. | Dieses Buch ist sehr interessant. | Oggi leggo un libro. | Heute lese ich ein Buch. | ˈlibro
+il quaderno |  | m | Nomen | das Heft | Il mio quaderno è sul tavolo. | Mein Heft liegt auf dem Tisch. | Lei scrive nel suo quaderno. | Sie schreibt in ihr Heft. | kwaˈdɛrno
+la matita |  | f | Nomen | der Bleistift | Scrivo con una matita. | Ich schreibe mit einem Bleistift. | La sua matita è sotto la sedia. | Sein Bleistift liegt unter dem Stuhl. | maˈtita
+la penna |  | f | Nomen | der Kugelschreiber | La mia penna è nello zaino. | Mein Kugelschreiber ist im Rucksack. | Lei scrive con una penna blu. | Sie schreibt mit einem blauen Kugelschreiber. | ˈpenna
+la lavagna |  | f | Nomen | die Tafel | La risposta è sulla lavagna. | Die Antwort steht an der Tafel. | L'insegnante pulisce la lavagna. | Der Lehrer reinigt die Tafel. | laˈvaɲɲa
+il tavolo |  | m | Nomen | der Tisch | I libri sono sul tavolo. | Die Bücher liegen auf dem Tisch. | Ceniamo insieme al tavolo. | Wir essen gemeinsam am Tisch zu Abend. | ˈtavolo
+la sedia |  | f | Nomen | der Stuhl | La sedia è vicino alla finestra. | Der Stuhl steht beim Fenster. | Il gatto dorme sulla sedia. | Die Katze schläft auf dem Stuhl. | ˈsɛdja
+la domanda |  | f | Nomen | die Frage | L'insegnante fa una domanda. | Der Lehrer stellt eine Frage. | Capisco bene la tua domanda. | Ich verstehe deine Frage gut. | doˈmanda
+la risposta |  | f | Nomen | die Antwort | La sua risposta è corretta. | Seine Antwort ist richtig. | Lui scrive lentamente la risposta. | Er schreibt die Antwort langsam. | risˈpɔsta
+uno |  |  | Zahlwort | eins | Ho un fratello. | Ich habe einen Bruder. | Un libro è sul tavolo. | Ein Buch liegt auf dem Tisch. | ˈuno
+due |  |  | Zahlwort | zwei | Lei ha due buoni amici. | Sie hat zwei gute Freunde. | Compriamo due litri di latte. | Wir kaufen zwei Liter Milch. | ˈdue
+tre |  |  | Zahlwort | drei | Tre studenti leggono un libro. | Drei Schüler lesen ein Buch. | Lui mangia tre piccole mele. | Er isst drei kleine Äpfel. | ˈtre
+dieci |  |  | Zahlwort | zehn | La nostra classe ha dieci studenti. | Unsere Klasse hat zehn Schüler. | Il treno arriva fra dieci minuti. | Der Zug kommt in zehn Minuten. | ˈdjɛtʃi
+cento |  |  | Zahlwort | hundert | Questo libro ha cento pagine. | Dieses Buch hat hundert Seiten. | Cento persone abitano in questa strada. | Hundert Menschen wohnen in dieser Strasse. | ˈtʃɛnto
+il giorno |  | m | Nomen | der Tag | Oggi è un bel giorno. | Heute ist ein schöner Tag. | Imparo l'italiano ogni giorno. | Ich lerne jeden Tag Italienisch. | ˈdʒorno
+la settimana |  | f | Nomen | die Woche | Andiamo a scuola questa settimana. | Wir gehen diese Woche zur Schule. | Lei visita sua nonna ogni settimana. | Sie besucht jede Woche ihre Grossmutter. | settiˈmana
+il mese |  | m | Nomen | der Monat | Questo mese ha trenta giorni. | Dieser Monat hat dreissig Tage. | Partiamo il mese prossimo. | Wir fahren nächsten Monat weg. | ˈmeze
+l'anno |  | m | Nomen | das Jahr | L'anno comincia a gennaio. | Das Jahr beginnt im Januar. | Lui abita qui tutto l'anno. | Er wohnt das ganze Jahr hier. | ˈanno
+oggi |  |  | Adverb | heute | Oggi abbiamo la lezione d'italiano. | Heute haben wir Italienischunterricht. | Oggi il tempo è bello. | Heute ist schönes Wetter. | ˈɔddʒi
+domani |  |  | Adverb | morgen | Il treno parte domani mattina. | Der Zug fährt morgen früh ab. | Domani visito il mio amico. | Morgen besuche ich meinen Freund. | doˈmani
+l'ora |  | f | Nomen | die Stunde | La lezione dura un'ora. | Der Unterricht dauert eine Stunde. | Aspettiamo qui per un'ora. | Wir warten hier eine Stunde. | ˈora
+la testa |  | f | Nomen | der Kopf | Mi fa male la testa. | Mein Kopf tut weh. | Lui mette la mano sulla testa. | Er legt die Hand auf den Kopf. | ˈtɛsta
+la mano |  | f | Nomen | die Hand | Lei scrive con la mano sinistra. | Sie schreibt mit der linken Hand. | Dammi la mano. | Gib mir die Hand. | ˈmano
+l'occhio | l'occhio, gli occhi | m | Nomen | das Auge | Il suo occhio sinistro è azzurro. | Ihr linkes Auge ist blau. | Lui chiude un occhio. | Er schliesst ein Auge. | ˈɔkkjo
+il piede |  | m | Nomen | der Fuss | Mi fa male il piede destro. | Mein rechter Fuss tut weh. | Lui lava il piede sinistro. | Er wäscht den linken Fuss. | ˈpjɛde
+il cuore |  | m | Nomen | das Herz | Il mio cuore batte molto forte. | Mein Herz schlägt sehr stark. | Il medico ascolta il suo cuore. | Der Arzt hört sein Herz ab. | ˈkwɔre
+la bocca |  | f | Nomen | der Mund | Apri la bocca, per favore. | Öffne bitte den Mund. | Il bambino ha una bocca piccola. | Das Kind hat einen kleinen Mund. | ˈbokka
+l'acqua |  | f | Nomen | das Wasser | Bevo acqua ogni mattina. | Ich trinke jeden Morgen Wasser. | L'acqua è molto fredda. | Das Wasser ist sehr kalt. | ˈakkwa
+il pane |  | m | Nomen | das Brot | Mangiamo pane a colazione. | Wir essen Brot zum Frühstück. | Lei compra del pane fresco. | Sie kauft frisches Brot. | ˈpane
+il latte |  | m | Nomen | die Milch | Il bambino beve latte caldo. | Das Kind trinkt warme Milch. | Beviamo latte a colazione. | Wir trinken Milch zum Frühstück. | ˈlatte
+la mela |  | f | Nomen | der Apfel | Questa mela è molto buona. | Dieser Apfel ist sehr gut. | Lui mangia una mela a scuola. | Er isst in der Schule einen Apfel. | ˈmela
+il formaggio |  | m | Nomen | der Käse | Il formaggio è sul tavolo. | Der Käse liegt auf dem Tisch. | Mangio pane con il formaggio. | Ich esse Brot mit Käse. | forˈmaddʒo
+la carne |  | f | Nomen | das Fleisch | Mangiamo carne per cena. | Wir essen Fleisch zum Abendessen. | La carne è ancora calda. | Das Fleisch ist noch warm. | ˈkarne
+l'uovo | l'uovo, le uova | m | Nomen | das Ei | Mangio un uovo a colazione. | Ich esse ein Ei zum Frühstück. | L'uovo è in cucina. | Das Ei ist in der Küche. | ˈwɔvo
+il pesce |  | m | Nomen | der Fisch | Il pesce nuota nell'acqua. | Der Fisch schwimmt im Wasser. | Mangiamo pesce per cena. | Wir essen Fisch zum Abendessen. | ˈpeʃʃe
+la minestra |  | f | Nomen | die Suppe | La minestra è molto calda. | Die Suppe ist sehr heiss. | Mia madre prepara una buona minestra. | Meine Mutter kocht eine gute Suppe. | miˈnɛstra
+lo zucchero |  | m | Nomen | der Zucker | Prendo il caffè con lo zucchero. | Ich trinke den Kaffee mit Zucker. | Lo zucchero è sul tavolo. | Der Zucker steht auf dem Tisch. | ˈdzuːkkero
+la colazione |  | f | Nomen | das Frühstück | Facciamo colazione insieme. | Wir frühstücken gemeinsam. | La colazione è pronta alle sette. | Das Frühstück ist um sieben Uhr bereit. | kolaˈtsjone
+la cena |  | f | Nomen | das Abendessen | La cena è pronta adesso. | Das Abendessen ist jetzt bereit. | Prepariamo la cena insieme. | Wir bereiten das Abendessen gemeinsam zu. | ˈtʃena
+la casa |  | f | Nomen | das Haus | La nostra casa ha un giardino. | Unser Haus hat einen Garten. | La casa è vicino alla scuola. | Das Haus steht nahe bei der Schule. | ˈkaza
+l'appartamento |  | m | Nomen | die Wohnung | Il loro appartamento è molto piccolo. | Ihre Wohnung ist sehr klein. | Abitiamo in un appartamento nuovo. | Wir wohnen in einer neuen Wohnung. | appartaˈmento
+la camera |  | f | Nomen | das Zimmer | La mia camera ha due finestre. | Mein Zimmer hat zwei Fenster. | I bambini giocano in questa camera. | Die Kinder spielen in diesem Zimmer. | ˈkamera
+la porta |  | f | Nomen | die Tür | Chiudi la porta, per favore. | Schliesse bitte die Tür. | Il cane aspetta davanti alla porta. | Der Hund wartet vor der Tür. | ˈpɔrta
+la finestra |  | f | Nomen | das Fenster | Apri la finestra, per favore. | Öffne bitte das Fenster. | Il gatto guarda dalla finestra. | Die Katze schaut aus dem Fenster. | fiˈnɛstra
+il letto |  | m | Nomen | das Bett | Il bambino dorme in questo letto. | Das Kind schläft in diesem Bett. | Il mio libro è sul letto. | Mein Buch liegt auf dem Bett. | ˈletto
+la cucina |  | f | Nomen | die Küche | Mio padre cucina in cucina. | Mein Vater kocht in der Küche. | La nostra cucina ha un tavolo piccolo. | Unsere Küche hat einen kleinen Tisch. | kuˈtʃina
+il giardino |  | m | Nomen | der Garten | I bambini giocano in giardino. | Die Kinder spielen im Garten. | Abbiamo molti fiori nel giardino. | Wir haben viele Blumen im Garten. | dʒarˈdino
+il pantalone |  | m | Nomen | die Hose | Questo pantalone è troppo piccolo. | Diese Hose ist zu klein. | Il suo pantalone è nuovo e blu. | Seine Hose ist neu und blau. | pantaˈlone
+la camicia |  | f | Nomen | das Hemd | La sua camicia è bianca. | Sein Hemd ist weiss. | Cerco una camicia nuova. | Ich suche ein neues Hemd. | kaˈmitʃa
+la scarpa |  | f | Nomen | der Schuh | Questa scarpa è troppo grande. | Dieser Schuh ist zu gross. | La mia scarpa è sotto il letto. | Mein Schuh liegt unter dem Bett. | ˈskarpa
+la giacca |  | f | Nomen | die Jacke | La sua giacca è sulla sedia. | Ihre Jacke liegt auf dem Stuhl. | Porto una giacca calda. | Ich trage eine warme Jacke. | ˈdʒakka
+il cane |  | m | Nomen | der Hund | Il cane corre nel giardino. | Der Hund rennt im Garten. | Il nostro cane beve acqua. | Unser Hund trinkt Wasser. | ˈkane
+il gatto |  | m | Nomen | die Katze | Il gatto dorme sul mio letto. | Die Katze schläft auf meinem Bett. | Il nostro gatto ha gli occhi verdi. | Unsere Katze hat grüne Augen. | ˈɡatto
+il cavallo |  | m | Nomen | das Pferd | Il cavallo mangia una mela. | Das Pferd frisst einen Apfel. | Il suo cavallo corre molto veloce. | Ihr Pferd rennt sehr schnell. | kaˈvallo
+l'uccello |  | m | Nomen | der Vogel | Un uccello è sull'albero. | Ein Vogel sitzt auf dem Baum. | L'uccello ha le piume azzurre. | Der Vogel hat blaue Federn. | utˈtʃɛllo
+l'albero |  | m | Nomen | der Baum | Questo albero è molto vecchio. | Dieser Baum ist sehr alt. | Un uccello canta sull'albero. | Ein Vogel singt auf dem Baum. | ˈalbero
+il fiore |  | m | Nomen | die Blume | Questo fiore è molto bello. | Diese Blume ist sehr schön. | Lei tiene un fiore rosso. | Sie hält eine rote Blume. | ˈfjore
+il sole |  | m | Nomen | die Sonne | Il sole splende oggi. | Die Sonne scheint heute. | Ci sediamo sotto il sole. | Wir setzen uns in die Sonne. | ˈsole
+la pioggia |  | f | Nomen | der Regen | La pioggia comincia questa mattina. | Der Regen beginnt heute Morgen. | Giochiamo fuori dopo la pioggia. | Wir spielen nach dem Regen draussen. | ˈpjɔddʒa
+la città | la città, le città | f | Nomen | die Stadt | Questa città ha una grande stazione. | Diese Stadt hat einen grossen Bahnhof. | I miei nonni abitano in città. | Meine Grosseltern wohnen in der Stadt. | tʃitˈta
+la strada |  | f | Nomen | die Strasse | La nostra scuola è in questa strada. | Unsere Schule liegt in dieser Strasse. | La strada è molto tranquilla oggi. | Die Strasse ist heute sehr ruhig. | ˈstrada
+la stazione |  | f | Nomen | der Bahnhof | Il treno aspetta alla stazione. | Der Zug wartet am Bahnhof. | Camminiamo fino alla stazione. | Wir gehen zu Fuss zum Bahnhof. | statˈtsjone
+la macchina |  | f | Nomen | das Auto | La nostra macchina è molto vecchia. | Unser Auto ist sehr alt. | Mia madre guida la macchina. | Meine Mutter fährt das Auto. | ˈmakkina
+il treno |  | m | Nomen | der Zug | Il treno arriva alle dieci. | Der Zug kommt um zehn Uhr an. | Andiamo a scuola in treno. | Wir fahren mit dem Zug zur Schule. | ˈtrɛno
+il negozio |  | m | Nomen | das Geschäft | Il negozio apre alle otto. | Das Geschäft öffnet um acht Uhr. | Compro il pane al negozio. | Ich kaufe Brot im Geschäft. | neˈɡɔttsjo
+essere | essere: sono, sei, è |  | Verb | sein | Voglio essere insegnante. | Ich möchte Lehrer sein. | Oggi siamo a casa. | Wir sind heute zu Hause. | ˈɛssere
+avere | avere: ho, hai, ha |  | Verb | haben | Ho un libro nuovo. | Ich habe ein neues Buch. | Loro hanno due figli. | Sie haben zwei Kinder. | aˈvere
+andare | andare: vado, vai, va |  | Verb | gehen | Andiamo insieme a scuola. | Wir gehen gemeinsam zur Schule. | Adesso vado al negozio. | Ich gehe jetzt ins Geschäft. | anˈdare
+venire | venire: vengo, vieni, viene |  | Verb | kommen | I miei amici vengono a casa nostra. | Meine Freunde kommen zu uns nach Hause. | Vieni a casa domani. | Komm morgen nach Hause. | veˈnire
+fare | fare: faccio, fai, fa |  | Verb | machen | Facciamo la colazione insieme. | Wir machen gemeinsam das Frühstück. | Gli studenti fanno un grande disegno. | Die Schüler machen eine grosse Zeichnung. | ˈfare
+dire | dire: dico, dici, dice |  | Verb | sagen | Di' lentamente il tuo nome. | Sag deinen Namen langsam. | Loro dicono la risposta insieme. | Sie sagen die Antwort gemeinsam. | ˈdire
+vedere |  |  | Verb | sehen | Vedo un uccello fuori. | Ich sehe draussen einen Vogel. | Vediamo i nostri amici a scuola. | Wir sehen unsere Freunde in der Schule. | veˈdere
+mangiare |  |  | Verb | essen | Mangiamo alle sette. | Wir essen um sieben Uhr. | I bambini mangiano pane e formaggio. | Die Kinder essen Brot und Käse. | manˈdʒare
+bere | bere: bevo, bevi, beve |  | Verb | trinken | Bevo acqua ogni giorno. | Ich trinke jeden Tag Wasser. | Loro bevono latte la mattina. | Sie trinken morgens Milch. | ˈbere
+imparare |  |  | Verb | lernen | Impariamo l'italiano a scuola. | Wir lernen in der Schule Italienisch. | Imparo dieci parole nuove. | Ich lerne zehn neue Wörter. | impaˈrare
+giocare |  |  | Verb | spielen | I bambini giocano in giardino. | Die Kinder spielen im Garten. | Gioco con il mio amico. | Ich spiele mit meinem Freund. | dʒoˈkare
+abitare |  |  | Verb | wohnen | Abitiamo vicino alla stazione. | Wir wohnen nahe beim Bahnhof. | I miei nonni abitano in città. | Meine Grosseltern wohnen in der Stadt. | abiˈtare
+grande |  |  | Adjektiv | gross | La loro casa è molto grande. | Ihr Haus ist sehr gross. | Lui ha un cane grande. | Er hat einen grossen Hund. | ˈɡrande
+piccolo |  |  | Adjektiv | klein | La mia camera è molto piccola. | Mein Zimmer ist sehr klein. | Lei ha un gatto piccolo. | Sie hat eine kleine Katze. | ˈpikkolo
+buono |  |  | Adjektiv | gut | Questa minestra è molto buona. | Diese Suppe ist sehr gut. | Lui è un buon insegnante. | Er ist ein guter Lehrer. | ˈbwɔno
+cattivo |  |  | Adjektiv | schlecht | Oggi il tempo è cattivo. | Das Wetter ist heute schlecht. | Questa è una cattiva risposta. | Das ist eine schlechte Antwort. | katˈtivo
+nuovo |  |  | Adjektiv | neu | Mia sorella ha un libro nuovo. | Meine Schwester hat ein neues Buch. | Abitiamo in una casa nuova. | Wir wohnen in einem neuen Haus. | ˈnwɔvo
+vecchio |  |  | Adjektiv | alt | Mio nonno ha un cane vecchio. | Mein Grossvater hat einen alten Hund. | Questo albero è molto vecchio. | Dieser Baum ist sehr alt. | ˈvɛkkjo
+=== pt-de ===
+a família |  | f | Nomen | die Familie | A minha família vive na Suíça. | Meine Familie lebt in der Schweiz. | Toda a família janta junta. | Die ganze Familie isst gemeinsam zu Abend. | fɐˈmiljɐ
+a mãe |  | f | Nomen | die Mutter | A minha mãe trabalha em casa. | Meine Mutter arbeitet zu Hause. | A sua mãe prepara uma sopa. | Seine Mutter kocht eine Suppe. | ˈmɐ̃j̃
+o pai |  | m | Nomen | der Vater | O meu pai lê um livro. | Mein Vater liest ein Buch. | O seu pai conduz o carro. | Ihr Vater fährt das Auto. | ˈpaj
+os pais |  | m pl | Nomen | die Eltern | Os meus pais vivem em Zurique. | Meine Eltern wohnen in Zürich. | Os seus pais chegam amanhã. | Ihre Eltern kommen morgen an. | ˈpajʃ
+a irmã |  | f | Nomen | die Schwester | A minha irmã vai à escola. | Meine Schwester geht zur Schule. | A sua irmã brinca no jardim. | Seine Schwester spielt im Garten. | iɾˈmɐ̃
+o irmão | o irmão, os irmãos | m | Nomen | der Bruder | O meu irmão tem um cão. | Mein Bruder hat einen Hund. | O seu irmão bebe leite. | Ihr Bruder trinkt Milch. | iɾˈmɐ̃w̃
+a avó |  | f | Nomen | die Grossmutter | A minha avó prepara pão fresco. | Meine Grossmutter macht frisches Brot. | A sua avó vive perto. | Seine Grossmutter wohnt in der Nähe. | ɐˈvɔ
+o avô |  | m | Nomen | der Grossvater | O meu avô lê todos os dias. | Mein Grossvater liest jeden Tag. | O seu avô tem um carro velho. | Ihr Grossvater hat ein altes Auto. | ɐˈvo
+a filha |  | f | Nomen | die Tochter | A sua filha tem dez anos. | Ihre Tochter ist zehn Jahre alt. | A minha filha aprende português. | Meine Tochter lernt Portugiesisch. | ˈfiʎɐ
+o filho |  | m | Nomen | der Sohn | O seu filho brinca com o cão. | Ihr Sohn spielt mit dem Hund. | O meu filho volta amanhã. | Mein Sohn kommt morgen zurück. | ˈfiʎu
+a criança |  | f | Nomen | das Kind | A criança bebe água. | Das Kind trinkt Wasser. | Cada criança tem um livro. | Jedes Kind hat ein Buch. | kɾiˈɐ̃sɐ
+o homem | o homem, os homens | m | Nomen | der Mann | O homem abre a porta. | Der Mann öffnet die Tür. | Um homem espera diante da escola. | Ein Mann wartet vor der Schule. | ˈɔmɐ̃j̃
+a mulher |  | f | Nomen | die Frau | A mulher compra queijo. | Die Frau kauft Käse. | Uma mulher espera na estação. | Eine Frau wartet am Bahnhof. | muˈʎɛɾ
+o amigo |  | m | Nomen | der Freund | O meu amigo vive perto. | Mein Freund wohnt in der Nähe. | Hoje vejo o meu amigo. | Heute sehe ich meinen Freund. | ɐˈmiɣu
+a escola |  | f | Nomen | die Schule | A nossa escola é muito grande. | Unsere Schule ist sehr gross. | Vamos juntos para a escola. | Wir gehen gemeinsam zur Schule. | ɨʃˈkɔlɐ
+o professor |  | m | Nomen | der Lehrer | O professor escreve no quadro. | Der Lehrer schreibt an die Tafel. | O nosso professor faz uma pergunta. | Unser Lehrer stellt eine Frage. | pɾufɨˈsoɾ
+o aluno |  | m | Nomen | der Schüler | O aluno abre o seu livro. | Der Schüler öffnet sein Buch. | Cada aluno tem um lápis. | Jeder Schüler hat einen Bleistift. | ɐˈlunu
+o livro |  | m | Nomen | das Buch | Este livro é muito interessante. | Dieses Buch ist sehr interessant. | Hoje leio um livro. | Heute lese ich ein Buch. | ˈlivɾu
+o caderno |  | m | Nomen | das Heft | O meu caderno está na mesa. | Mein Heft liegt auf dem Tisch. | Ela escreve no seu caderno. | Sie schreibt in ihr Heft. | kɐˈdɛɾnu
+o lápis | o lápis, os lápis | m | Nomen | der Bleistift | Escrevo com um lápis. | Ich schreibe mit einem Bleistift. | O seu lápis está debaixo da cadeira. | Sein Bleistift liegt unter dem Stuhl. | ˈlapiʃ
+a caneta |  | f | Nomen | der Kugelschreiber | A minha caneta está na mochila. | Mein Kugelschreiber ist im Rucksack. | Ela escreve com uma caneta azul. | Sie schreibt mit einem blauen Kugelschreiber. | kɐˈnetɐ
+o quadro |  | m | Nomen | die Tafel | A resposta está no quadro. | Die Antwort steht an der Tafel. | O professor limpa o quadro. | Der Lehrer reinigt die Tafel. | ˈkwadɾu
+a mesa |  | f | Nomen | der Tisch | Os livros estão na mesa. | Die Bücher liegen auf dem Tisch. | Jantamos juntos à mesa. | Wir essen gemeinsam am Tisch zu Abend. | ˈmezɐ
+a cadeira |  | f | Nomen | der Stuhl | A cadeira está junto à janela. | Der Stuhl steht beim Fenster. | O gato dorme na cadeira. | Die Katze schläft auf dem Stuhl. | kɐˈðɐjɾɐ
+a pergunta |  | f | Nomen | die Frage | O professor faz uma pergunta. | Der Lehrer stellt eine Frage. | Compreendo bem a tua pergunta. | Ich verstehe deine Frage gut. | pɨɾˈɡũtɐ
+a resposta |  | f | Nomen | die Antwort | A sua resposta está correta. | Seine Antwort ist richtig. | Ele escreve lentamente a resposta. | Er schreibt die Antwort langsam. | ʁɨʃˈpɔʃtɐ
+um |  |  | Zahlwort | eins | Tenho um irmão. | Ich habe einen Bruder. | Um livro está na mesa. | Ein Buch liegt auf dem Tisch. | ˈũ
+dois |  |  | Zahlwort | zwei | Ela tem dois bons amigos. | Sie hat zwei gute Freunde. | Compramos dois litros de leite. | Wir kaufen zwei Liter Milch. | ˈdojʃ
+três |  |  | Zahlwort | drei | Três alunos leem um livro. | Drei Schüler lesen ein Buch. | Ele come três maçãs pequenas. | Er isst drei kleine Äpfel. | ˈtɾeʃ
+dez |  |  | Zahlwort | zehn | A nossa turma tem dez alunos. | Unsere Klasse hat zehn Schüler. | O comboio chega em dez minutos. | Der Zug kommt in zehn Minuten. | ˈdɛʃ
+cem |  |  | Zahlwort | hundert | Este livro tem cem páginas. | Dieses Buch hat hundert Seiten. | Cem pessoas vivem nesta rua. | Hundert Menschen wohnen in dieser Strasse. | ˈsɐ̃j̃
+o dia |  | m | Nomen | der Tag | Hoje é um bom dia. | Heute ist ein guter Tag. | Aprendo português todos os dias. | Ich lerne jeden Tag Portugiesisch. | ˈdiɐ
+a semana |  | f | Nomen | die Woche | Temos aulas esta semana. | Wir haben diese Woche Unterricht. | Ela visita a avó todas as semanas. | Sie besucht jede Woche ihre Grossmutter. | sɨˈmɐnɐ
+o mês |  | m | Nomen | der Monat | Este mês tem trinta dias. | Dieser Monat hat dreissig Tage. | Viajamos no próximo mês. | Wir verreisen nächsten Monat. | ˈmeʃ
+o ano |  | m | Nomen | das Jahr | O ano começa em janeiro. | Das Jahr beginnt im Januar. | Ele vive aqui todo o ano. | Er wohnt das ganze Jahr hier. | ˈɐnu
+hoje |  |  | Adverb | heute | Hoje temos uma aula de português. | Heute haben wir Portugiesischunterricht. | Hoje está bom tempo. | Heute ist schönes Wetter. | ˈoʒɨ
+amanhã |  |  | Adverb | morgen | O comboio parte amanhã cedo. | Der Zug fährt morgen früh ab. | Amanhã visito o meu amigo. | Morgen besuche ich meinen Freund. | ɐmɐˈɲɐ̃
+a hora |  | f | Nomen | die Stunde | A aula dura uma hora. | Der Unterricht dauert eine Stunde. | Esperamos aqui durante uma hora. | Wir warten hier eine Stunde. | ˈɔɾɐ
+a cabeça |  | f | Nomen | der Kopf | Dói-me a cabeça. | Mein Kopf tut weh. | Ele põe a mão na cabeça. | Er legt die Hand auf den Kopf. | kɐˈβesɐ
+a mão | a mão, as mãos | f | Nomen | die Hand | Ela escreve com a mão esquerda. | Sie schreibt mit der linken Hand. | Dá-me a tua mão. | Gib mir deine Hand. | ˈmɐ̃w̃
+o olho |  | m | Nomen | das Auge | O seu olho esquerdo é azul. | Ihr linkes Auge ist blau. | Ele fecha um olho. | Er schliesst ein Auge. | ˈoʎu
+o pé |  | m | Nomen | der Fuss | Dói-me o pé direito. | Mein rechter Fuss tut weh. | Ele lava o pé esquerdo. | Er wäscht den linken Fuss. | ˈpɛ
+o coração | o coração, os corações | m | Nomen | das Herz | O meu coração bate muito depressa. | Mein Herz schlägt sehr schnell. | O médico escuta o seu coração. | Der Arzt hört sein Herz ab. | kuɾɐˈsɐ̃w̃
+a boca |  | f | Nomen | der Mund | Abre a boca, por favor. | Öffne bitte den Mund. | A criança tem uma boca pequena. | Das Kind hat einen kleinen Mund. | ˈbɔkɐ
+a água |  | f | Nomen | das Wasser | Bebo água todas as manhãs. | Ich trinke jeden Morgen Wasser. | A água está muito fria. | Das Wasser ist sehr kalt. | ˈaɣwɐ
+o pão | o pão, os pães | m | Nomen | das Brot | Comemos pão ao pequeno-almoço. | Wir essen Brot zum Frühstück. | Ela compra pão fresco. | Sie kauft frisches Brot. | ˈpɐ̃w̃
+o leite |  | m | Nomen | die Milch | A criança bebe leite quente. | Das Kind trinkt warme Milch. | Bebemos leite ao pequeno-almoço. | Wir trinken Milch zum Frühstück. | ˈlɐjtɨ
+a maçã |  | f | Nomen | der Apfel | Esta maçã é muito boa. | Dieser Apfel ist sehr gut. | Ele come uma maçã na escola. | Er isst in der Schule einen Apfel. | mɐˈsɐ̃
+o queijo |  | m | Nomen | der Käse | O queijo está na mesa. | Der Käse liegt auf dem Tisch. | Como pão com queijo. | Ich esse Brot mit Käse. | ˈkɐjʒu
+a carne |  | f | Nomen | das Fleisch | Comemos carne ao jantar. | Wir essen Fleisch zum Abendessen. | A carne ainda está quente. | Das Fleisch ist noch warm. | ˈkaɾnɨ

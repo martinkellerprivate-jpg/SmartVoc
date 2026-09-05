@@ -1,0 +1,806 @@
+{
+ "pair": "pt-de",
+ "stufe": 1,
+ "words": [
+  {
+   "foreign": "a família",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Familie",
+   "examples": [
+    "A minha família vive na Suíça.",
+    "Toda a família janta junta."
+   ],
+   "examplesDe": [
+    "Meine Familie lebt in der Schweiz.",
+    "Die ganze Familie isst gemeinsam zu Abend."
+   ],
+   "phonetic": "fɐˈmiljɐ"
+  },
+  {
+   "foreign": "a mãe",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Mutter",
+   "examples": [
+    "A minha mãe trabalha em casa.",
+    "A sua mãe prepara uma sopa."
+   ],
+   "examplesDe": [
+    "Meine Mutter arbeitet zu Hause.",
+    "Seine Mutter kocht eine Suppe."
+   ],
+   "phonetic": "ˈmɐ̃j̃"
+  },
+  {
+   "foreign": "o pai",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Vater",
+   "examples": [
+    "O meu pai lê um livro.",
+    "O seu pai conduz o carro."
+   ],
+   "examplesDe": [
+    "Mein Vater liest ein Buch.",
+    "Ihr Vater fährt das Auto."
+   ],
+   "phonetic": "ˈpaj"
+  },
+  {
+   "foreign": "os pais",
+   "lernform": "",
+   "genus": "m pl",
+   "wortart": "Nomen",
+   "german": "die Eltern",
+   "examples": [
+    "Os meus pais vivem em Zurique.",
+    "Os seus pais chegam amanhã."
+   ],
+   "examplesDe": [
+    "Meine Eltern wohnen in Zürich.",
+    "Ihre Eltern kommen morgen an."
+   ],
+   "phonetic": "ˈpajʃ"
+  },
+  {
+   "foreign": "a irmã",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schwester",
+   "examples": [
+    "A minha irmã vai à escola.",
+    "A sua irmã brinca no jardim."
+   ],
+   "examplesDe": [
+    "Meine Schwester geht zur Schule.",
+    "Seine Schwester spielt im Garten."
+   ],
+   "phonetic": "iɾˈmɐ̃"
+  },
+  {
+   "foreign": "o irmão",
+   "lernform": "o irmão, os irmãos",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Bruder",
+   "examples": [
+    "O meu irmão tem um cão.",
+    "O seu irmão bebe leite."
+   ],
+   "examplesDe": [
+    "Mein Bruder hat einen Hund.",
+    "Ihr Bruder trinkt Milch."
+   ],
+   "phonetic": "iɾˈmɐ̃w̃"
+  },
+  {
+   "foreign": "a avó",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Grossmutter",
+   "examples": [
+    "A minha avó prepara pão fresco.",
+    "A sua avó vive perto."
+   ],
+   "examplesDe": [
+    "Meine Grossmutter macht frisches Brot.",
+    "Seine Grossmutter wohnt in der Nähe."
+   ],
+   "phonetic": "ɐˈvɔ"
+  },
+  {
+   "foreign": "o avô",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Grossvater",
+   "examples": [
+    "O meu avô lê todos os dias.",
+    "O seu avô tem um carro velho."
+   ],
+   "examplesDe": [
+    "Mein Grossvater liest jeden Tag.",
+    "Ihr Grossvater hat ein altes Auto."
+   ],
+   "phonetic": "ɐˈvo"
+  },
+  {
+   "foreign": "a filha",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tochter",
+   "examples": [
+    "A sua filha tem dez anos.",
+    "A minha filha aprende português."
+   ],
+   "examplesDe": [
+    "Ihre Tochter ist zehn Jahre alt.",
+    "Meine Tochter lernt Portugiesisch."
+   ],
+   "phonetic": "ˈfiʎɐ"
+  },
+  {
+   "foreign": "o filho",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Sohn",
+   "examples": [
+    "O seu filho brinca com o cão.",
+    "O meu filho volta amanhã."
+   ],
+   "examplesDe": [
+    "Ihr Sohn spielt mit dem Hund.",
+    "Mein Sohn kommt morgen zurück."
+   ],
+   "phonetic": "ˈfiʎu"
+  },
+  {
+   "foreign": "a criança",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Kind",
+   "examples": [
+    "A criança bebe água.",
+    "Cada criança tem um livro."
+   ],
+   "examplesDe": [
+    "Das Kind trinkt Wasser.",
+    "Jedes Kind hat ein Buch."
+   ],
+   "phonetic": "kɾiˈɐ̃sɐ"
+  },
+  {
+   "foreign": "o homem",
+   "lernform": "o homem, os homens",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Mann",
+   "examples": [
+    "O homem abre a porta.",
+    "Um homem espera diante da escola."
+   ],
+   "examplesDe": [
+    "Der Mann öffnet die Tür.",
+    "Ein Mann wartet vor der Schule."
+   ],
+   "phonetic": "ˈɔmɐ̃j̃"
+  },
+  {
+   "foreign": "a mulher",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Frau",
+   "examples": [
+    "A mulher compra queijo.",
+    "Uma mulher espera na estação."
+   ],
+   "examplesDe": [
+    "Die Frau kauft Käse.",
+    "Eine Frau wartet am Bahnhof."
+   ],
+   "phonetic": "muˈʎɛɾ"
+  },
+  {
+   "foreign": "o amigo",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Freund",
+   "examples": [
+    "O meu amigo vive perto.",
+    "Hoje vejo o meu amigo."
+   ],
+   "examplesDe": [
+    "Mein Freund wohnt in der Nähe.",
+    "Heute sehe ich meinen Freund."
+   ],
+   "phonetic": "ɐˈmiɣu"
+  },
+  {
+   "foreign": "a escola",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schule",
+   "examples": [
+    "A nossa escola é muito grande.",
+    "Vamos juntos para a escola."
+   ],
+   "examplesDe": [
+    "Unsere Schule ist sehr gross.",
+    "Wir gehen gemeinsam zur Schule."
+   ],
+   "phonetic": "ɨʃˈkɔlɐ"
+  },
+  {
+   "foreign": "o professor",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Lehrer",
+   "examples": [
+    "O professor escreve no quadro.",
+    "O nosso professor faz uma pergunta."
+   ],
+   "examplesDe": [
+    "Der Lehrer schreibt an die Tafel.",
+    "Unser Lehrer stellt eine Frage."
+   ],
+   "phonetic": "pɾufɨˈsoɾ"
+  },
+  {
+   "foreign": "o aluno",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Schüler",
+   "examples": [
+    "O aluno abre o seu livro.",
+    "Cada aluno tem um lápis."
+   ],
+   "examplesDe": [
+    "Der Schüler öffnet sein Buch.",
+    "Jeder Schüler hat einen Bleistift."
+   ],
+   "phonetic": "ɐˈlunu"
+  },
+  {
+   "foreign": "o livro",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Buch",
+   "examples": [
+    "Este livro é muito interessante.",
+    "Hoje leio um livro."
+   ],
+   "examplesDe": [
+    "Dieses Buch ist sehr interessant.",
+    "Heute lese ich ein Buch."
+   ],
+   "phonetic": "ˈlivɾu"
+  },
+  {
+   "foreign": "o caderno",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Heft",
+   "examples": [
+    "O meu caderno está na mesa.",
+    "Ela escreve no seu caderno."
+   ],
+   "examplesDe": [
+    "Mein Heft liegt auf dem Tisch.",
+    "Sie schreibt in ihr Heft."
+   ],
+   "phonetic": "kɐˈdɛɾnu"
+  },
+  {
+   "foreign": "o lápis",
+   "lernform": "o lápis, os lápis",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Bleistift",
+   "examples": [
+    "Escrevo com um lápis.",
+    "O seu lápis está debaixo da cadeira."
+   ],
+   "examplesDe": [
+    "Ich schreibe mit einem Bleistift.",
+    "Sein Bleistift liegt unter dem Stuhl."
+   ],
+   "phonetic": "ˈlapiʃ"
+  },
+  {
+   "foreign": "a caneta",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Kugelschreiber",
+   "examples": [
+    "A minha caneta está na mochila.",
+    "Ela escreve com uma caneta azul."
+   ],
+   "examplesDe": [
+    "Mein Kugelschreiber ist im Rucksack.",
+    "Sie schreibt mit einem blauen Kugelschreiber."
+   ],
+   "phonetic": "kɐˈnetɐ"
+  },
+  {
+   "foreign": "o quadro",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Tafel",
+   "examples": [
+    "A resposta está no quadro.",
+    "O professor limpa o quadro."
+   ],
+   "examplesDe": [
+    "Die Antwort steht an der Tafel.",
+    "Der Lehrer reinigt die Tafel."
+   ],
+   "phonetic": "ˈkwadɾu"
+  },
+  {
+   "foreign": "a mesa",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Tisch",
+   "examples": [
+    "Os livros estão na mesa.",
+    "Jantamos juntos à mesa."
+   ],
+   "examplesDe": [
+    "Die Bücher liegen auf dem Tisch.",
+    "Wir essen gemeinsam am Tisch zu Abend."
+   ],
+   "phonetic": "ˈmezɐ"
+  },
+  {
+   "foreign": "a cadeira",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Stuhl",
+   "examples": [
+    "A cadeira está junto à janela.",
+    "O gato dorme na cadeira."
+   ],
+   "examplesDe": [
+    "Der Stuhl steht beim Fenster.",
+    "Die Katze schläft auf dem Stuhl."
+   ],
+   "phonetic": "kɐˈðɐjɾɐ"
+  },
+  {
+   "foreign": "a pergunta",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Frage",
+   "examples": [
+    "O professor faz uma pergunta.",
+    "Compreendo bem a tua pergunta."
+   ],
+   "examplesDe": [
+    "Der Lehrer stellt eine Frage.",
+    "Ich verstehe deine Frage gut."
+   ],
+   "phonetic": "pɨɾˈɡũtɐ"
+  },
+  {
+   "foreign": "a resposta",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Antwort",
+   "examples": [
+    "A sua resposta está correta.",
+    "Ele escreve lentamente a resposta."
+   ],
+   "examplesDe": [
+    "Seine Antwort ist richtig.",
+    "Er schreibt die Antwort langsam."
+   ],
+   "phonetic": "ʁɨʃˈpɔʃtɐ"
+  },
+  {
+   "foreign": "um",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "eins",
+   "examples": [
+    "Tenho um irmão.",
+    "Um livro está na mesa."
+   ],
+   "examplesDe": [
+    "Ich habe einen Bruder.",
+    "Ein Buch liegt auf dem Tisch."
+   ],
+   "phonetic": "ˈũ"
+  },
+  {
+   "foreign": "dois",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zwei",
+   "examples": [
+    "Ela tem dois bons amigos.",
+    "Compramos dois litros de leite."
+   ],
+   "examplesDe": [
+    "Sie hat zwei gute Freunde.",
+    "Wir kaufen zwei Liter Milch."
+   ],
+   "phonetic": "ˈdojʃ"
+  },
+  {
+   "foreign": "três",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "drei",
+   "examples": [
+    "Três alunos leem um livro.",
+    "Ele come três maçãs pequenas."
+   ],
+   "examplesDe": [
+    "Drei Schüler lesen ein Buch.",
+    "Er isst drei kleine Äpfel."
+   ],
+   "phonetic": "ˈtɾeʃ"
+  },
+  {
+   "foreign": "dez",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zehn",
+   "examples": [
+    "A nossa turma tem dez alunos.",
+    "O comboio chega em dez minutos."
+   ],
+   "examplesDe": [
+    "Unsere Klasse hat zehn Schüler.",
+    "Der Zug kommt in zehn Minuten."
+   ],
+   "phonetic": "ˈdɛʃ"
+  },
+  {
+   "foreign": "cem",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "hundert",
+   "examples": [
+    "Este livro tem cem páginas.",
+    "Cem pessoas vivem nesta rua."
+   ],
+   "examplesDe": [
+    "Dieses Buch hat hundert Seiten.",
+    "Hundert Menschen wohnen in dieser Strasse."
+   ],
+   "phonetic": "ˈsɐ̃j̃"
+  },
+  {
+   "foreign": "o dia",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Tag",
+   "examples": [
+    "Hoje é um bom dia.",
+    "Aprendo português todos os dias."
+   ],
+   "examplesDe": [
+    "Heute ist ein guter Tag.",
+    "Ich lerne jeden Tag Portugiesisch."
+   ],
+   "phonetic": "ˈdiɐ"
+  },
+  {
+   "foreign": "a semana",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Woche",
+   "examples": [
+    "Temos aulas esta semana.",
+    "Ela visita a avó todas as semanas."
+   ],
+   "examplesDe": [
+    "Wir haben diese Woche Unterricht.",
+    "Sie besucht jede Woche ihre Grossmutter."
+   ],
+   "phonetic": "sɨˈmɐnɐ"
+  },
+  {
+   "foreign": "o mês",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Monat",
+   "examples": [
+    "Este mês tem trinta dias.",
+    "Viajamos no próximo mês."
+   ],
+   "examplesDe": [
+    "Dieser Monat hat dreissig Tage.",
+    "Wir verreisen nächsten Monat."
+   ],
+   "phonetic": "ˈmeʃ"
+  },
+  {
+   "foreign": "o ano",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Jahr",
+   "examples": [
+    "O ano começa em janeiro.",
+    "Ele vive aqui todo o ano."
+   ],
+   "examplesDe": [
+    "Das Jahr beginnt im Januar.",
+    "Er wohnt das ganze Jahr hier."
+   ],
+   "phonetic": "ˈɐnu"
+  },
+  {
+   "foreign": "hoje",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "heute",
+   "examples": [
+    "Hoje temos uma aula de português.",
+    "Hoje está bom tempo."
+   ],
+   "examplesDe": [
+    "Heute haben wir Portugiesischunterricht.",
+    "Heute ist schönes Wetter."
+   ],
+   "phonetic": "ˈoʒɨ"
+  },
+  {
+   "foreign": "amanhã",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "morgen",
+   "examples": [
+    "O comboio parte amanhã cedo.",
+    "Amanhã visito o meu amigo."
+   ],
+   "examplesDe": [
+    "Der Zug fährt morgen früh ab.",
+    "Morgen besuche ich meinen Freund."
+   ],
+   "phonetic": "ɐmɐˈɲɐ̃"
+  },
+  {
+   "foreign": "a hora",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Stunde",
+   "examples": [
+    "A aula dura uma hora.",
+    "Esperamos aqui durante uma hora."
+   ],
+   "examplesDe": [
+    "Der Unterricht dauert eine Stunde.",
+    "Wir warten hier eine Stunde."
+   ],
+   "phonetic": "ˈɔɾɐ"
+  },
+  {
+   "foreign": "a cabeça",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Kopf",
+   "examples": [
+    "Dói-me a cabeça.",
+    "Ele põe a mão na cabeça."
+   ],
+   "examplesDe": [
+    "Mein Kopf tut weh.",
+    "Er legt die Hand auf den Kopf."
+   ],
+   "phonetic": "kɐˈβesɐ"
+  },
+  {
+   "foreign": "a mão",
+   "lernform": "a mão, as mãos",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Hand",
+   "examples": [
+    "Ela escreve com a mão esquerda.",
+    "Dá-me a tua mão."
+   ],
+   "examplesDe": [
+    "Sie schreibt mit der linken Hand.",
+    "Gib mir deine Hand."
+   ],
+   "phonetic": "ˈmɐ̃w̃"
+  },
+  {
+   "foreign": "o olho",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Auge",
+   "examples": [
+    "O seu olho esquerdo é azul.",
+    "Ele fecha um olho."
+   ],
+   "examplesDe": [
+    "Ihr linkes Auge ist blau.",
+    "Er schliesst ein Auge."
+   ],
+   "phonetic": "ˈoʎu"
+  },
+  {
+   "foreign": "o pé",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Fuss",
+   "examples": [
+    "Dói-me o pé direito.",
+    "Ele lava o pé esquerdo."
+   ],
+   "examplesDe": [
+    "Mein rechter Fuss tut weh.",
+    "Er wäscht den linken Fuss."
+   ],
+   "phonetic": "ˈpɛ"
+  },
+  {
+   "foreign": "o coração",
+   "lernform": "o coração, os corações",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Herz",
+   "examples": [
+    "O meu coração bate muito depressa.",
+    "O médico escuta o seu coração."
+   ],
+   "examplesDe": [
+    "Mein Herz schlägt sehr schnell.",
+    "Der Arzt hört sein Herz ab."
+   ],
+   "phonetic": "kuɾɐˈsɐ̃w̃"
+  },
+  {
+   "foreign": "a boca",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Mund",
+   "examples": [
+    "Abre a boca, por favor.",
+    "A criança tem uma boca pequena."
+   ],
+   "examplesDe": [
+    "Öffne bitte den Mund.",
+    "Das Kind hat einen kleinen Mund."
+   ],
+   "phonetic": "ˈbɔkɐ"
+  },
+  {
+   "foreign": "a água",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Wasser",
+   "examples": [
+    "Bebo água todas as manhãs.",
+    "A água está muito fria."
+   ],
+   "examplesDe": [
+    "Ich trinke jeden Morgen Wasser.",
+    "Das Wasser ist sehr kalt."
+   ],
+   "phonetic": "ˈaɣwɐ"
+  },
+  {
+   "foreign": "o pão",
+   "lernform": "o pão, os pães",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Brot",
+   "examples": [
+    "Comemos pão ao pequeno-almoço.",
+    "Ela compra pão fresco."
+   ],
+   "examplesDe": [
+    "Wir essen Brot zum Frühstück.",
+    "Sie kauft frisches Brot."
+   ],
+   "phonetic": "ˈpɐ̃w̃"
+  },
+  {
+   "foreign": "o leite",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Milch",
+   "examples": [
+    "A criança bebe leite quente.",
+    "Bebemos leite ao pequeno-almoço."
+   ],
+   "examplesDe": [
+    "Das Kind trinkt warme Milch.",
+    "Wir trinken Milch zum Frühstück."
+   ],
+   "phonetic": "ˈlɐjtɨ"
+  },
+  {
+   "foreign": "a maçã",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Apfel",
+   "examples": [
+    "Esta maçã é muito boa.",
+    "Ele come uma maçã na escola."
+   ],
+   "examplesDe": [
+    "Dieser Apfel ist sehr gut.",
+    "Er isst in der Schule einen Apfel."
+   ],
+   "phonetic": "mɐˈsɐ̃"
+  },
+  {
+   "foreign": "o queijo",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Käse",
+   "examples": [
+    "O queijo está na mesa.",
+    "Como pão com queijo."
+   ],
+   "examplesDe": [
+    "Der Käse liegt auf dem Tisch.",
+    "Ich esse Brot mit Käse."
+   ],
+   "phonetic": "ˈkɐjʒu"
+  },
+  {
+   "foreign": "a carne",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Fleisch",
+   "examples": [
+    "Comemos carne ao jantar.",
+    "A carne ainda está quente."
+   ],
+   "examplesDe": [
+    "Wir essen Fleisch zum Abendessen.",
+    "Das Fleisch ist noch warm."
+   ],
+   "phonetic": "ˈkaɾnɨ"
+  }
+ ]
+}

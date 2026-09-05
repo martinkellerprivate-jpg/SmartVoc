@@ -1,0 +1,1606 @@
+{
+ "pair": "it-de",
+ "stufe": 1,
+ "words": [
+  {
+   "foreign": "la famiglia",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Familie",
+   "examples": [
+    "La mia famiglia vive in Svizzera.",
+    "Tutta la famiglia cena insieme."
+   ],
+   "examplesDe": [
+    "Meine Familie lebt in der Schweiz.",
+    "Die ganze Familie isst gemeinsam zu Abend."
+   ],
+   "phonetic": "faˈmiʎʎa"
+  },
+  {
+   "foreign": "la madre",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Mutter",
+   "examples": [
+    "Mia madre lavora a casa.",
+    "Sua madre prepara una minestra."
+   ],
+   "examplesDe": [
+    "Meine Mutter arbeitet zu Hause.",
+    "Seine Mutter kocht eine Suppe."
+   ],
+   "phonetic": "ˈmadre"
+  },
+  {
+   "foreign": "il padre",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Vater",
+   "examples": [
+    "Mio padre legge un libro.",
+    "Suo padre guida la macchina."
+   ],
+   "examplesDe": [
+    "Mein Vater liest ein Buch.",
+    "Ihr Vater fährt das Auto."
+   ],
+   "phonetic": "ˈpadre"
+  },
+  {
+   "foreign": "i genitori",
+   "lernform": "",
+   "genus": "m pl",
+   "wortart": "Nomen",
+   "german": "die Eltern",
+   "examples": [
+    "I miei genitori vivono a Zurigo.",
+    "I suoi genitori arrivano domani."
+   ],
+   "examplesDe": [
+    "Meine Eltern wohnen in Zürich.",
+    "Ihre Eltern kommen morgen an."
+   ],
+   "phonetic": "dʒeniˈtori"
+  },
+  {
+   "foreign": "la sorella",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schwester",
+   "examples": [
+    "Mia sorella va a scuola.",
+    "Sua sorella gioca in giardino."
+   ],
+   "examplesDe": [
+    "Meine Schwester geht zur Schule.",
+    "Seine Schwester spielt im Garten."
+   ],
+   "phonetic": "soˈrɛlla"
+  },
+  {
+   "foreign": "il fratello",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Bruder",
+   "examples": [
+    "Mio fratello ha un cane.",
+    "Suo fratello beve il latte."
+   ],
+   "examplesDe": [
+    "Mein Bruder hat einen Hund.",
+    "Ihr Bruder trinkt Milch."
+   ],
+   "phonetic": "fraˈtɛllo"
+  },
+  {
+   "foreign": "la nonna",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Grossmutter",
+   "examples": [
+    "Mia nonna prepara il pane.",
+    "Sua nonna abita qui vicino."
+   ],
+   "examplesDe": [
+    "Meine Grossmutter macht Brot.",
+    "Seine Grossmutter wohnt hier in der Nähe."
+   ],
+   "phonetic": "ˈnɔnna"
+  },
+  {
+   "foreign": "il nonno",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Grossvater",
+   "examples": [
+    "Mio nonno legge ogni giorno.",
+    "Suo nonno ha una vecchia macchina."
+   ],
+   "examplesDe": [
+    "Mein Grossvater liest jeden Tag.",
+    "Ihr Grossvater hat ein altes Auto."
+   ],
+   "phonetic": "ˈnɔnno"
+  },
+  {
+   "foreign": "la figlia",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tochter",
+   "examples": [
+    "Sua figlia ha dieci anni.",
+    "Mia figlia impara l'italiano."
+   ],
+   "examplesDe": [
+    "Ihre Tochter ist zehn Jahre alt.",
+    "Meine Tochter lernt Italienisch."
+   ],
+   "phonetic": "ˈfiʎʎa"
+  },
+  {
+   "foreign": "il figlio",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Sohn",
+   "examples": [
+    "Suo figlio gioca con il cane.",
+    "Mio figlio torna domani."
+   ],
+   "examplesDe": [
+    "Ihr Sohn spielt mit dem Hund.",
+    "Mein Sohn kommt morgen zurück."
+   ],
+   "phonetic": "ˈfiʎʎo"
+  },
+  {
+   "foreign": "il bambino",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Kind",
+   "examples": [
+    "Il bambino beve acqua.",
+    "Ogni bambino ha un libro."
+   ],
+   "examplesDe": [
+    "Das Kind trinkt Wasser.",
+    "Jedes Kind hat ein Buch."
+   ],
+   "phonetic": "bamˈbino"
+  },
+  {
+   "foreign": "l'uomo",
+   "lernform": "l'uomo, gli uomini",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Mann",
+   "examples": [
+    "L'uomo apre la porta.",
+    "Un uomo aspetta davanti alla scuola."
+   ],
+   "examplesDe": [
+    "Der Mann öffnet die Tür.",
+    "Ein Mann wartet vor der Schule."
+   ],
+   "phonetic": "ˈwɔmo"
+  },
+  {
+   "foreign": "la donna",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Frau",
+   "examples": [
+    "La donna compra il formaggio.",
+    "Una donna aspetta alla stazione."
+   ],
+   "examplesDe": [
+    "Die Frau kauft Käse.",
+    "Eine Frau wartet am Bahnhof."
+   ],
+   "phonetic": "ˈdɔnna"
+  },
+  {
+   "foreign": "l'amico",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Freund",
+   "examples": [
+    "Il mio amico abita vicino.",
+    "Oggi vedo il mio amico."
+   ],
+   "examplesDe": [
+    "Mein Freund wohnt in der Nähe.",
+    "Heute sehe ich meinen Freund."
+   ],
+   "phonetic": "aˈmiko"
+  },
+  {
+   "foreign": "la scuola",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Schule",
+   "examples": [
+    "La nostra scuola è molto grande.",
+    "Andiamo insieme a scuola."
+   ],
+   "examplesDe": [
+    "Unsere Schule ist sehr gross.",
+    "Wir gehen gemeinsam zur Schule."
+   ],
+   "phonetic": "ˈskwɔla"
+  },
+  {
+   "foreign": "l'insegnante",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Lehrer",
+   "examples": [
+    "L'insegnante scrive alla lavagna.",
+    "Il nostro insegnante fa una domanda."
+   ],
+   "examplesDe": [
+    "Der Lehrer schreibt an die Tafel.",
+    "Unser Lehrer stellt eine Frage."
+   ],
+   "phonetic": "inseɲˈɲante"
+  },
+  {
+   "foreign": "lo studente",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Schüler",
+   "examples": [
+    "Lo studente apre il suo libro.",
+    "Ogni studente ha una matita."
+   ],
+   "examplesDe": [
+    "Der Schüler öffnet sein Buch.",
+    "Jeder Schüler hat einen Bleistift."
+   ],
+   "phonetic": "stuˈdɛnte"
+  },
+  {
+   "foreign": "il libro",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Buch",
+   "examples": [
+    "Questo libro è molto interessante.",
+    "Oggi leggo un libro."
+   ],
+   "examplesDe": [
+    "Dieses Buch ist sehr interessant.",
+    "Heute lese ich ein Buch."
+   ],
+   "phonetic": "ˈlibro"
+  },
+  {
+   "foreign": "il quaderno",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Heft",
+   "examples": [
+    "Il mio quaderno è sul tavolo.",
+    "Lei scrive nel suo quaderno."
+   ],
+   "examplesDe": [
+    "Mein Heft liegt auf dem Tisch.",
+    "Sie schreibt in ihr Heft."
+   ],
+   "phonetic": "kwaˈdɛrno"
+  },
+  {
+   "foreign": "la matita",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Bleistift",
+   "examples": [
+    "Scrivo con una matita.",
+    "La sua matita è sotto la sedia."
+   ],
+   "examplesDe": [
+    "Ich schreibe mit einem Bleistift.",
+    "Sein Bleistift liegt unter dem Stuhl."
+   ],
+   "phonetic": "maˈtita"
+  },
+  {
+   "foreign": "la penna",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Kugelschreiber",
+   "examples": [
+    "La mia penna è nello zaino.",
+    "Lei scrive con una penna blu."
+   ],
+   "examplesDe": [
+    "Mein Kugelschreiber ist im Rucksack.",
+    "Sie schreibt mit einem blauen Kugelschreiber."
+   ],
+   "phonetic": "ˈpenna"
+  },
+  {
+   "foreign": "la lavagna",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tafel",
+   "examples": [
+    "La risposta è sulla lavagna.",
+    "L'insegnante pulisce la lavagna."
+   ],
+   "examplesDe": [
+    "Die Antwort steht an der Tafel.",
+    "Der Lehrer reinigt die Tafel."
+   ],
+   "phonetic": "laˈvaɲɲa"
+  },
+  {
+   "foreign": "il tavolo",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Tisch",
+   "examples": [
+    "I libri sono sul tavolo.",
+    "Ceniamo insieme al tavolo."
+   ],
+   "examplesDe": [
+    "Die Bücher liegen auf dem Tisch.",
+    "Wir essen gemeinsam am Tisch zu Abend."
+   ],
+   "phonetic": "ˈtavolo"
+  },
+  {
+   "foreign": "la sedia",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Stuhl",
+   "examples": [
+    "La sedia è vicino alla finestra.",
+    "Il gatto dorme sulla sedia."
+   ],
+   "examplesDe": [
+    "Der Stuhl steht beim Fenster.",
+    "Die Katze schläft auf dem Stuhl."
+   ],
+   "phonetic": "ˈsɛdja"
+  },
+  {
+   "foreign": "la domanda",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Frage",
+   "examples": [
+    "L'insegnante fa una domanda.",
+    "Capisco bene la tua domanda."
+   ],
+   "examplesDe": [
+    "Der Lehrer stellt eine Frage.",
+    "Ich verstehe deine Frage gut."
+   ],
+   "phonetic": "doˈmanda"
+  },
+  {
+   "foreign": "la risposta",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Antwort",
+   "examples": [
+    "La sua risposta è corretta.",
+    "Lui scrive lentamente la risposta."
+   ],
+   "examplesDe": [
+    "Seine Antwort ist richtig.",
+    "Er schreibt die Antwort langsam."
+   ],
+   "phonetic": "risˈpɔsta"
+  },
+  {
+   "foreign": "uno",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "eins",
+   "examples": [
+    "Ho un fratello.",
+    "Un libro è sul tavolo."
+   ],
+   "examplesDe": [
+    "Ich habe einen Bruder.",
+    "Ein Buch liegt auf dem Tisch."
+   ],
+   "phonetic": "ˈuno"
+  },
+  {
+   "foreign": "due",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zwei",
+   "examples": [
+    "Lei ha due buoni amici.",
+    "Compriamo due litri di latte."
+   ],
+   "examplesDe": [
+    "Sie hat zwei gute Freunde.",
+    "Wir kaufen zwei Liter Milch."
+   ],
+   "phonetic": "ˈdue"
+  },
+  {
+   "foreign": "tre",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "drei",
+   "examples": [
+    "Tre studenti leggono un libro.",
+    "Lui mangia tre piccole mele."
+   ],
+   "examplesDe": [
+    "Drei Schüler lesen ein Buch.",
+    "Er isst drei kleine Äpfel."
+   ],
+   "phonetic": "ˈtre"
+  },
+  {
+   "foreign": "dieci",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "zehn",
+   "examples": [
+    "La nostra classe ha dieci studenti.",
+    "Il treno arriva fra dieci minuti."
+   ],
+   "examplesDe": [
+    "Unsere Klasse hat zehn Schüler.",
+    "Der Zug kommt in zehn Minuten."
+   ],
+   "phonetic": "ˈdjɛtʃi"
+  },
+  {
+   "foreign": "cento",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Zahlwort",
+   "german": "hundert",
+   "examples": [
+    "Questo libro ha cento pagine.",
+    "Cento persone abitano in questa strada."
+   ],
+   "examplesDe": [
+    "Dieses Buch hat hundert Seiten.",
+    "Hundert Menschen wohnen in dieser Strasse."
+   ],
+   "phonetic": "ˈtʃɛnto"
+  },
+  {
+   "foreign": "il giorno",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Tag",
+   "examples": [
+    "Oggi è un bel giorno.",
+    "Imparo l'italiano ogni giorno."
+   ],
+   "examplesDe": [
+    "Heute ist ein schöner Tag.",
+    "Ich lerne jeden Tag Italienisch."
+   ],
+   "phonetic": "ˈdʒorno"
+  },
+  {
+   "foreign": "la settimana",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Woche",
+   "examples": [
+    "Andiamo a scuola questa settimana.",
+    "Lei visita sua nonna ogni settimana."
+   ],
+   "examplesDe": [
+    "Wir gehen diese Woche zur Schule.",
+    "Sie besucht jede Woche ihre Grossmutter."
+   ],
+   "phonetic": "settiˈmana"
+  },
+  {
+   "foreign": "il mese",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Monat",
+   "examples": [
+    "Questo mese ha trenta giorni.",
+    "Partiamo il mese prossimo."
+   ],
+   "examplesDe": [
+    "Dieser Monat hat dreissig Tage.",
+    "Wir fahren nächsten Monat weg."
+   ],
+   "phonetic": "ˈmeze"
+  },
+  {
+   "foreign": "l'anno",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Jahr",
+   "examples": [
+    "L'anno comincia a gennaio.",
+    "Lui abita qui tutto l'anno."
+   ],
+   "examplesDe": [
+    "Das Jahr beginnt im Januar.",
+    "Er wohnt das ganze Jahr hier."
+   ],
+   "phonetic": "ˈanno"
+  },
+  {
+   "foreign": "oggi",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "heute",
+   "examples": [
+    "Oggi abbiamo la lezione d'italiano.",
+    "Oggi il tempo è bello."
+   ],
+   "examplesDe": [
+    "Heute haben wir Italienischunterricht.",
+    "Heute ist schönes Wetter."
+   ],
+   "phonetic": "ˈɔddʒi"
+  },
+  {
+   "foreign": "domani",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adverb",
+   "german": "morgen",
+   "examples": [
+    "Il treno parte domani mattina.",
+    "Domani visito il mio amico."
+   ],
+   "examplesDe": [
+    "Der Zug fährt morgen früh ab.",
+    "Morgen besuche ich meinen Freund."
+   ],
+   "phonetic": "doˈmani"
+  },
+  {
+   "foreign": "l'ora",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Stunde",
+   "examples": [
+    "La lezione dura un'ora.",
+    "Aspettiamo qui per un'ora."
+   ],
+   "examplesDe": [
+    "Der Unterricht dauert eine Stunde.",
+    "Wir warten hier eine Stunde."
+   ],
+   "phonetic": "ˈora"
+  },
+  {
+   "foreign": "la testa",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Kopf",
+   "examples": [
+    "Mi fa male la testa.",
+    "Lui mette la mano sulla testa."
+   ],
+   "examplesDe": [
+    "Mein Kopf tut weh.",
+    "Er legt die Hand auf den Kopf."
+   ],
+   "phonetic": "ˈtɛsta"
+  },
+  {
+   "foreign": "la mano",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Hand",
+   "examples": [
+    "Lei scrive con la mano sinistra.",
+    "Dammi la mano."
+   ],
+   "examplesDe": [
+    "Sie schreibt mit der linken Hand.",
+    "Gib mir die Hand."
+   ],
+   "phonetic": "ˈmano"
+  },
+  {
+   "foreign": "l'occhio",
+   "lernform": "l'occhio, gli occhi",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Auge",
+   "examples": [
+    "Il suo occhio sinistro è azzurro.",
+    "Lui chiude un occhio."
+   ],
+   "examplesDe": [
+    "Ihr linkes Auge ist blau.",
+    "Er schliesst ein Auge."
+   ],
+   "phonetic": "ˈɔkkjo"
+  },
+  {
+   "foreign": "il piede",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Fuss",
+   "examples": [
+    "Mi fa male il piede destro.",
+    "Lui lava il piede sinistro."
+   ],
+   "examplesDe": [
+    "Mein rechter Fuss tut weh.",
+    "Er wäscht den linken Fuss."
+   ],
+   "phonetic": "ˈpjɛde"
+  },
+  {
+   "foreign": "il cuore",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Herz",
+   "examples": [
+    "Il mio cuore batte molto forte.",
+    "Il medico ascolta il suo cuore."
+   ],
+   "examplesDe": [
+    "Mein Herz schlägt sehr stark.",
+    "Der Arzt hört sein Herz ab."
+   ],
+   "phonetic": "ˈkwɔre"
+  },
+  {
+   "foreign": "la bocca",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Mund",
+   "examples": [
+    "Apri la bocca, per favore.",
+    "Il bambino ha una bocca piccola."
+   ],
+   "examplesDe": [
+    "Öffne bitte den Mund.",
+    "Das Kind hat einen kleinen Mund."
+   ],
+   "phonetic": "ˈbokka"
+  },
+  {
+   "foreign": "l'acqua",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Wasser",
+   "examples": [
+    "Bevo acqua ogni mattina.",
+    "L'acqua è molto fredda."
+   ],
+   "examplesDe": [
+    "Ich trinke jeden Morgen Wasser.",
+    "Das Wasser ist sehr kalt."
+   ],
+   "phonetic": "ˈakkwa"
+  },
+  {
+   "foreign": "il pane",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Brot",
+   "examples": [
+    "Mangiamo pane a colazione.",
+    "Lei compra del pane fresco."
+   ],
+   "examplesDe": [
+    "Wir essen Brot zum Frühstück.",
+    "Sie kauft frisches Brot."
+   ],
+   "phonetic": "ˈpane"
+  },
+  {
+   "foreign": "il latte",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Milch",
+   "examples": [
+    "Il bambino beve latte caldo.",
+    "Beviamo latte a colazione."
+   ],
+   "examplesDe": [
+    "Das Kind trinkt warme Milch.",
+    "Wir trinken Milch zum Frühstück."
+   ],
+   "phonetic": "ˈlatte"
+  },
+  {
+   "foreign": "la mela",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Apfel",
+   "examples": [
+    "Questa mela è molto buona.",
+    "Lui mangia una mela a scuola."
+   ],
+   "examplesDe": [
+    "Dieser Apfel ist sehr gut.",
+    "Er isst in der Schule einen Apfel."
+   ],
+   "phonetic": "ˈmela"
+  },
+  {
+   "foreign": "il formaggio",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Käse",
+   "examples": [
+    "Il formaggio è sul tavolo.",
+    "Mangio pane con il formaggio."
+   ],
+   "examplesDe": [
+    "Der Käse liegt auf dem Tisch.",
+    "Ich esse Brot mit Käse."
+   ],
+   "phonetic": "forˈmaddʒo"
+  },
+  {
+   "foreign": "la carne",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Fleisch",
+   "examples": [
+    "Mangiamo carne per cena.",
+    "La carne è ancora calda."
+   ],
+   "examplesDe": [
+    "Wir essen Fleisch zum Abendessen.",
+    "Das Fleisch ist noch warm."
+   ],
+   "phonetic": "ˈkarne"
+  },
+  {
+   "foreign": "l'uovo",
+   "lernform": "l'uovo, le uova",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Ei",
+   "examples": [
+    "Mangio un uovo a colazione.",
+    "L'uovo è in cucina."
+   ],
+   "examplesDe": [
+    "Ich esse ein Ei zum Frühstück.",
+    "Das Ei ist in der Küche."
+   ],
+   "phonetic": "ˈwɔvo"
+  },
+  {
+   "foreign": "il pesce",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Fisch",
+   "examples": [
+    "Il pesce nuota nell'acqua.",
+    "Mangiamo pesce per cena."
+   ],
+   "examplesDe": [
+    "Der Fisch schwimmt im Wasser.",
+    "Wir essen Fisch zum Abendessen."
+   ],
+   "phonetic": "ˈpeʃʃe"
+  },
+  {
+   "foreign": "la minestra",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Suppe",
+   "examples": [
+    "La minestra è molto calda.",
+    "Mia madre prepara una buona minestra."
+   ],
+   "examplesDe": [
+    "Die Suppe ist sehr heiss.",
+    "Meine Mutter kocht eine gute Suppe."
+   ],
+   "phonetic": "miˈnɛstra"
+  },
+  {
+   "foreign": "lo zucchero",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Zucker",
+   "examples": [
+    "Prendo il caffè con lo zucchero.",
+    "Lo zucchero è sul tavolo."
+   ],
+   "examplesDe": [
+    "Ich trinke den Kaffee mit Zucker.",
+    "Der Zucker steht auf dem Tisch."
+   ],
+   "phonetic": "ˈdzuːkkero"
+  },
+  {
+   "foreign": "la colazione",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Frühstück",
+   "examples": [
+    "Facciamo colazione insieme.",
+    "La colazione è pronta alle sette."
+   ],
+   "examplesDe": [
+    "Wir frühstücken gemeinsam.",
+    "Das Frühstück ist um sieben Uhr bereit."
+   ],
+   "phonetic": "kolaˈtsjone"
+  },
+  {
+   "foreign": "la cena",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Abendessen",
+   "examples": [
+    "La cena è pronta adesso.",
+    "Prepariamo la cena insieme."
+   ],
+   "examplesDe": [
+    "Das Abendessen ist jetzt bereit.",
+    "Wir bereiten das Abendessen gemeinsam zu."
+   ],
+   "phonetic": "ˈtʃena"
+  },
+  {
+   "foreign": "la casa",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Haus",
+   "examples": [
+    "La nostra casa ha un giardino.",
+    "La casa è vicino alla scuola."
+   ],
+   "examplesDe": [
+    "Unser Haus hat einen Garten.",
+    "Das Haus steht nahe bei der Schule."
+   ],
+   "phonetic": "ˈkaza"
+  },
+  {
+   "foreign": "l'appartamento",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Wohnung",
+   "examples": [
+    "Il loro appartamento è molto piccolo.",
+    "Abitiamo in un appartamento nuovo."
+   ],
+   "examplesDe": [
+    "Ihre Wohnung ist sehr klein.",
+    "Wir wohnen in einer neuen Wohnung."
+   ],
+   "phonetic": "appartaˈmento"
+  },
+  {
+   "foreign": "la camera",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Zimmer",
+   "examples": [
+    "La mia camera ha due finestre.",
+    "I bambini giocano in questa camera."
+   ],
+   "examplesDe": [
+    "Mein Zimmer hat zwei Fenster.",
+    "Die Kinder spielen in diesem Zimmer."
+   ],
+   "phonetic": "ˈkamera"
+  },
+  {
+   "foreign": "la porta",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Tür",
+   "examples": [
+    "Chiudi la porta, per favore.",
+    "Il cane aspetta davanti alla porta."
+   ],
+   "examplesDe": [
+    "Schliesse bitte die Tür.",
+    "Der Hund wartet vor der Tür."
+   ],
+   "phonetic": "ˈpɔrta"
+  },
+  {
+   "foreign": "la finestra",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Fenster",
+   "examples": [
+    "Apri la finestra, per favore.",
+    "Il gatto guarda dalla finestra."
+   ],
+   "examplesDe": [
+    "Öffne bitte das Fenster.",
+    "Die Katze schaut aus dem Fenster."
+   ],
+   "phonetic": "fiˈnɛstra"
+  },
+  {
+   "foreign": "il letto",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Bett",
+   "examples": [
+    "Il bambino dorme in questo letto.",
+    "Il mio libro è sul letto."
+   ],
+   "examplesDe": [
+    "Das Kind schläft in diesem Bett.",
+    "Mein Buch liegt auf dem Bett."
+   ],
+   "phonetic": "ˈletto"
+  },
+  {
+   "foreign": "la cucina",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Küche",
+   "examples": [
+    "Mio padre cucina in cucina.",
+    "La nostra cucina ha un tavolo piccolo."
+   ],
+   "examplesDe": [
+    "Mein Vater kocht in der Küche.",
+    "Unsere Küche hat einen kleinen Tisch."
+   ],
+   "phonetic": "kuˈtʃina"
+  },
+  {
+   "foreign": "il giardino",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Garten",
+   "examples": [
+    "I bambini giocano in giardino.",
+    "Abbiamo molti fiori nel giardino."
+   ],
+   "examplesDe": [
+    "Die Kinder spielen im Garten.",
+    "Wir haben viele Blumen im Garten."
+   ],
+   "phonetic": "dʒarˈdino"
+  },
+  {
+   "foreign": "il pantalone",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Hose",
+   "examples": [
+    "Questo pantalone è troppo piccolo.",
+    "Il suo pantalone è nuovo e blu."
+   ],
+   "examplesDe": [
+    "Diese Hose ist zu klein.",
+    "Seine Hose ist neu und blau."
+   ],
+   "phonetic": "pantaˈlone"
+  },
+  {
+   "foreign": "la camicia",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Hemd",
+   "examples": [
+    "La sua camicia è bianca.",
+    "Cerco una camicia nuova."
+   ],
+   "examplesDe": [
+    "Sein Hemd ist weiss.",
+    "Ich suche ein neues Hemd."
+   ],
+   "phonetic": "kaˈmitʃa"
+  },
+  {
+   "foreign": "la scarpa",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Schuh",
+   "examples": [
+    "Questa scarpa è troppo grande.",
+    "La mia scarpa è sotto il letto."
+   ],
+   "examplesDe": [
+    "Dieser Schuh ist zu gross.",
+    "Mein Schuh liegt unter dem Bett."
+   ],
+   "phonetic": "ˈskarpa"
+  },
+  {
+   "foreign": "la giacca",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Jacke",
+   "examples": [
+    "La sua giacca è sulla sedia.",
+    "Porto una giacca calda."
+   ],
+   "examplesDe": [
+    "Ihre Jacke liegt auf dem Stuhl.",
+    "Ich trage eine warme Jacke."
+   ],
+   "phonetic": "ˈdʒakka"
+  },
+  {
+   "foreign": "il cane",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Hund",
+   "examples": [
+    "Il cane corre nel giardino.",
+    "Il nostro cane beve acqua."
+   ],
+   "examplesDe": [
+    "Der Hund rennt im Garten.",
+    "Unser Hund trinkt Wasser."
+   ],
+   "phonetic": "ˈkane"
+  },
+  {
+   "foreign": "il gatto",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Katze",
+   "examples": [
+    "Il gatto dorme sul mio letto.",
+    "Il nostro gatto ha gli occhi verdi."
+   ],
+   "examplesDe": [
+    "Die Katze schläft auf meinem Bett.",
+    "Unsere Katze hat grüne Augen."
+   ],
+   "phonetic": "ˈɡatto"
+  },
+  {
+   "foreign": "il cavallo",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Pferd",
+   "examples": [
+    "Il cavallo mangia una mela.",
+    "Il suo cavallo corre molto veloce."
+   ],
+   "examplesDe": [
+    "Das Pferd frisst einen Apfel.",
+    "Ihr Pferd rennt sehr schnell."
+   ],
+   "phonetic": "kaˈvallo"
+  },
+  {
+   "foreign": "l'uccello",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Vogel",
+   "examples": [
+    "Un uccello è sull'albero.",
+    "L'uccello ha le piume azzurre."
+   ],
+   "examplesDe": [
+    "Ein Vogel sitzt auf dem Baum.",
+    "Der Vogel hat blaue Federn."
+   ],
+   "phonetic": "utˈtʃɛllo"
+  },
+  {
+   "foreign": "l'albero",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Baum",
+   "examples": [
+    "Questo albero è molto vecchio.",
+    "Un uccello canta sull'albero."
+   ],
+   "examplesDe": [
+    "Dieser Baum ist sehr alt.",
+    "Ein Vogel singt auf dem Baum."
+   ],
+   "phonetic": "ˈalbero"
+  },
+  {
+   "foreign": "il fiore",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Blume",
+   "examples": [
+    "Questo fiore è molto bello.",
+    "Lei tiene un fiore rosso."
+   ],
+   "examplesDe": [
+    "Diese Blume ist sehr schön.",
+    "Sie hält eine rote Blume."
+   ],
+   "phonetic": "ˈfjore"
+  },
+  {
+   "foreign": "il sole",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "die Sonne",
+   "examples": [
+    "Il sole splende oggi.",
+    "Ci sediamo sotto il sole."
+   ],
+   "examplesDe": [
+    "Die Sonne scheint heute.",
+    "Wir setzen uns in die Sonne."
+   ],
+   "phonetic": "ˈsole"
+  },
+  {
+   "foreign": "la pioggia",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Regen",
+   "examples": [
+    "La pioggia comincia questa mattina.",
+    "Giochiamo fuori dopo la pioggia."
+   ],
+   "examplesDe": [
+    "Der Regen beginnt heute Morgen.",
+    "Wir spielen nach dem Regen draussen."
+   ],
+   "phonetic": "ˈpjɔddʒa"
+  },
+  {
+   "foreign": "la città",
+   "lernform": "la città, le città",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Stadt",
+   "examples": [
+    "Questa città ha una grande stazione.",
+    "I miei nonni abitano in città."
+   ],
+   "examplesDe": [
+    "Diese Stadt hat einen grossen Bahnhof.",
+    "Meine Grosseltern wohnen in der Stadt."
+   ],
+   "phonetic": "tʃitˈta"
+  },
+  {
+   "foreign": "la strada",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "die Strasse",
+   "examples": [
+    "La nostra scuola è in questa strada.",
+    "La strada è molto tranquilla oggi."
+   ],
+   "examplesDe": [
+    "Unsere Schule liegt in dieser Strasse.",
+    "Die Strasse ist heute sehr ruhig."
+   ],
+   "phonetic": "ˈstrada"
+  },
+  {
+   "foreign": "la stazione",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "der Bahnhof",
+   "examples": [
+    "Il treno aspetta alla stazione.",
+    "Camminiamo fino alla stazione."
+   ],
+   "examplesDe": [
+    "Der Zug wartet am Bahnhof.",
+    "Wir gehen zu Fuss zum Bahnhof."
+   ],
+   "phonetic": "statˈtsjone"
+  },
+  {
+   "foreign": "la macchina",
+   "lernform": "",
+   "genus": "f",
+   "wortart": "Nomen",
+   "german": "das Auto",
+   "examples": [
+    "La nostra macchina è molto vecchia.",
+    "Mia madre guida la macchina."
+   ],
+   "examplesDe": [
+    "Unser Auto ist sehr alt.",
+    "Meine Mutter fährt das Auto."
+   ],
+   "phonetic": "ˈmakkina"
+  },
+  {
+   "foreign": "il treno",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "der Zug",
+   "examples": [
+    "Il treno arriva alle dieci.",
+    "Andiamo a scuola in treno."
+   ],
+   "examplesDe": [
+    "Der Zug kommt um zehn Uhr an.",
+    "Wir fahren mit dem Zug zur Schule."
+   ],
+   "phonetic": "ˈtrɛno"
+  },
+  {
+   "foreign": "il negozio",
+   "lernform": "",
+   "genus": "m",
+   "wortart": "Nomen",
+   "german": "das Geschäft",
+   "examples": [
+    "Il negozio apre alle otto.",
+    "Compro il pane al negozio."
+   ],
+   "examplesDe": [
+    "Das Geschäft öffnet um acht Uhr.",
+    "Ich kaufe Brot im Geschäft."
+   ],
+   "phonetic": "neˈɡɔttsjo"
+  },
+  {
+   "foreign": "essere",
+   "lernform": "essere: sono, sei, è",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sein",
+   "examples": [
+    "Voglio essere insegnante.",
+    "Oggi siamo a casa."
+   ],
+   "examplesDe": [
+    "Ich möchte Lehrer sein.",
+    "Wir sind heute zu Hause."
+   ],
+   "phonetic": "ˈɛssere"
+  },
+  {
+   "foreign": "avere",
+   "lernform": "avere: ho, hai, ha",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "haben",
+   "examples": [
+    "Ho un libro nuovo.",
+    "Loro hanno due figli."
+   ],
+   "examplesDe": [
+    "Ich habe ein neues Buch.",
+    "Sie haben zwei Kinder."
+   ],
+   "phonetic": "aˈvere"
+  },
+  {
+   "foreign": "andare",
+   "lernform": "andare: vado, vai, va",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "gehen",
+   "examples": [
+    "Andiamo insieme a scuola.",
+    "Adesso vado al negozio."
+   ],
+   "examplesDe": [
+    "Wir gehen gemeinsam zur Schule.",
+    "Ich gehe jetzt ins Geschäft."
+   ],
+   "phonetic": "anˈdare"
+  },
+  {
+   "foreign": "venire",
+   "lernform": "venire: vengo, vieni, viene",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "kommen",
+   "examples": [
+    "I miei amici vengono a casa nostra.",
+    "Vieni a casa domani."
+   ],
+   "examplesDe": [
+    "Meine Freunde kommen zu uns nach Hause.",
+    "Komm morgen nach Hause."
+   ],
+   "phonetic": "veˈnire"
+  },
+  {
+   "foreign": "fare",
+   "lernform": "fare: faccio, fai, fa",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "machen",
+   "examples": [
+    "Facciamo la colazione insieme.",
+    "Gli studenti fanno un grande disegno."
+   ],
+   "examplesDe": [
+    "Wir machen gemeinsam das Frühstück.",
+    "Die Schüler machen eine grosse Zeichnung."
+   ],
+   "phonetic": "ˈfare"
+  },
+  {
+   "foreign": "dire",
+   "lernform": "dire: dico, dici, dice",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sagen",
+   "examples": [
+    "Di' lentamente il tuo nome.",
+    "Loro dicono la risposta insieme."
+   ],
+   "examplesDe": [
+    "Sag deinen Namen langsam.",
+    "Sie sagen die Antwort gemeinsam."
+   ],
+   "phonetic": "ˈdire"
+  },
+  {
+   "foreign": "vedere",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "sehen",
+   "examples": [
+    "Vedo un uccello fuori.",
+    "Vediamo i nostri amici a scuola."
+   ],
+   "examplesDe": [
+    "Ich sehe draussen einen Vogel.",
+    "Wir sehen unsere Freunde in der Schule."
+   ],
+   "phonetic": "veˈdere"
+  },
+  {
+   "foreign": "mangiare",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "essen",
+   "examples": [
+    "Mangiamo alle sette.",
+    "I bambini mangiano pane e formaggio."
+   ],
+   "examplesDe": [
+    "Wir essen um sieben Uhr.",
+    "Die Kinder essen Brot und Käse."
+   ],
+   "phonetic": "manˈdʒare"
+  },
+  {
+   "foreign": "bere",
+   "lernform": "bere: bevo, bevi, beve",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "trinken",
+   "examples": [
+    "Bevo acqua ogni giorno.",
+    "Loro bevono latte la mattina."
+   ],
+   "examplesDe": [
+    "Ich trinke jeden Tag Wasser.",
+    "Sie trinken morgens Milch."
+   ],
+   "phonetic": "ˈbere"
+  },
+  {
+   "foreign": "imparare",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "lernen",
+   "examples": [
+    "Impariamo l'italiano a scuola.",
+    "Imparo dieci parole nuove."
+   ],
+   "examplesDe": [
+    "Wir lernen in der Schule Italienisch.",
+    "Ich lerne zehn neue Wörter."
+   ],
+   "phonetic": "impaˈrare"
+  },
+  {
+   "foreign": "giocare",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "spielen",
+   "examples": [
+    "I bambini giocano in giardino.",
+    "Gioco con il mio amico."
+   ],
+   "examplesDe": [
+    "Die Kinder spielen im Garten.",
+    "Ich spiele mit meinem Freund."
+   ],
+   "phonetic": "dʒoˈkare"
+  },
+  {
+   "foreign": "abitare",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Verb",
+   "german": "wohnen",
+   "examples": [
+    "Abitiamo vicino alla stazione.",
+    "I miei nonni abitano in città."
+   ],
+   "examplesDe": [
+    "Wir wohnen nahe beim Bahnhof.",
+    "Meine Grosseltern wohnen in der Stadt."
+   ],
+   "phonetic": "abiˈtare"
+  },
+  {
+   "foreign": "grande",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "gross",
+   "examples": [
+    "La loro casa è molto grande.",
+    "Lui ha un cane grande."
+   ],
+   "examplesDe": [
+    "Ihr Haus ist sehr gross.",
+    "Er hat einen grossen Hund."
+   ],
+   "phonetic": "ˈɡrande"
+  },
+  {
+   "foreign": "piccolo",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "klein",
+   "examples": [
+    "La mia camera è molto piccola.",
+    "Lei ha un gatto piccolo."
+   ],
+   "examplesDe": [
+    "Mein Zimmer ist sehr klein.",
+    "Sie hat eine kleine Katze."
+   ],
+   "phonetic": "ˈpikkolo"
+  },
+  {
+   "foreign": "buono",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "gut",
+   "examples": [
+    "Questa minestra è molto buona.",
+    "Lui è un buon insegnante."
+   ],
+   "examplesDe": [
+    "Diese Suppe ist sehr gut.",
+    "Er ist ein guter Lehrer."
+   ],
+   "phonetic": "ˈbwɔno"
+  },
+  {
+   "foreign": "cattivo",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "schlecht",
+   "examples": [
+    "Oggi il tempo è cattivo.",
+    "Questa è una cattiva risposta."
+   ],
+   "examplesDe": [
+    "Das Wetter ist heute schlecht.",
+    "Das ist eine schlechte Antwort."
+   ],
+   "phonetic": "katˈtivo"
+  },
+  {
+   "foreign": "nuovo",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "neu",
+   "examples": [
+    "Mia sorella ha un libro nuovo.",
+    "Abitiamo in una casa nuova."
+   ],
+   "examplesDe": [
+    "Meine Schwester hat ein neues Buch.",
+    "Wir wohnen in einem neuen Haus."
+   ],
+   "phonetic": "ˈnwɔvo"
+  },
+  {
+   "foreign": "vecchio",
+   "lernform": "",
+   "genus": "",
+   "wortart": "Adjektiv",
+   "german": "alt",
+   "examples": [
+    "Mio nonno ha un cane vecchio.",
+    "Questo albero è molto vecchio."
+   ],
+   "examplesDe": [
+    "Mein Grossvater hat einen alten Hund.",
+    "Dieser Baum ist sehr alt."
+   ],
+   "phonetic": "ˈvɛkkjo"
+  }
+ ]
+}
