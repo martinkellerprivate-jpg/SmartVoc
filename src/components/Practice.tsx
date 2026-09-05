@@ -5,7 +5,7 @@ import { useStore } from "../store/StoreProvider";
 import { useToast } from "../ui/Toast";
 import { Icon } from "../ui/Icon";
 import { toneColor } from "../ui/Ring";
-import { scoreAnswer } from "../lib/scoring";
+import { scoreAnswer, stripArticle } from "../lib/scoring";
 import { LS, load, save } from "../lib/storage";
 import { resolveList, resolveSmart, resolveToday } from "../lib/engine";
 import { buildQueue, pick, record, outcomeOf, pendingGrades, progress, remaining } from "../lib/runqueue";
@@ -16,7 +16,7 @@ import { PAIRS, NATIVE, practiceable, isLatinPair } from "../lib/pairs";
 import { listReadiness, TONE_VAR, toneLegend } from "../lib/readiness";
 import { PairPill } from "../ui/PairPill";
 import { WahlPille } from "../ui/WahlPille";
-import { zeigt, hatSchalter, BEISPIELE, PHONETIK } from "../lib/anzeige";
+import { zeigt, hatSchalter, BEISPIELE, PHONETIK, FORMEN, wortAnzeige } from "../lib/anzeige";
 import { SMART_ACCESS, SMART_REFS } from "../lib/smartlists";
 import { tapRichtig, tapFalsch } from "../lib/native";
 import { latinHeadword, latinReveal, latinAnswerTarget, scoreLatinForm } from "../lib/latin";
@@ -90,11 +90,35 @@ export function Practice() {
   // side is built from the learning forms, not a plain string.
   const sideText = (w, key) => key === NATIVE ? w.de : (isLatOf(w) ? latinHeadword(w) : w[key]);
   // the string the answer is scored against (Latin: grundform in L2, lernform in L3)
-  const scoreTarget = (w, key) => key === NATIVE ? w.de : (isLatOf(w) ? latinAnswerTarget(w, latinMode) : w[key]);
+  /* Ist der Artikel freiwillig, gehoert er auch nicht in die Loesung, gegen
+   * die verglichen wird -- sonst zeigte die Karte "der Stuhl" mit den ersten
+   * vier Zeichen als fehlend an, obwohl "Stuhl" die volle Punktzahl bekam. */
+  const roherTarget = (w, key) => key === NATIVE ? w.de : (isLatOf(w) ? latinAnswerTarget(w, latinMode) : w[key]);
+  const scoreTarget = (w, key) => settings.articleMode === "optional"
+    ? stripArticle(roherTarget(w, key)) : roherTarget(w, key);
   // the string revealed on the back as the solution (Latin: always full lernform)
   const revealText = (w, key) => key === NATIVE ? w.de : (isLatOf(w) ? latinReveal(w) : w[key]);
   // Latin lernform context line (shown under the prompt when Latin is the prompt)
-  const latinContext = (w) => (isLatOf(w) && w.lernform && latinHeadword(w) !== w.lernform) ? w.lernform : "";
+  /* Die Formen -- bei Latein die Stammformen, sonst Singular und Plural oder
+   * die unregelmaessigen Formen. Sie gehoeren zum Fremdwort und erscheinen
+   * nur dort, wo dieses Wort steht: unter einer deutschen Frage waeren sie
+   * ein Wink mit dem Zaunpfahl. */
+  const formenVon = (w) => {
+    if (!zeigt(settings, FORMEN)) return "";
+    const f = String(w?.lernform || "").trim();
+    if (!f) return "";
+    return (isLatOf(w) && latinHeadword(w) === f) ? "" : f;
+  };
+  /* Wort und Geschlecht fuer die Anzeige. Steht der Artikel in der Antwort,
+   * steht er auch auf der Karte; ist er freiwillig, tritt an seine Stelle
+   * die leise Angabe des Geschlechts. Siehe lib/anzeige.ts. */
+  const zeigeWort = (w, key, text) => wortAnzeige(text, {
+    istMuttersprache: key === NATIVE, genus: w?.genus, de: w?.de, articleMode: settings.articleMode,
+  });
+  const WortMitGenus = ({ w, k, text }: any) => {
+    const a = zeigeWort(w, k, text);
+    return <>{a.haupt}{a.zusatz && <span className="wort-genus">, {a.zusatz}</span>}</>;
+  };
   const latinL3AnswerFor = (w: any) => isLatOf(w) && tgtKeyOf(w) === pairOf(w).foreign && latinMode === "L3";
 
   // ---- Umfang: eine gewaehlte Wortliste ODER ein Schnellzugriff -------
@@ -1134,10 +1158,10 @@ export function Practice() {
                 <span className="ruled-margin" />
                 <div className="card-top">{dirMark(false)}</div>
                 <div className="card-center" ref={centerRef}>
-                  <div className="prompt-word">{sideText(current, srcKey)}</div>
+                  <div className="prompt-word"><WortMitGenus w={current} k={srcKey} text={sideText(current, srcKey)} /></div>
                   {srcKey !== NATIVE && phoneticEl}
-                  {srcKey !== NATIVE && latinContext(current) && (
-                    <div className="card-sub">{latinContext(current)}</div>
+                  {srcKey !== NATIVE && formenVon(current) && (
+                    <div className="card-sub">{formenVon(current)}</div>
                   )}
                   {examplesFor(srcKey)}
                 </div>
@@ -1163,8 +1187,8 @@ export function Practice() {
                         {result.targetDiff.map((c, i) => <span key={i} className={"ch " + c.status}>{c.ch}</span>)}
                       </div>
                       {tgtKey !== NATIVE && phoneticEl}
-                      {isLat && tgtKey !== NATIVE && latinContext(current) && (
-                        <div className="card-sub">{current.lernform}</div>
+                      {tgtKey !== NATIVE && formenVon(current) && (
+                        <div className="card-sub">{formenVon(current)}</div>
                       )}
                       {result.verdict !== "correct" && input.trim() && (
                         <div className="card-yours">{txt("Du hast {wort} geschrieben", { wort: input.trim() })}</div>
@@ -1177,10 +1201,10 @@ export function Practice() {
                           trug eine Seite beide Sprachen, und die Karte war
                           keine Karteikarte mehr. Wer die Frage nochmal sehen
                           will, dreht zurueck. */}
-                      <div className="prompt-word">{revealText(current, tgtKey)}</div>
+                      <div className="prompt-word"><WortMitGenus w={current} k={tgtKey} text={revealText(current, tgtKey)} /></div>
                       {tgtKey !== NATIVE && phoneticEl}
-                      {isLat && tgtKey !== NATIVE && latinContext(current) && (
-                        <div className="card-sub">{current.lernform}</div>
+                      {tgtKey !== NATIVE && formenVon(current) && (
+                        <div className="card-sub">{formenVon(current)}</div>
                       )}
                       {examplesFor(tgtKey)}
                     </>
@@ -1314,6 +1338,14 @@ export function Practice() {
             onClick={() => store.setSettings({ beispieleAn: !zeigt(settings, BEISPIELE) })}>
             <Icon name={zeigt(settings, BEISPIELE) ? "check" : "eye"} size={15} />
             <span>{txt("Beispielsätze")}</span>
+          </button>
+        )}
+        {hatSchalter(settings, FORMEN) && (
+          <button className={"pill" + (zeigt(settings, FORMEN) ? " pill-an" : "")}
+            aria-pressed={zeigt(settings, FORMEN)}
+            onClick={() => store.setSettings({ formenAn: !zeigt(settings, FORMEN) })}>
+            <Icon name={zeigt(settings, FORMEN) ? "check" : "eye"} size={15} />
+            <span>{txt("Formen")}</span>
           </button>
         )}
         {hatSchalter(settings, PHONETIK) && (

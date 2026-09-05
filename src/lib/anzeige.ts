@@ -38,6 +38,7 @@ export interface AnzeigeFeld {
 
 export const BEISPIELE: AnzeigeFeld = { modus: "beispieleModus", an: "beispieleAn" };
 export const PHONETIK: AnzeigeFeld = { modus: "phonetikModus", an: "phonetikAn" };
+export const FORMEN: AnzeigeFeld = { modus: "formenModus", an: "formenAn" };
 
 export const modusVon = (settings: any, feld: AnzeigeFeld): Anzeigemodus =>
   (settings?.[feld.modus] as Anzeigemodus) || "waehlbar";
@@ -63,5 +64,56 @@ export function stempelAnzeige(settings: any): Partial<any> | null {
   const aus: any = {};
   if (!settings?.beispieleModus) aus.beispieleModus = settings?.showExamples === false ? "nie" : "immer";
   if (!settings?.phonetikModus) aus.phonetikModus = settings?.showPhonetic === false ? "nie" : "immer";
+  /* Die Formen gab es vorher nur bei Latein und dort ohne Schalter -- also
+   * gibt es keinen alten Wert fortzusetzen. "waehlbar" ist die Empfehlung. */
+  if (!settings?.formenModus) aus.formenModus = "waehlbar";
   return Object.keys(aus).length ? aus : null;
+}
+
+/* ===================================================================
+ * Wie ein Wort auf der Karte steht.
+ *
+ * Der Artikel ist Teil des gespeicherten Wortes ("der Stuhl", "l'école")
+ * -- er muss dort stehen, weil er sich aus dem Geschlecht nicht
+ * zurueckbauen liesse: "l'" sagt nichts ueber m oder f, und Italienisch
+ * waehlt zwischen il, lo und l' nach dem Anlaut.
+ *
+ * Ob er auf der Karte ERSCHEINT, entscheidet dieselbe Einstellung, die
+ * ueber seine Bewertung entscheidet: was gefragt ist, wird gezeigt.
+ *
+ *   Artikel zaehlt (voll oder teilweise)  ->  "der Stuhl"
+ *   Artikel ist freiwillig                ->  "Stuhl" + leise ", m"
+ *
+ * Das Geschlecht steht dann daneben, weil die Auskunft sonst verloren
+ * ginge -- im ersten Fall traegt sie ja der Artikel selbst.
+ * =================================================================== */
+import { stripArticle, hasArticle } from "./scoring";
+
+/* Das Geschlecht der Muttersprachseite wird abgeleitet, nicht gespeichert:
+ * im Deutschen ist der Artikel eindeutig. Die eine Luecke ist "die" beim
+ * Pluralwort -- dort hilft die Angabe am Fremdwort weiter, denn was in der
+ * einen Sprache nur im Plural vorkommt, tut es in der anderen so gut wie
+ * immer auch. */
+export function genusDeutsch(de: string, genusFremd?: string): string {
+  if (/\bpl\b/.test(genusFremd || "")) return "pl";
+  const a = (de || "").trim().toLowerCase();
+  if (a.startsWith("der ")) return "m";
+  if (a.startsWith("das ")) return "n";
+  if (a.startsWith("die ")) return "f";
+  return "";
+}
+
+export interface Wortanzeige { haupt: string; zusatz: string }
+
+export function wortAnzeige(text: string, opts: {
+  istMuttersprache: boolean;
+  genus?: string;
+  de?: string;
+  articleMode?: string;
+}): Wortanzeige {
+  const roh = String(text || "").trim();
+  const modus = opts.articleMode || "required-partial";
+  if (modus !== "optional" || !hasArticle(roh)) return { haupt: roh, zusatz: "" };
+  const g = opts.istMuttersprache ? genusDeutsch(opts.de ?? roh, opts.genus) : (opts.genus || "");
+  return { haupt: stripArticle(roh), zusatz: g };
 }

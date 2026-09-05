@@ -11,12 +11,10 @@ Das Format ist bindend, weil die Listen maschinell eingelesen werden.
 Eine Zeile pro Wort. Spalten getrennt durch " | " (Leerzeichen, senkrechter
 Strich, Leerzeichen), in genau dieser Reihenfolge:
 
-Fremdsprache | Lernform | Wortart | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Aussprache
+Fremdsprache | Formen | Genus | Wortart | Deutsch | Beispielsatz 1 | Beispielsatz 1 deutsch | Beispielsatz 2 | Beispielsatz 2 deutsch | Aussprache
 
-Jede Zeile hat genau 9 Spalten, also genau 8 Trennstriche.
-Kein Feld bleibt leer — mit EINER Ausnahme: die Spalte «Lernform» wird nur
-bei Latein ausgefüllt. Bei den anderen fünf Sprachen bleibt sie leer, das
-Trennzeichen wird trotzdem gesetzt.
+Jede Zeile hat genau 10 Spalten, also genau 9 Trennstriche.
+Trennstriche werden auch um leere Felder gesetzt.
 
 Der senkrechte Strich "|" darf im Inhalt selbst NIRGENDS vorkommen.
 Keine Zeilenumbrüche innerhalb einer Zeile.
@@ -29,24 +27,38 @@ Code-Blöcke, keine Sternchen, kein einleitender oder abschliessender Text.
 ═══════════════════════════════════════════════════════════════════════
 
 Fremdsprache
-  Das Wort in der jeweiligen Sprache.
-  Nomen IMMER mit bestimmtem Artikel — und zwar dem richtigen:
-    English    ohne Artikel (Englisch hat keinen bestimmten Artikel im Lexikon)
+  Das Wort in der jeweiligen Sprache, Nomen im Singular.
+  Nomen MIT bestimmtem Artikel — und zwar dem, den man wirklich sagt:
     Français   le / la / l'      Español   el / la
-    Italiano   il / lo / la / l' Português o / a
-    Latein     ohne Artikel, dafür die Lernform (siehe unten)
+    Italiano   il / lo / l'      Português o / a
+    English    OHNE Artikel — "the" trägt keine Auskunft, die man lernt
+    Latein     ohne Artikel, dafür die Formen (siehe unten)
+  Achte auf die Ausnahmen: l'école, l'uomo, lo zaino, el agua.
   Verben im Infinitiv. Adjektive in der männlichen Einzahl.
-  Keine Klammern, keine Alternativen, keine Kommas.
+  Keine Klammern, keine Alternativen.
 
-Lernform
-  NUR bei Latein. Die Stammformen, wie man sie auswendig lernt:
-    Nomen      Nominativ, Genitiv, Genus     amicus, amici m
-    Verb       vier Stammformen              video, videre, vidi, visum
-               (Deponens: drei)              sequor, sequi, secutus sum
-    Adjektiv   drei Genusformen              ruber, rubra, rubrum
-               (einendig: Nom. und Gen.)     felix, felicis
-    sonst      das Wort selbst
-  Bei allen anderen Sprachen: leer.
+Formen
+  Die Formen, die man zum Wort mitlernt. Kurz, eine Zeile, ohne Klammern.
+    Latein     die Stammformen:
+               Nomen      amicus, amici m
+               Verb       video, videre, vidi, visum
+               Deponens   sequor, sequi, secutus sum
+               Adjektiv   ruber, rubra, rubrum   ·   felix, felicis
+    English    unregelmässige Formen: child, children · go, went, gone
+               Ist alles regelmässig, lass es leer.
+    Romanisch  beim Nomen Singular und Plural:  l'école, les écoles
+               beim Verb die Gegenwart:  aller: je vais, tu vas, il va
+               Bei regelmässigen Nomen und Verben darf es leer bleiben.
+  Adjektive und kleine Wörter: leer.
+
+Genus
+  Das Geschlecht des FREMDWORTS. Genau einer dieser Werte, sonst nichts:
+    m · f · n · m pl · f pl · n pl · pl
+  Nur bei Nomen. Bei Verben, Adjektiven, Adverbien und Zahlwörtern: leer.
+  Englisch hat kein Geschlecht — dort bleibt die Spalte leer, AUSSER bei
+  Wörtern, die es nur im Plural gibt; die bekommen "pl".
+  Die Plural-Werte gelten nur für Wörter OHNE Singular (die Eltern,
+  les parents, los padres). Alles andere ist ein normales Nomen.
 
 Wortart
   Genau eines dieser neun Wörter, nichts anderes, keine Abkürzungen:
@@ -75,9 +87,13 @@ Aussprache
   eckige Klammern, MIT Betonungszeichen ˈ. Beim Nomen nur das Wort selbst,
   ohne den Artikel. Varietäten: britisches Englisch, europäisches Spanisch,
   Standarditalienisch, europäisches Portugiesisch.
-  Latein: KEINE Lautschrift. Schreibe stattdessen die Grundform noch einmal,
+  Latein: KEINE Lautschrift. Schreibe stattdessen das Stichwort noch einmal,
   diesmal mit Längenzeichen über den langen Vokalen (amicus → amīcus,
   video → videō, ruber → ruber). Kurze Vokale bleiben unmarkiert.
+
+Diese Felder sind IMMER gefüllt: Fremdsprache, Wortart, Deutsch, beide
+Beispielsätze, beide Übersetzungen, Aussprache.
+Leer bleiben dürfen nur: Formen und Genus, nach den Regeln oben.
 
 
 ═══════════════════════════════════════════════════════════════════════
@@ -88,7 +104,7 @@ Aussprache
 Diese fünf Sprachen bekommen DIESELBEN 100 Begriffe, in DIESER Reihenfolge.
 Die deutsche Spalte ist damit in allen fünf Listen identisch — das ist
 Absicht: wer die Sprache wechselt, findet denselben Wortschatz wieder.
-Übersetze also, erfinde nicht.
+Übersetze also, erfinde nicht, und ändere die Reihenfolge nicht.
 
 die Familie · die Mutter · der Vater · die Eltern · die Schwester ·
 der Bruder · die Grossmutter · der Grossvater · die Tochter · der Sohn ·
@@ -104,7 +120,7 @@ das Ei · der Fisch · die Suppe · der Zucker · das Frühstück ·
 das Abendessen ·
 das Haus · die Wohnung · das Zimmer · die Tür · das Fenster · das Bett ·
 die Küche · der Garten ·
-die Hose · das Hemd · die Schuhe · die Jacke ·
+die Hose · das Hemd · der Schuh · die Jacke ·
 der Hund · die Katze · das Pferd · der Vogel · der Baum · die Blume ·
 die Sonne · der Regen ·
 die Stadt · die Strasse · der Bahnhof · das Auto · der Zug · das Geschäft ·
@@ -112,7 +128,8 @@ sein · haben · gehen · kommen · machen · sagen · sehen · essen · trinken
 lernen · spielen · wohnen ·
 gross · klein · gut · schlecht · neu · alt
 
-Das sind genau 100. Zähle nach, bevor du eine Sprache abschliesst.
+Das sind genau 100. «die Eltern» ist der einzige Begriff ohne Singular.
+Zähle nach, bevor du eine Sprache abschliesst.
 
 
 ═══════════════════════════════════════════════════════════════════════
@@ -160,9 +177,10 @@ Dann 50 Zeilen und halten. Ich schreibe «weiter», du gibst die nächsten
 Zwei Antworten pro Sprache, zwölf insgesamt.
 
 Prüfe jede Zeile, bevor du sie ausgibst:
-  – genau 8 Trennstriche?
-  – alle Felder gefüllt, ausser «Lernform» ausserhalb des Lateinischen?
-  – Nomen mit Artikel, in beiden Sprachen?
+  – genau 9 Trennstriche?
+  – alle Pflichtfelder gefüllt?
+  – Nomen mit Artikel (ausser Englisch und Latein)?
+  – Genus nur bei Nomen, und einer der sieben erlaubten Werte?
   – Wortart eines der neun erlaubten Wörter?
   – deutsche Spalte genau wie vorgegeben, «ss» statt «ß»?
   – Lautschrift ohne Klammern und ohne Artikel?

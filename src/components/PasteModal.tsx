@@ -6,7 +6,7 @@ import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { useToast } from "../ui/Toast";
 import { PAIRS, isLatinPair } from "../lib/pairs";
-import { spalten, TRENNER, WORTARTEN } from "../lib/export";
+import { spalten, TRENNER, WORTARTEN, GENUS } from "../lib/export";
 
 /* EN/FR line splitter: columns Fremd | Deutsch | Topic. Same delimiters as the
  * scan heuristic (tab / : | – — - / 2+ spaces). */
@@ -50,10 +50,10 @@ function columns(s: string): string[] {
 function zeileZuWort(p: string[], isLat: boolean) {
   const kopf = isLat ? "grundform" : "fgn";
   const w: any = { [kopf]: p[0] || "" };
-  if (p.length >= 9) {
-    w.lernform = p[1]; w.wortart = p[2]; w.de = p[3];
-    w.examples = [p[4], p[6]]; w.examplesDe = [p[5], p[7]];
-    w.phonetic = p[8];
+  if (p.length >= 10) {
+    w.lernform = p[1]; w.genus = p[2]; w.wortart = p[3]; w.de = p[4];
+    w.examples = [p[5], p[7]]; w.examplesDe = [p[6], p[8]];
+    w.phonetic = p[9];
     return w;
   }
   if (isLat) {
@@ -132,14 +132,15 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText }: { ope
    * Deshalb steht die Regel dazu auch nur dort -- und fuer alle anderen
    * Sprachen der ausdrueckliche Hinweis, die Spalte leer zu lassen: sonst
    * denkt sich eine KI etwas aus. */
-  const lernformRegel = isLat
-    ? "Lernform = die Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: 4 Stammformen; Adjektiv: 3 Genus-Endungen).\n"
-    : "Lernform bleibt bei dieser Sprache LEER — die Spalte gibt es nur für Latein. Trennzeichen trotzdem setzen.\n";
+  const formenRegel = isLat
+    ? "Formen = die Stammformen (Nomen: Nominativ, Genitiv, Genus; Verb: 4 Stammformen; Adjektiv: 3 Genus-Endungen).\n"
+    : `Formen = die Formen, die man zum Wort mitlernt: beim Nomen Singular und Plural, beim Verb die Gegenwart oder die unregelmässigen Formen. Beispiele: "child, children" · "aller: je vais, tu vas, il va". Weisst du nichts Nennenswertes, lass es leer.\n`;
   const aiPrompt =
     `Ich gebe dir ein Foto einer Vokabelliste (z. B. eine Heftseite). Schreib die Wörter daraus ab.\n` +
     `Steht kein Foto dabei, erstelle stattdessen eine Vokabelliste ${isLat ? "Latein" : P.foreignLabel} ⇄ Deutsch zu dem Thema, das ich nenne.\n\n` +
     `Gib NUR eine Tabelle aus, eine Zeile pro Wort, Spalten getrennt durch " | ", in genau dieser Reihenfolge:\n${COLS}\n\n` +
-    lernformRegel +
+    formenRegel +
+    `Genus = das Geschlecht des Fremdworts, genau eines von: ${GENUS.join(", ")}. Nur bei Nomen; sonst leer. Im Englischen immer leer.\n` +
     `Wortart = genau eines von: ${WORTARTEN.join(", ")}. Nichts anderes, keine Abkürzungen.\n` +
     `Jede Zeile hat genau ${nCols} Spalten. Was du nicht weisst, lässt du leer — das Trennzeichen setzt du trotzdem.\n` +
     `Beispielsätze: kurz und einfach, auf ${isLat ? "Latein" : P.foreignLabel}; direkt daneben die deutsche Übersetzung. Beides ist freiwillig, aber nur zusammen sinnvoll.\n` +
@@ -173,7 +174,7 @@ export function PasteModal({ open, pair, onParsed, onClose, initialText }: { ope
             als Satz und als Knopf unter dem Textfeld. */}
         <div className="tips-intro" style={{ marginBottom: 12 }}>
           Füge eine Wortliste ein — eine Zeile pro Wort, Spalten getrennt durch Tab, „|", „–" oder „:".
-          {isLat ? " Kurz genügt: Grundform | Lernform | Wortart | Deutsch." : ` Kurz genügt: ${P.foreignLabel} | Deutsch.`}
+          {isLat ? " Kurz genügt: Grundform | Formen | Wortart | Deutsch." : ` Kurz genügt: ${P.foreignLabel} | Deutsch.`}
           {" "}{txt("Nichts zum Kopieren? Der KI-Prompt unten holt dir die Liste aus einem Foto der Heftseite.")}
         </div>
 

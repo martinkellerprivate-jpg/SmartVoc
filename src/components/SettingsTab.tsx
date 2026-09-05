@@ -10,7 +10,7 @@ import { useAuth } from "../sync/auth";
 import { exportAllData, deleteLocalData } from "../lib/accountData";
 import { deleteCloudAccount } from "../sync/share";
 import { PAIRS, isLatinPair, mutterVon, MUTTERSPRACHE_VORGABE } from "../lib/pairs";
-import { ANZEIGE_NAME, ANZEIGE_KURZ, modusVon, BEISPIELE, PHONETIK } from "../lib/anzeige";
+import { ANZEIGE_NAME, ANZEIGE_KURZ, modusVon, BEISPIELE, PHONETIK, FORMEN } from "../lib/anzeige";
 import { DEFAULTS, previewStabilityGood, retentionFor } from "../lib/fsrs";
 import { FsrsValuesModal } from "./FsrsValuesModal";
 import { toneLegend, TONE_VAR } from "../lib/readiness";
@@ -286,6 +286,8 @@ export function SettingsTab() {
           wert={txt(ANZEIGE_NAME[modusVon(settings, BEISPIELE)])} onClick={() => setBlatt("beispiele")} />
         <ZeileWert titel={txt("Lautschrift")} atRec={modusVon(settings, PHONETIK) === "waehlbar"}
           wert={txt(ANZEIGE_NAME[modusVon(settings, PHONETIK)])} onClick={() => setBlatt("phonetik")} />
+        <ZeileWert titel={txt("Formen")} atRec={modusVon(settings, FORMEN) === "waehlbar"}
+          wert={txt(ANZEIGE_NAME[modusVon(settings, FORMEN)])} onClick={() => setBlatt("formen")} />
         <ZeileWert titel={txt("Lerntipp-Einblendungen")} atRec={atR("tipsFrequency")}
           wert={txt({ off: "Aus", occasional: "Gelegentlich", frequent: "Häufig" }[settings.tipsFrequency] || "Gelegentlich")}
           onClick={() => setBlatt("tips")} />
@@ -471,7 +473,8 @@ export function SettingsTab() {
       </div>
 
       {([[ "beispiele", BEISPIELE, "Beispielsätze", "Die Beispielsätze eines Wortes stehen auf der Lösungsseite der Karte — der Satz in der Fremdsprache und darunter seine Übersetzung."],
-         [ "phonetik", PHONETIK, "Lautschrift", "Die Lautschrift steht klein unter dem Fremdwort und sagt, wie man es ausspricht."]] as any[]).map(([schl, feld, titel, desc]) => (
+         [ "phonetik", PHONETIK, "Lautschrift", "Die Lautschrift steht klein unter dem Fremdwort und sagt, wie man es ausspricht."],
+         [ "formen", FORMEN, "Formen", "Die Formen, die man zum Wort mitlernt: bei Latein die Stammformen, sonst Singular und Plural oder die unregelmässigen Formen. Sie stehen klein unter dem Fremdwort und werden nie abgefragt."]] as any[]).map(([schl, feld, titel, desc]) => (
         <Blatt key={schl} offen={blatt === schl} titel={txt(titel)} onClose={() => setBlatt(null)}
           desc={txt(desc)}
           rec={txt(ANZEIGE_NAME.waehlbar)} atRec={modusVon(settings, feld) === "waehlbar"}

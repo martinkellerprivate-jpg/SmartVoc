@@ -11,8 +11,10 @@ export const RECOMMENDED: Partial<Settings> = {
      trotzdem dorthin, wo sie anfällt. Siehe lib/anzeige.ts. */
   beispieleModus: "waehlbar",
   phonetikModus: "waehlbar",
+  formenModus: "waehlbar",
   beispieleAn: true,
   phonetikAn: true,
+  formenAn: true,
   dailyGoal: 30,          // cards/day target (~15 min daily session)
   newPerDay: 10,          // new words introduced per day (8–12 is ideal)
   targetRetention: 0.9,    // V13: THE retention source (Lernintensität-Preset schreibt hierein)

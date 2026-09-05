@@ -14,6 +14,7 @@ import { useStore } from "../store/StoreProvider";
 import { txt } from "../lib/i18n";
 import { Icon } from "../ui/Icon";
 import { PAIRS, fk, isLatinPair, practiceable } from "../lib/pairs";
+import { GENUS_LANG } from "../lib/export";
 import { latinHeadword } from "../lib/latin";
 import { deriveProfile, effectiveRetentionFor } from "../lib/fsrs";
 import { STUFE_FARBE, STUFE_KURZ } from "../lib/stufen";
@@ -50,7 +51,7 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
           <div>
             <div className="wd-wort">{fgn || word.de}</div>
             <div className="muted" style={{ fontSize: 12.5, marginTop: 1 }}>
-              {P.foreignLabel}{isLat && word.wortart ? " · " + word.wortart : ""}
+              {P.foreignLabel}{word.wortart ? " · " + txt(word.wortart) : ""}
             </div>
           </div>
           <button className="icon-btn" style={{ width: 34, height: 34 }} onClick={onClose}><Icon name="x" size={16} /></button>
@@ -58,7 +59,9 @@ export function WordDetailModal({ open, word, onClose, onEdit }: { open: boolean
 
         <div className="list">
           <Zeile feld={P.nativeLabel} wert={word.de} />
-          {isLat && <Zeile feld={txt("Stammformen")} wert={word.lernform} />}
+          <Zeile feld={txt("Formen")} hinweis={isLat ? txt("Stammformen") : txt("optional")} wert={word.lernform} />
+          <Zeile feld={txt("Geschlecht")} hinweis={txt("nur bei Nomen")}
+            wert={word.genus ? txt(GENUS_LANG[word.genus] || word.genus) : ""} />
           <Zeile feld={txt("Lautschrift")} hinweis={txt("optional")} wert={word.phonetic} />
           <Zeile feld={txt("Beispielsatz 1")} hinweis={P.foreignLabel} wert={bsp(0)} />
           <Zeile feld={txt("Beispielsatz 1")} hinweis={P.nativeLabel} wert={bspDe(0)} />

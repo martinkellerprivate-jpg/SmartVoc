@@ -8,7 +8,7 @@
  * Danach eine Zeile je Wort, neun Spalten, getrennt durch " | ", in der
  * Reihenfolge aus src/lib/export.ts:
  *
- *     Fremdsprache | Lernform | Wortart | Deutsch |
+ *     Fremdsprache | Formen | Genus | Wortart | Deutsch |
  *     Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache
  *
  * Schreibt src/data/starter/<paar>/stufe1.json und prueft dabei, was eine
@@ -25,6 +25,7 @@ const wurzel = join(hier, "..");
 
 const WORTARTEN = ["Nomen", "Verb", "Adjektiv", "Adverb", "Pronomen",
                    "Zahlwort", "Präposition", "Konjunktion", "Wendung"];
+const GENUS = ["m", "f", "n", "m pl", "f pl", "n pl", "pl", ""];
 const ARTIKEL = /^(der|die|das)\s/i;
 const PAARE = ["en-de", "fr-de", "es-de", "it-de", "pt-de", "la-de"];
 const SOLL = 100;
@@ -55,12 +56,11 @@ for (const pair of PAARE) {
   zeilen.forEach((z, i) => {
     const nr = i + 1;
     const sp = z.split("|").map((x) => x.trim());
-    if (sp.length !== 9) { meckern.push(`Zeile ${nr}: ${sp.length} Spalten statt 9 — ${z.slice(0, 60)}`); return; }
-    const [kopf, lernform, wortart, german, e1, e1de, e2, e2de, phon] = sp;
+    if (sp.length !== 10) { meckern.push(`Zeile ${nr}: ${sp.length} Spalten statt 10 — ${z.slice(0, 60)}`); return; }
+    const [kopf, lernform, genus, wortart, german, e1, e1de, e2, e2de, phon] = sp;
 
-    const w = latein
-      ? { grundform: kopf, lernform, wortart, german, examples: [e1, e2], examplesDe: [e1de, e2de], phonetic: phon }
-      : { foreign: kopf, wortart, german, examples: [e1, e2], examplesDe: [e1de, e2de], phonetic: phon };
+    const gemein = { lernform, genus, wortart, german, examples: [e1, e2], examplesDe: [e1de, e2de], phonetic: phon };
+    const w = latein ? { grundform: kopf, ...gemein } : { foreign: kopf, ...gemein };
 
     if (!kopf) { meckern.push(`Zeile ${nr}: kein Stichwort`); return; }
     if (!german) { meckern.push(`Zeile ${nr}: keine Uebersetzung — ${kopf}`); return; }
@@ -70,8 +70,10 @@ for (const pair of PAARE) {
     gesehen.add(schluessel);
 
     if (!WORTARTEN.includes(wortart)) meckern.push(`Zeile ${nr}: Wortart "${wortart}" — ${kopf}`);
-    if (latein && !lernform) meckern.push(`Zeile ${nr}: keine Lernform — ${kopf}`);
-    if (!latein && lernform) meckern.push(`Zeile ${nr}: Lernform gefuellt, gehoert nur zu Latein — ${kopf}`);
+    if (!GENUS.includes(genus)) meckern.push(`Zeile ${nr}: Genus "${genus}" — ${kopf}`);
+    if (wortart !== "Nomen" && genus) meckern.push(`Zeile ${nr}: Genus bei "${wortart}" — ${kopf}`);
+    if (wortart === "Nomen" && !genus && pair !== "en-de") meckern.push(`Zeile ${nr}: Nomen ohne Genus — ${kopf}`);
+    if (latein && !lernform) meckern.push(`Zeile ${nr}: keine Stammformen — ${kopf}`);
     if (/^[A-ZÄÖÜ]/.test(german) && !ARTIKEL.test(german)) meckern.push(`Zeile ${nr}: Nomen ohne Artikel — ${german}`);
     if (/ß/.test(german + e1de + e2de)) meckern.push(`Zeile ${nr}: ß statt ss — ${kopf}`);
     if (/^[[/]/.test(phon)) meckern.push(`Zeile ${nr}: Lautschrift in Klammern — ${phon}`);

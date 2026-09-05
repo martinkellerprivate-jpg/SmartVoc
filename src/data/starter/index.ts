@@ -49,10 +49,15 @@ export function activateStarter(store: any, pair: string, stufe: number) {
     if (bsp.some(Boolean)) o.examples = bsp;
     if (bspDe.some(Boolean)) o.examplesDe = bspDe;
     if (w.phonetic) o.phonetic = String(w.phonetic).trim();
+    if (w.genus) o.genus = String(w.genus).trim();
+    if (w.wortart) o.wortart = String(w.wortart).trim();
+    /* Die Formen gibt es jetzt in jeder Sprache, nicht nur im Lateinischen --
+     * dort trug sie das Feld `lernform` schon immer. */
+    if (w.lernform) o.lernform = String(w.lernform).trim();
     return o;
   };
   const mapped = entry.words.map((w: any) => isLat
-    ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.german || "", pair, ...zusatz(w) }
+    ? { grundform: w.grundform || "", de: w.german || "", pair, ...zusatz(w) }
     : { [foreign]: w.foreign || "", de: w.german || "", pair, ...zusatz(w) });
 
   const keyOf = (w: any) => (isLat ? ((w.grundform || "") + "|" + (w.de || "")) : ((w[foreign] || "") + "|" + (w.de || ""))).toLowerCase();

@@ -13,7 +13,7 @@ import { PAIRS, practiceable, isLatinPair } from "../lib/pairs";
 import { latinHeadword } from "../lib/latin";
 import { isConfigured } from "../lib/supabase";
 import { istWeb, teilen } from "../lib/native";
-import { spalten, alsText, wortNutzlast, wortZeile as exportZeile, WORTARTEN } from "../lib/export";
+import { spalten, alsText, wortNutzlast, wortZeile as exportZeile, WORTARTEN, GENUS } from "../lib/export";
 import { useAuth } from "../sync/auth";
 import { publishList } from "../sync/share";
 import { ListPicker } from "./ListPicker";
@@ -90,8 +90,8 @@ export function WordList() {
   const toggleWort = (id: string) => setGewaehlt((g) => g.includes(id) ? g.filter((x) => x !== id) : [...g, id]);
   const [query, setQuery] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [draft, setDraft] = useState({ fgn: "", de: "", lists: [] as any[], lernform: "", wortart: "", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
-  const [adding, setAdding] = useState({ fgn: "", de: "", listId: "", lernform: "", wortart: "", ex1: "", ex1de: "", phon: "" });
+  const [draft, setDraft] = useState({ fgn: "", de: "", lists: [] as any[], lernform: "", genus: "", wortart: "", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
+  const [adding, setAdding] = useState({ fgn: "", de: "", listId: "", lernform: "", genus: "", wortart: "", ex1: "", ex1de: "", phon: "" });
   const [busy, setBusy] = useState(false);
   const [pendingImport, setPendingImport] = useState(null);
   const [editingListId, setEditingListId] = useState(null);
@@ -142,9 +142,11 @@ export function WordList() {
         const phK = findKey(row, /ausspr|phonet|lautschr|pronunc|ipa/i);
         const lfK = findKey(row, /lernform|stammform|formen/i);
         const waK = findKey(row, /wortart|wort.?art|^art$|pos/i);
+        const geK = findKey(row, /^genus$|geschlecht|gender/i);
         const phonetic = (phK ? String(row[phK]) : "").trim();
         const lernform = (lfK ? String(row[lfK]) : "").trim();
         const wortart = (waK ? String(row[waK]) : "").trim();
+        const genus = (geK ? String(row[geK]) : "").trim();
         const exK = ex1K ? null : spalte(/beispiel|example|satz|phrase/i, false);
         const paare: string[][] = [[ex1K, ex1deK], [ex2K, ex2deK]]
           .filter(([a]) => a)
@@ -160,17 +162,17 @@ export function WordList() {
          * der Sprache ("Español", "Latein"), also wird zuerst danach
          * gesucht; sonst nach den bekannten Bezeichnungen, und zuletzt
          * bleibt die erste Spalte uebrig, die noch keine Rolle hat. */
-        const belegt = new Set([deK, ex1K, ex1deK, ex2K, ex2deK, exK, phK, lfK, waK].filter(Boolean) as string[]);
+        const belegt = new Set([deK, ex1K, ex1deK, ex2K, ex2deK, exK, phK, lfK, waK, geK].filter(Boolean) as string[]);
         const kopfK = Object.keys(row).find((k) => k.trim().toLowerCase() === P.foreignLabel.toLowerCase())
           || findKey(row, /grundform|fremdsprache|^wort$|eng|fran|fren|espa|itali|portug|latein|^fr$|^en$|^es$|^it$|^pt$|^la$/i)
           || Object.keys(row).find((k) => !belegt.has(k));
         const kopf = (kopfK ? String(row[kopfK]) : "").trim();
         const de = (deK ? String(row[deK]) : "").trim();
         if (isLat) {
-          if (kopf || lernform || de) parsed.push({ grundform: kopf, lernform, wortart, de, examples, examplesDe, phonetic });
+          if (kopf || lernform || de) parsed.push({ grundform: kopf, lernform, genus, wortart, de, examples, examplesDe, phonetic });
           continue;
         }
-        if (kopf || de) parsed.push({ fgn: kopf, wortart, de, examples, examplesDe, phonetic });
+        if (kopf || de) parsed.push({ fgn: kopf, lernform, genus, wortart, de, examples, examplesDe, phonetic });
       }
       setBusy(false);
       if (!parsed.length) { toast(txt("In dieser Datei stehen keine Wörter"), "x"); return; }
@@ -263,7 +265,7 @@ export function WordList() {
       const lernform = adding.lernform.trim();
       const de = adding.de.trim();
       if (!grundform && !lernform && !de) return;
-      store.addWord({ grundform, lernform, wortart: adding.wortart, de, examples, examplesDe, phonetic, pair, lists: listId ? [listId] : [] });
+      store.addWord({ grundform, lernform, genus: adding.genus, wortart: adding.wortart, de, examples, examplesDe, phonetic, pair, lists: listId ? [listId] : [] });
       setAdding((a) => ({ ...a, fgn: "", de: "", lernform: "", ex1: "", ex1de: "", phon: "" }));
       return;
     }
@@ -281,7 +283,7 @@ export function WordList() {
       toast(r.source === "none" ? "Couldn't translate — please fill it in" : `Auto-filled “${fgn}” — please review`, r.source === "none" ? "x" : "sparkle");
       setBusy(false);
     }
-    store.addWord({ [foreign]: fgn, de, examples, examplesDe, phonetic, review, pair, lists: listId ? [listId] : [] });
+    store.addWord({ [foreign]: fgn, genus: adding.genus, wortart: adding.wortart, de, examples, examplesDe, phonetic, review, pair, lists: listId ? [listId] : [] });
     setAdding((a) => ({ ...a, fgn: "", de: "", ex1: "", ex1de: "", phon: "" }));
   }, [adding, store, toast, foreign, pair, isLat]);
 
@@ -293,10 +295,10 @@ export function WordList() {
   const NEU = "__neu";
   const startNeu = (listId: string) => {
     setDraft({ fgn: "", de: "", lists: listId && listId !== "__all" ? [listId] : [],
-      lernform: "", wortart: "", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
+      lernform: "", genus: "", wortart: "", ex1: "", ex2: "", ex1de: "", ex2de: "", phon: "" });
     setEditingId(NEU);
   };
-  const startEdit = (w) => { setEditingId(w.id); setDraft({ fgn: isLat ? (w.grundform || "") : (w[foreign] || ""), de: w.de, lists: w.lists || [], lernform: w.lernform || "", wortart: w.wortart || "", ex1: (w.examples || [])[0] || "", ex2: (w.examples || [])[1] || "", ex1de: (w.examplesDe || [])[0] || "", ex2de: (w.examplesDe || [])[1] || "", phon: w.phonetic || "" }); };
+  const startEdit = (w) => { setEditingId(w.id); setDraft({ fgn: isLat ? (w.grundform || "") : (w[foreign] || ""), de: w.de, lists: w.lists || [], lernform: w.lernform || "", genus: w.genus || "", wortart: w.wortart || "", ex1: (w.examples || [])[0] || "", ex2: (w.examples || [])[1] || "", ex1de: (w.examplesDe || [])[0] || "", ex2de: (w.examplesDe || [])[1] || "", phon: w.phonetic || "" }); };
   const saveEdit = (id) => {
     /* Index-treu speichern: examples[i] und examplesDe[i] gehören zusammen.
      * Deshalb hier KEIN filter(Boolean) — sonst rutscht die zweite Übersetzung
@@ -305,8 +307,8 @@ export function WordList() {
     const examplesDe = [draft.ex1de, draft.ex2de].map((s) => (s || "").trim());
     const phonetic = (draft.phon || "").trim();
     const patch = isLat
-      ? { grundform: draft.fgn.trim(), lernform: draft.lernform.trim(), wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false }
-      : { [foreign]: draft.fgn.trim(), wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false };
+      ? { grundform: draft.fgn.trim(), lernform: draft.lernform.trim(), genus: draft.genus, wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false }
+      : { [foreign]: draft.fgn.trim(), lernform: draft.lernform.trim(), genus: draft.genus, wortart: draft.wortart, de: draft.de.trim(), examples, examplesDe, phonetic, lists: draft.lists, review: false };
     if (id === NEU) {
       if (!draft.fgn.trim() && !draft.de.trim() && !draft.lernform.trim()) { setEditingId(null); return; }
       store.addWord({ ...patch, pair, source: "manual", createdAt: Date.now() });
@@ -392,7 +394,8 @@ export function WordList() {
         const de = (r.de || "").trim();
         const { examples, examplesDe } = beispielePaar(r);
         const phonetic = (r.phonetic || "").trim();
-        if (grundform || lernform || de) result.push({ grundform, lernform, wortart, de, examples, examplesDe, phonetic, review: false, pair, lists: [listId] });
+        const genus = (r.genus || "").trim();
+        if (grundform || lernform || de) result.push({ grundform, lernform, genus, wortart, de, examples, examplesDe, phonetic, review: false, pair, lists: [listId] });
       }
       const key = (w) => ((w.grundform || "") + "|" + (w.de || "")).toLowerCase();
       const existing = new Set(pairVocab.map(key));
@@ -411,7 +414,7 @@ export function WordList() {
       const { examples, examplesDe } = beispielePaar(r);
       const phonetic = (r.phonetic || "").trim();
       const wortart = (r.wortart || "").trim();
-      if (fgn || de) result.push({ [foreign]: fgn, wortart, de, examples, examplesDe, phonetic, review, pair, lists: [listId] });
+      if (fgn || de) result.push({ [foreign]: fgn, lernform: (r.lernform || "").trim(), genus: (r.genus || "").trim(), wortart, de, examples, examplesDe, phonetic, review, pair, lists: [listId] });
     }
     const existing = new Set(pairVocab.map((w) => ((w[foreign] || "") + "|" + w.de).toLowerCase()));
     const fresh = result.filter((w) => !existing.has(((w[foreign] || "") + "|" + w.de).toLowerCase()));
@@ -431,29 +434,34 @@ export function WordList() {
    auch ausgefuellt aussehen soll. Die letzte Zeile zeigt absichtlich eine
    halb leere: nur die Uebersetzung, den Rest holt die App oder man traegt
    ihn spaeter nach. */
+/* Beispielzeilen der Vorlage, im EINEN Spaltensatz:
+     Fremdsprache | Formen | Genus | Wortart | Deutsch |
+     Bsp1 | Bsp1 dt | Bsp2 | Bsp2 dt | Aussprache
+   Die letzte Zeile ist absichtlich halb leer: nur die Uebersetzung, den
+   Rest traegt man spaeter nach. */
   const exampleRows = isLat
-    ? [["canis", "canis, canis, m.", "Nomen", "der Hund", "Canis in horto currit.", "Der Hund läuft im Garten.", "", "", "canis"],
-       ["video", "video, videre, vidi, visum", "Verb", "sehen", "Puellam video.", "Ich sehe das Mädchen.", "Nihil videre possum.", "Ich kann nichts sehen.", "videō"],
-       ["ruber", "ruber, rubra, rubrum", "Adjektiv", "rot", "Rosa rubra est.", "Die Rose ist rot.", "", "", "ruber"]]
+    ? [["canis", "canis, canis m", "m", "Nomen", "der Hund", "Canis in horto currit.", "Der Hund läuft im Garten.", "", "", "canis"],
+       ["video", "video, videre, vidi, visum", "", "Verb", "sehen", "Puellam video.", "Ich sehe das Mädchen.", "Nihil videre possum.", "Ich kann nichts sehen.", "videō"],
+       ["ruber", "ruber, rubra, rubrum", "", "Adjektiv", "rot", "Rosa rubra est.", "Die Rose ist rot.", "", "", "ruber"]]
     : pair === "fr-de"
-    ? [["le chien", "", "Nomen", "der Hund", "Le chien court dans le jardin.", "Der Hund läuft im Garten.", "", "", "ʃjɛ̃"],
-       ["rouge", "", "Adjektiv", "rot", "La rose est rouge.", "Die Rose ist rot.", "", "", "ʁuʒ"],
-       ["", "", "", "das Buch", "", "", "", "", ""]]
+    ? [["le chien", "le chien, les chiens", "m", "Nomen", "der Hund", "Le chien court dans le jardin.", "Der Hund läuft im Garten.", "", "", "ʃjɛ̃"],
+       ["aller", "aller: je vais, tu vas, il va", "", "Verb", "gehen", "Je vais à l'école.", "Ich gehe zur Schule.", "", "", "ale"],
+       ["", "", "", "", "das Buch", "", "", "", "", ""]]
     : pair === "es-de"
-    ? [["el perro", "", "Nomen", "der Hund", "El perro corre por el jardín.", "Der Hund läuft durch den Garten.", "", "", "ˈpe.ro"],
-       ["rojo", "", "Adjektiv", "rot", "La rosa es roja.", "Die Rose ist rot.", "", "", "ˈro.xo"],
-       ["", "", "", "das Buch", "", "", "", "", ""]]
+    ? [["el perro", "el perro, los perros", "m", "Nomen", "der Hund", "El perro corre por el jardín.", "Der Hund läuft durch den Garten.", "", "", "ˈpe.ro"],
+       ["ir", "ir: voy, vas, va", "", "Verb", "gehen", "Voy a la escuela.", "Ich gehe zur Schule.", "", "", "iɾ"],
+       ["", "", "", "", "das Buch", "", "", "", "", ""]]
     : pair === "it-de"
-    ? [["il cane", "", "Nomen", "der Hund", "Il cane corre nel giardino.", "Der Hund läuft im Garten.", "", "", "ˈkaːne"],
-       ["rosso", "", "Adjektiv", "rot", "La rosa è rossa.", "Die Rose ist rot.", "", "", "ˈrosːo"],
-       ["", "", "", "das Buch", "", "", "", "", ""]]
+    ? [["il cane", "il cane, i cani", "m", "Nomen", "der Hund", "Il cane corre nel giardino.", "Der Hund läuft im Garten.", "", "", "ˈkaːne"],
+       ["andare", "andare: vado, vai, va", "", "Verb", "gehen", "Vado a scuola.", "Ich gehe zur Schule.", "", "", "anˈdaːre"],
+       ["", "", "", "", "das Buch", "", "", "", "", ""]]
     : pair === "pt-de"
-    ? [["o cão", "", "Nomen", "der Hund", "O cão corre no jardim.", "Der Hund läuft im Garten.", "", "", "ˈkɐ̃w"],
-       ["vermelho", "", "Adjektiv", "rot", "A rosa é vermelha.", "Die Rose ist rot.", "", "", "vɨɾˈmɐʎu"],
-       ["", "", "", "das Buch", "", "", "", "", ""]]
-    : [["dog", "", "Nomen", "der Hund", "The dog runs in the garden.", "Der Hund läuft im Garten.", "My dog is very old.", "Mein Hund ist sehr alt.", "dɒɡ"],
-       ["red", "", "Adjektiv", "rot", "The rose is red.", "Die Rose ist rot.", "", "", "rɛd"],
-       ["", "", "", "das Buch", "", "", "", "", ""]];
+    ? [["o cão", "o cão, os cães", "m", "Nomen", "der Hund", "O cão corre no jardim.", "Der Hund läuft im Garten.", "", "", "ˈkɐ̃w"],
+       ["ir", "ir: vou, vais, vai", "", "Verb", "gehen", "Vou à escola.", "Ich gehe zur Schule.", "", "", "iɾ"],
+       ["", "", "", "", "das Buch", "", "", "", "", ""]]
+    : [["child", "child, children", "", "Nomen", "das Kind", "The child opens the door.", "Das Kind öffnet die Tür.", "Every child gets an apple.", "Jedes Kind bekommt einen Apfel.", "tʃaɪld"],
+       ["go", "go, went, gone", "", "Verb", "gehen", "I go to school.", "Ich gehe zur Schule.", "", "", "ɡəʊ"],
+       ["", "", "", "", "das Buch", "", "", "", "", ""]];
 
   const catBadge = (w: any) => {
     if (!practiceable(w)) return <span className="badge red"><span className="dot" />{txt("Übersetzung fehlt")}</span>;
@@ -688,10 +696,13 @@ export function WordList() {
                     Sprache -- ein englisches "under" ist genauso eine
                     Praeposition, und die Angabe steht in den Angaben zum
                     Wort wie jede andere. */}
-                {isLat && (
-                  <FeldEingabe feld={txt("Stammformen")} wert={draft.lernform}
-                    onChange={(v) => setDraft({ ...draft, lernform: v })} />
-                )}
+                {/* Die Formen kennt jede Sprache -- bei Latein die Stammformen,
+                    sonst Singular und Plural oder die unregelmaessigen Formen.
+                    Sie werden nie abgefragt, sie stehen nur da. */}
+                <FeldEingabe feld={txt("Formen")} hinweis={isLat ? txt("Stammformen") : txt("optional")}
+                  wert={draft.lernform} onChange={(v) => setDraft({ ...draft, lernform: v })} />
+                <FeldAuswahl feld={txt("Geschlecht")} hinweis={txt("nur bei Nomen")} wert={draft.genus} werte={GENUS}
+                  onChange={(v) => setDraft({ ...draft, genus: v })} />
                 <FeldAuswahl feld={txt("Wortart")} hinweis={txt("optional")} wert={draft.wortart} werte={WORTARTEN}
                   onChange={(v) => setDraft({ ...draft, wortart: v })} />
                 <FeldEingabe feld={P.nativeLabel} wert={draft.de}

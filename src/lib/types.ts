@@ -6,7 +6,7 @@
  * Paare kommen daneben, statt bestehende zu entwerten. */
 export type PairId = string;
 export type Verdict = "correct" | "almost" | "wrong";
-export type Wortart = "Nomen" | "Verb" | "Adjektiv" | "Zahlwort" | "Adverb";
+export type Wortart = string;   // die erlaubten Werte stehen in lib/export.ts
 export type LatinMode = "L2" | "L3";
 export type ErrorType = "article" | "accent" | "typo" | "wrong" | null;
 export type TipsFrequency = "off" | "occasional" | "frequent";
@@ -40,6 +40,10 @@ export interface Word {
   grundform?: string;     // Nominativ / 1. Pers. Sg. / m-Form
   lernform?: string;      // full stammformen, e.g. "video, videre, vidi, visum"
   wortart?: Wortart;
+  /* Das Geschlecht des FREMDWORTS, als eigene Angabe -- "m", "f", "n" oder
+   * eine der Plural-Formen. Siehe lib/export.ts: aus dem Artikel abzuleiten
+   * geht nur im Deutschen. */
+  genus?: string;
   examples?: string[];    // 1–2 example sentences IN THE FOREIGN LANGUAGE (school books print these)
   /* Their German translations, index-aligned with `examples`. A parallel array
    * rather than a restructure to {fgn, de} pairs: `examples` is read in a dozen

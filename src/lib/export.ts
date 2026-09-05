@@ -34,10 +34,31 @@ export const TRENNER = " | ";
  * heruntergeladenen Datei ansieht, fuer welche Sprache sie gedacht ist --
  * die Form ist trotzdem ueberall gleich. */
 export function spalten(pair: string, fremdLabel: string): string[] {
-  return [fremdLabel, "Lernform", "Wortart", "Deutsch",
+  return [fremdLabel, "Formen", "Genus", "Wortart", "Deutsch",
           "Beispielsatz 1", "Beispielsatz 1 deutsch",
           "Beispielsatz 2", "Beispielsatz 2 deutsch", "Aussprache"];
 }
+
+/* Das Geschlecht des Fremdworts.
+ *
+ * Es steht als eigene Angabe da und wird NICHT aus dem Artikel abgeleitet:
+ * das ginge nur im Deutschen. "l'école" ist weiblich, "l'uomo" maennlich,
+ * "lo zaino" maennlich, "el agua" weiblich -- das Franzoesische und das
+ * Italienische waehlen den Artikel nach dem Anlaut, das Spanische elidiert.
+ * Umgekehrt bleibt der Artikel im Wortfeld stehen, denn aus dem Geschlecht
+ * liesse er sich aus denselben Gruenden nicht zurueckbauen.
+ *
+ * Kein eigenes Feld fuer den Numerus: "Singular" traefe auf 99 von 100
+ * Nomen zu, und ein Merkmal, das fast immer denselben Wert hat, traegt
+ * keine Auskunft. Angeschrieben wird die Ausnahme -- deshalb die
+ * Plural-Werte hier drin, in der Schreibweise der Woerterbuecher. */
+export const GENUS = ["m", "f", "n", "m pl", "f pl", "n pl", "pl"];
+
+export const GENUS_LANG: Record<string, string> = {
+  m: "männlich", f: "weiblich", n: "sächlich",
+  "m pl": "männlich, nur Plural", "f pl": "weiblich, nur Plural",
+  "n pl": "sächlich, nur Plural", pl: "nur Plural",
+};
 
 /* Die Wortarten. Sie waren auf Latein beschraenkt und dort auf fuenf
  * Klassen; beides ohne Grund. Ein englisches "under" ist genauso eine
@@ -59,7 +80,7 @@ export function wortZeile(w: any, pair: string, fremdSchluessel: string): string
   const bsp = w.examples || [];
   const bspDe = w.examplesDe || [];
   const kopf = isLatinPair(pair) ? w.grundform : w[fremdSchluessel];
-  return [kopf, w.lernform, w.wortart, w.de,
+  return [kopf, w.lernform, w.genus, w.wortart, w.de,
           bsp[0], bspDe[0], bsp[1], bspDe[1], w.phonetic].map(sauber);
 }
 
@@ -75,12 +96,13 @@ export function alsText(words: any[], pair: string, fremdSchluessel: string): st
 export function wortNutzlast(w: any, pair: string, fremdSchluessel: string) {
   const kopf = isLatinPair(pair)
     ? { grundform: w.grundform || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.de || "" }
-    : { [fremdSchluessel]: w[fremdSchluessel] || "", de: w.de || "" };
+    : { [fremdSchluessel]: w[fremdSchluessel] || "", lernform: w.lernform || "", wortart: w.wortart || "", de: w.de || "" };
   const bsp = (w.examples || []).map((s: any) => String(s || "").trim());
   const bspDe = (w.examplesDe || []).map((s: any) => String(s || "").trim());
   const rest: any = {};
   if (bsp.some(Boolean)) rest.examples = bsp;
   if (bspDe.some(Boolean)) rest.examplesDe = bspDe;
   if (w.phonetic) rest.phonetic = String(w.phonetic).trim();
+  if (w.genus) rest.genus = String(w.genus).trim();
   return { ...kopf, ...rest };
 }
